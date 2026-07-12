@@ -65,7 +65,23 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
     show in the local file).
   - `lister.py` — 3-step publish (inventory item → offer → publish), dry-run default.
 - Top-level `*.py` = thin owner-facing commands. `run.py` = menu.
-- `output/` — generated (git-ignored): drafts, comps, dashboard.html, search.html.
+- `docs/` (also holds the web app) — **Card Vault PWA**, the "real app" (à la
+  the owner's Sports-Hub). Static HTML/CSS/vanilla-JS, no build step, deploys
+  via GitHub Pages. `index.html` shell, `app.js` (renders tabs: Collection /
+  Value / Drafts / About, card-detail modal, theme toggle, SW registration),
+  `styles.css` (card-hobby theme: felt-green/charcoal + foil-gold, dark default
+  + light via tokens), `manifest.webmanifest` + `sw.js` (installable, offline),
+  `icon.svg`, `.nojekyll`. Reads `docs/data.json`.
+- `build_web.py` — regenerates `docs/data.json` from the catalog AND a
+  self-contained `output/preview.html` (CSS+JS+data inlined) for previewing.
+  Run it after any catalog change so the app reflects it.
+- ARCHITECTURE NOTE: eBay's APIs are CORS-blocked + secret-gated, so live
+  features (comps/search/Buy Radar/listing) CANNOT run client-side — they need
+  a small backend (Phase 2, mirroring Sports-Hub's Railway server exception).
+  The static app covers view/track (collection, value, drafts) with no backend.
+- `output/` — generated (git-ignored): drafts, comps, dashboard.html,
+  search.html, preview.html. NOTE: `docs/` is committed (it's the live app);
+  `output/` is not.
 - `docs/` — 5 step-by-step guides (01 keys, 02 catalog, 03 pricing, 04 listing,
   05 roadmap).
 
@@ -83,6 +99,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   (flagged in notes; refine with real eBay comps). All validate clean + drafted.
 - Dashboard published to a private Artifact URL (owner bookmarks it). Republish
   `output/dashboard_web.html` to the same conversation path to refresh it.
+- **Card Vault PWA (Phase 1) built** in `docs/` — card-hobby themed, tabbed,
+  installable. Previewed via Artifact. NOT yet live on GitHub Pages: needs the
+  owner to (1) merge `docs/` to `main` and (2) enable Pages (Settings → Pages →
+  main / `/docs`). Then live at https://mcdermottj639.github.io/Ebay/ .
 - eBay developer account: **registered, pending approval** (~1 business day).
   No keys in `.env` yet → pricing/listing/Buy Radar/search are built but idle.
 - Next when keys land: plug into `.env`, pull comps, refine prices, run first

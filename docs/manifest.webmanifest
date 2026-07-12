@@ -1,0 +1,15 @@
+{
+  "name": "Card Vault",
+  "short_name": "Card Vault",
+  "description": "Your personal sports-card collection, value, and eBay listing hub.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e1310",
+  "theme_color": "#0e1310",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
