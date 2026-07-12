@@ -1,4 +1,11 @@
 sku,sport,year,brand,set,player,card_number,parallel,insert,team,league,rookie,autograph,serial_run,graded,grader,grade,condition,quantity,cost,asking_price,notes
-CARD-0001,Baseball,2011,Topps,Update,Mike Trout,US175,,,Angels,MLB,yes,no,,no,,,Near Mint,1,5,,Key rookie - check comps before pricing
-CARD-0002,Basketball,2018,Panini,Prizm,Luka Doncic,280,Silver,,Mavericks,NBA,yes,no,,yes,PSA,10,,1,40,,Graded gem mint
-CARD-0003,Football,2020,Panini,Donruss,Justin Herbert,#312,Press Proof,Rated Rookie,Chargers,NFL,yes,no,99,no,,,Near Mint,1,8,,Serial numbered /99
+CARD-0001,Football,2025,Panini,Prizm,Jayden Higgins,14,Green Cracked Ice,Emergent,Texans,NFL,yes,no,,no,,,,1,,,Confirm exact parallel color (green cracked ice) for value
+CARD-0002,Football,2025,Panini,Donruss Optic,Kenneth Grant,216,Green,Rated Rookie,Dolphins,NFL,yes,no,,no,,,,1,,,Optic Green parallel - confirm if serial numbered
+CARD-0003,Football,2025,Panini,Donruss Optic,Cam Skattebo,228,,Rated Rookie,Giants,NFL,yes,no,,no,,,,1,,,
+CARD-0004,Football,2025,Panini,Donruss Optic,Tyler Loop,227,,Rated Rookie,Ravens,NFL,yes,no,,no,,,,1,,,
+CARD-0005,Football,2024,Panini,Select,Luke McCaffrey,279,Club Level Die-Cut,,Commanders,NFL,yes,no,,no,,,,1,,,Club Level die-cut - confirm if colored/numbered
+CARD-0006,Football,2024,Panini,Select,Joe Andreessen,20,Gold,Concourse,Bills,NFL,yes,no,,no,,,,1,,,Concourse level - confirm Gold parallel is serial numbered
+CARD-0007,Football,2024,Panini,Select,Ray Davis,22,,Select Certified,Bills,NFL,yes,no,,no,,,,1,,,
+CARD-0008,Football,2025,Panini,Donruss Optic,Jalon Walker,290,Green,Rated Rookie,Falcons,NFL,yes,no,,no,,,,1,,,Optic Green parallel - confirm if serial numbered
+CARD-0009,Football,2025,Panini,Prizm,Jack Bech,346,,,Raiders,NFL,yes,no,,no,,,,1,,,
+CARD-0010,Football,2025,Panini,Prizm,Brashard Smith,308,,,Chiefs,NFL,yes,no,,no,,,,1,,,
