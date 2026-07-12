@@ -20,7 +20,8 @@ MENU = """
   3) Look up prices/comps on eBay   (needs API keys)
   4) Preview listings (safe, nothing goes live)
   5) LIST FOR REAL on eBay          (needs full setup)
-  6) Quit
+  6) Build my visual dashboard (opens in browser)
+  7) Quit
 ========================================
 """
 
@@ -30,6 +31,7 @@ ACTIONS = {
     "3": ["get_comps.py"],
     "4": ["create_listings.py"],
     "5": ["create_listings.py", "live"],
+    "6": ["dashboard.py"],
 }
 
 
@@ -37,7 +39,7 @@ def main() -> int:
     while True:
         print(MENU)
         choice = input("Pick a number: ").strip()
-        if choice == "6":
+        if choice == "7":
             print("Bye! Happy selling.")
             return 0
         if choice == "5":

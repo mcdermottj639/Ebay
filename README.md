@@ -75,6 +75,7 @@ You'll get a numbered menu — just type a number:
 | Look up prices for my cards         | `python3 get_comps.py`           | Yes             |
 | Preview what would be listed        | `python3 create_listings.py`     | No              |
 | Actually list on eBay               | `python3 create_listings.py live`| Yes             |
+| See everything in a visual dashboard| `python3 dashboard.py`           | No              |
 
 Anything you generate lands in the `output/` folder as spreadsheets you can
 open in Excel or Google Sheets.
