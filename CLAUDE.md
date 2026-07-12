@@ -112,11 +112,13 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
-- Catalog: **33 items** — 32 cards + **1 merch** (Kyren Williams framed signed
-  Rams jersey, Beckett COA, `MERCH-0001`). Cards span 5 sports; 15 graded (PSA),
-  8 autos (incl. jersey), 1 patch, several numbered. Graded cards carry PSA-app
-  value estimates as a starting `asking_price` (refine with real eBay comps).
-  Jersey unpriced pending comps. All validate clean + drafted. Current app: v4.
+- Catalog: **34 items** — 32 cards + **2 merch** (`MERCH-0001` Kyren Williams
+  framed signed Rams jersey, Beckett COA; `MERCH-0002` Baker Mayfield signed
+  Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
+  15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered. Graded
+  cards carry PSA-app value estimates as a starting `asking_price` (refine with
+  real eBay comps). Merch unpriced pending comps. All validate clean + drafted.
+  Current app: v4. (Helmet: confirm full-size vs mini.)
 - Dashboard published to a private Artifact URL (owner bookmarks it). Republish
   `output/dashboard_web.html` to the same conversation path to refresh it.
 - **Card Vault PWA (Phase 1) built** in `docs/` — card-hobby themed, tabbed,
