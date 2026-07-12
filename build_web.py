@@ -37,6 +37,14 @@ def _status(card):
     return "priced" if card.asking_price.strip() else "needs_price"
 
 
+def _line(card):
+    """The grey subtitle line shown under the player name in the app."""
+    if card.is_merch():
+        return " · ".join([p for p in [card.team, card.item_type] if p])
+    num = ("#" + card.card_number) if card.card_number else ""
+    return " ".join([p for p in [card.year, card.brand, card.set, num, card.parallel] if p])
+
+
 def build_data(cards) -> dict:
     by_sport: dict[str, int] = {}
     for c in cards:
@@ -50,6 +58,7 @@ def build_data(cards) -> dict:
         "generated": datetime.now(timezone.utc).strftime("%b %d, %Y · %H:%M UTC"),
         "summary": {
             "total_cards": len(cards),
+            "merch": sum(1 for c in cards if c.is_merch()),
             "physical": sum(int(c.quantity) for c in cards if c.quantity.isdigit()),
             "rookies": sum(1 for c in cards if c.is_rookie()),
             "autos": sum(1 for c in cards if c.is_auto()),
@@ -62,14 +71,17 @@ def build_data(cards) -> dict:
         },
         "cards": [
             {
-                "sku": c.sku, "sport": c.sport, "year": c.year, "brand": c.brand,
-                "set": c.set, "player": c.player, "card_number": c.card_number,
-                "parallel": c.parallel, "insert": c.insert, "team": c.team,
-                "league": c.league, "rookie": c.is_rookie(), "auto": c.is_auto(),
-                "graded": c.is_graded(), "relic": c.is_relic(), "grader": c.grader,
-                "grade": c.grade, "serial_run": c.serial_run, "condition": c.condition,
+                "sku": c.sku, "item_type": c.item_type or "Card",
+                "is_merch": c.is_merch(), "sport": c.sport, "year": c.year,
+                "brand": c.brand, "set": c.set, "player": c.player,
+                "card_number": c.card_number, "parallel": c.parallel,
+                "insert": c.insert, "team": c.team, "league": c.league,
+                "rookie": c.is_rookie(), "auto": c.is_auto(), "graded": c.is_graded(),
+                "relic": c.is_relic(), "grader": c.grader, "grade": c.grade,
+                "serial_run": c.serial_run, "condition": c.condition,
+                "authentication": c.grader if c.is_merch() else "",
                 "cost": c.cost, "asking_price": c.asking_price, "notes": c.notes,
-                "title": titles.build_title(c), "status": _status(c),
+                "line": _line(c), "title": titles.build_title(c), "status": _status(c),
             }
             for c in cards
         ],

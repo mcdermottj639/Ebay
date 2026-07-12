@@ -59,6 +59,31 @@ what you can.
 
 ---
 
+## Merch (jerseys, balls, framed items, photos)
+
+The same spreadsheet holds your memorabilia too — just set the **`item_type`**
+column to what it is (e.g. `Jersey`, `Framed Jersey`, `Mini Helmet`, `Football`,
+`Photo`). Leave `item_type` blank (or `Card`) for trading cards.
+
+For a merch row you only fill what applies — the card-only columns
+(brand, set, card_number, parallel, grade…) stay blank. What matters:
+
+| Column | For merch, put… | Example |
+|---|---|---|
+| `sku` | a merch SKU | `MERCH-0001` |
+| `item_type` | what it is | `Framed Jersey` |
+| `player` | who | `Kyren Williams` |
+| `team` | team | `Los Angeles Rams` |
+| `sport` / `league` | sport / league | `Football` / `NFL` |
+| `autograph` | `yes` if signed | `yes` |
+| `grader` | **who authenticated it** (COA) | `Beckett`, `JSA`, `PSA/DNA`, `Fanatics` |
+| `condition` | condition | `Excellent` |
+| `notes` | framing, size, hologram #, etc. | `Framed shadow box; BAS COA hologram` |
+
+The toolkit automatically gives merch a different eBay title
+(`Kyren Williams Autographed Framed Jersey Los Angeles Rams Beckett COA`) and
+listing category (memorabilia, not cards). New merch SKUs use `MERCH-000N`.
+
 ## Check your work
 
 After editing, always run:

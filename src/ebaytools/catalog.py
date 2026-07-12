@@ -14,22 +14,29 @@ from pathlib import Path
 from . import config
 
 # Every column we understand. Extra columns in your CSV are kept in `extra`.
+# `item_type` distinguishes cards from merch (jersey, ball, photo, etc.). Blank
+# or "card" = a trading card; anything else = merch. For merch, the card-only
+# columns (brand/set/card_number/parallel/grade...) are simply left blank, and
+# `grader` doubles as the autograph authenticator (Beckett/JSA/PSA/DNA/Fanatics).
 COLUMNS = [
-    "sku", "sport", "year", "brand", "set", "player", "card_number",
+    "sku", "item_type", "sport", "year", "brand", "set", "player", "card_number",
     "parallel", "insert", "team", "league", "rookie", "autograph",
     "serial_run", "graded", "grader", "grade", "condition",
     "quantity", "cost", "asking_price", "notes",
 ]
 
-# The bare minimum a row needs before we'll try to make a listing from it.
-REQUIRED = ["sku", "sport", "year", "brand", "player"]
+# The bare minimum a row needs, by kind.
+REQUIRED_CARD = ["sku", "sport", "year", "brand", "player"]
+REQUIRED_MERCH = ["sku", "player", "item_type"]
 
 TRUTHY = {"yes", "y", "true", "1", "x"}
+CARD_TYPES = {"", "card", "trading card"}
 
 
 @dataclass
 class Card:
     sku: str = ""
+    item_type: str = ""
     sport: str = ""
     year: str = ""
     brand: str = ""
@@ -53,6 +60,17 @@ class Card:
     notes: str = ""
     extra: dict = field(default_factory=dict)
     row_number: int = 0  # line in the spreadsheet, for error messages
+
+    def is_merch(self) -> bool:
+        """True if this is memorabilia/merch rather than a trading card."""
+        return self.item_type.strip().lower() not in CARD_TYPES
+
+    def is_card(self) -> bool:
+        return not self.is_merch()
+
+    def is_authenticated(self) -> bool:
+        """Merch with a COA/authenticator recorded (in `grader`)."""
+        return self.is_merch() and bool(self.grader.strip())
 
     def is_rookie(self) -> bool:
         return self.rookie.strip().lower() in TRUTHY
@@ -102,8 +120,9 @@ def check(cards: list[Card]) -> list[str]:
     for card in cards:
         where = f"Row {card.row_number}"
 
-        # Missing must-have fields
-        for req in REQUIRED:
+        # Missing must-have fields (cards and merch need different basics)
+        required = REQUIRED_MERCH if card.is_merch() else REQUIRED_CARD
+        for req in required:
             if not getattr(card, req):
                 problems.append(f"{where}: missing '{req}'.")
 
@@ -147,6 +166,7 @@ def _looks_like_number(value: str) -> bool:
 def summarize(cards: list[Card]) -> str:
     """One-line-per-stat summary of the whole catalog."""
     total = len(cards)
+    merch = sum(1 for c in cards if c.is_merch())
     qty = sum(int(c.quantity) for c in cards if c.quantity.isdigit())
     rookies = sum(1 for c in cards if c.is_rookie())
     autos = sum(1 for c in cards if c.is_auto())
@@ -157,8 +177,9 @@ def summarize(cards: list[Card]) -> str:
             sports[c.sport] = sports.get(c.sport, 0) + 1
 
     lines = [
-        f"Rows (unique cards/lots): {total}",
-        f"Total physical cards:     {qty}",
+        f"Items (cards + merch):    {total}",
+        f"Cards / Merch:            {total - merch} / {merch}",
+        f"Total physical items:     {qty}",
         f"Rookies:                  {rookies}",
         f"Autographs:               {autos}",
         f"Graded:                   {graded}",

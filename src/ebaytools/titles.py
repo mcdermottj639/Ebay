@@ -20,9 +20,14 @@ TITLE_MAX = 80
 def build_title(card: Card) -> str:
     """Assemble an 80-char title, keeping the highest-value keywords first.
 
-    Priority order (buyers search these first, so we keep these when trimming):
-      year -> brand -> set -> player -> card# -> parallel -> insert
-      -> RC -> AUTO -> serial -> grade -> team
+    Cards and merch (jerseys, balls, framed items) search very differently, so
+    they get different title shapes.
+    """
+    if card.is_merch():
+        return _merch_title(card)
+
+    """Card title priority (buyers search these first, kept when trimming):
+      year -> brand -> set -> player -> card# -> grade/AUTO/RELIC/serial ...
     """
     number = card.card_number.strip()
     if number and not number.startswith("#"):
@@ -62,6 +67,29 @@ def build_title(card: Card) -> str:
     return _assemble(parts)
 
 
+def _merch_title(card: Card) -> str:
+    """Title for memorabilia: player + Autographed + item + team + COA + year.
+
+    e.g. 'Kyren Williams Autographed Los Angeles Rams Jersey Beckett COA'.
+    """
+    auth = (card.grader.strip() + " COA") if card.grader.strip() else ""
+    parts = [
+        card.player,
+        "Autographed" if card.is_auto() else "",
+        card.item_type,          # e.g. "Framed Jersey"
+        card.team,
+        auth,
+        card.year,
+    ]
+    parts = [p.strip() for p in parts if p and p.strip()]
+    title = _assemble(parts)
+    if len(title) <= TITLE_MAX:
+        return title
+    while parts and len(_assemble(parts)) > TITLE_MAX:
+        parts.pop()
+    return _assemble(parts)
+
+
 def _assemble(parts: list[str]) -> str:
     """Join parts into a title, collapsing repeated adjacent words."""
     return _collapse_words(" ".join(parts))
@@ -83,11 +111,25 @@ def _collapse_words(text: str) -> str:
 
 
 def build_item_specifics(card: Card) -> dict[str, list[str]]:
-    """The structured fields eBay's Trading Card category expects.
+    """The structured fields eBay expects for this item (card OR merch).
 
     Values are lists because eBay's API takes a list of values per aspect.
     Only non-empty fields are included.
     """
+    if card.is_merch():
+        raw = {
+            "Product": card.item_type,
+            "Player/Athlete": card.player,
+            "Team": card.team,
+            "Sport": card.sport,
+            "League": card.league,
+            "Season": card.year,
+            "Autographed": "Yes" if card.is_auto() else "",
+            "Authentication": card.grader,   # Beckett / JSA / PSA-DNA / Fanatics
+            "Condition": card.condition,
+        }
+        return {k: [v] for k, v in raw.items() if v and v.strip()}
+
     features = []
     if card.is_rookie():
         features.append("Rookie")
@@ -123,21 +165,29 @@ def build_description(card: Card) -> str:
     rows = "".join(
         f"<li><strong>{k}:</strong> {v[0]}</li>" for k, v in specifics.items()
     )
-    condition_line = (
-        f"Graded {card.grader.upper()} {card.grade}."
-        if card.is_graded()
-        else f"Condition: {card.condition or 'see photos'}. Ungraded — grade your own opinion from the pictures."
-    )
+    if card.is_merch():
+        auth = f" Authenticated by {card.grader} (COA included)." if card.grader else ""
+        condition_line = f"Autographed {card.item_type.lower()}.{auth} Condition: {card.condition or 'see photos'}."
+    elif card.is_graded():
+        condition_line = f"Graded {card.grader.upper()} {card.grade}."
+    else:
+        condition_line = f"Condition: {card.condition or 'see photos'}. Ungraded — grade your own opinion from the pictures."
     note = f"<p>{card.notes}</p>" if card.notes else ""
+    shipping = (
+        "<p>Carefully packed and shipped fully insured with tracking. Comes with "
+        "the pictured authentication/COA. Thanks for looking!</p>"
+        if card.is_merch() else
+        "<p>Shipped securely in a penny sleeve + top loader (or graded slab), "
+        "team bagged, inside a bubble mailer or box. Combined shipping on "
+        "multiple wins — buy more, save on shipping. Thanks for looking!</p>"
+    )
 
     return (
         f"<h2>{build_title(card)}</h2>"
         f"<p>{condition_line}</p>"
         f"<ul>{rows}</ul>"
         f"{note}"
-        "<p>Shipped securely in a penny sleeve + top loader (or graded slab), "
-        "team bagged, inside a bubble mailer or box. Combined shipping on "
-        "multiple wins — buy more, save on shipping. Thanks for looking!</p>"
+        + shipping
     )
 
 

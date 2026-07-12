@@ -132,7 +132,7 @@ def build_html(cards, template=None):
         rows.append(
             f"<tr>"
             f"<td class='mono'>{escape(c.sku)}</td>"
-            f"<td>{escape(c.year)} {escape(c.brand)} {escape(c.set)}</td>"
+            f"<td>{escape(c.item_type if c.is_merch() else f'{c.year} {c.brand} {c.set}'.strip())}</td>"
             f"<td><b>{escape(c.player)}</b> {flags}</td>"
             f"<td>{escape(c.sport)}</td>"
             f"<td class='num'>{escape(c.cost)}</td>"

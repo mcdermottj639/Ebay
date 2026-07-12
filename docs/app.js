@@ -66,6 +66,12 @@
 
   function badges(c) {
     var out = "";
+    if (c.is_merch) {
+      if (c.auto) out += '<span class="badge b-auto">AUTO</span>';
+      if (c.authentication) out += '<span class="badge b-psa">' + esc(c.authentication) + " COA</span>";
+      if (/fram/i.test(c.item_type)) out += '<span class="badge b-num">FRAMED</span>';
+      return out ? '<span class="badges">' + out + "</span>" : "";
+    }
     if (c.graded && c.grader && c.grade) out += '<span class="badge b-psa">' + esc(c.grader.toUpperCase() + " " + c.grade) + "</span>";
     if (c.rookie) out += '<span class="badge b-rc">RC</span>';
     if (c.auto) out += '<span class="badge b-auto">AUTO</span>';
@@ -78,7 +84,9 @@
     var wrap = el('<div class="view"></div>');
     var cards = state.data.cards;
     var sports = Object.keys(state.data.summary.by_sport);
-    var filters = ["All"].concat(sports).concat(["Graded", "Autos", "Rookies"]);
+    var extras = ["Graded", "Autos", "Rookies"];
+    if (state.data.summary.merch) extras.push("Merch");
+    var filters = ["All"].concat(sports).concat(extras);
 
     var chips = el('<div class="chips"></div>');
     filters.forEach(function (f) {
@@ -93,6 +101,7 @@
       if (state.filter === "Graded") return c.graded;
       if (state.filter === "Autos") return c.auto;
       if (state.filter === "Rookies") return c.rookie;
+      if (state.filter === "Merch") return c.is_merch;
       return c.sport === state.filter;
     });
     // Highest value first, then priced before unpriced
@@ -104,8 +113,7 @@
       var val = c.asking_price ? '<div class="val tnum">' + money0(c.asking_price) + "</div>"
                                : '<div class="val none">—</div>';
       var st = c.status === "priced" ? "Priced" : "Needs price";
-      var sub = [c.year, c.brand, c.set, c.card_number ? "#" + c.card_number : "", c.parallel]
-                  .filter(Boolean).join(" ");
+      var sub = c.line || "";
       var row = el(
         '<button class="crow s-' + c.status + '">' +
           '<div class="stripe"></div>' +
@@ -157,7 +165,7 @@
     top.forEach(function (c) {
       var row = el('<button class="crow s-' + c.status + '"><div class="stripe"></div>' +
         '<div class="m"><div class="p">' + esc(c.player) + badges(c) + "</div>" +
-        '<div class="sub">' + esc([c.year, c.brand, c.set].filter(Boolean).join(" ")) + "</div></div>" +
+        '<div class="sub">' + esc(c.line || "") + "</div></div>" +
         '<div class="r"><div class="val tnum">' + money0(c.asking_price) + "</div></div></button>");
       row.onclick = function () { openModal(c); };
       list.appendChild(row);
@@ -201,9 +209,11 @@
   function openModal(c) {
     var m = document.getElementById("modal");
     var rows = [
+      ["Item type", c.is_merch ? c.item_type : ""],
       ["Player", c.player], ["Year", c.year], ["Brand", c.brand], ["Set", c.set],
       ["Card #", c.card_number], ["Parallel", c.parallel], ["Insert", c.insert],
       ["Team", c.team], ["Grade", c.graded ? (c.grader + " " + c.grade) : ""],
+      ["Authentication", c.is_merch ? c.authentication : ""],
       ["Condition", c.graded ? "" : c.condition], ["Serial", c.serial_run ? "/" + c.serial_run : ""],
       ["Sport", c.sport], ["SKU", c.sku], ["Est. value", c.asking_price ? money(c.asking_price) : ""],
       ["Notes", c.notes]
@@ -212,7 +222,7 @@
     m.innerHTML =
       '<button class="close" id="mClose">✕</button>' +
       "<h3>" + esc(c.player) + badges(c) + "</h3>" +
-      '<div class="muted" style="font-size:13px">' + esc([c.year, c.brand, c.set].filter(Boolean).join(" ")) + "</div>" +
+      '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
       '<dl class="kv">' + kv + "</dl>" +
       '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>";
     m.querySelector("#mClose").onclick = closeModal;

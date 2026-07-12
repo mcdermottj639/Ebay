@@ -47,11 +47,18 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - `src/ebaytools/`
   - `config.py` — loads `.env`, sandbox/production hosts, key checks.
   - `catalog.py` — load/validate/summarize inventory; `Card` model + flags
-    (`is_rookie/is_auto/is_graded/is_relic`).
-  - `titles.py` — offline title/specifics/description builder. Title priority:
-    year, brand, set, player, #, **grade, AUTO, RELIC, /serial** (value flags
-    kept high so they survive the 80-char trim), RC, parallel, insert, team.
-    `_dedupe` drops exact repeated tokens.
+    (`is_rookie/is_auto/is_graded/is_relic`, and for merch `is_merch/is_card/
+    is_authenticated`). The `item_type` column splits cards from merch: blank/
+    "card" = trading card; anything else (Jersey, Framed Jersey, Ball, Photo…)
+    = merch. Merch reuses `grader` as the COA authenticator (Beckett/JSA/etc.)
+    and leaves card-only columns blank. Validation requires different fields
+    per kind (REQUIRED_CARD vs REQUIRED_MERCH).
+  - `titles.py` — offline title/specifics/description builder, branches on
+    card vs merch. Card title priority: year, brand, set, player, #, **grade,
+    AUTO, RELIC, /serial** (value flags kept high so they survive the 80-char
+    trim), RC, parallel, insert, team. Merch title: player, Autographed,
+    item_type, team, "<authenticator> COA", year. `_collapse_words` drops
+    repeated adjacent words.
   - `ebay_auth.py` — OAuth app token (public) + user token (selling).
   - `comps.py` — Browse API pricing (active). Marketplace Insights (sold) TODO.
   - `deals.py` — Buy Radar `scan()` + Alt-style `search()`; `value_rating()`
@@ -97,13 +104,14 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - Every owner-facing script guards missing keys with a plain-English message and
   points to `docs/01`.
 - Anything destructive/live is dry-run or confirmation-gated by default.
-- SKUs are `CARD-000N`, unique. New batches continue the numbering.
+- SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
-- Catalog: **32 cards** across 5 sports (26 football, 3 basketball, 1 each
-  baseball/hockey/soccer). 15 graded (PSA), 7 autos, 1 patch, several numbered.
-  Graded cards carry PSA-app value estimates as a starting `asking_price`
-  (flagged in notes; refine with real eBay comps). All validate clean + drafted.
+- Catalog: **33 items** — 32 cards + **1 merch** (Kyren Williams framed signed
+  Rams jersey, Beckett COA, `MERCH-0001`). Cards span 5 sports; 15 graded (PSA),
+  8 autos (incl. jersey), 1 patch, several numbered. Graded cards carry PSA-app
+  value estimates as a starting `asking_price` (refine with real eBay comps).
+  Jersey unpriced pending comps. All validate clean + drafted. Current app: v3.
 - Dashboard published to a private Artifact URL (owner bookmarks it). Republish
   `output/dashboard_web.html` to the same conversation path to refresh it.
 - **Card Vault PWA (Phase 1) built** in `docs/` — card-hobby themed, tabbed,

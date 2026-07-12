@@ -57,7 +57,7 @@ def build_offer(card: Card) -> dict:
         "marketplaceId": "EBAY_US",
         "format": "FIXED_PRICE",
         "availableQuantity": int(card.quantity) if card.quantity.isdigit() else 1,
-        "categoryId": _category_for(card.sport),
+        "categoryId": _category_for(card),
         "listingDescription": build_description(card),
         "pricingSummary": {"price": {"currency": "USD", "value": price}},
         "listingPolicies": {
@@ -144,15 +144,26 @@ def _require_live_setup() -> None:
         )
 
 
-def _category_for(sport: str) -> str:
-    """eBay leaf category IDs for single trading cards (US site)."""
+def _category_for(card: Card) -> str:
+    """eBay leaf category ID (US site). Cards vs. autographed memorabilia differ.
+
+    Merch IDs are approximate defaults — confirm the exact leaf category at
+    listing time (once keys are in) with eBay's getCategorySuggestions.
+    """
+    if card.is_merch():
+        return {              # Sports Mem > Autographs-Original > by sport
+            "Football": "1521",   # Football-NFL autographs
+            "Basketball": "2926",
+            "Baseball": "1525",
+            "Hockey": "2870",
+        }.get(card.sport.strip().title(), "64482")  # 64482 = Sports Mem/Fan Shop
     return {
         "Baseball": "213",
         "Basketball": "214",
         "Football": "215",
         "Hockey": "216",
         "Soccer": "183444",
-    }.get(sport.strip().title(), "212")  # 212 = Sports Trading Cards (general)
+    }.get(card.sport.strip().title(), "212")  # 212 = Sports Trading Cards (general)
 
 
 def _check(resp: requests.Response, step: str) -> None:
