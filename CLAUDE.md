@@ -56,6 +56,13 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   - `comps.py` — Browse API pricing (active). Marketplace Insights (sold) TODO.
   - `deals.py` — Buy Radar `scan()` + Alt-style `search()`; `value_rating()`
     maps discount→Great/Good/Fair/Over-market (3/2/1/0 bars).
+  - Dashboard/search HTML: theme-aware via CSS variables. Light default,
+    dark via `@media prefers-color-scheme` (auto) or a manual sun/moon toggle
+    (`data-theme` attr + localStorage). Keep both themes working on any UI edit.
+    Dashboard can be published as a private URL with the Artifact tool (a
+    snapshot — republish to the same file path to update; external image
+    thumbnails are blocked by the Artifact CSP, so live Buy Radar images only
+    show in the local file).
   - `lister.py` — 3-step publish (inventory item → offer → publish), dry-run default.
 - Top-level `*.py` = thin owner-facing commands. `run.py` = menu.
 - `output/` — generated (git-ignored): drafts, comps, dashboard.html, search.html.
@@ -70,10 +77,14 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs are `CARD-000N`, unique. New batches continue the numbering.
 
 ## Current status (update me)
-- Catalog: **18 cards** (16 football rookies + a PSA 10 basketball; 2 autos,
-  1 patch, several numbered). All validate clean and are drafted.
+- Catalog: **32 cards** across 5 sports (26 football, 3 basketball, 1 each
+  baseball/hockey/soccer). 15 graded (PSA), 7 autos, 1 patch, several numbered.
+  Graded cards carry PSA-app value estimates as a starting `asking_price`
+  (flagged in notes; refine with real eBay comps). All validate clean + drafted.
+- Dashboard published to a private Artifact URL (owner bookmarks it). Republish
+  `output/dashboard_web.html` to the same conversation path to refresh it.
 - eBay developer account: **registered, pending approval** (~1 business day).
   No keys in `.env` yet → pricing/listing/Buy Radar/search are built but idle.
-- Next when keys land: plug into `.env`, pull comps, price the 18, run first
+- Next when keys land: plug into `.env`, pull comps, refine prices, run first
   live searches, list best cards. Consider applying for Marketplace Insights
   (sold comps) and adding a PSA cert/pop lookup.
