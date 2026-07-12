@@ -63,6 +63,16 @@ class Card:
     def is_graded(self) -> bool:
         return self.graded.strip().lower() in TRUTHY
 
+    def is_relic(self) -> bool:
+        """True if this looks like a memorabilia/patch/jersey card.
+
+        Only reads the structured set/insert fields — not freeform notes, which
+        can contain questions like "confirm if it has a patch".
+        """
+        text = f"{self.insert} {self.set}".lower()
+        return any(w in text for w in
+                   ("relic", "patch", "jersey", "memorabilia", "materials"))
+
 
 def load(path: Path | None = None) -> list[Card]:
     """Read the inventory CSV into a list of Card objects."""

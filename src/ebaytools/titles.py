@@ -33,18 +33,21 @@ def build_title(card: Card) -> str:
         grade = f"{card.grader.upper()} {card.grade}"
 
     # Ordered from most to least important. We drop from the END until it fits.
+    # Value flags (grade, AUTO, RELIC, /serial) sit high so they survive trimming
+    # even when the set name is long — buyers filter searches on exactly these.
     parts = [
         card.year,
         card.brand,
         card.set,
         card.player,
         number,
+        grade,
+        "AUTO" if card.is_auto() else "",
+        "RELIC" if card.is_relic() else "",
+        f"/{card.serial_run}" if card.serial_run else "",
+        "RC" if card.is_rookie() else "",
         card.parallel,
         card.insert,
-        "RC" if card.is_rookie() else "",
-        "AUTO" if card.is_auto() else "",
-        f"/{card.serial_run}" if card.serial_run else "",
-        grade,
         card.team,
     ]
     parts = [p.strip() for p in parts if p and p.strip()]
@@ -70,6 +73,8 @@ def build_item_specifics(card: Card) -> dict[str, list[str]]:
         features.append("Rookie")
     if card.is_auto():
         features.append("Autograph")
+    if card.is_relic():
+        features.append("Patch/Relic")
     if card.serial_run:
         features.append("Serial Numbered")
 

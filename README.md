@@ -76,6 +76,8 @@ You'll get a numbered menu — just type a number:
 | Preview what would be listed        | `python3 create_listings.py`     | No              |
 | Actually list on eBay               | `python3 create_listings.py live`| Yes             |
 | See everything in a visual dashboard| `python3 dashboard.py`           | No              |
+| Find cards to BUY under market       | `python3 find_deals.py`          | Yes             |
+| Search eBay for any card, by value   | `python3 search_deals.py "..."`  | Yes             |
 
 Anything you generate lands in the `output/` folder as spreadsheets you can
 open in Excel or Google Sheets.

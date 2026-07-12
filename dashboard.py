@@ -42,6 +42,45 @@ def _listed_skus():
     return {r.get("sku") for r in data if isinstance(r, dict) and not r.get("dry_run")}
 
 
+def _load_deals():
+    """Deals found by find_deals.py, if any."""
+    path = OUTPUT / "deals.json"
+    if not path.exists():
+        return []
+    try:
+        return json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return []
+
+
+def _deals_section():
+    deals = _load_deals()
+    if not deals:
+        return ""
+    rows = []
+    for d in deals[:25]:
+        snipe = '<span class="flag" style="background:#d1495b">SNIPE</span>' if d.get("snipe") else ""
+        kind = "Auction" if d.get("buying_option") == "AUCTION" else "Buy It Now"
+        disc = d.get("discount_pct", 0)
+        rows.append(
+            f"<tr>"
+            f"<td><b>{escape(str(d.get('label','')))}</b> {snipe}</td>"
+            f"<td>{escape(d.get('item_title','')[:60])}</td>"
+            f"<td class='num'>${d.get('price',0):.2f}</td>"
+            f"<td class='num muted'>${d.get('reference',0):.0f}</td>"
+            f"<td class='num'><span class='status ok'>{disc:+.0f}%</span></td>"
+            f"<td>{kind}</td>"
+            f"<td><a href='{escape(d.get('url',''))}' target='_blank'>view</a></td>"
+            f"</tr>"
+        )
+    return (
+        "<section><h2>🎯 Buy Radar — deals under market</h2>"
+        "<table><thead><tr><th>Watch</th><th>Listing</th><th class='num'>Price</th>"
+        "<th class='num'>Market</th><th class='num'>Disc.</th><th>Type</th><th></th></tr></thead>"
+        f"<tbody>{''.join(rows)}</tbody></table></section>"
+    )
+
+
 def _status(card, listed):
     if card.sku in listed:
         return ("Listed", "ok")
@@ -100,6 +139,7 @@ def build_html(cards):
         priced=priced,
         listed=len(listed),
         sport_rows=sport_rows or "<p class='muted'>No sports recorded yet.</p>",
+        deals_section=_deals_section(),
         table_rows="".join(rows) or "<tr><td colspan='7' class='muted'>No cards yet — add rows to data/inventory.csv.</td></tr>",
     )
 
@@ -164,6 +204,8 @@ TEMPLATE = """<!doctype html>
     <div class="card"><div class="k">Potential profit</div><div class="v {profit_cls}">{profit}</div></div>
     <div class="card"><div class="k">Priced / Listed</div><div class="v">{priced} / {listed}</div></div>
   </div>
+
+  {deals_section}
 
   <section>
     <h2>By sport</h2>

@@ -21,7 +21,9 @@ MENU = """
   4) Preview listings (safe, nothing goes live)
   5) LIST FOR REAL on eBay          (needs full setup)
   6) Build my visual dashboard (opens in browser)
-  7) Quit
+  7) Buy Radar: find cards to buy under market  (needs API keys)
+  8) Search eBay for any card, ranked by value  (needs API keys)
+  9) Quit
 ========================================
 """
 
@@ -32,6 +34,7 @@ ACTIONS = {
     "4": ["create_listings.py"],
     "5": ["create_listings.py", "live"],
     "6": ["dashboard.py"],
+    "7": ["find_deals.py"],
 }
 
 
@@ -39,9 +42,15 @@ def main() -> int:
     while True:
         print(MENU)
         choice = input("Pick a number: ").strip()
-        if choice == "7":
+        if choice == "9":
             print("Bye! Happy selling.")
             return 0
+        if choice == "8":
+            query = input("What card do you want to search for? ").strip()
+            if query:
+                subprocess.run([sys.executable, str(HERE / "search_deals.py"), query])
+                input("\nPress Enter to return to the menu...")
+            continue
         if choice == "5":
             confirm = input("This lists REAL cards on eBay. Type YES to continue: ")
             if confirm.strip() != "YES":
