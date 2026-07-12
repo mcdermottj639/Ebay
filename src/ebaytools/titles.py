@@ -52,14 +52,34 @@ def build_title(card: Card) -> str:
     ]
     parts = [p.strip() for p in parts if p and p.strip()]
 
-    title = " ".join(parts)
+    title = _assemble(parts)
     if len(title) <= TITLE_MAX:
         return title
 
     # Too long: drop trailing (lowest-priority) parts until it fits.
-    while parts and len(" ".join(parts)) > TITLE_MAX:
+    while parts and len(_assemble(parts)) > TITLE_MAX:
         parts.pop()
-    return " ".join(parts)
+    return _assemble(parts)
+
+
+def _assemble(parts: list[str]) -> str:
+    """Join parts into a title, collapsing repeated adjacent words."""
+    return _collapse_words(" ".join(parts))
+
+
+def _collapse_words(text: str) -> str:
+    """Remove a word that repeats the immediately preceding word.
+
+    Handles brand 'Panini' + set 'Panini Prizm' -> 'Panini Prizm', or a
+    parallel/insert that duplicates. Word-level (not substring) so it never
+    strips a flag like 'RC' because those letters sit inside another word.
+    """
+    out: list[str] = []
+    for word in text.split():
+        if out and out[-1].lower() == word.lower():
+            continue
+        out.append(word)
+    return " ".join(out)
 
 
 def build_item_specifics(card: Card) -> dict[str, list[str]]:

@@ -53,31 +53,44 @@ def _load_deals():
         return []
 
 
+def _bars(n):
+    """Value bars like Alt's — filled green up to n, hollow after."""
+    return "".join(
+        f'<i class="bar {"on" if i < n else ""}"></i>' for i in range(3)
+    )
+
+
 def _deals_section():
     deals = _load_deals()
     if not deals:
         return ""
+    colors = {3: "#1a9e5f", 2: "#5a9e1a", 1: "#c77d0a", 0: "#d1495b"}
     rows = []
     for d in deals[:25]:
-        snipe = '<span class="flag" style="background:#d1495b">SNIPE</span>' if d.get("snipe") else ""
+        snipe = '<span class="snipe">ENDING SOON</span>' if d.get("snipe") else ""
         kind = "Auction" if d.get("buying_option") == "AUCTION" else "Buy It Now"
         disc = d.get("discount_pct", 0)
-        rows.append(
-            f"<tr>"
-            f"<td><b>{escape(str(d.get('label','')))}</b> {snipe}</td>"
-            f"<td>{escape(d.get('item_title','')[:60])}</td>"
-            f"<td class='num'>${d.get('price',0):.2f}</td>"
-            f"<td class='num muted'>${d.get('reference',0):.0f}</td>"
-            f"<td class='num'><span class='status ok'>{disc:+.0f}%</span></td>"
-            f"<td>{kind}</td>"
-            f"<td><a href='{escape(d.get('url',''))}' target='_blank'>view</a></td>"
-            f"</tr>"
-        )
+        bars = d.get("bars", 0)
+        color = colors.get(bars, "#8a8a99")
+        img = (f'<img src="{escape(d["image"])}" alt="">' if d.get("image")
+               else '<div class="noimg"></div>')
+        rows.append(f"""
+        <a class="deal" href="{escape(d.get('url',''))}" target="_blank">
+          <div class="thumb">{img}</div>
+          <div class="mid">
+            <div class="dl">{escape(str(d.get('label','')))} {snipe}</div>
+            <div class="dt">{escape(d.get('item_title','')[:66])}</div>
+            <div class="dm">{kind} · market ${d.get('reference',0):.0f}</div>
+          </div>
+          <div class="dr">
+            <div class="dp">${d.get('price',0):.2f}</div>
+            <div class="bars">{_bars(bars)}</div>
+            <div class="dd" style="color:{color}">{disc:+.0f}%</div>
+          </div>
+        </a>""")
     return (
-        "<section><h2>🎯 Buy Radar — deals under market</h2>"
-        "<table><thead><tr><th>Watch</th><th>Listing</th><th class='num'>Price</th>"
-        "<th class='num'>Market</th><th class='num'>Disc.</th><th>Type</th><th></th></tr></thead>"
-        f"<tbody>{''.join(rows)}</tbody></table></section>"
+        '<section><h2>🎯 Buy Radar — deals under market</h2>'
+        f'<div class="deals">{"".join(rows)}</div></section>'
     )
 
 
@@ -189,6 +202,21 @@ TEMPLATE = """<!doctype html>
   .status.todo {{ background: rgba(209,73,91,.15); color: #d1495b; }}
   .flag {{ display: inline-block; background: #4361ee; color: #fff; font-size: 10px;
     font-weight: 700; padding: 1px 6px; border-radius: 4px; margin-left: 4px; }}
+  .deals {{ display: flex; flex-direction: column; gap: 8px; }}
+  .deal {{ display: flex; gap: 12px; align-items: center; background: #fff; border-radius: 12px;
+    padding: 10px 14px; text-decoration: none; color: inherit; box-shadow: 0 1px 3px rgba(0,0,0,.08); }}
+  .thumb img, .noimg {{ width: 56px; height: 56px; object-fit: contain; border-radius: 8px; background: #eef0f4; }}
+  .deal .mid {{ flex: 1; min-width: 0; }}
+  .deal .dl {{ font-size: 13px; font-weight: 700; }}
+  .deal .dt {{ font-size: 13px; color: #555; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+  .deal .dm {{ font-size: 11px; color: #8a8a99; margin-top: 2px; }}
+  .deal .dr {{ text-align: right; white-space: nowrap; }}
+  .deal .dp {{ font-size: 16px; font-weight: 700; }}
+  .deal .dd {{ font-size: 12px; font-weight: 700; }}
+  .bars {{ display: inline-flex; gap: 3px; margin: 3px 0; }}
+  .bars .bar {{ width: 7px; height: 12px; border-radius: 2px; background: #d6d8de; display: inline-block; }}
+  .bars .bar.on {{ background: #1a9e5f; }}
+  .snipe {{ background: #d1495b; color: #fff; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; }}
 </style></head>
 <body>
 <header class="wrap">

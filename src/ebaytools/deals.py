@@ -48,6 +48,8 @@ class Deal:
     discount_pct: float     # how far under market
     snipe: bool             # auction ending soon?
     url: str
+    image: str = ""         # thumbnail URL
+    bars: int = 0           # value rating 0-3 (like Alt's green bars)
 
 
 def load_watchlist(path: Path | None = None) -> list[WatchItem]:
@@ -97,6 +99,7 @@ def scan(items: list[WatchItem], per_item_limit: int = 50) -> list[Deal]:
             if l["price"] is None or l["price"] > alert:
                 continue
             discount = (reference - l["price"]) / reference * 100 if reference else 0
+            _, bars = value_rating(discount)
             deals.append(Deal(
                 label=item.label or item.query,
                 item_title=l["title"],
@@ -107,6 +110,8 @@ def scan(items: list[WatchItem], per_item_limit: int = 50) -> list[Deal]:
                 discount_pct=round(discount, 1),
                 snipe=l["snipe"],
                 url=l["url"],
+                image=l.get("image", ""),
+                bars=bars,
             ))
     # Best deals first
     deals.sort(key=lambda d: d.discount_pct, reverse=True)
