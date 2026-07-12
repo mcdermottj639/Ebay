@@ -5,7 +5,7 @@
   "use strict";
 
   var APP_VERSION = "v1";
-  var state = { tab: "collection", filter: "All", data: null };
+  var state = { tab: "collection", filter: "All", data: null, bucket: "Cards", collapsed: {} };
 
   // ---------- helpers ----------
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
@@ -80,53 +80,117 @@
     return out ? '<span class="badges">' + out + "</span>" : "";
   }
 
+  // one card/merch row
+  function crowEl(c) {
+    var val = c.asking_price ? '<div class="val tnum">' + money0(c.asking_price) + "</div>"
+                             : '<div class="val none">—</div>';
+    var st = c.status === "priced" ? "Priced" : "Needs price";
+    var row = el(
+      '<button class="crow s-' + c.status + '">' +
+        '<div class="stripe"></div>' +
+        '<div class="m"><div class="p">' + esc(c.player) + badges(c) + "</div>" +
+          '<div class="sub">' + esc(c.line || "") + "</div></div>" +
+        '<div class="r">' + val + '<div class="st">' + st + "</div></div>" +
+      "</button>"
+    );
+    row.onclick = function () { openModal(c); };
+    return row;
+  }
+
+  // price tier for a card (keeps cheap commons collapsed out of the way)
+  function tierOf(c) {
+    if (!c.asking_price || num(c.asking_price) <= 0) return { label: "Unpriced", order: 5, collapse: true };
+    var v = num(c.asking_price);
+    if (v >= 100) return { label: "$100+", order: 0 };
+    if (v >= 25) return { label: "$25 – $100", order: 1 };
+    if (v >= 5) return { label: "$5 – $25", order: 2 };
+    if (v >= 1) return { label: "$1 – $5", order: 3 };
+    return { label: "Under $1", order: 4, collapse: true };
+  }
+
+  // a collapsible titled section
+  function sectionEl(label, items, defaultCollapsed) {
+    var collapsed = state.collapsed[label];
+    if (collapsed === undefined) collapsed = !!defaultCollapsed;
+    var sec = el('<div class="section"></div>');
+    var head = el('<button class="section-head"><span class="sh-l">' + esc(label) +
+      '</span><span class="sh-c">' + items.length + '</span><span class="sh-x">' +
+      (collapsed ? "▸" : "▾") + "</span></button>");
+    head.onclick = function () { state.collapsed[label] = !collapsed; render(); };
+    sec.appendChild(head);
+    if (!collapsed) {
+      var list = el('<div class="list"></div>');
+      items.forEach(function (c) { list.appendChild(crowEl(c)); });
+      sec.appendChild(list);
+    }
+    return sec;
+  }
+
   function viewCollection() {
     var wrap = el('<div class="view"></div>');
     var cards = state.data.cards;
-    var sports = Object.keys(state.data.summary.by_sport);
-    var extras = ["Graded", "Autos", "Rookies"];
-    if (state.data.summary.merch) extras.push("Merch");
-    var filters = ["All"].concat(sports).concat(extras);
+    var nCards = cards.filter(function (c) { return !c.is_merch; }).length;
+    var nMerch = cards.filter(function (c) { return c.is_merch; }).length;
 
+    // primary split: Cards | Merch
+    var seg = el('<div class="seg"></div>');
+    [["Cards", nCards], ["Merch", nMerch]].forEach(function (b) {
+      var btn = el('<button class="' + (state.bucket === b[0] ? "on" : "") + '">' + b[0] + ' <em>' + b[1] + "</em></button>");
+      btn.onclick = function () { if (state.bucket !== b[0]) { state.bucket = b[0]; state.filter = "All"; render(); } };
+      seg.appendChild(btn);
+    });
+    wrap.appendChild(seg);
+
+    var inBucket = cards.filter(function (c) { return state.bucket === "Merch" ? c.is_merch : !c.is_merch; });
+
+    if (state.bucket === "Cards") {
+      var sports = [];
+      inBucket.forEach(function (c) { if (c.sport && sports.indexOf(c.sport) < 0) sports.push(c.sport); });
+      var filters = ["All"].concat(sports.sort()).concat(["Graded", "Autos"]);
+      wrap.appendChild(chipRow(filters));
+
+      var shown = inBucket.filter(matchFilter);
+      var groups = {};
+      shown.forEach(function (c) {
+        var t = tierOf(c);
+        (groups[t.label] = groups[t.label] || { items: [], t: t }).items.push(c);
+      });
+      var ordered = Object.keys(groups).map(function (k) { return groups[k]; })
+        .sort(function (a, b) { return a.t.order - b.t.order; });
+      ordered.forEach(function (g) {
+        g.items.sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); });
+        wrap.appendChild(sectionEl(g.t.label, g.items, g.t.collapse));
+      });
+      if (!shown.length) wrap.appendChild(el('<p class="muted">No cards match this filter.</p>'));
+    } else {
+      // Merch grouped by item type (Jersey, Helmet, Ball, …)
+      var byType = {};
+      inBucket.forEach(function (c) { var k = c.item_type || "Merch"; (byType[k] = byType[k] || []).push(c); });
+      var keys = Object.keys(byType).sort();
+      keys.forEach(function (k) {
+        byType[k].sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); });
+        wrap.appendChild(sectionEl(k, byType[k], false));
+      });
+      if (!keys.length) wrap.appendChild(el('<p class="muted">No merch yet — add jerseys, helmets, balls, photos…</p>'));
+    }
+    return wrap;
+  }
+
+  function chipRow(filters) {
     var chips = el('<div class="chips"></div>');
     filters.forEach(function (f) {
       var c = el('<button class="chip' + (state.filter === f ? " on" : "") + '">' + esc(f) + "</button>");
       c.onclick = function () { state.filter = f; render(); };
       chips.appendChild(c);
     });
-    wrap.appendChild(chips);
+    return chips;
+  }
 
-    var shown = cards.filter(function (c) {
-      if (state.filter === "All") return true;
-      if (state.filter === "Graded") return c.graded;
-      if (state.filter === "Autos") return c.auto;
-      if (state.filter === "Rookies") return c.rookie;
-      if (state.filter === "Merch") return c.is_merch;
-      return c.sport === state.filter;
-    });
-    // Highest value first, then priced before unpriced
-    shown.sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); });
-
-    wrap.appendChild(el('<div class="eyebrow">' + shown.length + " card" + (shown.length === 1 ? "" : "s") + "</div>"));
-    var list = el('<div class="list"></div>');
-    shown.forEach(function (c) {
-      var val = c.asking_price ? '<div class="val tnum">' + money0(c.asking_price) + "</div>"
-                               : '<div class="val none">—</div>';
-      var st = c.status === "priced" ? "Priced" : "Needs price";
-      var sub = c.line || "";
-      var row = el(
-        '<button class="crow s-' + c.status + '">' +
-          '<div class="stripe"></div>' +
-          '<div class="m"><div class="p">' + esc(c.player) + badges(c) + "</div>" +
-            '<div class="sub">' + esc(sub) + "</div></div>" +
-          '<div class="r">' + val + '<div class="st">' + st + "</div></div>" +
-        "</button>"
-      );
-      row.onclick = function () { openModal(c); };
-      list.appendChild(row);
-    });
-    wrap.appendChild(list);
-    return wrap;
+  function matchFilter(c) {
+    if (state.filter === "All") return true;
+    if (state.filter === "Graded") return c.graded;
+    if (state.filter === "Autos") return c.auto;
+    return c.sport === state.filter;
   }
 
   function viewValue() {

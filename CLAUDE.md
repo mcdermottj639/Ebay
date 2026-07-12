@@ -63,6 +63,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   - `comps.py` — Browse API pricing (active). Marketplace Insights (sold) TODO.
   - `deals.py` — Buy Radar `scan()` + Alt-style `search()`; `value_rating()`
     maps discount→Great/Good/Fair/Over-market (3/2/1/0 bars).
+  - App Collection tab: a **Cards / Merch** segmented toggle, then Cards group
+    into collapsible **price tiers** ($100+, $25–100, $5–25, $1–5, Under $1,
+    Unpriced) with Under-$1 + Unpriced collapsed by default (keeps bulk commons
+    out of the way); Merch groups by `item_type`. Sport + Graded/Autos chips
+    filter within Cards. `state.bucket`/`state.collapsed` drive it.
   - Dashboard/search HTML: theme-aware via CSS variables. Light default,
     dark via `@media prefers-color-scheme` (auto) or a manual sun/moon toggle
     (`data-theme` attr + localStorage). Keep both themes working on any UI edit.
@@ -111,7 +116,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Rams jersey, Beckett COA, `MERCH-0001`). Cards span 5 sports; 15 graded (PSA),
   8 autos (incl. jersey), 1 patch, several numbered. Graded cards carry PSA-app
   value estimates as a starting `asking_price` (refine with real eBay comps).
-  Jersey unpriced pending comps. All validate clean + drafted. Current app: v3.
+  Jersey unpriced pending comps. All validate clean + drafted. Current app: v4.
 - Dashboard published to a private Artifact URL (owner bookmarks it). Republish
   `output/dashboard_web.html` to the same conversation path to refresh it.
 - **Card Vault PWA (Phase 1) built** in `docs/` — card-hobby themed, tabbed,
