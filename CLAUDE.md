@@ -75,6 +75,13 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - `build_web.py` — regenerates `docs/data.json` from the catalog AND a
   self-contained `output/preview.html` (CSS+JS+data inlined) for previewing.
   Run it after any catalog change so the app reflects it.
+- PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
+  `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
+  `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
+  this makes the service worker serve stale CSS/JS. Current: v2.
+- iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
+  appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
+  home indicator. Preserve these on any layout change.
 - ARCHITECTURE NOTE: eBay's APIs are CORS-blocked + secret-gated, so live
   features (comps/search/Buy Radar/listing) CANNOT run client-side — they need
   a small backend (Phase 2, mirroring Sports-Hub's Railway server exception).
