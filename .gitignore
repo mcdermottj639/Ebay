@@ -1,0 +1,22 @@
+# Secrets — NEVER commit these
+.env
+*.env
+!.env.example
+tokens.json
+*.token
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Generated output (your drafts, comps, logs — safe to regenerate)
+output/
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
