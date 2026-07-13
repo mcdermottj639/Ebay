@@ -164,10 +164,13 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   match the `Deal` dataclass. `search_deals.py "2024 donruss downtown"` works.
 - Dashboard published to a private Artifact URL (owner bookmarks it). Republish
   `output/dashboard_web.html` to the same conversation path to refresh it.
-- **Card Vault PWA (Phase 1) built** in `docs/` — card-hobby themed, tabbed,
-  installable. NOT yet live on GitHub Pages: needs the owner to (1) merge
-  `docs/` to `main` and (2) enable Pages (Settings → Pages → main / `/docs`).
-  Then live at https://mcdermottj639.github.io/Ebay/ .
+- **Card Vault PWA (Phase 1) is LIVE** at https://mcdermottj639.github.io/Ebay/
+  — card-hobby themed, tabbed, installable. Deployed via GitHub Actions
+  (`.github/workflows/pages.yml`), which auto-enabled Pages (configure-pages
+  enablement:true) and rebuilds `docs/data.json` from the catalog on every push
+  to `main`. So: edit `data/inventory.csv` → merge to `main` → site updates
+  itself (no manual Pages steps, no manual rebuild). Deploy status via the
+  Actions tab / `pages.yml` runs.
 - Next: mint a user token (consent flow) to enable live listing + Marketplace
   Insights (sold comps), then refine prices off SOLD data and list the best
   cards. Consider a PSA cert/pop lookup.
