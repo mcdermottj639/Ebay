@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v6";
+  var APP_VERSION = "v7";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards", collapsed: {} };
 
   // ---------- helpers ----------
@@ -81,10 +81,43 @@
     return out ? '<span class="badges">' + out + "</span>" : "";
   }
 
-  // photo thumbnail (or a themed placeholder when there's no photo yet)
+  // team colors [primary, secondary] for the smart placeholder gradient.
+  var TEAM_COLORS = {
+    // NFL
+    "Texans": ["#03202F", "#A71930"], "Dolphins": ["#008E97", "#FC4C02"],
+    "Giants": ["#0B2265", "#A71930"], "Ravens": ["#241773", "#9E7C0C"],
+    "Commanders": ["#5A1414", "#FFB612"], "Bills": ["#00338D", "#C60C30"],
+    "Falcons": ["#A71930", "#000000"], "Raiders": ["#0B0B0B", "#A5ACAF"],
+    "Chiefs": ["#E31837", "#FFB81C"], "Cardinals": ["#97233F", "#000000"],
+    "Lions": ["#0076B6", "#B0B7BC"], "Colts": ["#002C5F", "#A2AAAD"],
+    "Cowboys": ["#041E42", "#869397"], "49ers": ["#AA0000", "#B3995D"],
+    "Los Angeles Rams": ["#003594", "#FFA300"], "Rams": ["#003594", "#FFA300"],
+    "Tampa Bay Buccaneers": ["#D50A0A", "#34302B"], "Buccaneers": ["#D50A0A", "#34302B"],
+    // NBA
+    "Warriors": ["#1D428A", "#FFC72C"], "Pistons": ["#C8102E", "#1D42BA"],
+    // MLB
+    "Reds": ["#C6011F", "#000000"],
+    // NHL
+    "Rangers": ["#0038A8", "#CE1126"],
+    // Soccer / College
+    "PSG": ["#004170", "#DA291C"], "Alabama": ["#9E1B32", "#828A8F"]
+  };
+  function teamColors(team) { return TEAM_COLORS[team] || ["#1d3a2f", "#0e1310"]; }
+  function initials(name) {
+    if (!name) return "🃏";
+    var parts = String(name).replace(/[^A-Za-z ]/g, " ").trim().split(/\s+/);
+    var s = (parts[0] ? parts[0][0] : "") + (parts[1] ? parts[1][0] : "");
+    return s ? s.toUpperCase() : "🃏";
+  }
+
+  // photo thumbnail — or a smart team-colored placeholder with the player's
+  // initials when there's no photo yet.
   function thumb(c, cls) {
     if (c.image) return '<div class="thumb ' + (cls || "") + '"><img src="' + esc(c.image) + '" alt="" loading="lazy"></div>';
-    return '<div class="thumb ph ' + (cls || "") + '">🃏</div>';
+    var col = teamColors(c.team);
+    var style = "background:linear-gradient(140deg," + col[0] + "," + col[1] + ")";
+    return '<div class="thumb ph ' + (cls || "") + '" style="' + style + '">' +
+      '<span class="ini">' + esc(initials(c.player)) + "</span></div>";
   }
 
   // sold-vs-asking pill: green SOLD (real sold comps) vs gold ASKING (active listings)
