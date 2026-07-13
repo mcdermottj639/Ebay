@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v7";
+  var APP_VERSION = "v8";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards", collapsed: {} };
 
   // ---------- helpers ----------
@@ -194,7 +194,7 @@
     if (state.bucket === "Cards") {
       var sports = [];
       inBucket.forEach(function (c) { if (c.sport && sports.indexOf(c.sport) < 0) sports.push(c.sport); });
-      var filters = ["All"].concat(sports.sort()).concat(["Graded", "Autos"]);
+      var filters = ["All"].concat(sports.sort()).concat(["Graded", "Autos", "Non-Autos"]);
       wrap.appendChild(chipRow(filters));
 
       var shown = inBucket.filter(matchFilter);
@@ -238,6 +238,7 @@
     if (state.filter === "All") return true;
     if (state.filter === "Graded") return c.graded;
     if (state.filter === "Autos") return c.auto;
+    if (state.filter === "Non-Autos") return !c.auto;
     return c.sport === state.filter;
   }
 
