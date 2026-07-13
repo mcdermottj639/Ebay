@@ -150,14 +150,31 @@ main { max-width: 720px; margin: 0 auto;
   border: 1px solid var(--border); border-radius: 20px; padding: 1px 8px; font-variant-numeric: tabular-nums; }
 .section-head .sh-x { margin-left: auto; color: var(--muted); font-size: 12px; }
 
-/* ---- chips ---- */
-.chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 10px; -webkit-overflow-scrolling: touch; }
-.chip {
-  flex: none; border: 1px solid var(--border); background: var(--surface);
-  color: var(--muted); border-radius: 20px; padding: 7px 13px; font-size: 13px;
-  font-weight: 600; cursor: pointer; white-space: nowrap;
+/* ---- filter bar + popup ---- */
+.filterbar { display: flex; align-items: center; gap: 8px; padding: 2px 0 10px; }
+.filterbtn {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--fg);
+  border-radius: 20px; padding: 8px 14px; font-size: 13px; font-weight: 700;
+  cursor: pointer; box-shadow: var(--shadow);
 }
-.chip.on { background: var(--gold); color: #241b06; border-color: var(--gold); }
+.filterbtn.on { border-color: var(--gold); }
+.filterbtn .fi { color: var(--gold); font-size: 14px; line-height: 1; }
+.filterbtn .fcur { color: var(--muted); font-weight: 600;
+  padding-left: 8px; margin-left: 2px; border-left: 1px solid var(--border); }
+.filterbtn.on .fcur { color: var(--gold); }
+.fclear { border: none; background: none; color: var(--muted); font-size: 13px;
+  font-weight: 700; cursor: pointer; padding: 8px 4px; }
+.fgroup { margin-top: 16px; }
+.fgroup:first-of-type { margin-top: 6px; }
+.flab { font-size: 11px; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--gold); font-weight: 800; margin-bottom: 9px; }
+.fchips { display: flex; flex-wrap: wrap; gap: 8px; }
+.fchip {
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--fg);
+  border-radius: 20px; padding: 9px 15px; font-size: 13.5px; font-weight: 600; cursor: pointer;
+}
+.fchip.on { background: var(--gold); color: #241b06; border-color: var(--gold); }
 
 /* ---- card rows ---- */
 .list { display: flex; flex-direction: column; gap: 9px; }
