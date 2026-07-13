@@ -52,6 +52,43 @@ def query_for(card: Card) -> str:
     return build_title(card)
 
 
+def broad_query_for(card: Card) -> str:
+    """A looser fallback search for when the exact-title query finds nothing.
+
+    Niche inserts/autos (odd card numbers like #S-WAJ, long insert names) are
+    over-specific, so eBay's keyword search returns zero. This keeps only the
+    words a buyer would still type — year, brand, player, and the value flags
+    (grade, AUTO, RELIC, /serial) — dropping the card number and insert/parallel
+    that cause the miss.
+    """
+    if card.is_merch():
+        # For merch, drop the "COA" wording and year; keep player+item+team.
+        parts = [card.player, "Autographed" if card.is_auto() else "",
+                 card.item_type, card.team]
+        return _collapse(" ".join(p.strip() for p in parts if p and p.strip()))
+
+    grade = f"{card.grader.upper()} {card.grade}" if (card.is_graded() and card.grader and card.grade) else ""
+    parts = [
+        card.year, card.brand, card.player,
+        grade,
+        "AUTO" if card.is_auto() else "",
+        "RELIC" if card.is_relic() else "",
+        f"/{card.serial_run}" if card.serial_run else "",
+        "RC" if card.is_rookie() else "",
+    ]
+    return _collapse(" ".join(p.strip() for p in parts if p and p.strip()))
+
+
+def _collapse(text: str) -> str:
+    """Drop a word that repeats the immediately preceding word (Panini Panini)."""
+    out: list[str] = []
+    for word in text.split():
+        if out and out[-1].lower() == word.lower():
+            continue
+        out.append(word)
+    return " ".join(out)
+
+
 def get_comps(card_or_query, limit: int = 50) -> CompResult:
     """Look up comps for a Card object OR a raw search string."""
     query = card_or_query if isinstance(card_or_query, str) else query_for(card_or_query)
@@ -65,6 +102,16 @@ def get_comps(card_or_query, limit: int = 50) -> CompResult:
         )
 
     prices, titles, source = _search_active(query, limit)
+
+    # If the exact-title query found nothing and we have a Card, retry with a
+    # broadened query so niche inserts/autos still get a ballpark comp.
+    if not prices and not isinstance(card_or_query, str):
+        broad = broad_query_for(card_or_query)
+        if broad and broad != query:
+            prices, titles, source = _search_active(broad, limit)
+            if prices:
+                query = f"{broad}  (broad match)"
+
     if not prices:
         return CompResult(query, source, 0, None, None, None, [])
 

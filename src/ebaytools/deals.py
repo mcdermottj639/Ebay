@@ -188,7 +188,10 @@ def search(query: str, fair_value: str = "", limit: int = 60) -> dict:
             continue
         discount = (reference - l["price"]) / reference * 100 if reference else 0
         label, bars = value_rating(discount)
-        results.append({**l, "discount_pct": round(discount, 1),
+        # Normalize "title" -> "item_title" to match the Deal dataclass and the
+        # console/CSV/HTML consumers in search_deals.py.
+        results.append({**l, "item_title": l["title"],
+                        "discount_pct": round(discount, 1),
                         "value_label": label, "bars": bars})
     results.sort(key=lambda r: r["discount_pct"], reverse=True)
     return {"query": query, "reference": round(reference, 2),
