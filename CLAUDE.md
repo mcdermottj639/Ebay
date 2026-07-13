@@ -78,7 +78,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   - App Collection tab: a **Cards / Merch** segmented toggle, then Cards group
     into collapsible **price tiers** ($100+, $25–100, $5–25, $1–5, Under $1,
     Unpriced) with Under-$1 + Unpriced collapsed by default (keeps bulk commons
-    out of the way); Merch groups by `item_type`. Sport + Graded/Autos chips
+    out of the way); Merch groups by `item_type`. Sport + Graded/Autos/Non-Autos chips
     filter within Cards. `state.bucket`/`state.collapsed` drive it.
   - Dashboard/search HTML: theme-aware via CSS variables. Light default,
     dark via `@media prefers-color-scheme` (auto) or a manual sun/moon toggle
@@ -119,7 +119,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v7. The live
+  this makes the service worker serve stale CSS/JS. Current: v8. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
@@ -149,7 +149,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v7
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v8
   (version tag now shown in the top bar for at-a-glance build verification).
   (Helmet: confirm full-size vs mini.)
 - **eBay Production API is LIVE** (2026-07). Keys approved and in `.env`
