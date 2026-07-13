@@ -143,15 +143,17 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - Pricing method used: comps are **active/asking** medians (Browse API), which
   run ABOVE actual sold — so `asking_price` set at/just-under median for clean
   comps. Refine down once real SOLD comps are available.
-- **Marketplace Insights (real SOLD comps): code built + wired, ACCESS PENDING.**
-  Tested the production keyset (2026-07) — the `buy.marketplace.insights` scope
-  returns `invalid_scope`, i.e. eBay has NOT granted this app the gated Limited-
-  Release API. `comps.py` already prefers sold and auto-falls-back to active, so
-  the day access is granted, `get_comps.py` switches to real sold with no code
-  change (it prints "✓ Using REAL SOLD prices" vs the active-fallback notice).
-  ACTION FOR OWNER: apply for Marketplace Insights access in the eBay developer
-  portal (Application Growth Check / Buy APIs request) —
-  https://developer.ebay.com/api-docs/buy/marketplace-insights/overview.html .
+- **Marketplace Insights (real SOLD comps): code built + wired, APPLIED — awaiting
+  eBay review.** Tested the production keyset (2026-07) — the
+  `buy.marketplace.insights` scope returns `invalid_scope`, i.e. eBay has NOT yet
+  granted this app the gated Limited-Release API. `comps.py` already prefers sold
+  and auto-falls-back to active, so the day access is granted, `get_comps.py`
+  switches to real sold with no code change (it prints "✓ Using REAL SOLD prices"
+  vs the active-fallback notice). STATUS: owner activated Developer Support and
+  submitted the Application Growth Check requesting the "MIP" (Marketplace Insights
+  Program) product on 2026-07-13. Now pending eBay's approval (days–weeks). When
+  the owner says "check sold comps", re-probe `comps.sold_available()`; if True,
+  re-run `get_comps.py` and refine every `asking_price` off real sold medians.
 - Comp-query fallback added (`comps.broad_query_for`): when the exact-title
   search returns 0 (niche inserts/autos w/ odd card #s), it retries with a
   broadened query (year+brand+player+grade/AUTO/RELIC/serial). These are marked
