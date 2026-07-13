@@ -90,7 +90,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v2.
+  this makes the service worker serve stale CSS/JS. Current: v5. The live
+  version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
+  `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
+  — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -117,7 +120,8 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v4.
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v5
+  (version tag now shown in the top bar for at-a-glance build verification).
   (Helmet: confirm full-size vs mini.)
 - **eBay Production API is LIVE** (2026-07). Keys approved and in `.env`
   (`EBAY_ENV=production`, git-ignored). OAuth app token works against
