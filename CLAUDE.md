@@ -175,9 +175,14 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   switches to real sold with no code change (it prints "✓ Using REAL SOLD prices"
   vs the active-fallback notice). STATUS: owner activated Developer Support and
   submitted the Application Growth Check requesting the "MIP" (Marketplace Insights
-  Program) product on 2026-07-13. Now pending eBay's approval (days–weeks). When
-  the owner says "check sold comps", re-probe `comps.sold_available()`; if True,
-  re-run `get_comps.py` and refine every `asking_price` off real sold medians.
+  Program) product on 2026-07-13. eBay Dev Support replied (ticket 260713-000007)
+  asking 8 vetting questions (use case, storage, sharing, categoryIds, eBay
+  UserID, EPN status, contact); owner answered same day — first-party pricing of
+  own inventory, no data sharing, categories 212/213/214/215/216/183444 +
+  64482/1521. Now awaiting eBay's decision. When the owner says "check sold
+  comps", re-probe `comps.sold_available()`; if True, re-run `get_comps.py` and
+  refine every `asking_price` off real sold medians (and flip `price_basis` to
+  `sold` for repriced rows so the app's pill turns green).
 - Comp-query fallback added (`comps.broad_query_for`): when the exact-title
   search returns 0 (niche inserts/autos w/ odd card #s), it retries with a
   broadened query (year+brand+player+grade/AUTO/RELIC/serial). These are marked
