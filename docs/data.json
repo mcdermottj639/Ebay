@@ -1,5 +1,5 @@
 {
-  "generated": "Jul 12, 2026 \u00b7 23:41 UTC",
+  "generated": "Jul 13, 2026 \u00b7 10:36 UTC",
   "summary": {
     "total_cards": 34,
     "merch": 2,
@@ -7,10 +7,10 @@
     "rookies": 28,
     "autos": 9,
     "graded": 15,
-    "priced": 14,
+    "priced": 34,
     "total_cost": 0.0,
-    "total_value": 1039.0,
-    "profit": 1039.0,
+    "total_value": 2701.75,
+    "profit": 2701.75,
     "by_sport": {
       "Football": 28,
       "Basketball": 3,
@@ -44,11 +44,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "6.99",
       "notes": "Confirm exact parallel color (green cracked ice) for value",
       "line": "2025 Panini Prizm #14 Green Cracked Ice",
       "title": "2025 Panini Prizm Jayden Higgins #14 RC Green Cracked Ice Emergent Texans",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0002",
@@ -74,11 +74,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "2.99",
       "notes": "Optic Green parallel - confirm if serial numbered",
       "line": "2025 Panini Donruss Optic #216 Green",
       "title": "2025 Panini Donruss Optic Kenneth Grant #216 RC Green Rated Rookie Dolphins",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0003",
@@ -104,11 +104,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "4.99",
       "notes": "",
       "line": "2025 Panini Donruss Optic #228",
       "title": "2025 Panini Donruss Optic Cam Skattebo #228 RC Rated Rookie Giants",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0004",
@@ -134,11 +134,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "1.99",
       "notes": "",
       "line": "2025 Panini Donruss Optic #227",
       "title": "2025 Panini Donruss Optic Tyler Loop #227 RC Rated Rookie Ravens",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0005",
@@ -164,11 +164,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "2.49",
       "notes": "Club Level die-cut - confirm if colored/numbered",
       "line": "2024 Panini Select #279 Club Level Die-Cut",
       "title": "2024 Panini Select Luke McCaffrey #279 RC Club Level Die-Cut Commanders",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0006",
@@ -194,11 +194,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "2.49",
       "notes": "Concourse level - confirm Gold parallel is serial numbered",
       "line": "2024 Panini Select #20 Gold",
       "title": "2024 Panini Select Joe Andreessen #20 RC Gold Concourse Bills",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0007",
@@ -224,11 +224,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "1.99",
       "notes": "",
       "line": "2024 Panini Select #22",
       "title": "2024 Panini Select Ray Davis #22 RC Select Certified Bills",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0008",
@@ -254,11 +254,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "2.49",
       "notes": "Optic Green parallel - confirm if serial numbered",
       "line": "2025 Panini Donruss Optic #290 Green",
       "title": "2025 Panini Donruss Optic Jalon Walker #290 RC Green Rated Rookie Falcons",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0009",
@@ -284,11 +284,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "5.99",
       "notes": "",
       "line": "2025 Panini Prizm #346",
       "title": "2025 Panini Prizm Jack Bech #346 RC Raiders",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0010",
@@ -314,11 +314,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "2.49",
       "notes": "",
       "line": "2025 Panini Prizm #308",
       "title": "2025 Panini Prizm Brashard Smith #308 RC Chiefs",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0011",
@@ -344,11 +344,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "12.99",
       "notes": "On-card auto /99 - confirm if it also has a patch (RPA)",
       "line": "2023 Panini National Treasures #102",
       "title": "2023 Panini National Treasures BJ Ojulari #102 AUTO /99 RC Cardinals",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0012",
@@ -374,7 +374,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "7",
+      "asking_price": "44.99",
       "notes": "PSA app value; cert 67423370; basketball RC",
       "line": "2020 Panini Prizm Draft Picks #42 Pink Ice",
       "title": "2020 Panini Prizm Draft Picks James Wiseman #42 PSA 10 RC Pink Ice Warriors",
@@ -404,11 +404,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "59.99",
       "notes": "Jersey patch/relic /99; collegiate card",
       "line": "2024 Panini National Treasures Collegiate #S-WAJ",
       "title": "2024 Panini National Treasures Collegiate Will Anderson Jr #S-WAJ RELIC /99",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0014",
@@ -434,11 +434,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "49.99",
       "notes": "Certified Potential auto /15; confirm exact parallel color",
       "line": "2021 Panini Certified #CP-KM Teal",
       "title": "2021 Panini Certified Kyler Murray #CP-KM AUTO /15 Teal Certified Potential",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0015",
@@ -464,11 +464,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "44.99",
       "notes": "Numbered /299 - confirm parallel color",
       "line": "2024 Panini Luminance #102 Gold",
       "title": "2024 Panini Luminance Jayden Daniels #102 /299 RC Gold Commanders",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0016",
@@ -494,11 +494,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "39.99",
       "notes": "Thrillers Prizm insert /149",
       "line": "2023 Panini Rookies & Stars #TH-11 Prizm",
       "title": "2023 Panini Rookies & Stars Jahmyr Gibbs #TH-11 /149 RC Prizm Thrillers Lions",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0017",
@@ -524,11 +524,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "29.99",
       "notes": "Rated Rookie Pink parallel - confirm if numbered",
       "line": "2023 Panini Donruss Optic #244 Pink",
       "title": "2023 Panini Donruss Optic CJ Stroud #244 RC Pink Rated Rookie Texans",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0018",
@@ -554,11 +554,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "74.99",
       "notes": "Thrillers insert /75",
       "line": "2023 Panini Rookies & Stars #TH-13",
       "title": "2023 Panini Rookies & Stars Anthony Richardson #TH-13 /75 RC Thrillers Colts",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "CARD-0019",
@@ -584,7 +584,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "102",
+      "asking_price": "139.00",
       "notes": "PSA app value; Disco Prizm; refine with comps",
       "line": "2023 Panini Prizm #339 Disco",
       "title": "2023 Panini Prizm CJ Stroud #339 PSA 10 RC Disco Texans",
@@ -614,7 +614,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "28",
+      "asking_price": "54.99",
       "notes": "PSA app value; 1994 Pacific insert",
       "line": "2023 Panini Zenith #5 Blue",
       "title": "2023 Panini Zenith CJ Stroud #5 PSA 10 RC Blue 1994 Pacific Texans",
@@ -644,7 +644,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "131",
+      "asking_price": "189.00",
       "notes": "PSA app value; on-card auto",
       "line": "2019 Panini Prizm #339",
       "title": "2019 Panini Prizm Tony Pollard #339 PSA 10 AUTO RC Autograph Cowboys",
@@ -674,7 +674,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "158",
+      "asking_price": "349.00",
       "notes": "PSA app value; Turn of the Century auto",
       "line": "2023 Panini Donruss Elite #TC-BRO",
       "title": "2023 Panini Donruss Elite Bijan Robinson #TC-BRO PSA 10 AUTO RC",
@@ -704,7 +704,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "18",
+      "asking_price": "24.99",
       "notes": "PSA app value",
       "line": "2023 Panini Certified #CS11 Mirror Bronze",
       "title": "2023 Panini Certified CJ Stroud #CS11 PSA 9 RC Mirror Bronze Certified Stars",
@@ -734,7 +734,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "49",
+      "asking_price": "99.00",
       "notes": "PSA app value; on-card auto",
       "line": "2023 Panini Mosaic #RS-SL",
       "title": "2023 Panini Mosaic Sam LaPorta #RS-SL PSA 9 AUTO RC Rookie Scripts Auto Lions",
@@ -764,7 +764,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "17",
+      "asking_price": "29.99",
       "notes": "PSA app value",
       "line": "2005 Upper Deck Rookie Class #3",
       "title": "2005 Upper Deck Rookie Class Henrik Lundqvist #3 PSA 9 RC Rangers",
@@ -794,7 +794,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "143",
+      "asking_price": "179.00",
       "notes": "PSA app value; dual-player card",
       "line": "2023 Panini Instant #371",
       "title": "2023 Panini Instant LeBron James / Victor Wembanyama #371 PSA 10",
@@ -824,7 +824,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "10",
+      "asking_price": "29.99",
       "notes": "PSA app value",
       "line": "2017 Panini Select #164",
       "title": "2017 Panini Select Deshaun Watson #164 PSA 9 RC Texans",
@@ -854,7 +854,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "71",
+      "asking_price": "99.00",
       "notes": "PSA app value",
       "line": "2018 Panini Donruss #53",
       "title": "2018 Panini Donruss Kylian Mbappe #53 PSA 10 PSG",
@@ -884,7 +884,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "180",
+      "asking_price": "249.00",
       "notes": "PSA app value; Pink Ice",
       "line": "2021 Panini Prizm #282 Pink Ice",
       "title": "2021 Panini Prizm Cade Cunningham #282 PSA 10 RC Pink Ice Pistons",
@@ -914,7 +914,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "102",
+      "asking_price": "149.00",
       "notes": "PSA app value; Auto 10; confirm card# from slab",
       "line": "2023 Topps Chrome Update Purple Refractor",
       "title": "2023 Topps Chrome Update Matt McLain PSA 10 AUTO RC Purple Refractor Autograph",
@@ -944,7 +944,7 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "23",
+      "asking_price": "42.99",
       "notes": "PSA app value",
       "line": "2023 Panini Donruss #339",
       "title": "2023 Panini Donruss CJ Stroud #339 PSA 10 RC Texans",
@@ -974,11 +974,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "199.00",
       "notes": "PSA value not shown - add later; on-card auto",
       "line": "2022 Panini Certified #RS-BP Mirror Teal Etch",
       "title": "2022 Panini Certified Brock Purdy #RS-BP PSA 9 AUTO RC Mirror Teal Etch",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "MERCH-0001",
@@ -1004,11 +1004,11 @@
       "condition": "Excellent",
       "authentication": "Beckett",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "124.99",
       "notes": "Framed black shadow box; #23 white Rams jersey; Beckett BAS COA hologram",
       "line": "Los Angeles Rams \u00b7 Framed Jersey",
       "title": "Kyren Williams Autographed Framed Jersey Los Angeles Rams Beckett COA",
-      "status": "needs_price"
+      "status": "priced"
     },
     {
       "sku": "MERCH-0002",
@@ -1034,11 +1034,11 @@
       "condition": "Excellent",
       "authentication": "Beckett",
       "cost": "",
-      "asking_price": "",
+      "asking_price": "349.99",
       "notes": "Bucs Flash (orange chrome) alternate; RED VISOR; #6; Beckett Witness cert 1W622369",
       "line": "Tampa Bay Buccaneers \u00b7 Full Size Helmet",
       "title": "Baker Mayfield Autographed Full Size Helmet Tampa Bay Buccaneers Beckett COA",
-      "status": "needs_price"
+      "status": "priced"
     }
   ]
 }

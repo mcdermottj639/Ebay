@@ -12,8 +12,12 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 1. **Be the efficiency tracker.** Proactively fix minor title/logic/data issues
    the moment you notice them — don't wait to be asked. Note what you fixed.
 2. **Our visuals lead.** Make our own dashboard / Buy Radar / search look great;
-   don't just defer to Alt or other apps. Offer to show the owner a rendered
-   preview (send the HTML file) when you change how something looks.
+   don't just defer to Alt or other apps. Show the owner a rendered preview when
+   you change how something looks — **always via the Artifact tool (a hosted URL
+   they tap), NEVER as a sent .html file.** The owner's phone previews raw HTML
+   files without running JavaScript, so an attached preview shows only a blank
+   dark screen. `output/preview.html` carries a `<title>`, so it publishes as an
+   Artifact directly (republish the same path to refresh the same URL).
 3. **Always update this CLAUDE.md** as part of any change — treat it as part of
    the definition of done, same as committing code.
 
@@ -90,7 +94,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v2.
+  this makes the service worker serve stale CSS/JS. Current: v5. The live
+  version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
+  `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
+  — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -115,18 +122,36 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - Catalog: **34 items** — 32 cards + **2 merch** (`MERCH-0001` Kyren Williams
   framed signed Rams jersey, Beckett COA; `MERCH-0002` Baker Mayfield signed
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
-  15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered. Graded
-  cards carry PSA-app value estimates as a starting `asking_price` (refine with
-  real eBay comps). Merch unpriced pending comps. All validate clean + drafted.
-  Current app: v4. (Helmet: confirm full-size vs mini.)
+  15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
+  **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v5
+  (version tag now shown in the top bar for at-a-glance build verification).
+  (Helmet: confirm full-size vs mini.)
+- **eBay Production API is LIVE** (2026-07). Keys approved and in `.env`
+  (`EBAY_ENV=production`, git-ignored). OAuth app token works against
+  `api.ebay.com`. Pricing / Buy Radar / value search all pull real data.
+  If an HTTPS call fails TLS/proxy verify in this env, prefix commands with
+  `REQUESTS_CA_BUNDLE=/root/.ccr/ca-bundle.crt`.
+- Pricing method used: comps are **active/asking** medians (Browse API), which
+  run ABOVE actual sold — so `asking_price` set at/just-under median for clean
+  comps. **User token / Marketplace Insights (real SOLD comps) still TODO** —
+  medians are asking-price proxies, refine when sold data lands.
+- Comp-query fallback added (`comps.broad_query_for`): when the exact-title
+  search returns 0 (niche inserts/autos w/ odd card #s), it retries with a
+  broadened query (year+brand+player+grade/AUTO/RELIC/serial). These are marked
+  "(broad match)" in output and are NOISY (sweep in the player's other cards) —
+  treat as ballpark only. Broad-matched SKUs whose price is a judgment call, not
+  the raw median: CARD-0001/0011/0013/0014/0016/0023/0030/0032 — verify these.
+- Fixed a latent bug in the value search: `deals.search()` emitted result key
+  `title` but `search_deals.py` (console/CSV/HTML) read `item_title` — the
+  ad-hoc search 500'd on first real run. `search()` now emits `item_title` to
+  match the `Deal` dataclass. `search_deals.py "2024 donruss downtown"` works.
 - Dashboard published to a private Artifact URL (owner bookmarks it). Republish
   `output/dashboard_web.html` to the same conversation path to refresh it.
 - **Card Vault PWA (Phase 1) built** in `docs/` — card-hobby themed, tabbed,
-  installable. Previewed via Artifact. NOT yet live on GitHub Pages: needs the
-  owner to (1) merge `docs/` to `main` and (2) enable Pages (Settings → Pages →
-  main / `/docs`). Then live at https://mcdermottj639.github.io/Ebay/ .
-- eBay developer account: **registered, pending approval** (~1 business day).
-  No keys in `.env` yet → pricing/listing/Buy Radar/search are built but idle.
-- Next when keys land: plug into `.env`, pull comps, refine prices, run first
-  live searches, list best cards. Consider applying for Marketplace Insights
-  (sold comps) and adding a PSA cert/pop lookup.
+  installable. NOT yet live on GitHub Pages: needs the owner to (1) merge
+  `docs/` to `main` and (2) enable Pages (Settings → Pages → main / `/docs`).
+  Then live at https://mcdermottj639.github.io/Ebay/ .
+- Next: mint a user token (consent flow) to enable live listing + Marketplace
+  Insights (sold comps), then refine prices off SOLD data and list the best
+  cards. Consider a PSA cert/pop lookup.

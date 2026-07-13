@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v1";
+  var APP_VERSION = "v5";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards", collapsed: {} };
 
   // ---------- helpers ----------
@@ -22,6 +22,7 @@
         '<div class="logo">🃏</div>' +
         '<div class="brand"><b>Card Vault</b><small id="gen">your collection</small></div>' +
         '<div class="spacer"></div>' +
+        '<span class="ver" id="verpill" title="App version — check this to confirm the latest build loaded">' + APP_VERSION + '</span>' +
         '<span class="pill" id="livepill">Local</span>' +
         '<button class="iconbtn" id="themebtn" title="Light / dark">🌙</button>' +
       "</div>"
