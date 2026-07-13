@@ -30,6 +30,25 @@ from .titles import build_description, build_item_specifics, build_title
 CONDITION_GRADED = "2750"      # "Graded"
 CONDITION_UNGRADED = "4000"    # "Ungraded" / used
 
+# Card photos live in docs/img/<SKU>.<ext> and are served publicly by GitHub
+# Pages, so eBay can fetch them as listing images. Override the base with the
+# SITE_IMAGE_BASE env var if the site URL ever changes.
+_DEFAULT_IMAGE_BASE = "https://mcdermottj639.github.io/Ebay/img"
+_IMG_EXTS = ("jpg", "jpeg", "png", "webp")
+
+
+def image_urls_for(card: Card) -> list[str]:
+    """Public HTTPS image URL(s) for a card, if a photo exists in docs/img/.
+
+    eBay requires listing images to be publicly reachable; the live PWA already
+    hosts them, so we reuse those exact URLs. Returns [] when there's no photo.
+    """
+    base = (config.get("SITE_IMAGE_BASE") or _DEFAULT_IMAGE_BASE).rstrip("/")
+    for ext in _IMG_EXTS:
+        if (config.PROJECT_ROOT / "docs" / "img" / f"{card.sku}.{ext}").exists():
+            return [f"{base}/{card.sku}.{ext}"]
+    return []
+
 
 def build_inventory_item(card: Card, image_urls: list[str] | None = None) -> dict:
     """The JSON body for step 1 (createOrReplaceInventoryItem)."""
@@ -79,6 +98,10 @@ def publish_card(card: Card, image_urls: list[str] | None = None, dry_run: bool 
         raise ValueError("Card has no SKU — every card needs a unique SKU to list.")
     if not card.asking_price:
         raise ValueError(f"{card.sku}: no asking_price set. Add one before listing.")
+
+    # Auto-attach the card's live-site photo(s) when the caller didn't specify.
+    if image_urls is None:
+        image_urls = image_urls_for(card)
 
     inv_body = build_inventory_item(card, image_urls)
     offer_body = build_offer(card)

@@ -88,6 +88,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
     thumbnails are blocked by the Artifact CSP, so live Buy Radar images only
     show in the local file).
   - `lister.py` — 3-step publish (inventory item → offer → publish), dry-run default.
+    `image_urls_for(card)` auto-attaches the card's live-site photo
+    (`docs/img/<SKU>.*` → `https://…github.io/Ebay/img/<SKU>.jpg`, base overridable
+    via `SITE_IMAGE_BASE`) so eBay listings carry images. Cards without a photo
+    list with no image — eBay requires ≥1 photo, so photograph before going live.
 - Top-level `*.py` = thin owner-facing commands. `run.py` = menu.
 - `docs/` (also holds the web app) — **Card Vault PWA**, the "real app" (à la
   the owner's Sports-Hub). Static HTML/CSS/vanilla-JS, no build step, deploys
