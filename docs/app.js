@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v8";
+  var APP_VERSION = "v9";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards", collapsed: {} };
 
   // ---------- helpers ----------
@@ -31,6 +31,9 @@
     document.body.appendChild(el(
       '<div class="modal-wrap" id="modalWrap"><div class="modal" id="modal"></div></div>'
     ));
+    document.body.appendChild(el(
+      '<div class="modal-wrap" id="filterWrap"><div class="modal"></div></div>'
+    ));
     var nav = el('<nav class="nav"></nav>');
     [["collection", "🗃️", "Collection"],
      ["value", "💰", "Value"],
@@ -45,6 +48,9 @@
     document.getElementById("themebtn").onclick = toggleTheme;
     document.getElementById("modalWrap").onclick = function (e) {
       if (e.target.id === "modalWrap") closeModal();
+    };
+    document.getElementById("filterWrap").onclick = function (e) {
+      if (e.target.id === "filterWrap") closeFilter();
     };
     syncThemeIcon();
   }
@@ -194,8 +200,7 @@
     if (state.bucket === "Cards") {
       var sports = [];
       inBucket.forEach(function (c) { if (c.sport && sports.indexOf(c.sport) < 0) sports.push(c.sport); });
-      var filters = ["All"].concat(sports.sort()).concat(["Graded", "Autos", "Non-Autos"]);
-      wrap.appendChild(chipRow(filters));
+      wrap.appendChild(filterBar(sports));
 
       var shown = inBucket.filter(matchFilter);
       var groups = {};
@@ -224,22 +229,59 @@
     return wrap;
   }
 
-  function chipRow(filters) {
-    var chips = el('<div class="chips"></div>');
-    filters.forEach(function (f) {
-      var c = el('<button class="chip' + (state.filter === f ? " on" : "") + '">' + esc(f) + "</button>");
-      c.onclick = function () { state.filter = f; render(); };
-      chips.appendChild(c);
-    });
-    return chips;
+  // Filter bar: a single button showing the active filter, opens a popup sheet.
+  function filterBar(sports) {
+    var bar = el('<div class="filterbar"></div>');
+    var active = state.filter !== "All";
+    var btn = el('<button class="filterbtn' + (active ? " on" : "") + '">' +
+      '<span class="fi">☰</span><span class="flabel">Filter</span>' +
+      '<span class="fcur">' + esc(state.filter) + "</span></button>");
+    btn.onclick = function () { openFilter(sports); };
+    bar.appendChild(btn);
+    if (active) {
+      var clr = el('<button class="fclear">Clear</button>');
+      clr.onclick = function () { state.filter = "All"; render(); };
+      bar.appendChild(clr);
+    }
+    return bar;
   }
 
+  function openFilter(sports) {
+    var groups = [
+      ["Sport", sports.slice().sort()],
+      ["Type", ["Graded", "Raw", "Autos", "Non-Autos", "Rookie", "Numbered"]]
+    ];
+    var html = '<div class="fgroup"><div class="fchips">' +
+      '<button class="fchip' + (state.filter === "All" ? " on" : "") + '" data-f="All">All cards</button></div></div>';
+    html += groups.map(function (g) {
+      if (!g[1].length) return "";
+      var chips = g[1].map(function (f) {
+        return '<button class="fchip' + (state.filter === f ? " on" : "") + '" data-f="' + esc(f) + '">' + esc(f) + "</button>";
+      }).join("");
+      return '<div class="fgroup"><div class="flab">' + g[0] + '</div><div class="fchips">' + chips + "</div></div>";
+    }).join("");
+    var wrap = document.getElementById("filterWrap");
+    var sheet = wrap.querySelector(".modal");
+    sheet.innerHTML = '<button class="close" id="fClose">✕</button><h3>Filter cards</h3>' + html;
+    sheet.querySelectorAll(".fchip").forEach(function (b) {
+      b.onclick = function () { state.filter = b.getAttribute("data-f"); closeFilter(); render(); };
+    });
+    sheet.querySelector("#fClose").onclick = closeFilter;
+    wrap.classList.add("open");
+  }
+  function closeFilter() { document.getElementById("filterWrap").classList.remove("open"); }
+
   function matchFilter(c) {
-    if (state.filter === "All") return true;
-    if (state.filter === "Graded") return c.graded;
-    if (state.filter === "Autos") return c.auto;
-    if (state.filter === "Non-Autos") return !c.auto;
-    return c.sport === state.filter;
+    switch (state.filter) {
+      case "All": return true;
+      case "Graded": return c.graded;
+      case "Raw": return !c.graded;
+      case "Autos": return c.auto;
+      case "Non-Autos": return !c.auto;
+      case "Rookie": return c.rookie;
+      case "Numbered": return !!c.serial_run;
+      default: return c.sport === state.filter;
+    }
   }
 
   function viewValue() {
