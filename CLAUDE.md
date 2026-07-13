@@ -20,6 +20,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
    Artifact directly (republish the same path to refresh the same URL).
 3. **Always update this CLAUDE.md** as part of any change — treat it as part of
    the definition of done, same as committing code.
+4. **You (Claude) do the merges.** The owner does not merge PRs — when work is
+   ready, take it all the way to `main` yourself (open the PR and merge it),
+   then tell the owner it's live. Don't leave a PR waiting on the owner to click
+   Merge. (Standing permission to merge to `main`.)
 
 ## Also remember
 - Owner is **non-technical**: keep commands simple, explain plainly, avoid jargon.
