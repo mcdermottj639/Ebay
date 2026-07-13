@@ -34,7 +34,14 @@ def main() -> int:
 
     OUTPUT.mkdir(exist_ok=True)
     rows = []
-    print(f"Looking up comps for {len(cards)} card(s) on eBay ({config.env()})...\n")
+    if comps.sold_available():
+        print("✓ Using REAL SOLD prices (Marketplace Insights).")
+    else:
+        print("Using ACTIVE/asking prices (Browse API). These run ABOVE actual")
+        print("sold — real sold comps need Marketplace Insights access, which")
+        print("eBay hasn't granted this app yet. Apply: https://developer.ebay.com/")
+        print("api-docs/buy/marketplace-insights/overview.html")
+    print(f"\nLooking up comps for {len(cards)} card(s) on eBay ({config.env()})...\n")
     for card in cards:
         try:
             result = comps.get_comps(card)

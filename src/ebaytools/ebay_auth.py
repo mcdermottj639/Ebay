@@ -24,6 +24,9 @@ from . import config
 # eBay OAuth "scopes" describe what the token is allowed to do.
 SCOPE_PUBLIC = "https://api.ebay.com/oauth/api_scope"
 SCOPE_SELL_INVENTORY = "https://api.ebay.com/oauth/api_scope/sell.inventory"
+# Real SOLD comps. Gated "Limited Release" — you must apply and be granted
+# access by eBay before a token with this scope will mint (else invalid_scope).
+SCOPE_MARKETPLACE_INSIGHTS = "https://api.ebay.com/oauth/api_scope/buy.marketplace.insights"
 
 _cache: dict[str, tuple[str, float]] = {}  # key -> (token, expires_at_epoch)
 
