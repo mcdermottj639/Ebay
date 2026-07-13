@@ -95,14 +95,24 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Value / Drafts / About, card-detail modal, theme toggle, SW registration),
   `styles.css` (card-hobby theme: felt-green/charcoal + foil-gold, dark default
   + light via tokens), `manifest.webmanifest` + `sw.js` (installable, offline),
-  `icon.svg`, `.nojekyll`. Reads `docs/data.json`.
-- `build_web.py` — regenerates `docs/data.json` from the catalog AND a
-  self-contained `output/preview.html` (CSS+JS+data inlined) for previewing.
-  Run it after any catalog change so the app reflects it.
+  `icon.svg`, `.nojekyll`, `img/` (card photos). Reads `docs/data.json`.
+- Card rows + the detail modal show a **photo thumbnail** (big image in the
+  modal), falling back to a 🃏 placeholder when there's no photo. Photos are
+  auto-detected: drop `docs/img/<SKU>.{jpg,jpeg,png,webp}` (e.g. `CARD-0019.jpg`)
+  and `build_web._image_for` wires it in — no spreadsheet edit. Each priced item
+  also shows a **price-basis pill**: gold **ASKING** (active-listing comps, the
+  default today) or green **SOLD** (real sold comps). Basis comes from the
+  `price_basis` CSV column (`asking`/`sold`), surfaced by `build_web._price_basis`;
+  flip rows to `sold` when Marketplace Insights is granted and re-priced.
+- `build_web.py` — regenerates `docs/data.json` from the catalog (incl. per-card
+  `image` + `price_basis`) AND a self-contained `output/preview.html` (CSS+JS+data
+  inlined) for previewing. Run it after any catalog change so the app reflects it.
+  NOTE: the Artifact CSP blocks images, so photos only show on the live Pages
+  site, not in the Artifact preview (placeholders show there).
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v5. The live
+  this makes the service worker serve stale CSS/JS. Current: v6. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
@@ -132,7 +142,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v5
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v6
   (version tag now shown in the top bar for at-a-glance build verification).
   (Helmet: confirm full-size vs mini.)
 - **eBay Production API is LIVE** (2026-07). Keys approved and in `.env`
