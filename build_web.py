@@ -37,6 +37,30 @@ def _status(card):
     return "priced" if card.asking_price.strip() else "needs_price"
 
 
+# Image types we recognize in docs/img/, best-quality first.
+_IMG_EXTS = ("jpg", "jpeg", "png", "webp")
+
+
+def _image_for(sku):
+    """Relative path to a card's photo if one exists in docs/img/<sku>.<ext>.
+
+    Owner just drops a photo named after the SKU — no spreadsheet edit. Returns
+    "" when there's no photo, so the app falls back to a themed placeholder.
+    """
+    for ext in _IMG_EXTS:
+        if (DOCS / "img" / f"{sku}.{ext}").exists():
+            return f"./img/{sku}.{ext}"
+    return ""
+
+
+def _price_basis(card):
+    """'sold' (real sold comps), 'asking' (active listings), or '' if unpriced."""
+    basis = card.price_basis.strip().lower()
+    if basis in ("sold", "asking"):
+        return basis
+    return "asking" if card.asking_price.strip() else ""
+
+
 def _line(card):
     """The grey subtitle line shown under the player name in the app."""
     if card.is_merch():
@@ -81,6 +105,7 @@ def build_data(cards) -> dict:
                 "serial_run": c.serial_run, "condition": c.condition,
                 "authentication": c.grader if c.is_merch() else "",
                 "cost": c.cost, "asking_price": c.asking_price, "notes": c.notes,
+                "price_basis": _price_basis(c), "image": _image_for(c.sku),
                 "line": _line(c), "title": titles.build_title(c), "status": _status(c),
             }
             for c in cards

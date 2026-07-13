@@ -22,7 +22,7 @@ COLUMNS = [
     "sku", "item_type", "sport", "year", "brand", "set", "player", "card_number",
     "parallel", "insert", "team", "league", "rookie", "autograph",
     "serial_run", "graded", "grader", "grade", "condition",
-    "quantity", "cost", "asking_price", "notes",
+    "quantity", "cost", "asking_price", "notes", "price_basis",
 ]
 
 # The bare minimum a row needs, by kind.
@@ -58,6 +58,7 @@ class Card:
     cost: str = ""
     asking_price: str = ""
     notes: str = ""
+    price_basis: str = ""   # "sold" (real sold comps) or "asking" (active listings)
     extra: dict = field(default_factory=dict)
     row_number: int = 0  # line in the spreadsheet, for error messages
 

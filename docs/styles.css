@@ -162,7 +162,7 @@ main { max-width: 720px; margin: 0 auto;
 /* ---- card rows ---- */
 .list { display: flex; flex-direction: column; gap: 9px; }
 .crow {
-  display: grid; grid-template-columns: 4px 1fr auto; gap: 12px; align-items: center;
+  display: grid; grid-template-columns: 4px 44px 1fr auto; gap: 10px; align-items: center;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 11px 13px 11px 0; box-shadow: var(--shadow);
   cursor: pointer; text-align: left; width: 100%; font: inherit; color: inherit;
@@ -187,6 +187,21 @@ main { max-width: 720px; margin: 0 auto;
 .b-psa  { background: var(--gold); color: #241b06; }
 .b-num  { background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
 
+/* ---- photo thumbnails + placeholder ---- */
+.thumb { width: 44px; height: 44px; border-radius: 8px; overflow: hidden;
+  background: var(--surface-2); border: 1px solid var(--border); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb.ph { display: flex; align-items: center; justify-content: center; font-size: 20px;
+  background: linear-gradient(150deg, var(--surface-2), var(--surface)); }
+
+/* ---- sold vs asking pill ---- */
+.basis { display: inline-block; font-size: 9.5px; font-weight: 800; letter-spacing: .04em;
+  padding: 2px 7px; border-radius: 20px; vertical-align: middle; }
+.crow .r .basis { margin-top: 5px; }
+.modal h3 .basis { margin-left: 6px; }
+.b-sold { background: rgba(51,157,99,.18); color: var(--felt); border: 1px solid rgba(51,157,99,.42); }
+.b-ask  { background: rgba(216,179,80,.16); color: var(--gold); border: 1px solid rgba(216,179,80,.42); }
+
 /* ---- drafts ---- */
 .draft { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 13px; box-shadow: var(--shadow); }
 .draft .t { font-size: 13.5px; font-weight: 600; }
@@ -200,6 +215,10 @@ main { max-width: 720px; margin: 0 auto;
 .modal-wrap.open { display: flex; }
 .modal { background: var(--surface); width: 100%; max-width: 560px; border-radius: 18px 18px 0 0; border: 1px solid var(--border); border-bottom: none; padding: 18px 18px calc(28px + env(safe-area-inset-bottom)); max-height: 84vh; overflow-y: auto; -webkit-overflow-scrolling: touch; animation: up .22s ease; }
 @keyframes up { from { transform: translateY(20px); opacity: .6; } to { transform: none; opacity: 1; } }
+.mhero { margin: 2px 0 14px; }
+.mhero .thumb.big { width: 100%; height: 200px; border-radius: 12px; }
+.mhero .thumb.big img { object-fit: contain; }
+.mhero .thumb.big.ph { font-size: 56px; }
 .modal h3 { margin: 0 6px 2px 0; font-size: 18px; }
 .modal .close { float: right; border: none; background: var(--surface-2); color: var(--fg); width: 30px; height: 30px; border-radius: 8px; font-size: 15px; cursor: pointer; }
 .kv { display: grid; grid-template-columns: 108px 1fr; gap: 6px 12px; margin-top: 14px; font-size: 13.5px; }

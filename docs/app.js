@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v5";
+  var APP_VERSION = "v6";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards", collapsed: {} };
 
   // ---------- helpers ----------
@@ -81,17 +81,31 @@
     return out ? '<span class="badges">' + out + "</span>" : "";
   }
 
+  // photo thumbnail (or a themed placeholder when there's no photo yet)
+  function thumb(c, cls) {
+    if (c.image) return '<div class="thumb ' + (cls || "") + '"><img src="' + esc(c.image) + '" alt="" loading="lazy"></div>';
+    return '<div class="thumb ph ' + (cls || "") + '">🃏</div>';
+  }
+
+  // sold-vs-asking pill: green SOLD (real sold comps) vs gold ASKING (active listings)
+  function basisPill(c) {
+    if (c.status !== "priced" || !c.price_basis) return "";
+    var sold = c.price_basis === "sold";
+    return '<span class="basis ' + (sold ? "b-sold" : "b-ask") + '">' + (sold ? "SOLD" : "ASKING") + "</span>";
+  }
+
   // one card/merch row
   function crowEl(c) {
     var val = c.asking_price ? '<div class="val tnum">' + money0(c.asking_price) + "</div>"
                              : '<div class="val none">—</div>';
-    var st = c.status === "priced" ? "Priced" : "Needs price";
+    var status = c.status === "priced" ? basisPill(c) : '<div class="st">Needs price</div>';
     var row = el(
       '<button class="crow s-' + c.status + '">' +
         '<div class="stripe"></div>' +
+        thumb(c) +
         '<div class="m"><div class="p">' + esc(c.player) + badges(c) + "</div>" +
           '<div class="sub">' + esc(c.line || "") + "</div></div>" +
-        '<div class="r">' + val + '<div class="st">' + st + "</div></div>" +
+        '<div class="r">' + val + status + "</div>" +
       "</button>"
     );
     row.onclick = function () { openModal(c); };
@@ -227,14 +241,7 @@
     var top = state.data.cards.slice().filter(function (c) { return num(c.asking_price) > 0; })
                 .sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); }).slice(0, 6);
     var list = el('<div class="list"></div>');
-    top.forEach(function (c) {
-      var row = el('<button class="crow s-' + c.status + '"><div class="stripe"></div>' +
-        '<div class="m"><div class="p">' + esc(c.player) + badges(c) + "</div>" +
-        '<div class="sub">' + esc(c.line || "") + "</div></div>" +
-        '<div class="r"><div class="val tnum">' + money0(c.asking_price) + "</div></div></button>");
-      row.onclick = function () { openModal(c); };
-      list.appendChild(row);
-    });
+    top.forEach(function (c) { list.appendChild(crowEl(c)); });
     wrap.appendChild(top.length ? list : el('<p class="muted">No priced cards yet.</p>'));
     return wrap;
   }
@@ -280,13 +287,17 @@
       ["Team", c.team], ["Grade", c.graded ? (c.grader + " " + c.grade) : ""],
       ["Authentication", c.is_merch ? c.authentication : ""],
       ["Condition", c.graded ? "" : c.condition], ["Serial", c.serial_run ? "/" + c.serial_run : ""],
-      ["Sport", c.sport], ["SKU", c.sku], ["Est. value", c.asking_price ? money(c.asking_price) : ""],
+      ["Sport", c.sport], ["SKU", c.sku],
+      ["Est. value", c.asking_price ? money(c.asking_price) : ""],
+      ["Price basis", c.price_basis === "sold" ? "Real eBay sold comps"
+                    : c.price_basis === "asking" ? "Active listings (asking)" : ""],
       ["Notes", c.notes]
     ].filter(function (r) { return r[1]; });
     var kv = rows.map(function (r) { return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("");
     m.innerHTML =
       '<button class="close" id="mClose">✕</button>' +
-      "<h3>" + esc(c.player) + badges(c) + "</h3>" +
+      '<div class="mhero">' + thumb(c, "big") + "</div>" +
+      "<h3>" + esc(c.player) + badges(c) + basisPill(c) + "</h3>" +
       '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
       '<dl class="kv">' + kv + "</dl>" +
       '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>";
