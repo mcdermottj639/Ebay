@@ -12,8 +12,12 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 1. **Be the efficiency tracker.** Proactively fix minor title/logic/data issues
    the moment you notice them — don't wait to be asked. Note what you fixed.
 2. **Our visuals lead.** Make our own dashboard / Buy Radar / search look great;
-   don't just defer to Alt or other apps. Offer to show the owner a rendered
-   preview (send the HTML file) when you change how something looks.
+   don't just defer to Alt or other apps. Show the owner a rendered preview when
+   you change how something looks — **always via the Artifact tool (a hosted URL
+   they tap), NEVER as a sent .html file.** The owner's phone previews raw HTML
+   files without running JavaScript, so an attached preview shows only a blank
+   dark screen. `output/preview.html` carries a `<title>`, so it publishes as an
+   Artifact directly (republish the same path to refresh the same URL).
 3. **Always update this CLAUDE.md** as part of any change — treat it as part of
    the definition of done, same as committing code.
 

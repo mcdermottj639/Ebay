@@ -104,7 +104,10 @@ def main() -> int:
     css = (DOCS / "styles.css").read_text(encoding="utf-8") if (DOCS / "styles.css").exists() else ""
     appjs = (DOCS / "app.js").read_text(encoding="utf-8") if (DOCS / "app.js").exists() else ""
     if css and appjs:
+        # A <title> makes the file publishable as an Artifact (a hosted page the
+        # owner can actually open — raw HTML files preview without running JS).
         preview = (
+            "<title>Card Vault — Preview</title>\n"
             "<style>\n" + css + "\n</style>\n<div id=\"root\"></div>\n"
             "<script>window.__CARD_DATA__=" + json.dumps(data) + ";\n" + appjs + "\n</script>"
         )
