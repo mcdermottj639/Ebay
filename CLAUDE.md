@@ -68,7 +68,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
     item_type, team, "<authenticator> COA", year. `_collapse_words` drops
     repeated adjacent words.
   - `ebay_auth.py` — OAuth app token (public) + user token (selling).
-  - `comps.py` — Browse API pricing (active). Marketplace Insights (sold) TODO.
+  - `comps.py` — pricing. Prefers real SOLD comps via Marketplace Insights
+    (`_search_sold`), auto-detecting access with `_sold_available()` (probed once
+    per run) and transparently falling back to active Browse listings when the
+    scope isn't granted. Public `sold_available()` lets owner-facing scripts show
+    which source is live. `broad_query_for` widens niche queries that return 0.
   - `deals.py` — Buy Radar `scan()` + Alt-style `search()`; `value_rating()`
     maps discount→Great/Good/Fair/Over-market (3/2/1/0 bars).
   - App Collection tab: a **Cards / Merch** segmented toggle, then Cards group
@@ -138,8 +142,16 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   `REQUESTS_CA_BUNDLE=/root/.ccr/ca-bundle.crt`.
 - Pricing method used: comps are **active/asking** medians (Browse API), which
   run ABOVE actual sold — so `asking_price` set at/just-under median for clean
-  comps. **User token / Marketplace Insights (real SOLD comps) still TODO** —
-  medians are asking-price proxies, refine when sold data lands.
+  comps. Refine down once real SOLD comps are available.
+- **Marketplace Insights (real SOLD comps): code built + wired, ACCESS PENDING.**
+  Tested the production keyset (2026-07) — the `buy.marketplace.insights` scope
+  returns `invalid_scope`, i.e. eBay has NOT granted this app the gated Limited-
+  Release API. `comps.py` already prefers sold and auto-falls-back to active, so
+  the day access is granted, `get_comps.py` switches to real sold with no code
+  change (it prints "✓ Using REAL SOLD prices" vs the active-fallback notice).
+  ACTION FOR OWNER: apply for Marketplace Insights access in the eBay developer
+  portal (Application Growth Check / Buy APIs request) —
+  https://developer.ebay.com/api-docs/buy/marketplace-insights/overview.html .
 - Comp-query fallback added (`comps.broad_query_for`): when the exact-title
   search returns 0 (niche inserts/autos w/ odd card #s), it retries with a
   broadened query (year+brand+player+grade/AUTO/RELIC/serial). These are marked

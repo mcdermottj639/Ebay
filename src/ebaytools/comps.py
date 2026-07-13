@@ -11,6 +11,13 @@ Two eBay APIs are relevant:
 This module uses the Browse API by default (works with basic keys) and will use
 Marketplace Insights automatically if you've been granted access. Either way it
 returns a simple price summary you can eyeball.
+
+Marketplace Insights is a GATED "Limited Release" API — a standard production
+keyset does NOT include it. Until eBay grants your app the
+`buy.marketplace.insights` scope, `_sold_available()` returns False and we
+transparently fall back to active/asking listings. The moment access lands,
+sold comps switch on with no further code changes. To apply, see:
+https://developer.ebay.com/api-docs/buy/marketplace-insights/overview.html
 """
 
 from __future__ import annotations
@@ -101,14 +108,14 @@ def get_comps(card_or_query, limit: int = 50) -> CompResult:
             "toolkit works without keys — you can catalog and draft first.)"
         )
 
-    prices, titles, source = _search_active(query, limit)
+    prices, titles, source = _search_best(query, limit)
 
     # If the exact-title query found nothing and we have a Card, retry with a
     # broadened query so niche inserts/autos still get a ballpark comp.
     if not prices and not isinstance(card_or_query, str):
         broad = broad_query_for(card_or_query)
         if broad and broad != query:
-            prices, titles, source = _search_active(broad, limit)
+            prices, titles, source = _search_best(broad, limit)
             if prices:
                 query = f"{broad}  (broad match)"
 
@@ -125,6 +132,74 @@ def get_comps(card_or_query, limit: int = 50) -> CompResult:
         high=max(prices),
         sample_titles=titles[:5],
     )
+
+
+# Probed once per run: None = unknown, True/False = whether this app has been
+# granted Marketplace Insights (sold-comps) access. Avoids re-hitting the token
+# endpoint (and eating a failed request) for every one of the 34 cards.
+_MI_AVAILABLE: bool | None = None
+
+
+def _sold_available() -> bool:
+    """True only if eBay has granted this app the Marketplace Insights scope."""
+    global _MI_AVAILABLE
+    if _MI_AVAILABLE is None:
+        try:
+            ebay_auth.application_token(ebay_auth.SCOPE_MARKETPLACE_INSIGHTS)
+            _MI_AVAILABLE = True
+        except ebay_auth.EbayAuthError:
+            # invalid_scope / not granted — fall back to active listings.
+            _MI_AVAILABLE = False
+    return _MI_AVAILABLE
+
+
+def sold_available() -> bool:
+    """Public: has eBay granted this app real SOLD-comp (Marketplace Insights)
+    access? Owner-facing scripts use this to tell you which data they're on."""
+    return _sold_available()
+
+
+def _search_best(query: str, limit: int) -> tuple[list[float], list[str], str]:
+    """Prefer real SOLD comps; fall back to active/asking when sold is
+    unavailable (not granted) or returns nothing for this query."""
+    if _sold_available():
+        try:
+            prices, titles, source = _search_sold(query, limit)
+            if prices:
+                return prices, titles, source
+        except RuntimeError:
+            pass  # transient sold-search error — use active instead
+    return _search_active(query, limit)
+
+
+def _search_sold(query: str, limit: int) -> tuple[list[float], list[str], str]:
+    """Search SOLD/completed items via the Marketplace Insights API (gated)."""
+    token = ebay_auth.application_token(ebay_auth.SCOPE_MARKETPLACE_INSIGHTS)
+    resp = requests.get(
+        f"{config.api_base()}/buy/marketplace_insights/v1_beta/item_sales/search",
+        headers={
+            "Authorization": f"Bearer {token}",
+            "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
+        },
+        params={"q": query, "limit": min(limit, 200)},
+        timeout=30,
+    )
+    if resp.status_code >= 400:
+        raise RuntimeError(f"eBay Marketplace Insights error ({resp.status_code}): {resp.text[:300]}")
+
+    data = resp.json()
+    prices: list[float] = []
+    titles: list[str] = []
+    for item in data.get("itemSales", []):
+        titles.append(item.get("title", ""))
+        # Sold price lives in lastSoldPrice; fall back to price for safety.
+        price = (item.get("lastSoldPrice") or item.get("price") or {}).get("value")
+        if price is not None:
+            try:
+                prices.append(float(price))
+            except (TypeError, ValueError):
+                pass
+    return prices, titles, "sold"
 
 
 def _search_active(query: str, limit: int) -> tuple[list[float], list[str], str]:
