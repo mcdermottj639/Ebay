@@ -97,9 +97,16 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   + light via tokens), `manifest.webmanifest` + `sw.js` (installable, offline),
   `icon.svg`, `.nojekyll`, `img/` (card photos). Reads `docs/data.json`.
 - Card rows + the detail modal show a **photo thumbnail** (big image in the
-  modal), falling back to a 🃏 placeholder when there's no photo. Photos are
-  auto-detected: drop `docs/img/<SKU>.{jpg,jpeg,png,webp}` (e.g. `CARD-0019.jpg`)
-  and `build_web._image_for` wires it in — no spreadsheet edit. Each priced item
+  modal), falling back to a **smart placeholder** when there's no photo — a
+  team-colored gradient (`TEAM_COLORS` map in app.js, keyed by `c.team`) with the
+  player's initials, so the collection looks designed even with zero photos.
+  Photos are auto-detected: drop `docs/img/<SKU>.{jpg,jpeg,png,webp}` (e.g.
+  `CARD-0019.jpg`) and `build_web._image_for` wires it in — no spreadsheet edit.
+  NOTE: this env's network is locked to eBay's API only — PSA/other web hosts are
+  proxy-blocked, so we CANNOT auto-fetch card/cert images here. For graded cards
+  the owner opens psacard.com/cert/<n>, saves the slab image, and sends it; also
+  note reusing PSA's images on listings is a copyright gray area — real photos are
+  safest for anything actually listed. Each priced item
   also shows a **price-basis pill**: gold **ASKING** (active-listing comps, the
   default today) or green **SOLD** (real sold comps). Basis comes from the
   `price_basis` CSV column (`asking`/`sold`), surfaced by `build_web._price_basis`;
@@ -112,7 +119,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v6. The live
+  this makes the service worker serve stale CSS/JS. Current: v7. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
@@ -142,7 +149,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v6
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v7
   (version tag now shown in the top bar for at-a-glance build verification).
   (Helmet: confirm full-size vs mini.)
 - **eBay Production API is LIVE** (2026-07). Keys approved and in `.env`
