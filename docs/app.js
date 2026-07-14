@@ -4,8 +4,9 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v9";
-  var state = { tab: "collection", filter: "All", data: null, bucket: "Cards", collapsed: {} };
+  var APP_VERSION = "v10";
+  var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
+                collapsed: {}, q: "", sort: "tier" };
 
   // ---------- helpers ----------
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
@@ -35,6 +36,8 @@
       '<div class="modal-wrap" id="filterWrap"><div class="modal"></div></div>'
     ));
     var nav = el('<nav class="nav"></nav>');
+    // rail-only brand (desktop sidebar); hidden on phones via CSS
+    nav.appendChild(el('<div class="navbrand"><span class="logo">🃏</span>Card Vault</div>'));
     [["collection", "🗃️", "Collection"],
      ["value", "💰", "Value"],
      ["drafts", "🏷️", "Drafts"],
@@ -43,6 +46,8 @@
       b.onclick = function () { setTab(t[0]); };
       nav.appendChild(b);
     });
+    nav.appendChild(el('<div class="navfoot"><small>Collection value</small><b class="tnum">' +
+      money0(state.data.summary.total_value) + "</b></div>"));
     document.body.appendChild(nav);
 
     document.getElementById("themebtn").onclick = toggleTheme;
@@ -52,6 +57,14 @@
     document.getElementById("filterWrap").onclick = function (e) {
       if (e.target.id === "filterWrap") closeFilter();
     };
+    // PC keyboard: "/" jumps to search, Esc closes any sheet
+    document.addEventListener("keydown", function (e) {
+      var typing = /INPUT|SELECT|TEXTAREA/.test((document.activeElement || {}).tagName || "");
+      if (e.key === "/" && !typing) {
+        var s = document.querySelector(".search input");
+        if (s) { e.preventDefault(); s.focus(); }
+      } else if (e.key === "Escape") { closeModal(); closeFilter(); }
+    });
     syncThemeIcon();
   }
 
@@ -180,6 +193,26 @@
     return sec;
   }
 
+  // instant search: every word must hit somewhere in the card's text
+  function matchQuery(c) {
+    if (!state.q) return true;
+    var hay = [c.player, c.team, c.set, c.brand, c.year, c.sku, c.parallel,
+               c.insert, c.sport, c.item_type, c.grader, c.grade]
+              .join(" ").toLowerCase();
+    return state.q.toLowerCase().split(/\s+/).every(function (w) { return hay.indexOf(w) >= 0; });
+  }
+
+  var SORTS = [["tier", "Price tiers"], ["val-desc", "Value: high → low"],
+               ["val-asc", "Value: low → high"], ["az", "Player A–Z"], ["new", "Newest added"]];
+  function sortCards(arr, mode) {
+    var a = arr.slice();
+    if (mode === "val-asc") a.sort(function (x, y) { return num(x.asking_price) - num(y.asking_price); });
+    else if (mode === "az") a.sort(function (x, y) { return String(x.player).localeCompare(String(y.player)); });
+    else if (mode === "new") a.sort(function (x, y) { return String(y.sku).localeCompare(String(x.sku), undefined, { numeric: true }); });
+    else a.sort(function (x, y) { return num(y.asking_price) - num(x.asking_price); });
+    return a;
+  }
+
   function viewCollection() {
     var wrap = el('<div class="view"></div>');
     var cards = state.data.cards;
@@ -195,37 +228,69 @@
     });
     wrap.appendChild(seg);
 
-    var inBucket = cards.filter(function (c) { return state.bucket === "Merch" ? c.is_merch : !c.is_merch; });
+    // search + sort toolbar (typing re-renders only the results below,
+    // so the input keeps focus)
+    var bar = el('<div class="toolbar">' +
+      '<label class="search"><span class="si">🔎</span>' +
+      '<input type="search" placeholder="Search players, teams, sets…" value="' + esc(state.q) + '">' +
+      "<kbd>/</kbd></label>" +
+      '<select class="sortsel" title="Sort">' +
+        SORTS.map(function (s) {
+          return '<option value="' + s[0] + '"' + (state.sort === s[0] ? " selected" : "") + ">" + s[1] + "</option>";
+        }).join("") +
+      "</select></div>");
+    var results = el("<div></div>");
+    bar.querySelector("input").oninput = function () { state.q = this.value.trim(); renderResults(); };
+    bar.querySelector("select").onchange = function () { state.sort = this.value; renderResults(); };
+    wrap.appendChild(bar);
+    wrap.appendChild(results);
 
-    if (state.bucket === "Cards") {
-      var sports = [];
-      inBucket.forEach(function (c) { if (c.sport && sports.indexOf(c.sport) < 0) sports.push(c.sport); });
-      wrap.appendChild(filterBar(sports));
+    function renderResults() {
+      results.innerHTML = "";
+      var inBucket = cards.filter(function (c) { return state.bucket === "Merch" ? c.is_merch : !c.is_merch; });
 
-      var shown = inBucket.filter(matchFilter);
-      var groups = {};
-      shown.forEach(function (c) {
-        var t = tierOf(c);
-        (groups[t.label] = groups[t.label] || { items: [], t: t }).items.push(c);
-      });
-      var ordered = Object.keys(groups).map(function (k) { return groups[k]; })
-        .sort(function (a, b) { return a.t.order - b.t.order; });
-      ordered.forEach(function (g) {
-        g.items.sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); });
-        wrap.appendChild(sectionEl(g.t.label, g.items, g.t.collapse));
-      });
-      if (!shown.length) wrap.appendChild(el('<p class="muted">No cards match this filter.</p>'));
-    } else {
-      // Merch grouped by item type (Jersey, Helmet, Ball, …)
-      var byType = {};
-      inBucket.forEach(function (c) { var k = c.item_type || "Merch"; (byType[k] = byType[k] || []).push(c); });
-      var keys = Object.keys(byType).sort();
-      keys.forEach(function (k) {
-        byType[k].sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); });
-        wrap.appendChild(sectionEl(k, byType[k], false));
-      });
-      if (!keys.length) wrap.appendChild(el('<p class="muted">No merch yet — add jerseys, helmets, balls, photos…</p>'));
+      if (state.bucket === "Cards") {
+        var sports = [];
+        inBucket.forEach(function (c) { if (c.sport && sports.indexOf(c.sport) < 0) sports.push(c.sport); });
+        results.appendChild(filterBar(sports));
+
+        var shown = inBucket.filter(matchFilter).filter(matchQuery);
+        if (state.q || state.sort !== "tier") {
+          // searching or custom sort → one flat, sorted grid
+          results.appendChild(el('<div class="rescount">' + shown.length +
+            (shown.length === 1 ? " card" : " cards") + (state.q ? " matching “" + esc(state.q) + "”" : "") + "</div>"));
+          var list = el('<div class="list"></div>');
+          sortCards(shown, state.sort).forEach(function (c) { list.appendChild(crowEl(c)); });
+          results.appendChild(list);
+        } else {
+          var groups = {};
+          shown.forEach(function (c) {
+            var t = tierOf(c);
+            (groups[t.label] = groups[t.label] || { items: [], t: t }).items.push(c);
+          });
+          var ordered = Object.keys(groups).map(function (k) { return groups[k]; })
+            .sort(function (a, b) { return a.t.order - b.t.order; });
+          ordered.forEach(function (g) {
+            g.items.sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); });
+            results.appendChild(sectionEl(g.t.label, g.items, g.t.collapse));
+          });
+        }
+        if (!shown.length) results.appendChild(el('<p class="muted">No cards match.</p>'));
+      } else {
+        // Merch grouped by item type (Jersey, Helmet, Ball, …)
+        var inMerch = inBucket.filter(matchQuery);
+        var byType = {};
+        inMerch.forEach(function (c) { var k = c.item_type || "Merch"; (byType[k] = byType[k] || []).push(c); });
+        var keys = Object.keys(byType).sort();
+        keys.forEach(function (k) {
+          byType[k].sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); });
+          results.appendChild(sectionEl(k, byType[k], false));
+        });
+        if (!keys.length) results.appendChild(el('<p class="muted">' +
+          (state.q ? "No merch matches." : "No merch yet — add jerseys, helmets, balls, photos…") + "</p>"));
+      }
     }
+    renderResults();
     return wrap;
   }
 
@@ -284,6 +349,50 @@
     }
   }
 
+  // value-over-time line chart (SVG, no libraries). One point per daily
+  // snapshot in data.history; needs 2+ points to draw a line.
+  function trendChart(history) {
+    var panel = el('<div class="panel trend"><div class="ptitle">Value over time</div></div>');
+    var h = (history || []).filter(function (p) { return p && typeof p.v === "number"; });
+    if (h.length < 2) {
+      var v = h.length ? money0(h[0].v) : "";
+      panel.appendChild(el('<p class="muted" style="font-size:13px;margin:4px 0 2px">Tracking started ' +
+        (h.length ? "— today’s snapshot: <b>" + v + "</b>. " : ". ") +
+        "The chart draws itself as daily snapshots build up.</p>"));
+      return panel;
+    }
+    var W = 600, H = 200, PL = 46, PR = 10, PT = 14, PB = 22;
+    var vals = h.map(function (p) { return p.v; });
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+    if (hi === lo) { hi += 1; lo -= 1; }
+    var pad = (hi - lo) * 0.08; lo -= pad; hi += pad;
+    var X = function (i) { return PL + (W - PL - PR) * (h.length === 1 ? 0 : i / (h.length - 1)); };
+    var Y = function (v) { return PT + (H - PT - PB) * (1 - (v - lo) / (hi - lo)); };
+    var pts = h.map(function (p, i) { return X(i).toFixed(1) + "," + Y(p.v).toFixed(1); });
+    var area = "M" + pts.join(" L") + " L" + X(h.length - 1).toFixed(1) + "," + (H - PB) +
+               " L" + PL + "," + (H - PB) + " Z";
+    var dots = h.length <= 40 ? h.map(function (p, i) {
+      return '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(p.v).toFixed(1) +
+        '" r="3" fill="var(--gold)"><title>' + esc(p.d) + " — " + money0(p.v) + "</title></circle>";
+    }).join("") : "";
+    var mdy = function (d) { var p = String(d).split("-"); return p.length === 3 ? p[1] + "/" + p[2] : d; };
+    panel.appendChild(el(
+      '<svg viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none" role="img" aria-label="Collection value over time">' +
+        '<defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="var(--gold)" stop-opacity=".28"/>' +
+          '<stop offset="1" stop-color="var(--gold)" stop-opacity="0"/></linearGradient></defs>' +
+        '<line x1="' + PL + '" y1="' + (H - PB) + '" x2="' + (W - PR) + '" y2="' + (H - PB) + '" stroke="var(--border)"/>' +
+        '<text class="tx" x="4" y="' + (Y(hi - pad) + 4) + '">' + money0(hi - pad) + "</text>" +
+        '<text class="tx" x="4" y="' + (Y(lo + pad) + 4) + '">' + money0(lo + pad) + "</text>" +
+        '<text class="tx" x="' + PL + '" y="' + (H - 6) + '">' + esc(mdy(h[0].d)) + "</text>" +
+        '<text class="tx" x="' + (W - PR) + '" y="' + (H - 6) + '" text-anchor="end">' + esc(mdy(h[h.length - 1].d)) + "</text>" +
+        '<path d="' + area + '" fill="url(#tg)"/>' +
+        '<polyline points="' + pts.join(" ") + '" fill="none" stroke="var(--gold)" stroke-width="2.5" ' +
+          'stroke-linejoin="round" stroke-linecap="round"/>' + dots +
+      "</svg>"));
+    return panel;
+  }
+
   function viewValue() {
     var s = state.data.summary;
     var wrap = el('<div class="view"></div>');
@@ -301,7 +410,9 @@
     });
     wrap.appendChild(tiles);
 
-    wrap.appendChild(el('<div class="eyebrow">By sport</div>'));
+    // charts side-by-side on PC, stacked on phones
+    var vgrid = el('<div class="vgrid"></div>');
+    var sport = el('<div class="panel"><div class="ptitle">By sport</div></div>');
     var bars = el('<div class="bars"></div>');
     var entries = Object.keys(s.by_sport).map(function (k) { return [k, s.by_sport[k]]; })
                     .sort(function (a, b) { return b[1] - a[1]; });
@@ -311,7 +422,10 @@
         '<div class="track"><div class="fill" style="width:' + (e[1] / max * 100) + '%"></div></div>' +
         "<b>" + e[1] + "</b></div>"));
     });
-    wrap.appendChild(bars);
+    sport.appendChild(bars);
+    vgrid.appendChild(sport);
+    vgrid.appendChild(trendChart(state.data.history));
+    wrap.appendChild(vgrid);
 
     wrap.appendChild(el('<div class="eyebrow">Top cards by value</div>'));
     var top = state.data.cards.slice().filter(function (c) { return num(c.asking_price) > 0; })
@@ -326,7 +440,7 @@
     var wrap = el('<div class="view"></div>');
     wrap.appendChild(el('<div class="eyebrow">eBay listing titles</div>'));
     wrap.appendChild(el('<p class="muted" style="font-size:13px;margin:0 2px 12px">Optimized, ready to paste. Tap Copy to grab a title.</p>'));
-    var list = el('<div class="list"></div>');
+    var list = el('<div class="list drafts"></div>');
     state.data.cards.forEach(function (c) {
       var d = el('<div class="draft"><div class="t">' + esc(c.title) + "</div>" +
         '<div class="foot"><span class="len">' + c.title.length + "/80 chars</span>" +
@@ -372,11 +486,15 @@
     var kv = rows.map(function (r) { return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("");
     m.innerHTML =
       '<button class="close" id="mClose">✕</button>' +
-      '<div class="mhero">' + thumb(c, "big") + "</div>" +
-      "<h3>" + esc(c.player) + badges(c) + basisPill(c) + "</h3>" +
-      '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
-      '<dl class="kv">' + kv + "</dl>" +
-      '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>";
+      '<div class="mgrid">' +
+        '<div class="mhero">' + thumb(c, "big") + "</div>" +
+        '<div class="mbody">' +
+          "<h3>" + esc(c.player) + badges(c) + basisPill(c) + "</h3>" +
+          '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
+          '<dl class="kv">' + kv + "</dl>" +
+          '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>" +
+        "</div>" +
+      "</div>";
     m.querySelector("#mClose").onclick = closeModal;
     document.getElementById("modalWrap").classList.add("open");
   }

@@ -69,6 +69,26 @@ def _line(card):
     return " ".join([p for p in [card.year, card.brand, card.set, num, card.parallel] if p])
 
 
+def _history(total_value: float, n_cards: int) -> list:
+    """Daily value snapshots, carried forward from the previous data.json.
+
+    One entry per day ({d, v, n}); rebuilding on the same day updates that
+    day's entry. Feeds the app's value-trend chart. Because data.json is
+    committed, the GitHub Actions rebuild carries history forward too.
+    """
+    try:
+        history = json.loads((DOCS / "data.json").read_text(encoding="utf-8")).get("history", [])
+    except (OSError, ValueError):
+        history = []
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    entry = {"d": today, "v": round(total_value, 2), "n": n_cards}
+    if history and history[-1].get("d") == today:
+        history[-1] = entry
+    else:
+        history.append(entry)
+    return history[-730:]  # keep ~2 years of dailies
+
+
 def build_data(cards) -> dict:
     by_sport: dict[str, int] = {}
     for c in cards:
@@ -79,6 +99,7 @@ def build_data(cards) -> dict:
     total_value = _money(cards, "asking_price")
 
     return {
+        "history": _history(total_value, len(cards)),
         "generated": datetime.now(timezone.utc).strftime("%b %d, %Y · %H:%M UTC"),
         "summary": {
             "total_cards": len(cards),
