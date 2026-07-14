@@ -23,6 +23,7 @@ COLUMNS = [
     "parallel", "insert", "team", "league", "rookie", "autograph",
     "serial_run", "graded", "grader", "grade", "condition",
     "quantity", "cost", "asking_price", "notes", "price_basis",
+    "listed", "sold_price", "sold_date",
 ]
 
 # The bare minimum a row needs, by kind.
@@ -59,6 +60,9 @@ class Card:
     asking_price: str = ""
     notes: str = ""
     price_basis: str = ""   # "sold" (real sold comps) or "asking" (active listings)
+    listed: str = ""        # yes = live on eBay right now
+    sold_price: str = ""    # actual sale price — filling this marks the item SOLD
+    sold_date: str = ""     # when it sold (YYYY-MM-DD)
     extra: dict = field(default_factory=dict)
     row_number: int = 0  # line in the spreadsheet, for error messages
 
@@ -81,6 +85,14 @@ class Card:
 
     def is_graded(self) -> bool:
         return self.graded.strip().lower() in TRUTHY
+
+    def is_sold(self) -> bool:
+        """True once a sale price is recorded — the item has left inventory."""
+        return bool(self.sold_price.strip())
+
+    def is_listed(self) -> bool:
+        """True if live on eBay right now (and not yet sold)."""
+        return (not self.is_sold()) and self.listed.strip().lower() in TRUTHY
 
     def is_relic(self) -> bool:
         """True if this looks like a memorabilia/patch/jersey card.
@@ -148,7 +160,7 @@ def check(cards: list[Card]) -> list[str]:
             )
 
         # Numbers should be numbers
-        for money in ("cost", "asking_price"):
+        for money in ("cost", "asking_price", "sold_price"):
             val = getattr(card, money)
             if val and not _looks_like_number(val):
                 problems.append(f"{where}: {money} '{val}' doesn't look like a price.")

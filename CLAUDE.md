@@ -45,13 +45,30 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 | `make_drafts.py` | build eBay titles/specifics/descriptions | no |
 | `dashboard.py` | build `output/dashboard.html` | no |
 | `get_comps.py` | pull eBay prices per card | yes |
+| `reprice.py [--dry-run]` | safely refresh asking prices from comps + log history | yes |
 | `find_deals.py` | Buy Radar: watchlist deals under market | yes |
 | `search_deals.py "query" [price]` | Alt-style value search | yes |
 | `create_listings.py [live]` | preview / publish listings | yes (live) |
 
 ## Architecture
 - `data/inventory.csv` — the catalog (one row per card). Master source of truth.
-- `data/watchlist.csv` — cards the owner wants to BUY (feeds Buy Radar).
+  Sales-tracking columns (v11): `listed` (yes = live on eBay), `sold_price`
+  (filling it marks the item SOLD and moves it from inventory value to
+  revenue), `sold_date`. `Card.is_listed()`/`is_sold()` in catalog.py.
+- `data/watchlist.csv` — cards the owner wants to BUY (feeds Buy Radar AND the
+  app's Targets tab via `build_web._targets`).
+- `data/price_history.csv` — per-SKU price observations appended by
+  `reprice.py` (date, price, basis, median, count, applied). Committed, so the
+  app's Movers panel + week-over-week ▲▼ chips (`build_web._price_changes`,
+  card `prev_price`) survive rebuilds. Doesn't exist until the first reprice.
+- `reprice.py` — conservative auto-repricing: exact-match comps only, ≥3
+  listings, moves >35% are flagged not applied, <1% ignored; never touches
+  merch, sold items, or the hand-priced broad-match SKUs in `SKIP_SKUS`.
+  Exits 1 with a plain message when keys are missing (safe under cron).
+  **A weekly Routine (Mondays ~9am ET, fresh session) runs it, rebuilds, and
+  merges to main — it needs EBAY_APP_ID/EBAY_CERT_ID/EBAY_ENV as environment
+  variables in the Claude Code environment settings (there's no .env in fresh
+  cloud containers; config.py reads os.environ, so env vars just work).**
 - `src/ebaytools/`
   - `config.py` — loads `.env`, sandbox/production hosts, key checks.
   - `catalog.py` — load/validate/summarize inventory; `Card` model + flags
@@ -149,11 +166,20 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v10. The live
+  this makes the service worker serve stale CSS/JS. Current: v11. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v10.
+  Current: v11.
+- App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
+  **Business row** on Value (revenue/realized profit/listed/sold — only shows
+  once something is listed or sold), **Movers · this week** panel + ▲▼ chips
+  (need price_history), Value-by-sport and Value-by-grade $ panels
+  (`summary.sport_stats`/`grade_stats`), LISTED/SOLD badges + Status filter
+  facets, sold items excluded from estimated value (Priced tile denominator is
+  total−sold), **share deep-links** (`#sku=CARD-000N` opens that card's modal;
+  Share button copies/shares the URL) and a PSA cert lookup link in the modal
+  (cert parsed from notes by `build_web._cert_for`).
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -180,12 +206,16 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v10** —
-  the big PC upgrade (owner runs it on a 1920×1080 monitor): sidebar Command
-  Center layout, card-grid display case with foil hover, dashboard Value tab,
-  instant search + sort, daily value-history chart (first snapshot 2026-07-14,
-  $2,701.75). Verified headless at 1920×1080 + 390×844, light + dark.
-  (Helmet: confirm full-size vs mini.)
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v11** —
+  v10 was the PC Command Center upgrade (sidebar layout, card-grid display
+  case, dashboard Value tab, search + sort, daily value-history chart, first
+  snapshot 2026-07-14 $2,701.75); v11 added the business layer: sales tracking
+  (listed/sold columns), Targets tab, Movers + $-analytics panels, share
+  deep-links + PSA cert links, and `reprice.py` + a **weekly Monday Routine**
+  that auto-reprices from live comps and ships to main. ⚠️ The Routine is a
+  no-op until the owner adds EBAY_APP_ID / EBAY_CERT_ID / EBAY_ENV=production
+  as environment variables in the Claude Code environment settings — fresh
+  cloud containers have no .env. (Helmet: confirm full-size vs mini.)
 - **eBay Production API is LIVE** (2026-07). Keys approved and in `.env`
   (`EBAY_ENV=production`, git-ignored). OAuth app token works against
   `api.ebay.com`. Pricing / Buy Radar / value search all pull real data.
