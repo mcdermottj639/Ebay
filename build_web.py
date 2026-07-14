@@ -107,6 +107,19 @@ def _price_changes():
     return changes
 
 
+def _comps_snapshot():
+    """Per-SKU comp listings saved by reprice.py (data/comps_snapshot.json).
+    Returns ({sku: {source, broad, items}}, as_of_date)."""
+    path = DATA / "comps_snapshot.json"
+    if not path.exists():
+        return {}, ""
+    try:
+        snap = json.loads(path.read_text(encoding="utf-8"))
+        return snap.get("cards", {}), snap.get("as_of", "")
+    except ValueError:
+        return {}, ""
+
+
 def _targets():
     """The owner's buy watchlist (data/watchlist.csv) for the Targets tab."""
     path = DATA / "watchlist.csv"
@@ -186,6 +199,7 @@ def build_data(cards) -> dict:
     revenue = _money(sold, "sold_price")
     realized = revenue - _money(sold, "cost")
     changes = _price_changes()
+    comps_by_sku, comps_as_of = _comps_snapshot()
 
     return {
         "history": _history(total_value, len(unsold)),
@@ -228,6 +242,11 @@ def build_data(cards) -> dict:
                 "sold_price": _num(c.sold_price) if c.is_sold() else "",
                 "sold_date": c.sold_date, "cert": _cert_for(c),
                 "prev_price": changes.get(c.sku, {}).get("prev", ""),
+                "comps": ({"as_of": comps_as_of,
+                           "source": comps_by_sku[c.sku].get("source", "active"),
+                           "broad": comps_by_sku[c.sku].get("broad", False),
+                           "items": comps_by_sku[c.sku].get("items", [])[:5]}
+                          if c.sku in comps_by_sku else None),
             }
             for c in cards
         ],

@@ -349,6 +349,20 @@ main { max-width: 720px; margin: 0 auto;
   border-radius: 20px; padding: 3px 9px; }
 .tfair { font-size: 11px; font-weight: 700; color: var(--muted); }
 
+/* ---- recent eBay comps in the card view ---- */
+.compsbox { margin-top: 14px; background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 11px; }
+.compsbox .lab { font-size: 10px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--gold); font-weight: 800; margin-bottom: 4px; }
+.comp { display: flex; align-items: baseline; gap: 12px; justify-content: space-between;
+  padding: 7px 2px; border-bottom: 1px solid var(--border); text-decoration: none; }
+.comp:last-of-type { border-bottom: none; }
+.comp .ct { font-size: 12.5px; color: var(--fg); overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+a.comp:hover .ct { color: var(--gold); }
+.comp b { font-size: 13px; }
+.compsbox .cfoot { font-size: 10.5px; color: var(--muted); margin-top: 7px; }
+
 /* ---- modal action buttons (share / cert lookup) ---- */
 .mbtns { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
 .mbtn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--gold);

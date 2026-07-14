@@ -6,7 +6,7 @@
       "n": 34
     }
   ],
-  "generated": "Jul 14, 2026 \u00b7 23:18 UTC",
+  "generated": "Jul 14, 2026 \u00b7 23:32 UTC",
   "targets": [
     {
       "label": "CJ Stroud Optic Pink RC",
@@ -134,7 +134,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0002",
@@ -172,7 +173,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0003",
@@ -210,7 +212,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0004",
@@ -248,7 +251,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0005",
@@ -286,7 +290,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0006",
@@ -324,7 +329,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0007",
@@ -362,7 +368,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0008",
@@ -400,7 +407,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0009",
@@ -438,7 +446,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0010",
@@ -476,7 +485,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0011",
@@ -514,7 +524,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0012",
@@ -552,7 +563,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "67423370",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0013",
@@ -590,7 +602,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0014",
@@ -628,7 +641,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0015",
@@ -666,7 +680,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0016",
@@ -704,7 +719,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0017",
@@ -742,7 +758,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0018",
@@ -780,7 +797,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0019",
@@ -818,7 +836,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "89222827",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0020",
@@ -856,7 +875,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0021",
@@ -894,7 +914,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0022",
@@ -932,7 +953,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "83143720",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0023",
@@ -970,7 +992,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0024",
@@ -1008,7 +1031,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0025",
@@ -1046,7 +1070,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0026",
@@ -1084,7 +1109,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "90720092",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0027",
@@ -1122,7 +1148,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0028",
@@ -1160,7 +1187,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "67269227",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0029",
@@ -1198,7 +1226,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0030",
@@ -1236,7 +1265,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "85776346",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0031",
@@ -1274,7 +1304,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "CARD-0032",
@@ -1312,7 +1343,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "75510176",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "MERCH-0001",
@@ -1350,7 +1382,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     },
     {
       "sku": "MERCH-0002",
@@ -1388,7 +1421,8 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "1W622369",
-      "prev_price": ""
+      "prev_price": "",
+      "comps": null
     }
   ]
 }

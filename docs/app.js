@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v11";
+  var APP_VERSION = "v12";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier" };
 
@@ -565,6 +565,28 @@
   }
 
   // ---------- modal ----------
+  // "Recent eBay comps" — the top matching listings saved by the weekly
+  // comp run. Sold comps once eBay grants Marketplace Insights; asking today.
+  function compsBox(c) {
+    if (!c.comps || !c.comps.items || !c.comps.items.length) return "";
+    var sold = c.comps.source === "sold";
+    var rows = c.comps.items.map(function (it) {
+      var inner = '<span class="ct">' + esc(it.t) + '</span><b class="tnum">' + money0(it.p) + "</b>";
+      return it.u ? '<a class="comp" href="' + esc(it.u) + '" target="_blank" rel="noopener">' + inner + "</a>"
+                  : '<span class="comp">' + inner + "</span>";
+    }).join("");
+    return '<div class="compsbox"><div class="lab">' +
+      (sold ? "Recent eBay sales" : "On eBay now (asking)") +
+      (c.comps.broad ? " · broad match" : "") + "</div>" + rows +
+      '<div class="cfoot">as of ' + esc(c.comps.as_of || "") +
+      (sold ? " · real sold prices" : " · sold prices unlock with eBay approval") + "</div></div>";
+  }
+
+  function ebaySearchUrl(c, soldOnly) {
+    return "https://www.ebay.com/sch/i.html?_nkw=" + encodeURIComponent(c.title) +
+      (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "");
+  }
+
   function openModal(c) {
     var m = document.getElementById("modal");
     var rows = [
@@ -590,7 +612,10 @@
           '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
           '<dl class="kv">' + kv + "</dl>" +
           '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>" +
+          compsBox(c) +
           '<div class="mbtns">' +
+            '<a class="mbtn" href="' + ebaySearchUrl(c, false) + '" target="_blank" rel="noopener">🛒 Live listings</a>' +
+            '<a class="mbtn" href="' + ebaySearchUrl(c, true) + '" target="_blank" rel="noopener">✅ Sold on eBay</a>' +
             '<button class="mbtn" id="mShare">🔗 Share card</button>' +
             (c.cert && /psa/i.test(c.grader || "") ?
               '<a class="mbtn" href="https://www.psacard.com/cert/' + esc(c.cert) +

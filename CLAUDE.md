@@ -166,11 +166,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v11. The live
+  this makes the service worker serve stale CSS/JS. Current: v12. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v11.
+  Current: v12.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -180,6 +180,16 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   total−sold), **share deep-links** (`#sku=CARD-000N` opens that card's modal;
   Share button copies/shares the URL) and a PSA cert lookup link in the modal
   (cert parsed from notes by `build_web._cert_for`).
+- App v12: **comps in the card view.** `comps.py` search functions also return
+  `sample_items` [{t,p,u}] with listing URLs; `reprice.py` saves the top 5 per
+  card to `data/comps_snapshot.json` (committed; it now queries EVERYTHING
+  unsold — merch + SKIP_SKUS included — but still only auto-applies where
+  safe; those are "held"). `build_web._comps_snapshot` attaches them as card
+  `comps` → the modal shows an "On eBay now (asking)" / "Recent eBay sales"
+  box (auto-relabels when source=sold) with an as-of date. Modal also has
+  always-available **Live listings / Sold on eBay** buttons (public eBay
+  search URLs built from the card title — no API needed). The snapshot file
+  doesn't exist until the first keyed reprice run; the box just hides.
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -206,7 +216,8 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v11** —
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v12**
+  (v12 = eBay comps inside the card view + Live/Sold eBay search buttons) —
   v10 was the PC Command Center upgrade (sidebar layout, card-grid display
   case, dashboard Value tab, search + sort, daily value-history chart, first
   snapshot 2026-07-14 $2,701.75); v11 added the business layer: sales tracking
