@@ -118,18 +118,42 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   default today) or green **SOLD** (real sold comps). Basis comes from the
   `price_basis` CSV column (`asking`/`sold`), surfaced by `build_web._price_basis`;
   flip rows to `sold` when Marketplace Insights is granted and re-priced.
+- **PC / widescreen layout (v10)**: at ≥1000px the same DOM reshapes into a
+  "Command Center" — bottom tab bar becomes a left sidebar rail (`.navbrand`
+  brand + `.navfoot` live collection-value card, hidden on phones), the appbar
+  slims down (brand hidden), `.list` rows become a display-case **card grid**
+  (`.crow` flex-column tiles, big photo top, foil-shine sweep + gold-glow hover
+  via `.crow::after`), the Value tab lays out as a dashboard (hero banner, 6-up
+  stat row, side-by-side `.vgrid` panels), and the detail sheet becomes a
+  centered two-pane dialog (`.mgrid`: photo | specs). All in one
+  `@media (min-width:1000px)` block in styles.css — the phone layout above it
+  is untouched. Keep `.crow { align-items: stretch }` in that block (base rule
+  centers, which double-clips overflowing tile text).
+- **Search + sort (v10)**: Collection toolbar with instant search (`state.q`,
+  every word must match player/team/set/brand/year/SKU/etc — `matchQuery`) and
+  a sort select (`state.sort`: tier default, value ↑↓, A–Z, newest). Typing
+  re-renders only the results container so the input keeps focus; pressing `/`
+  focuses search (PC), Esc closes sheets. Search + non-tier sorts show a flat
+  grid with a result count; the tier sections return when cleared.
+- **Value-over-time (v10)**: `build_web.py` carries a `history` array forward
+  in `docs/data.json` (one `{d,v,n}` snapshot per day, updated in place on
+  same-day rebuilds, capped ~2yr). Since data.json is committed, the Pages
+  Action carries it too. The Value tab renders it as a dependency-free SVG
+  line chart (`trendChart`); with <2 points it shows a "tracking started" note.
 - `build_web.py` — regenerates `docs/data.json` from the catalog (incl. per-card
-  `image` + `price_basis`) AND a self-contained `output/preview.html` (CSS+JS+data
+  `image` + `price_basis`, plus the `history` snapshots above) AND a self-contained
+  `output/preview.html` (CSS+JS+data
   inlined) for previewing. Run it after any catalog change so the app reflects it.
   NOTE: the Artifact CSP blocks images, so photos only show on the live Pages
   site, not in the Artifact preview (placeholders show there).
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v9. The live
+  this makes the service worker serve stale CSS/JS. Current: v10. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
+  Current: v10.
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -156,8 +180,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: v9
-  (version tag now shown in the top bar for at-a-glance build verification).
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v10** —
+  the big PC upgrade (owner runs it on a 1920×1080 monitor): sidebar Command
+  Center layout, card-grid display case with foil hover, dashboard Value tab,
+  instant search + sort, daily value-history chart (first snapshot 2026-07-14,
+  $2,701.75). Verified headless at 1920×1080 + 390×844, light + dark.
   (Helmet: confirm full-size vs mini.)
 - **eBay Production API is LIVE** (2026-07). Keys approved and in `.env`
   (`EBAY_ENV=production`, git-ignored). OAuth app token works against

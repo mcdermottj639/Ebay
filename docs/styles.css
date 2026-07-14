@@ -265,10 +265,168 @@ main { max-width: 720px; margin: 0 auto;
 }
 .nav button .i { font-size: 19px; line-height: 1; }
 .nav button.on { color: var(--gold); }
+/* rail-only extras (brand + value footer) — desktop shows these */
+.navbrand, .navfoot { display: none; }
 
 .muted { color: var(--muted); }
 .about p { line-height: 1.55; font-size: 14px; }
 .about .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow); margin-top: 10px; }
 .dot { color: var(--felt); }
 
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+/* ---- search + sort toolbar ---- */
+.toolbar { display: flex; gap: 8px; margin-bottom: 10px; }
+.search {
+  flex: 1; display: flex; align-items: center; gap: 8px; min-width: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 0 12px; box-shadow: var(--shadow);
+}
+.search:focus-within { border-color: var(--gold); }
+.search .si { color: var(--muted); font-size: 14px; }
+.search input {
+  flex: 1; min-width: 0; border: none; background: none; color: var(--fg);
+  font: inherit; font-size: 14px; padding: 10px 0; outline: none;
+}
+.search input::placeholder { color: var(--muted); }
+.search kbd {
+  display: none; font: inherit; font-size: 11px; font-weight: 700; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 6px; padding: 1px 7px;
+  background: var(--surface-2);
+}
+.sortsel {
+  border: 1px solid var(--border); background: var(--surface); color: var(--fg);
+  border-radius: 12px; padding: 0 10px; font: inherit; font-size: 13px;
+  font-weight: 600; box-shadow: var(--shadow); max-width: 46vw; cursor: pointer;
+}
+.rescount { font-size: 12px; color: var(--muted); margin: 2px 2px 10px; }
+
+/* ---- dashboard panels + value trend ---- */
+.vgrid { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+.panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow);
+}
+.ptitle {
+  text-transform: uppercase; letter-spacing: .09em; font-size: 11px;
+  color: var(--gold); font-weight: 800; margin: 0 0 12px;
+}
+.trend svg { width: 100%; height: 170px; display: block; }
+.trend .tx { font-size: 10px; fill: var(--muted); font-family: inherit; }
+
+/* ---- card detail: hero | specs (stacked on phones, two-pane on PC) ---- */
+.mgrid { display: block; }
+
+/* ============================================================
+   PC / widescreen — the Command Center layout (≥1000px).
+   Mobile above stays exactly as-is; everything here reshapes the
+   same DOM for a big screen: left rail nav, card-grid collection,
+   panel dashboard, centered two-pane detail, foil-shine hovers.
+   ============================================================ */
+@media (min-width: 1000px) {
+  body { padding-left: 236px; padding-bottom: 40px; }
+
+  /* bottom tab bar becomes a left rail */
+  .nav {
+    left: 0; right: auto; top: 0; bottom: 0; width: 236px;
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 18px 14px calc(18px + env(safe-area-inset-bottom));
+    border-top: none; border-right: 1px solid var(--border);
+  }
+  .nav button {
+    flex-direction: row; justify-content: flex-start; gap: 12px;
+    font-size: 14px; padding: 11px 14px; border-radius: 12px;
+    border: 1px solid transparent;
+  }
+  .nav button .i { font-size: 18px; }
+  .nav button:hover { background: var(--surface); color: var(--fg); }
+  .nav button.on {
+    background: color-mix(in srgb, var(--gold) 13%, transparent);
+    border-color: color-mix(in srgb, var(--gold) 35%, transparent);
+    color: var(--gold);
+  }
+  .navbrand {
+    display: flex !important; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 16px; letter-spacing: .2px;
+    padding: 2px 4px 16px; color: var(--fg);
+  }
+  .navfoot {
+    display: block !important; margin-top: auto; padding: 14px 15px;
+    border: 1px solid var(--border); border-radius: 14px;
+    background: linear-gradient(150deg, var(--surface-2), var(--surface));
+    box-shadow: var(--shadow);
+  }
+  .navfoot small { display: block; font-size: 10px; text-transform: uppercase;
+    letter-spacing: .07em; color: var(--muted); font-weight: 800; }
+  .navfoot b { font-size: 22px; color: var(--gold); font-variant-numeric: tabular-nums; }
+
+  /* slim utility bar (brand lives in the rail now) */
+  .appbar { padding: 12px 34px; }
+  .appbar .logo, .appbar .brand { display: none; }
+
+  main { max-width: 1480px; margin: 0 auto; padding: 26px 34px 40px; }
+
+  .search kbd { display: inline-block; }
+  .sortsel { max-width: 220px; }
+  .seg { max-width: 360px; }
+
+  /* rows become a display case: card-shaped tiles with a foil-shine hover */
+  .list {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    gap: 16px; align-items: stretch;
+  }
+  .crow {
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0;
+    border-radius: 16px;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .crow .stripe { position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    align-self: auto; border-radius: 0; z-index: 2; }
+  .crow .thumb { width: 100%; height: 212px; border-radius: 0; border: none;
+    border-bottom: 1px solid var(--border); }
+  .crow .thumb.ph .ini { font-size: 46px; }
+  .crow .m { padding: 12px 14px 2px; }
+  .crow .p { font-size: 15px; }
+  .crow .r { display: flex; align-items: center; justify-content: space-between;
+    text-align: left; padding: 8px 14px 13px; }
+  .crow .r .basis { margin-top: 0; }
+  .crow .val { font-size: 18px; }
+  .crow:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--gold) 55%, var(--border));
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .35), 0 0 22px rgba(216, 179, 80, .14);
+  }
+  .crow::after {          /* light catching a holo as the cursor lands */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(115deg, transparent 32%,
+      rgba(255, 255, 255, .16) 46%, rgba(255, 255, 255, .03) 55%, transparent 70%);
+    transform: translateX(-130%);
+  }
+  .crow:hover::after { transform: translateX(130%); transition: transform .6s ease; }
+
+  /* drafts keep a readable width in the grid */
+  .list.drafts { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+  .list.drafts .draft { display: flex; flex-direction: column; }
+  .list.drafts .draft .foot { margin-top: auto; padding-top: 10px; }
+
+  /* Value tab becomes a real dashboard */
+  .tiles { grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .tile.hero { display: flex; align-items: baseline; justify-content: space-between;
+    padding: 22px 26px; }
+  .tile.hero .k { font-size: 13px; }
+  .tile.hero .v { font-size: 52px; margin: 0; }
+  .vgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .panel { padding: 18px 20px; }
+  .trend svg { height: 220px; }
+  .barrow { grid-template-columns: 110px 1fr 34px; }
+
+  /* detail sheet becomes a centered two-pane dialog */
+  .modal-wrap { align-items: center; padding: 24px; }
+  .modal { max-width: 880px; border-radius: 20px; border-bottom: 1px solid var(--border);
+    padding: 24px 26px 26px; max-height: 88vh; }
+  .mgrid { display: grid; grid-template-columns: 320px 1fr; gap: 24px; align-items: start; }
+  .mgrid .mhero { margin: 0; }
+  .mgrid .mhero .thumb.big { height: 400px; }
+  .about { max-width: 760px; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
