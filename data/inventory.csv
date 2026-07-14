@@ -1,35 +1,35 @@
-sku,item_type,sport,year,brand,set,player,card_number,parallel,insert,team,league,rookie,autograph,serial_run,graded,grader,grade,condition,quantity,cost,asking_price,notes,price_basis
-CARD-0001,Card,Football,2025,Panini,Prizm,Jayden Higgins,14,Green Cracked Ice,Emergent,Texans,NFL,yes,no,,no,,,,1,,6.99,Confirm exact parallel color (green cracked ice) for value,asking
-CARD-0002,Card,Football,2025,Panini,Donruss Optic,Kenneth Grant,216,Green,Rated Rookie,Dolphins,NFL,yes,no,,no,,,,1,,2.99,Optic Green parallel - confirm if serial numbered,asking
-CARD-0003,Card,Football,2025,Panini,Donruss Optic,Cam Skattebo,228,,Rated Rookie,Giants,NFL,yes,no,,no,,,,1,,4.99,,asking
-CARD-0004,Card,Football,2025,Panini,Donruss Optic,Tyler Loop,227,,Rated Rookie,Ravens,NFL,yes,no,,no,,,,1,,1.99,,asking
-CARD-0005,Card,Football,2024,Panini,Select,Luke McCaffrey,279,Club Level Die-Cut,,Commanders,NFL,yes,no,,no,,,,1,,2.49,Club Level die-cut - confirm if colored/numbered,asking
-CARD-0006,Card,Football,2024,Panini,Select,Joe Andreessen,20,Gold,Concourse,Bills,NFL,yes,no,,no,,,,1,,2.49,Concourse level - confirm Gold parallel is serial numbered,asking
-CARD-0007,Card,Football,2024,Panini,Select,Ray Davis,22,,Select Certified,Bills,NFL,yes,no,,no,,,,1,,1.99,,asking
-CARD-0008,Card,Football,2025,Panini,Donruss Optic,Jalon Walker,290,Green,Rated Rookie,Falcons,NFL,yes,no,,no,,,,1,,2.49,Optic Green parallel - confirm if serial numbered,asking
-CARD-0009,Card,Football,2025,Panini,Prizm,Jack Bech,346,,,Raiders,NFL,yes,no,,no,,,,1,,5.99,,asking
-CARD-0010,Card,Football,2025,Panini,Prizm,Brashard Smith,308,,,Chiefs,NFL,yes,no,,no,,,,1,,2.49,,asking
-CARD-0011,Card,Football,2023,Panini,National Treasures,BJ Ojulari,102,,,Cardinals,NFL,yes,yes,99,no,,,,1,,12.99,On-card auto /99 - confirm if it also has a patch (RPA),asking
-CARD-0012,Card,Basketball,2020,Panini,Prizm Draft Picks,James Wiseman,42,Pink Ice,,Warriors,NBA,yes,no,,yes,PSA,10,,1,,44.99,PSA app value; cert 67423370; basketball RC,asking
-CARD-0013,Card,Football,2024,Panini,National Treasures Collegiate,Will Anderson Jr,S-WAJ,,Rookie Materials,Alabama,NCAA,no,no,99,no,,,,1,,59.99,Jersey patch/relic /99; collegiate card,asking
-CARD-0014,Card,Football,2021,Panini,Certified,Kyler Murray,CP-KM,Teal,Certified Potential,Cardinals,NFL,no,yes,15,no,,,,1,,49.99,Certified Potential auto /15; confirm exact parallel color,asking
-CARD-0015,Card,Football,2024,Panini,Luminance,Jayden Daniels,102,Gold,,Commanders,NFL,yes,no,299,no,,,,1,,44.99,Numbered /299 - confirm parallel color,asking
-CARD-0016,Card,Football,2023,Panini,Rookies & Stars,Jahmyr Gibbs,TH-11,Prizm,Thrillers,Lions,NFL,yes,no,149,no,,,,1,,39.99,Thrillers Prizm insert /149,asking
-CARD-0017,Card,Football,2023,Panini,Donruss Optic,CJ Stroud,244,Pink,Rated Rookie,Texans,NFL,yes,no,,no,,,,1,,29.99,Rated Rookie Pink parallel - confirm if numbered,asking
-CARD-0018,Card,Football,2023,Panini,Rookies & Stars,Anthony Richardson,TH-13,,Thrillers,Colts,NFL,yes,no,75,no,,,,1,,74.99,Thrillers insert /75,asking
-CARD-0019,Card,Football,2023,Panini,Prizm,CJ Stroud,339,Disco,,Texans,NFL,yes,no,,yes,PSA,10,,1,,139.00,PSA app value; Disco Prizm; refine with comps; PSA cert 89222827,asking
-CARD-0020,Card,Football,2023,Panini,Zenith,CJ Stroud,5,Blue,1994 Pacific,Texans,NFL,yes,no,,yes,PSA,10,,1,,54.99,PSA app value; 1994 Pacific insert,asking
-CARD-0021,Card,Football,2019,Panini,Prizm,Tony Pollard,339,,Autograph,Cowboys,NFL,yes,yes,,yes,PSA,10,,1,,189.00,PSA app value; on-card auto,asking
-CARD-0022,Card,Football,2023,Panini,Donruss Elite,Bijan Robinson,TC-BRO,,Turn of the Century Auto,Falcons,NFL,yes,yes,249,yes,PSA,10,,1,,349.00,PSA app value; Turn of the Century auto; PSA cert 83143720,asking
-CARD-0023,Card,Football,2023,Panini,Certified,CJ Stroud,CS11,Mirror Bronze,Certified Stars,Texans,NFL,yes,no,,yes,PSA,9,,1,,24.99,PSA app value,asking
-CARD-0024,Card,Football,2023,Panini,Mosaic,Sam LaPorta,RS-SL,,Rookie Scripts Auto,Lions,NFL,yes,yes,,yes,PSA,9,,1,,99.00,PSA app value; on-card auto,asking
-CARD-0025,Card,Hockey,2005,Upper Deck,Rookie Class,Henrik Lundqvist,3,,,Rangers,NHL,yes,no,,yes,PSA,9,,1,,29.99,PSA app value,asking
-CARD-0026,Card,Basketball,2023,Panini,Instant,LeBron James / Victor Wembanyama,371,,,,NBA,no,no,,yes,PSA,10,,1,,179.00,PSA app value; dual-player card; PSA cert 90720092,asking
-CARD-0027,Card,Football,2017,Panini,Select,Deshaun Watson,164,,,Texans,NFL,yes,no,,yes,PSA,9,,1,,29.99,PSA app value,asking
-CARD-0028,Card,Soccer,2018,Panini,Donruss,Kylian Mbappe,53,,,PSG,Ligue 1,no,no,,yes,PSA,10,,1,,99.00,PSA app value; PSA cert 67269227,asking
-CARD-0029,Card,Basketball,2021,Panini,Prizm,Cade Cunningham,282,Pink Ice,,Pistons,NBA,yes,no,,yes,PSA,10,,1,,249.00,PSA app value; Pink Ice,asking
-CARD-0030,Card,Baseball,2023,Topps,Chrome Update,Matt McLain,ACMMC,Purple Refractor,Autograph,Reds,MLB,yes,yes,,yes,PSA,10,,1,,149.00,PSA app value; Auto 10; PSA cert 85776346,asking
-CARD-0031,Card,Football,2023,Panini,Donruss,CJ Stroud,339,,,Texans,NFL,yes,no,,yes,PSA,10,,1,,42.99,PSA app value,asking
-CARD-0032,Card,Football,2022,Panini,Certified,Brock Purdy,RS-BP,Mirror Teal Etch,Rookie Signatures Auto,49ers,NFL,yes,yes,,yes,PSA,9,,1,,199.00,PSA value not shown - add later; on-card auto; PSA cert 75510176,asking
-MERCH-0001,Framed Jersey,Football,,,,Kyren Williams,,,,Los Angeles Rams,NFL,no,yes,,no,Beckett,,Excellent,1,,124.99,Framed black shadow box; #23 white Rams jersey; Beckett BAS COA hologram,asking
-MERCH-0002,Full Size Helmet,Football,,,,Baker Mayfield,,,,Tampa Bay Buccaneers,NFL,no,yes,,no,Beckett,,Excellent,1,,349.99,Bucs Flash (orange chrome) alternate; RED VISOR; #6; Beckett Witness cert 1W622369,asking
+sku,item_type,sport,year,brand,set,player,card_number,parallel,insert,team,league,rookie,autograph,serial_run,graded,grader,grade,condition,quantity,cost,asking_price,notes,price_basis,listed,sold_price,sold_date
+CARD-0001,Card,Football,2025,Panini,Prizm,Jayden Higgins,14,Green Cracked Ice,Emergent,Texans,NFL,yes,no,,no,,,,1,,6.99,Confirm exact parallel color (green cracked ice) for value,asking,,,
+CARD-0002,Card,Football,2025,Panini,Donruss Optic,Kenneth Grant,216,Green,Rated Rookie,Dolphins,NFL,yes,no,,no,,,,1,,2.99,Optic Green parallel - confirm if serial numbered,asking,,,
+CARD-0003,Card,Football,2025,Panini,Donruss Optic,Cam Skattebo,228,,Rated Rookie,Giants,NFL,yes,no,,no,,,,1,,4.99,,asking,,,
+CARD-0004,Card,Football,2025,Panini,Donruss Optic,Tyler Loop,227,,Rated Rookie,Ravens,NFL,yes,no,,no,,,,1,,1.99,,asking,,,
+CARD-0005,Card,Football,2024,Panini,Select,Luke McCaffrey,279,Club Level Die-Cut,,Commanders,NFL,yes,no,,no,,,,1,,2.49,Club Level die-cut - confirm if colored/numbered,asking,,,
+CARD-0006,Card,Football,2024,Panini,Select,Joe Andreessen,20,Gold,Concourse,Bills,NFL,yes,no,,no,,,,1,,2.49,Concourse level - confirm Gold parallel is serial numbered,asking,,,
+CARD-0007,Card,Football,2024,Panini,Select,Ray Davis,22,,Select Certified,Bills,NFL,yes,no,,no,,,,1,,1.99,,asking,,,
+CARD-0008,Card,Football,2025,Panini,Donruss Optic,Jalon Walker,290,Green,Rated Rookie,Falcons,NFL,yes,no,,no,,,,1,,2.49,Optic Green parallel - confirm if serial numbered,asking,,,
+CARD-0009,Card,Football,2025,Panini,Prizm,Jack Bech,346,,,Raiders,NFL,yes,no,,no,,,,1,,5.99,,asking,,,
+CARD-0010,Card,Football,2025,Panini,Prizm,Brashard Smith,308,,,Chiefs,NFL,yes,no,,no,,,,1,,2.49,,asking,,,
+CARD-0011,Card,Football,2023,Panini,National Treasures,BJ Ojulari,102,,,Cardinals,NFL,yes,yes,99,no,,,,1,,12.99,On-card auto /99 - confirm if it also has a patch (RPA),asking,,,
+CARD-0012,Card,Basketball,2020,Panini,Prizm Draft Picks,James Wiseman,42,Pink Ice,,Warriors,NBA,yes,no,,yes,PSA,10,,1,,44.99,PSA app value; cert 67423370; basketball RC,asking,,,
+CARD-0013,Card,Football,2024,Panini,National Treasures Collegiate,Will Anderson Jr,S-WAJ,,Rookie Materials,Alabama,NCAA,no,no,99,no,,,,1,,59.99,Jersey patch/relic /99; collegiate card,asking,,,
+CARD-0014,Card,Football,2021,Panini,Certified,Kyler Murray,CP-KM,Teal,Certified Potential,Cardinals,NFL,no,yes,15,no,,,,1,,49.99,Certified Potential auto /15; confirm exact parallel color,asking,,,
+CARD-0015,Card,Football,2024,Panini,Luminance,Jayden Daniels,102,Gold,,Commanders,NFL,yes,no,299,no,,,,1,,44.99,Numbered /299 - confirm parallel color,asking,,,
+CARD-0016,Card,Football,2023,Panini,Rookies & Stars,Jahmyr Gibbs,TH-11,Prizm,Thrillers,Lions,NFL,yes,no,149,no,,,,1,,39.99,Thrillers Prizm insert /149,asking,,,
+CARD-0017,Card,Football,2023,Panini,Donruss Optic,CJ Stroud,244,Pink,Rated Rookie,Texans,NFL,yes,no,,no,,,,1,,29.99,Rated Rookie Pink parallel - confirm if numbered,asking,,,
+CARD-0018,Card,Football,2023,Panini,Rookies & Stars,Anthony Richardson,TH-13,,Thrillers,Colts,NFL,yes,no,75,no,,,,1,,74.99,Thrillers insert /75,asking,,,
+CARD-0019,Card,Football,2023,Panini,Prizm,CJ Stroud,339,Disco,,Texans,NFL,yes,no,,yes,PSA,10,,1,,139.00,PSA app value; Disco Prizm; refine with comps; PSA cert 89222827,asking,,,
+CARD-0020,Card,Football,2023,Panini,Zenith,CJ Stroud,5,Blue,1994 Pacific,Texans,NFL,yes,no,,yes,PSA,10,,1,,54.99,PSA app value; 1994 Pacific insert,asking,,,
+CARD-0021,Card,Football,2019,Panini,Prizm,Tony Pollard,339,,Autograph,Cowboys,NFL,yes,yes,,yes,PSA,10,,1,,189.00,PSA app value; on-card auto,asking,,,
+CARD-0022,Card,Football,2023,Panini,Donruss Elite,Bijan Robinson,TC-BRO,,Turn of the Century Auto,Falcons,NFL,yes,yes,249,yes,PSA,10,,1,,349.00,PSA app value; Turn of the Century auto; PSA cert 83143720,asking,,,
+CARD-0023,Card,Football,2023,Panini,Certified,CJ Stroud,CS11,Mirror Bronze,Certified Stars,Texans,NFL,yes,no,,yes,PSA,9,,1,,24.99,PSA app value,asking,,,
+CARD-0024,Card,Football,2023,Panini,Mosaic,Sam LaPorta,RS-SL,,Rookie Scripts Auto,Lions,NFL,yes,yes,,yes,PSA,9,,1,,99.00,PSA app value; on-card auto,asking,,,
+CARD-0025,Card,Hockey,2005,Upper Deck,Rookie Class,Henrik Lundqvist,3,,,Rangers,NHL,yes,no,,yes,PSA,9,,1,,29.99,PSA app value,asking,,,
+CARD-0026,Card,Basketball,2023,Panini,Instant,LeBron James / Victor Wembanyama,371,,,,NBA,no,no,,yes,PSA,10,,1,,179.00,PSA app value; dual-player card; PSA cert 90720092,asking,,,
+CARD-0027,Card,Football,2017,Panini,Select,Deshaun Watson,164,,,Texans,NFL,yes,no,,yes,PSA,9,,1,,29.99,PSA app value,asking,,,
+CARD-0028,Card,Soccer,2018,Panini,Donruss,Kylian Mbappe,53,,,PSG,Ligue 1,no,no,,yes,PSA,10,,1,,99.00,PSA app value; PSA cert 67269227,asking,,,
+CARD-0029,Card,Basketball,2021,Panini,Prizm,Cade Cunningham,282,Pink Ice,,Pistons,NBA,yes,no,,yes,PSA,10,,1,,249.00,PSA app value; Pink Ice,asking,,,
+CARD-0030,Card,Baseball,2023,Topps,Chrome Update,Matt McLain,ACMMC,Purple Refractor,Autograph,Reds,MLB,yes,yes,,yes,PSA,10,,1,,149.00,PSA app value; Auto 10; PSA cert 85776346,asking,,,
+CARD-0031,Card,Football,2023,Panini,Donruss,CJ Stroud,339,,,Texans,NFL,yes,no,,yes,PSA,10,,1,,42.99,PSA app value,asking,,,
+CARD-0032,Card,Football,2022,Panini,Certified,Brock Purdy,RS-BP,Mirror Teal Etch,Rookie Signatures Auto,49ers,NFL,yes,yes,,yes,PSA,9,,1,,199.00,PSA value not shown - add later; on-card auto; PSA cert 75510176,asking,,,
+MERCH-0001,Framed Jersey,Football,,,,Kyren Williams,,,,Los Angeles Rams,NFL,no,yes,,no,Beckett,,Excellent,1,,124.99,Framed black shadow box; #23 white Rams jersey; Beckett BAS COA hologram,asking,,,
+MERCH-0002,Full Size Helmet,Football,,,,Baker Mayfield,,,,Tampa Bay Buccaneers,NFL,no,yes,,no,Beckett,,Excellent,1,,349.99,Bucs Flash (orange chrome) alternate; RED VISOR; #6; Beckett Witness cert 1W622369,asking,,,

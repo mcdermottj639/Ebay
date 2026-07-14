@@ -6,7 +6,30 @@
       "n": 34
     }
   ],
-  "generated": "Jul 14, 2026 \u00b7 23:02 UTC",
+  "generated": "Jul 14, 2026 \u00b7 23:18 UTC",
+  "targets": [
+    {
+      "label": "CJ Stroud Optic Pink RC",
+      "query": "2023 Donruss Optic CJ Stroud Pink Rated Rookie",
+      "fair_value": "",
+      "alert_below": "",
+      "notes": "Want more of this one"
+    },
+    {
+      "label": "Jayden Daniels Prizm RC",
+      "query": "2024 Panini Prizm Jayden Daniels Rookie Commanders",
+      "fair_value": "",
+      "alert_below": "",
+      "notes": "Hot QB"
+    },
+    {
+      "label": "Caleb Williams Prizm RC",
+      "query": "2024 Panini Prizm Caleb Williams Rookie Bears",
+      "fair_value": 120.0,
+      "alert_below": 90.0,
+      "notes": "Buy if a clean copy dips under 90"
+    }
+  ],
   "summary": {
     "total_cards": 34,
     "merch": 2,
@@ -18,13 +41,61 @@
     "total_cost": 0.0,
     "total_value": 2701.75,
     "profit": 2701.75,
+    "listed": 0,
+    "sold": 0,
+    "revenue": 0,
+    "realized_profit": 0,
     "by_sport": {
       "Football": 28,
       "Basketball": 3,
       "Hockey": 1,
       "Soccer": 1,
       "Baseball": 1
-    }
+    },
+    "sport_stats": [
+      {
+        "name": "Football",
+        "count": 28,
+        "value": 1950.77
+      },
+      {
+        "name": "Basketball",
+        "count": 3,
+        "value": 472.99
+      },
+      {
+        "name": "Baseball",
+        "count": 1,
+        "value": 149.0
+      },
+      {
+        "name": "Soccer",
+        "count": 1,
+        "value": 99.0
+      },
+      {
+        "name": "Hockey",
+        "count": 1,
+        "value": 29.99
+      }
+    ],
+    "grade_stats": [
+      {
+        "name": "PSA 10",
+        "count": 10,
+        "value": 1495.97
+      },
+      {
+        "name": "PSA 9",
+        "count": 5,
+        "value": 382.97
+      },
+      {
+        "name": "Raw",
+        "count": 17,
+        "value": 347.83
+      }
+    ]
   },
   "cards": [
     {
@@ -57,7 +128,13 @@
       "image": "",
       "line": "2025 Panini Prizm #14 Green Cracked Ice",
       "title": "2025 Panini Prizm Jayden Higgins #14 RC Green Cracked Ice Emergent Texans",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0002",
@@ -89,7 +166,13 @@
       "image": "",
       "line": "2025 Panini Donruss Optic #216 Green",
       "title": "2025 Panini Donruss Optic Kenneth Grant #216 RC Green Rated Rookie Dolphins",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0003",
@@ -121,7 +204,13 @@
       "image": "",
       "line": "2025 Panini Donruss Optic #228",
       "title": "2025 Panini Donruss Optic Cam Skattebo #228 RC Rated Rookie Giants",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0004",
@@ -153,7 +242,13 @@
       "image": "",
       "line": "2025 Panini Donruss Optic #227",
       "title": "2025 Panini Donruss Optic Tyler Loop #227 RC Rated Rookie Ravens",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0005",
@@ -185,7 +280,13 @@
       "image": "",
       "line": "2024 Panini Select #279 Club Level Die-Cut",
       "title": "2024 Panini Select Luke McCaffrey #279 RC Club Level Die-Cut Commanders",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0006",
@@ -217,7 +318,13 @@
       "image": "",
       "line": "2024 Panini Select #20 Gold",
       "title": "2024 Panini Select Joe Andreessen #20 RC Gold Concourse Bills",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0007",
@@ -249,7 +356,13 @@
       "image": "",
       "line": "2024 Panini Select #22",
       "title": "2024 Panini Select Ray Davis #22 RC Select Certified Bills",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0008",
@@ -281,7 +394,13 @@
       "image": "",
       "line": "2025 Panini Donruss Optic #290 Green",
       "title": "2025 Panini Donruss Optic Jalon Walker #290 RC Green Rated Rookie Falcons",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0009",
@@ -313,7 +432,13 @@
       "image": "",
       "line": "2025 Panini Prizm #346",
       "title": "2025 Panini Prizm Jack Bech #346 RC Raiders",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0010",
@@ -345,7 +470,13 @@
       "image": "",
       "line": "2025 Panini Prizm #308",
       "title": "2025 Panini Prizm Brashard Smith #308 RC Chiefs",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0011",
@@ -377,7 +508,13 @@
       "image": "",
       "line": "2023 Panini National Treasures #102",
       "title": "2023 Panini National Treasures BJ Ojulari #102 AUTO /99 RC Cardinals",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0012",
@@ -409,7 +546,13 @@
       "image": "",
       "line": "2020 Panini Prizm Draft Picks #42 Pink Ice",
       "title": "2020 Panini Prizm Draft Picks James Wiseman #42 PSA 10 RC Pink Ice Warriors",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "67423370",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0013",
@@ -441,7 +584,13 @@
       "image": "",
       "line": "2024 Panini National Treasures Collegiate #S-WAJ",
       "title": "2024 Panini National Treasures Collegiate Will Anderson Jr #S-WAJ RELIC /99",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0014",
@@ -473,7 +622,13 @@
       "image": "",
       "line": "2021 Panini Certified #CP-KM Teal",
       "title": "2021 Panini Certified Kyler Murray #CP-KM AUTO /15 Teal Certified Potential",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0015",
@@ -505,7 +660,13 @@
       "image": "",
       "line": "2024 Panini Luminance #102 Gold",
       "title": "2024 Panini Luminance Jayden Daniels #102 /299 RC Gold Commanders",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0016",
@@ -537,7 +698,13 @@
       "image": "",
       "line": "2023 Panini Rookies & Stars #TH-11 Prizm",
       "title": "2023 Panini Rookies & Stars Jahmyr Gibbs #TH-11 /149 RC Prizm Thrillers Lions",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0017",
@@ -569,7 +736,13 @@
       "image": "",
       "line": "2023 Panini Donruss Optic #244 Pink",
       "title": "2023 Panini Donruss Optic CJ Stroud #244 RC Pink Rated Rookie Texans",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0018",
@@ -601,7 +774,13 @@
       "image": "",
       "line": "2023 Panini Rookies & Stars #TH-13",
       "title": "2023 Panini Rookies & Stars Anthony Richardson #TH-13 /75 RC Thrillers Colts",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0019",
@@ -633,7 +812,13 @@
       "image": "./img/CARD-0019.jpg",
       "line": "2023 Panini Prizm #339 Disco",
       "title": "2023 Panini Prizm CJ Stroud #339 PSA 10 RC Disco Texans",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "89222827",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0020",
@@ -665,7 +850,13 @@
       "image": "",
       "line": "2023 Panini Zenith #5 Blue",
       "title": "2023 Panini Zenith CJ Stroud #5 PSA 10 RC Blue 1994 Pacific Texans",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0021",
@@ -697,7 +888,13 @@
       "image": "",
       "line": "2019 Panini Prizm #339",
       "title": "2019 Panini Prizm Tony Pollard #339 PSA 10 AUTO RC Autograph Cowboys",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0022",
@@ -729,7 +926,13 @@
       "image": "./img/CARD-0022.jpg",
       "line": "2023 Panini Donruss Elite #TC-BRO",
       "title": "2023 Panini Donruss Elite Bijan Robinson #TC-BRO PSA 10 AUTO /249 RC",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "83143720",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0023",
@@ -761,7 +964,13 @@
       "image": "",
       "line": "2023 Panini Certified #CS11 Mirror Bronze",
       "title": "2023 Panini Certified CJ Stroud #CS11 PSA 9 RC Mirror Bronze Certified Stars",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0024",
@@ -793,7 +1002,13 @@
       "image": "",
       "line": "2023 Panini Mosaic #RS-SL",
       "title": "2023 Panini Mosaic Sam LaPorta #RS-SL PSA 9 AUTO RC Rookie Scripts Auto Lions",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0025",
@@ -825,7 +1040,13 @@
       "image": "",
       "line": "2005 Upper Deck Rookie Class #3",
       "title": "2005 Upper Deck Rookie Class Henrik Lundqvist #3 PSA 9 RC Rangers",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0026",
@@ -857,7 +1078,13 @@
       "image": "./img/CARD-0026.jpg",
       "line": "2023 Panini Instant #371",
       "title": "2023 Panini Instant LeBron James / Victor Wembanyama #371 PSA 10",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "90720092",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0027",
@@ -889,7 +1116,13 @@
       "image": "",
       "line": "2017 Panini Select #164",
       "title": "2017 Panini Select Deshaun Watson #164 PSA 9 RC Texans",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0028",
@@ -921,7 +1154,13 @@
       "image": "./img/CARD-0028.jpg",
       "line": "2018 Panini Donruss #53",
       "title": "2018 Panini Donruss Kylian Mbappe #53 PSA 10 PSG",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "67269227",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0029",
@@ -953,7 +1192,13 @@
       "image": "",
       "line": "2021 Panini Prizm #282 Pink Ice",
       "title": "2021 Panini Prizm Cade Cunningham #282 PSA 10 RC Pink Ice Pistons",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0030",
@@ -985,7 +1230,13 @@
       "image": "./img/CARD-0030.jpg",
       "line": "2023 Topps Chrome Update #ACMMC Purple Refractor",
       "title": "2023 Topps Chrome Update Matt McLain #ACMMC PSA 10 AUTO RC Purple Refractor",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "85776346",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0031",
@@ -1017,7 +1268,13 @@
       "image": "",
       "line": "2023 Panini Donruss #339",
       "title": "2023 Panini Donruss CJ Stroud #339 PSA 10 RC Texans",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "CARD-0032",
@@ -1049,7 +1306,13 @@
       "image": "./img/CARD-0032.jpg",
       "line": "2022 Panini Certified #RS-BP Mirror Teal Etch",
       "title": "2022 Panini Certified Brock Purdy #RS-BP PSA 9 AUTO RC Mirror Teal Etch",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "75510176",
+      "prev_price": ""
     },
     {
       "sku": "MERCH-0001",
@@ -1081,7 +1344,13 @@
       "image": "",
       "line": "Los Angeles Rams \u00b7 Framed Jersey",
       "title": "Kyren Williams Autographed Framed Jersey Los Angeles Rams Beckett COA",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "prev_price": ""
     },
     {
       "sku": "MERCH-0002",
@@ -1113,7 +1382,13 @@
       "image": "",
       "line": "Tampa Bay Buccaneers \u00b7 Full Size Helmet",
       "title": "Baker Mayfield Autographed Full Size Helmet Tampa Bay Buccaneers Beckett COA",
-      "status": "priced"
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "1W622369",
+      "prev_price": ""
     }
   ]
 }

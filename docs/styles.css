@@ -312,6 +312,49 @@ main { max-width: 720px; margin: 0 auto;
 .trend svg { width: 100%; height: 170px; display: block; }
 .trend .tx { font-size: 10px; fill: var(--muted); font-family: inherit; }
 
+/* ---- price-move chips (fed by weekly reprice history) ---- */
+.chg { font-size: 10.5px; font-weight: 800; margin-left: 5px; letter-spacing: .02em;
+  vertical-align: 2px; }
+.chg.up { color: var(--good); }
+.chg.down { color: var(--bad); }
+
+/* ---- listed / sold ---- */
+.b-listed  { background: rgba(51,157,99,.16); color: var(--felt); border: 1px solid rgba(51,157,99,.4); }
+.b-soldtag { background: var(--bad); color: #fff; }
+.crow .val.soldval { color: var(--good); }
+.tiles.biz { margin-top: 2px; }
+
+/* ---- movers panel ---- */
+.movers { display: flex; flex-direction: column; }
+.mover { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: baseline;
+  background: none; border: none; border-bottom: 1px solid var(--border); color: inherit;
+  font: inherit; text-align: left; cursor: pointer; padding: 9px 2px; }
+.mover:last-child { border-bottom: none; }
+.mover .mp { font-weight: 700; font-size: 13.5px; white-space: nowrap; }
+.mover .ms { color: var(--muted); font-size: 12px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.mover .mr { font-weight: 800; font-size: 13.5px; white-space: nowrap; }
+
+/* ---- buy targets ---- */
+.trow { display: flex; align-items: center; gap: 12px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px; padding: 13px 15px;
+  box-shadow: var(--shadow); }
+.trow .tm { min-width: 0; flex: 1; }
+.trow .tp { font-weight: 700; font-size: 14.5px; }
+.trow .ts { color: var(--muted); font-size: 12px; margin-top: 2px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.trow .tr { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.talert { font-size: 11px; font-weight: 800; letter-spacing: .03em; color: var(--felt);
+  background: rgba(51,157,99,.16); border: 1px solid rgba(51,157,99,.4);
+  border-radius: 20px; padding: 3px 9px; }
+.tfair { font-size: 11px; font-weight: 700; color: var(--muted); }
+
+/* ---- modal action buttons (share / cert lookup) ---- */
+.mbtns { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.mbtn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--gold);
+  background: transparent; color: var(--gold); border-radius: 10px; padding: 8px 13px;
+  font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; }
+
 /* ---- card detail: hero | specs (stacked on phones, two-pane on PC) ---- */
 .mgrid { display: block; }
 
@@ -403,8 +446,10 @@ main { max-width: 720px; margin: 0 auto;
   }
   .crow:hover::after { transform: translateX(130%); transition: transform .6s ease; }
 
-  /* drafts keep a readable width in the grid */
+  /* drafts + targets keep a readable width in the grid */
   .list.drafts { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+  .list.targets { grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); }
+  .tiles.biz { grid-template-columns: repeat(4, 1fr); }
   .list.drafts .draft { display: flex; flex-direction: column; }
   .list.drafts .draft .foot { margin-top: auto; padding-top: 10px; }
 

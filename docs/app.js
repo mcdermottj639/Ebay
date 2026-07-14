@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v10";
+  var APP_VERSION = "v11";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier" };
 
@@ -40,6 +40,7 @@
     nav.appendChild(el('<div class="navbrand"><span class="logo">🃏</span>Card Vault</div>'));
     [["collection", "🗃️", "Collection"],
      ["value", "💰", "Value"],
+     ["targets", "🎯", "Targets"],
      ["drafts", "🏷️", "Drafts"],
      ["about", "ℹ️", "About"]].forEach(function (t) {
       var b = el('<button data-tab="' + t[0] + '"><span class="i">' + t[1] + '</span>' + t[2] + "</button>");
@@ -80,12 +81,15 @@
   function render() {
     var v = document.getElementById("view");
     v.innerHTML = "";
-    v.appendChild({ collection: viewCollection, value: viewValue, drafts: viewDrafts, about: viewAbout }[state.tab]());
+    v.appendChild({ collection: viewCollection, value: viewValue, targets: viewTargets,
+                    drafts: viewDrafts, about: viewAbout }[state.tab]());
     v.scrollTop = 0; window.scrollTo(0, 0);
   }
 
   function badges(c) {
     var out = "";
+    if (c.sold) out += '<span class="badge b-soldtag">SOLD</span>';
+    else if (c.listed) out += '<span class="badge b-listed">LISTED</span>';
     if (c.is_merch) {
       if (c.auto) out += '<span class="badge b-auto">AUTO</span>';
       if (c.authentication) out += '<span class="badge b-psa">' + esc(c.authentication) + " COA</span>";
@@ -146,11 +150,28 @@
     return '<span class="basis ' + (sold ? "b-sold" : "b-ask") + '">' + (sold ? "SOLD" : "ASKING") + "</span>";
   }
 
+  // ▲/▼ week-over-week movement chip (needs a prior price from reprice runs)
+  function changeChip(c) {
+    var cur = num(c.asking_price), prev = num(c.prev_price);
+    if (c.sold || !cur || !prev) return "";
+    var pct = (cur - prev) / prev * 100;
+    if (Math.abs(pct) < 0.5) return "";
+    var up = pct > 0;
+    return '<span class="chg ' + (up ? "up" : "down") + '">' + (up ? "▲" : "▼") +
+      Math.abs(pct).toFixed(Math.abs(pct) >= 10 ? 0 : 1) + "%</span>";
+  }
+
   // one card/merch row
   function crowEl(c) {
-    var val = c.asking_price ? '<div class="val tnum">' + money0(c.asking_price) + "</div>"
-                             : '<div class="val none">—</div>';
-    var status = c.status === "priced" ? basisPill(c) : '<div class="st">Needs price</div>';
+    var val, status;
+    if (c.sold) {
+      val = '<div class="val tnum soldval">' + money0(c.sold_price) + "</div>";
+      status = '<div class="st">Sold' + (c.sold_date ? " " + esc(c.sold_date) : "") + "</div>";
+    } else {
+      val = c.asking_price ? '<div class="val tnum">' + money0(c.asking_price) + changeChip(c) + "</div>"
+                           : '<div class="val none">—</div>';
+      status = c.status === "priced" ? basisPill(c) : '<div class="st">Needs price</div>';
+    }
     var row = el(
       '<button class="crow s-' + c.status + '">' +
         '<div class="stripe"></div>' +
@@ -314,7 +335,8 @@
   function openFilter(sports) {
     var groups = [
       ["Sport", sports.slice().sort()],
-      ["Type", ["Graded", "Raw", "Autos", "Non-Autos", "Rookie", "Numbered"]]
+      ["Type", ["Graded", "Raw", "Autos", "Non-Autos", "Rookie", "Numbered"]],
+      ["Status", ["Listed", "Sold"]]
     ];
     var html = '<div class="fgroup"><div class="fchips">' +
       '<button class="fchip' + (state.filter === "All" ? " on" : "") + '" data-f="All">All cards</button></div></div>';
@@ -345,6 +367,8 @@
       case "Non-Autos": return !c.auto;
       case "Rookie": return c.rookie;
       case "Numbered": return !!c.serial_run;
+      case "Listed": return c.listed;
+      case "Sold": return c.sold;
       default: return c.sport === state.filter;
     }
   }
@@ -403,28 +427,76 @@
     [["Total cost", money(s.total_cost), ""],
      ["Est. profit", money(s.profit), profitCls],
      ["Cards", s.total_cards, ""],
-     ["Priced", s.priced + " / " + s.total_cards, ""],
+     ["Priced", s.priced + " / " + (s.total_cards - (s.sold || 0)), ""],
      ["Graded", s.graded, ""],
      ["Autographs", s.autos, ""]].forEach(function (t) {
       tiles.appendChild(el('<div class="tile"><div class="k">' + t[0] + '</div><div class="v tnum ' + t[2] + '">' + t[1] + "</div></div>"));
     });
     wrap.appendChild(tiles);
 
-    // charts side-by-side on PC, stacked on phones
+    // the business row — only once something is listed or sold
+    if (s.listed || s.sold) {
+      wrap.appendChild(el('<div class="eyebrow">Business</div>'));
+      var biz = el('<div class="tiles biz"></div>');
+      var rCls = s.realized_profit >= 0 ? "pos" : "neg";
+      [["Revenue", money(s.revenue), "pos"],
+       ["Realized profit", money(s.realized_profit), rCls],
+       ["Listed now", s.listed, ""],
+       ["Sold", s.sold, ""]].forEach(function (t) {
+        biz.appendChild(el('<div class="tile"><div class="k">' + t[0] + '</div><div class="v tnum ' + t[2] + '">' + t[1] + "</div></div>"));
+      });
+      wrap.appendChild(biz);
+    }
+
+    // $-weighted bar panel used for By-sport and By-grade
+    function statPanel(title, stats) {
+      var panel = el('<div class="panel"><div class="ptitle">' + title + "</div></div>");
+      var bars = el('<div class="bars"></div>');
+      var max = stats.length ? Math.max.apply(null, stats.map(function (g) { return g.value; })) || 1 : 1;
+      stats.forEach(function (g) {
+        bars.appendChild(el('<div class="barrow"><span>' + esc(g.name) + '</span>' +
+          '<div class="track"><div class="fill" style="width:' + (g.value / max * 100) + '%"></div></div>' +
+          '<b class="tnum">' + money0(g.value) + " · " + g.count + "</b></div>"));
+      });
+      if (!stats.length) bars.appendChild(el('<p class="muted" style="font-size:13px">Nothing here yet.</p>'));
+      panel.appendChild(bars);
+      return panel;
+    }
+
+    // movers: biggest week-over-week price changes (fed by reprice runs)
+    function moversPanel() {
+      var panel = el('<div class="panel"><div class="ptitle">Movers · this week</div></div>');
+      var movers = state.data.cards.filter(function (c) {
+        return !c.sold && c.prev_price && num(c.asking_price) &&
+               Math.abs(num(c.asking_price) - num(c.prev_price)) / num(c.prev_price) >= 0.005;
+      }).sort(function (a, b) {
+        var pa = Math.abs(num(a.asking_price) - num(a.prev_price)) / num(a.prev_price);
+        var pb = Math.abs(num(b.asking_price) - num(b.prev_price)) / num(b.prev_price);
+        return pb - pa;
+      }).slice(0, 6);
+      if (!movers.length) {
+        panel.appendChild(el('<p class="muted" style="font-size:13px;margin:4px 0 2px">No price moves yet — ' +
+          "movers show up here after the weekly eBay re-price runs.</p>"));
+        return panel;
+      }
+      var list = el('<div class="movers"></div>');
+      movers.forEach(function (c) {
+        var row = el('<button class="mover"><span class="mp">' + esc(c.player) +
+          '</span><span class="ms">' + esc(c.line || "") + '</span>' +
+          '<span class="mr tnum">' + money0(c.asking_price) + changeChip(c) + "</span></button>");
+        row.onclick = function () { openModal(c); };
+        list.appendChild(row);
+      });
+      panel.appendChild(list);
+      return panel;
+    }
+
+    // panel grid: 2×2 on PC, stacked on phones
     var vgrid = el('<div class="vgrid"></div>');
-    var sport = el('<div class="panel"><div class="ptitle">By sport</div></div>');
-    var bars = el('<div class="bars"></div>');
-    var entries = Object.keys(s.by_sport).map(function (k) { return [k, s.by_sport[k]]; })
-                    .sort(function (a, b) { return b[1] - a[1]; });
-    var max = entries.length ? entries[0][1] : 1;
-    entries.forEach(function (e) {
-      bars.appendChild(el('<div class="barrow"><span>' + esc(e[0]) + '</span>' +
-        '<div class="track"><div class="fill" style="width:' + (e[1] / max * 100) + '%"></div></div>' +
-        "<b>" + e[1] + "</b></div>"));
-    });
-    sport.appendChild(bars);
-    vgrid.appendChild(sport);
+    vgrid.appendChild(statPanel("Value by sport", s.sport_stats || []));
     vgrid.appendChild(trendChart(state.data.history));
+    vgrid.appendChild(moversPanel());
+    vgrid.appendChild(statPanel("Value by grade", s.grade_stats || []));
     wrap.appendChild(vgrid);
 
     wrap.appendChild(el('<div class="eyebrow">Top cards by value</div>'));
@@ -433,6 +505,31 @@
     var list = el('<div class="list"></div>');
     top.forEach(function (c) { list.appendChild(crowEl(c)); });
     wrap.appendChild(top.length ? list : el('<p class="muted">No priced cards yet.</p>'));
+    return wrap;
+  }
+
+  function viewTargets() {
+    var wrap = el('<div class="view"></div>');
+    wrap.appendChild(el('<div class="eyebrow">Buy targets</div>'));
+    wrap.appendChild(el('<p class="muted" style="font-size:13px;margin:0 2px 12px">Cards you’re hunting. ' +
+      "Buy Radar scans eBay for these — deals land here once the eBay connection unlocks in-app.</p>"));
+    var targets = state.data.targets || [];
+    if (!targets.length) {
+      wrap.appendChild(el('<p class="muted">No targets yet — add rows to data/watchlist.csv ' +
+        "(label, search query, fair value, alert-below price).</p>"));
+      return wrap;
+    }
+    var list = el('<div class="list targets"></div>');
+    targets.forEach(function (t) {
+      var right = "";
+      if (t.alert_below) right += '<span class="talert tnum">BUY &lt; ' + money0(t.alert_below) + "</span>";
+      if (t.fair_value) right += '<span class="tfair tnum">fair ' + money0(t.fair_value) + "</span>";
+      list.appendChild(el('<div class="trow"><div class="tm"><div class="tp">🎯 ' + esc(t.label) +
+        '</div><div class="ts">' + esc(t.query) + (t.notes ? " · " + esc(t.notes) : "") + "</div></div>" +
+        '<div class="tr">' + (right || '<span class="muted" style="font-size:12px">no price set</span>') +
+        "</div></div>"));
+    });
+    wrap.appendChild(list);
     return wrap;
   }
 
@@ -493,12 +590,38 @@
           '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
           '<dl class="kv">' + kv + "</dl>" +
           '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>" +
+          '<div class="mbtns">' +
+            '<button class="mbtn" id="mShare">🔗 Share card</button>' +
+            (c.cert && /psa/i.test(c.grader || "") ?
+              '<a class="mbtn" href="https://www.psacard.com/cert/' + esc(c.cert) +
+              '" target="_blank" rel="noopener">🔍 PSA cert ' + esc(c.cert) + "</a>" : "") +
+          "</div>" +
         "</div>" +
       "</div>";
     m.querySelector("#mClose").onclick = closeModal;
+    var share = m.querySelector("#mShare");
+    share.onclick = function () {
+      var url = location.href.split("#")[0] + "#sku=" + encodeURIComponent(c.sku);
+      var done = function () { share.textContent = "✓ Link copied"; setTimeout(function () { share.innerHTML = "🔗 Share card"; }, 1600); };
+      if (navigator.share) navigator.share({ title: c.title, url: url }).catch(function () {});
+      else if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, done);
+      else done();
+    };
+    // deep-linkable: #sku=CARD-0022 reopens this exact card
+    if (history.replaceState) history.replaceState(null, "", "#sku=" + encodeURIComponent(c.sku));
     document.getElementById("modalWrap").classList.add("open");
   }
-  function closeModal() { document.getElementById("modalWrap").classList.remove("open"); }
+  function closeModal() {
+    document.getElementById("modalWrap").classList.remove("open");
+    if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+  }
+  function openFromHash() {
+    var m = location.hash.match(/^#sku=(.+)$/);
+    if (!m || !state.data) return;
+    var sku = decodeURIComponent(m[1]);
+    var card = state.data.cards.filter(function (c) { return c.sku === sku; })[0];
+    if (card) openModal(card);
+  }
 
   // ---------- theme ----------
   function currentTheme() {
@@ -522,6 +645,8 @@
     shell();
     document.getElementById("gen").textContent = data.summary.total_cards + " cards · " + money0(data.summary.total_value);
     setTab("collection");
+    openFromHash();               // shared link straight to a card
+    window.addEventListener("hashchange", openFromHash);
   }
 
   try { var t = localStorage.getItem("cv-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
