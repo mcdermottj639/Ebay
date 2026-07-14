@@ -21,6 +21,7 @@ Never touches: merch, sold items, or the judgment-call SKUs in SKIP_SKUS
 """
 
 import csv
+import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -29,6 +30,7 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 from ebaytools import catalog, comps, config  # noqa: E402
 
 ROOT = Path(__file__).parent
+SNAPSHOT = ROOT / "data" / "comps_snapshot.json"
 HISTORY = ROOT / "data" / "price_history.csv"
 HISTORY_COLS = ["date", "sku", "price", "basis", "median", "count", "source", "applied"]
 
@@ -91,14 +93,18 @@ def main() -> int:
            else "Using ACTIVE/asking prices (Browse API).") + "\n")
 
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    history, applied, flagged, skipped = [], [], [], []
+    history, applied, flagged, skipped, held = [], [], [], [], []
     updates = {}
+    snapshot = {"as_of": today, "cards": {}}
 
     for c in cards:
         current = _num(c.asking_price)
-        if c.is_merch() or c.is_sold() or c.sku in SKIP_SKUS or current <= 0:
+        if c.is_sold() or current <= 0:
             skipped.append(c.sku)
             continue
+        # merch + hand-priced SKUs still get queried (their comps feed the
+        # app's card view) — their price is just never auto-changed.
+        can_apply = not (c.is_merch() or c.sku in SKIP_SKUS)
         try:
             r = comps.get_comps(c)
         except Exception as e:
@@ -106,10 +112,20 @@ def main() -> int:
             continue
 
         broad = "(broad match)" in r.query
+        if r.sample_items:
+            snapshot["cards"][c.sku] = {
+                "source": r.source, "broad": broad,
+                "items": r.sample_items[:5],
+            }
         rec = {"date": today, "sku": c.sku, "price": f"{current:.2f}",
                "basis": c.price_basis or "asking",
                "median": f"{r.median:.2f}" if r.median else "",
                "count": r.count, "source": r.source, "applied": "no"}
+
+        if not can_apply:
+            held.append(c.sku)
+            history.append(rec)
+            continue
 
         ok = r.median and r.count >= MIN_COMPS and not broad
         if ok:
@@ -130,6 +146,9 @@ def main() -> int:
         if updates:
             _save_inventory(updates)
         _append_history(history)
+        if snapshot["cards"]:
+            SNAPSHOT.write_text(json.dumps(snapshot, indent=1), encoding="utf-8")
+            print(f"Saved {len(snapshot['cards'])} cards' comp listings → {SNAPSHOT.name}")
 
     print(f"\nApplied {len(applied)} price update(s):")
     for line in applied or ["  (none)"]:
@@ -138,7 +157,8 @@ def main() -> int:
         print(f"\nFlagged {len(flagged)} for human review (NOT applied):")
         for line in flagged:
             print("  " + line)
-    print(f"\nSkipped {len(skipped)} (merch / sold / hand-priced / unpriced).")
+    print(f"\nHeld {len(held)} at their hand-set price (merch / judgment-call SKUs);"
+          f" skipped {len(skipped)} (sold / unpriced).")
     if not dry:
         print(f"History → {HISTORY}. Now run: python3 build_web.py")
     return 0

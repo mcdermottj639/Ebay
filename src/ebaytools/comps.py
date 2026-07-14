@@ -41,6 +41,9 @@ class CompResult:
     median: float | None
     high: float | None
     sample_titles: list[str]
+    # top matching listings [{"t": title, "p": price, "u": url}] — powers the
+    # app's "Recent eBay comps" section in the card view.
+    sample_items: list = None
 
     def pretty(self) -> str:
         if self.count == 0:
@@ -108,19 +111,19 @@ def get_comps(card_or_query, limit: int = 50) -> CompResult:
             "toolkit works without keys — you can catalog and draft first.)"
         )
 
-    prices, titles, source = _search_best(query, limit)
+    prices, titles, items, source = _search_best(query, limit)
 
     # If the exact-title query found nothing and we have a Card, retry with a
     # broadened query so niche inserts/autos still get a ballpark comp.
     if not prices and not isinstance(card_or_query, str):
         broad = broad_query_for(card_or_query)
         if broad and broad != query:
-            prices, titles, source = _search_best(broad, limit)
+            prices, titles, items, source = _search_best(broad, limit)
             if prices:
                 query = f"{broad}  (broad match)"
 
     if not prices:
-        return CompResult(query, source, 0, None, None, None, [])
+        return CompResult(query, source, 0, None, None, None, [], [])
 
     prices.sort()
     return CompResult(
@@ -131,6 +134,7 @@ def get_comps(card_or_query, limit: int = 50) -> CompResult:
         median=statistics.median(prices),
         high=max(prices),
         sample_titles=titles[:5],
+        sample_items=items[:8],
     )
 
 
@@ -159,20 +163,20 @@ def sold_available() -> bool:
     return _sold_available()
 
 
-def _search_best(query: str, limit: int) -> tuple[list[float], list[str], str]:
+def _search_best(query: str, limit: int) -> tuple[list[float], list[str], list, str]:
     """Prefer real SOLD comps; fall back to active/asking when sold is
     unavailable (not granted) or returns nothing for this query."""
     if _sold_available():
         try:
-            prices, titles, source = _search_sold(query, limit)
+            prices, titles, items, source = _search_sold(query, limit)
             if prices:
-                return prices, titles, source
+                return prices, titles, items, source
         except RuntimeError:
             pass  # transient sold-search error — use active instead
     return _search_active(query, limit)
 
 
-def _search_sold(query: str, limit: int) -> tuple[list[float], list[str], str]:
+def _search_sold(query: str, limit: int) -> tuple[list[float], list[str], list, str]:
     """Search SOLD/completed items via the Marketplace Insights API (gated)."""
     token = ebay_auth.application_token(ebay_auth.SCOPE_MARKETPLACE_INSIGHTS)
     resp = requests.get(
@@ -190,19 +194,23 @@ def _search_sold(query: str, limit: int) -> tuple[list[float], list[str], str]:
     data = resp.json()
     prices: list[float] = []
     titles: list[str] = []
+    items: list[dict] = []
     for item in data.get("itemSales", []):
         titles.append(item.get("title", ""))
         # Sold price lives in lastSoldPrice; fall back to price for safety.
         price = (item.get("lastSoldPrice") or item.get("price") or {}).get("value")
         if price is not None:
             try:
-                prices.append(float(price))
+                p = float(price)
             except (TypeError, ValueError):
-                pass
-    return prices, titles, "sold"
+                continue
+            prices.append(p)
+            items.append({"t": item.get("title", ""), "p": p,
+                          "u": item.get("itemWebUrl", "")})
+    return prices, titles, items, "sold"
 
 
-def _search_active(query: str, limit: int) -> tuple[list[float], list[str], str]:
+def _search_active(query: str, limit: int) -> tuple[list[float], list[str], list, str]:
     """Search ACTIVE listings via the Browse API."""
     token = ebay_auth.application_token()
     resp = requests.get(
@@ -220,12 +228,16 @@ def _search_active(query: str, limit: int) -> tuple[list[float], list[str], str]
     data = resp.json()
     prices: list[float] = []
     titles: list[str] = []
+    items: list[dict] = []
     for item in data.get("itemSummaries", []):
         titles.append(item.get("title", ""))
         price = item.get("price", {}).get("value")
         if price is not None:
             try:
-                prices.append(float(price))
+                p = float(price)
             except (TypeError, ValueError):
-                pass
-    return prices, titles, "active"
+                continue
+            prices.append(p)
+            items.append({"t": item.get("title", ""), "p": p,
+                          "u": item.get("itemWebUrl", "")})
+    return prices, titles, items, "active"
