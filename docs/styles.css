@@ -237,14 +237,17 @@ main { max-width: 720px; margin: 0 auto;
 /* ---- modal ---- */
 .modal-wrap { position: fixed; inset: 0; z-index: 50; display: none; align-items: flex-end; justify-content: center; background: rgba(0,0,0,.55); }
 .modal-wrap.open { display: flex; }
-.modal { background: var(--surface); width: 100%; max-width: 560px; border-radius: 18px 18px 0 0; border: 1px solid var(--border); border-bottom: none; padding: 18px 18px calc(28px + env(safe-area-inset-bottom)); max-height: 84vh; overflow-y: auto; -webkit-overflow-scrolling: touch; animation: up .22s ease; }
+.modal { position: relative; background: var(--surface); width: 100%; max-width: 560px; border-radius: 18px 18px 0 0; border: 1px solid var(--border); border-bottom: none; padding: 18px 18px calc(28px + env(safe-area-inset-bottom)); max-height: 84vh; overflow-y: auto; -webkit-overflow-scrolling: touch; animation: up .22s ease; }
 @keyframes up { from { transform: translateY(20px); opacity: .6; } to { transform: none; opacity: 1; } }
 .mhero { margin: 2px 0 14px; }
 .mhero .thumb.big { width: 100%; height: 200px; border-radius: 12px; }
 .mhero .thumb.big img { object-fit: contain; }
 .mhero .thumb.big.ph { font-size: 56px; }
-.modal h3 { margin: 0 6px 2px 0; font-size: 18px; }
-.modal .close { float: right; border: none; background: var(--surface-2); color: var(--fg); width: 30px; height: 30px; border-radius: 8px; font-size: 15px; cursor: pointer; }
+.modal h3 { margin: 0 6px 2px 0; padding-right: 34px; font-size: 18px; }
+/* absolute (not float) + z-index so the grid/photo content can't paint over
+   the button and swallow the tap — the float caused an un-closable card popup */
+.modal .close { position: absolute; top: 14px; right: 14px; z-index: 3; border: none; background: var(--surface-2); color: var(--fg); width: 32px; height: 32px; border-radius: 8px; font-size: 15px; line-height: 1; cursor: pointer; }
+.modal .close:hover { background: var(--border); }
 .kv { display: grid; grid-template-columns: 108px 1fr; gap: 6px 12px; margin-top: 14px; font-size: 13.5px; }
 .kv dt { color: var(--muted); }
 .kv dd { margin: 0; font-weight: 600; }
