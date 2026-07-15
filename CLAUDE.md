@@ -172,11 +172,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v17. The live
+  this makes the service worker serve stale CSS/JS. Current: v18. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v17.
+  Current: v18.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -246,17 +246,24 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   lots, and breaks that poison the median — `deals._is_single_card`
   (`_NON_SINGLE` regex) drops those in `scan()` (Buy Radar only; the ad-hoc
   `search()` is left alone so box lookups still work).
-- **Buy Radar filters (v17).** The 🔎 tab now has a client-side filter bar
+- **Buy Radar filters (v17–v18).** The 🔎 tab has a client-side filter bar
   (`app.js viewRadar`, `.radartools`) — native `<select>`s for **Type**
-  (Downtown/Kaboom/Other), **Sport**, **Graded** (all/graded/raw), and **PSA
-  grade** (10, 9.5, …). Facets are derived per-deal from the listing
-  title/query (`dealType`/`dealGrader`/`dealGrade`) since the snapshot has no
-  explicit grade field, and each select is only shown when the current deals
-  actually contain those values (no empty facets). `state.radarFilter`
-  ({type,sport,graded,grade}) + `matchRadar` filter the list; changing a select
-  re-renders only the results (via an inner `renderResults`, so the page
-  doesn't jump), with a "Showing N of M · Clear filters" line. No backend/data
-  change — purely presentational over the existing snapshot.
+  (Downtown / Kaboom / **No Kaboom/Downtown**), **Sport**, **Graded**
+  (all/graded/raw), and **PSA grade** (10, 9.5, …). Facets are derived per-deal
+  from the listing title/query (`dealType`/`dealGrader`/`dealGrade`) since the
+  snapshot has no explicit grade field, and each select is only shown when the
+  current deals actually contain those values (no empty facets).
+  `state.radarFilter` ({type,sport,graded,grade}) + `matchRadar` filter the
+  list; changing a select re-renders only the results (inner `renderResults`,
+  no page jump), with a "Showing N of M · Clear filters" line. Purely
+  presentational over the snapshot.
+  **v18 — reserve slots for non-premium (`radar.OTHER_SLOTS`):** Downtowns/
+  Kabooms sort to the top, so they used to fill all `TOP_N` slots and the "No
+  Kaboom/Downtown" filter showed nothing. `_curate` now holds back up to
+  `OTHER_SLOTS` (12) slots for non-premium deals (premium fills the rest of
+  `TOP_N`, now 30) via `_order`, so that filter always has cards. The type
+  value for those is `"other"` (dealType = neither kaboom nor downtown),
+  labelled **"No Kaboom/Downtown"**.
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -283,8 +290,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v17**
-  (v17 = Buy Radar **filters** — Type (Downtown/Kaboom/Other), Sport, Graded,
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v18**
+  (v18 = Buy Radar filter gained a **"No Kaboom/Downtown"** type option, and
+  `radar.py` reserves slots (`OTHER_SLOTS`) for non-premium deals so that
+  filter always has cards to show;
+  v17 = Buy Radar **filters** — Type (Downtown/Kaboom/Other), Sport, Graded,
   PSA grade selects at the top of the 🔎 tab, facets derived per-deal from the
   listing title, filters the list in place with a Showing-N-of-M + Clear line;
   v16 = Buy Radar **deal popup + Downtowns/Kabooms** — tapping a deal opens a

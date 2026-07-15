@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v17";
+  var APP_VERSION = "v18";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -557,7 +557,7 @@
     // ---- Filter bar: Type (Downtown/Kaboom/Other), Sport, Graded, PSA grade.
     // Options are built from what's actually in the current deals, so we never
     // show an empty facet.
-    var TYPE_LABEL = { downtown: "Downtown", kaboom: "Kaboom", other: "Other" };
+    var TYPE_LABEL = { downtown: "Downtown", kaboom: "Kaboom", other: "No Kaboom/Downtown" };
     var typesPresent = ["downtown", "kaboom", "other"].filter(function (t) {
       return deals.some(function (d) { return dealType(d) === t; });
     });

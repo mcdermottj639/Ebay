@@ -35,7 +35,11 @@ SNAPSHOT = DATA / "radar_snapshot.json"
 # deals reliable regardless — those are the sharpest ones.)
 MIN_DISCOUNT = 15.0   # below this isn't worth flagging as a deal
 MAX_DISCOUNT = 65.0   # above this the reference is almost certainly polluted
-TOP_N = 24            # show the best two dozen
+TOP_N = 30            # show the best ~30
+# Downtowns/Kabooms sort to the top, so without a reserve they'd fill every
+# slot and the "no Kaboom/Downtown" filter would show nothing. Hold back some
+# slots for non-premium deals so that filter always has cards to show.
+OTHER_SLOTS = 12
 
 # Price band the owner wants to shop in: the more expensive, premium end.
 # We pass this to the eBay search so both the listings AND the market
@@ -74,15 +78,23 @@ def _keep(d) -> bool:
                 and d.discount_pct >= PREMIUM_MIN_DISCOUNT)
 
 
+def _order(deal_list):
+    """Football first, Downtowns/Kabooms next, then biggest discount."""
+    return sorted(deal_list, key=lambda d: (SPORT_ORDER.get(d.sport, 1),
+                                            0 if d.premium else 1, -d.discount_pct))
+
+
 def _curate(found):
-    """Keep believable, in-band deals; football first, premium next, then best
-    discount. Returns (kept, dropped)."""
+    """Keep believable, in-band deals, reserving room for non-premium ones so
+    the 'no Kaboom/Downtown' filter always has cards. Returns (kept, dropped)."""
     kept = [d for d in found if _keep(d)]
-    # Sort: football (0) before other sports, Downtowns/Kabooms before base,
-    # then biggest discount.
-    kept.sort(key=lambda d: (SPORT_ORDER.get(d.sport, 1), 0 if d.premium else 1,
-                             -d.discount_pct))
-    return kept[:TOP_N], len(found) - len(kept[:TOP_N])
+    premium = _order([d for d in kept if d.premium])
+    other = _order([d for d in kept if not d.premium])
+    # Reserve up to OTHER_SLOTS for non-premium; premium fills whatever's left.
+    other_keep = other[:OTHER_SLOTS]
+    premium_keep = premium[:TOP_N - len(other_keep)]
+    final = _order(premium_keep + other_keep)
+    return final, len(found) - len(final)
 
 
 def main() -> int:
