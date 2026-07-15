@@ -363,6 +363,7 @@ main { max-width: 720px; margin: 0 auto;
 .drow .dthumb { width: 52px; height: 52px; flex: none; border-radius: 9px; }
 .drow .dm { min-width: 0; flex: 1; }
 .drow .dp { font-weight: 800; font-size: 14.5px; }
+.sportbadge { font-size: 12px; }
 .drow .ds { color: var(--muted); font-size: 12px; margin-top: 2px; overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap; }
 .drate { display: flex; align-items: center; gap: 7px; margin-top: 6px; }

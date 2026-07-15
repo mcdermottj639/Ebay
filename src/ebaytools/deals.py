@@ -35,6 +35,7 @@ class WatchItem:
     fair_value: str = ""
     alert_below: str = ""
     notes: str = ""
+    sport: str = ""         # "football", "baseball", etc. — used to prefer football
 
 
 @dataclass
@@ -50,6 +51,7 @@ class Deal:
     url: str
     image: str = ""         # thumbnail URL
     bars: int = 0           # value rating 0-3 (like Alt's green bars)
+    sport: str = ""         # from the watchlist row (football preferred)
 
 
 def load_watchlist(path: Path | None = None) -> list[WatchItem]:
@@ -66,6 +68,7 @@ def load_watchlist(path: Path | None = None) -> list[WatchItem]:
                     fair_value=(raw.get("fair_value") or "").strip(),
                     alert_below=(raw.get("alert_below") or "").strip(),
                     notes=(raw.get("notes") or "").strip(),
+                    sport=(raw.get("sport") or "").strip().lower(),
                 ))
     return items
 
@@ -77,7 +80,8 @@ def _num(value: str) -> float | None:
         return None
 
 
-def scan(items: list[WatchItem], per_item_limit: int = 50) -> list[Deal]:
+def scan(items: list[WatchItem], per_item_limit: int = 50,
+         price_min: float | None = None, price_max: float | None = None) -> list[Deal]:
     if not config.have_api_keys():
         raise RuntimeError(
             "Buy Radar needs eBay API keys (same ones as pricing). "
@@ -86,7 +90,8 @@ def scan(items: list[WatchItem], per_item_limit: int = 50) -> list[Deal]:
     token = ebay_auth.application_token()
     deals: list[Deal] = []
     for item in items:
-        listings = _search(token, item.query, per_item_limit)
+        listings = _search(token, item.query, per_item_limit,
+                           price_min=price_min, price_max=price_max)
         if not listings:
             continue
         prices = [l["price"] for l in listings if l["price"] is not None]
@@ -112,20 +117,31 @@ def scan(items: list[WatchItem], per_item_limit: int = 50) -> list[Deal]:
                 url=l["url"],
                 image=l.get("image", ""),
                 bars=bars,
+                sport=item.sport,
             ))
     # Best deals first
     deals.sort(key=lambda d: d.discount_pct, reverse=True)
     return deals
 
 
-def _search(token: str, query: str, limit: int) -> list[dict]:
+def _search(token: str, query: str, limit: int,
+            price_min: float | None = None, price_max: float | None = None) -> list[dict]:
+    # eBay Browse filters are comma-joined. Add a price band when asked so both
+    # the returned listings AND the median "market" reference stay in the band
+    # the owner cares about (e.g. the $100–$1000 premium-card window).
+    filters = ["buyingOptions:{FIXED_PRICE|AUCTION}"]
+    if price_min is not None or price_max is not None:
+        lo = "" if price_min is None else f"{price_min:g}"
+        hi = "" if price_max is None else f"{price_max:g}"
+        filters.append(f"price:[{lo}..{hi}]")
+        filters.append("priceCurrency:USD")
     resp = requests.get(
         f"{config.api_base()}/buy/browse/v1/item_summary/search",
         headers={
             "Authorization": f"Bearer {token}",
             "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
         },
-        params={"q": query, "limit": min(limit, 200), "filter": "buyingOptions:{FIXED_PRICE|AUCTION}"},
+        params={"q": query, "limit": min(limit, 200), "filter": ",".join(filters)},
         timeout=30,
     )
     if resp.status_code >= 400:

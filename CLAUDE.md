@@ -57,7 +57,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   (filling it marks the item SOLD and moves it from inventory value to
   revenue), `sold_date`. `Card.is_listed()`/`is_sold()` in catalog.py.
 - `data/watchlist.csv` — cards the owner wants to BUY (feeds Buy Radar AND the
-  app's Targets tab via `build_web._targets`).
+  app's Targets tab via `build_web._targets`). Columns: label, query,
+  fair_value, alert_below, notes, **`sport`** (football/baseball/… — Buy Radar
+  sorts football-first). Owner preference: premium **$100–$1000** cards,
+  **football preferred**, baseball OK — so rows target graded/parallel/auto
+  versions that naturally list in that band (raw base RCs are too cheap).
 - `data/price_history.csv` — per-SKU price observations appended by
   `reprice.py` (date, price, basis, median, count, applied). Committed, so the
   app's Movers panel + week-over-week ▲▼ chips (`build_web._price_changes`,
@@ -168,11 +172,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v14. The live
+  this makes the service worker serve stale CSS/JS. Current: v15. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v14.
+  Current: v15.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -209,6 +213,17 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   `build_web.py` and ships to main (needs the same eBay env vars). This is the
   free "Option A" — the always-on backend for live type-anything search +
   one-tap listing (Option B) is still Phase 2.
+- **Buy Radar price band + sport preference (v15).** Owner wants pricier cards,
+  football-first. `radar.MIN_PRICE`/`MAX_PRICE` (default **$100–$1000**) are
+  passed into `deals.scan(price_min, price_max)` → `_search` adds an eBay
+  Browse `price:[min..max],priceCurrency:USD` filter, so both the listings AND
+  the market-median reference stay in-band (cheap base cards no longer pollute
+  the median). `radar._curate` also drops any kept deal outside the band and
+  sorts **football first** (`SPORT_ORDER`) then by discount. `sport` flows
+  watchlist row → `WatchItem` → `Deal` → snapshot; `app.js viewRadar` shows a
+  🏈 on football rows and notes the "$100–$1000, football first" focus.
+  Snapshot now carries `price_min`/`price_max`. `scan()` band args default to
+  None, so `find_deals.py` is unchanged. Tune the band in `radar.py`.
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -235,8 +250,13 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v14**
-  (v14 = in-app **🔎 Buy Radar tab** — watchlist deals with Alt-style value
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v15**
+  (v15 = Buy Radar **$100–$1000 price band + football-first** — owner wants
+  pricier cards; `radar.py` passes the band into the eBay search so listings +
+  market median stay in-band, curation drops out-of-band deals and sorts
+  football before baseball, watchlist gained a `sport` column and was
+  retargeted to premium graded/parallel/auto cards, deal rows show a 🏈;
+  v14 = in-app **🔎 Buy Radar tab** — watchlist deals with Alt-style value
   bars, curated from live eBay via `radar.py` → `data/radar_snapshot.json`,
   free/no-backend "Option A"; v13 = `est_sold` price basis — a conservative
   haircut on asking comps to estimate true market after eBay denied real
