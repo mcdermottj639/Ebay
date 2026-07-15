@@ -172,11 +172,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v15. The live
+  this makes the service worker serve stale CSS/JS. Current: v16. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v15.
+  Current: v16.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -224,6 +224,28 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   🏈 on football rows and notes the "$100–$1000, football first" focus.
   Snapshot now carries `price_min`/`price_max`. `scan()` band args default to
   None, so `find_deals.py` is unchanged. Tune the band in `radar.py`.
+- **Buy Radar deal popup + Downtowns/Kabooms (v16).** Tapping a deal now opens
+  a **popup** (`app.js openDeal`, reuses the modal shell) instead of jumping
+  straight to eBay: shows the listing + rating/discount, a **"Currently on eBay
+  · cheapest"** box (the 6 cheapest live listings `radar.py` captured per card,
+  attached as `Deal.samples` = [{t,p,u}]), and three buttons — **Open this
+  listing**, **All live listings**, **Recent sold prices** (the last two are
+  public eBay search URLs built from `Deal.query`; sold = `&LH_Sold=1&LH_Complete=1`,
+  our only path to sold since Marketplace Insights is denied). Deal rows are now
+  `<div role=button>` (click/Enter), not `<a>`.
+  **Premium inserts:** the owner specifically hunts **Downtowns** (Donruss
+  Downtown SSPs) and **Kabooms** (Panini Kaboom) and will pay **>$1000 when the
+  savings are big**. `radar._is_premium` flags a watchlist row when its
+  label/query contains "downtown"/"kaboom"; those get a wider band
+  (`PREMIUM_MAX_PRICE` $5000) via per-item `WatchItem.price_max`, and `_keep`
+  admits an over-$1000 deal only if it's premium AND `discount ≥
+  PREMIUM_MIN_DISCOUNT` (25%). Curation sorts premium ahead of base within each
+  sport; rows/popup show a 💥 badge. Watchlist gained football Downtown/Kaboom
+  rows for the QBs/stars.
+  **Single-card filter:** broad Kaboom/Downtown queries pull sealed wax, box
+  lots, and breaks that poison the median — `deals._is_single_card`
+  (`_NON_SINGLE` regex) drops those in `scan()` (Buy Radar only; the ad-hoc
+  `search()` is left alone so box lookups still work).
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -250,8 +272,13 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v15**
-  (v15 = Buy Radar **$100–$1000 price band + football-first** — owner wants
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v16**
+  (v16 = Buy Radar **deal popup + Downtowns/Kabooms** — tapping a deal opens a
+  popup with the current cheapest live listings + Open-listing / All-live /
+  Recent-sold eBay buttons; premium Downtown/Kaboom inserts get a wider band
+  (up to $5000) and are kept over $1000 only on big savings (≥25% off); a
+  single-card filter strips sealed wax/box-lot noise;
+  v15 = Buy Radar **$100–$1000 price band + football-first** — owner wants
   pricier cards; `radar.py` passes the band into the eBay search so listings +
   market median stay in-band, curation drops out-of-band deals and sorts
   football before baseball, watchlist gained a `sport` column and was
