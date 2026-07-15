@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v20";
+  var APP_VERSION = "v21";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -41,6 +41,7 @@
     nav.appendChild(el('<div class="navbrand"><span class="logo">🃏</span>Card Vault</div>'));
     [["collection", "🗃️", "Collection"],
      ["value", "💰", "Value"],
+     ["salesmap", "🗺️", "Sales Map"],
      ["radar", "🔎", "Buy Radar"],
      ["targets", "🎯", "Targets"],
      ["drafts", "🏷️", "Drafts"],
@@ -83,8 +84,9 @@
   function render() {
     var v = document.getElementById("view");
     v.innerHTML = "";
-    v.appendChild({ collection: viewCollection, value: viewValue, radar: viewRadar,
-                    targets: viewTargets, drafts: viewDrafts, about: viewAbout }[state.tab]());
+    v.appendChild({ collection: viewCollection, value: viewValue, salesmap: viewSalesMap,
+                    radar: viewRadar, targets: viewTargets, drafts: viewDrafts,
+                    about: viewAbout }[state.tab]());
     v.scrollTop = 0; window.scrollTo(0, 0);
   }
 
@@ -513,6 +515,233 @@
     return wrap;
   }
 
+  // ---------- Sales Map ----------
+  // Which held cards are in the best position to sell, plus price-change
+  // analytics. All signals come from fields already in data.json, so the tab
+  // works today and sharpens automatically as weekly re-price runs add history.
+
+  // % price move vs the prior weekly snapshot (null when we have no prior).
+  function sellMomentum(c) {
+    var cur = num(c.asking_price), prev = num(c.prev_price);
+    if (!cur || !prev) return null;
+    return (cur - prev) / prev * 100;
+  }
+
+  // Sell-readiness score 0–100 = value(34) + liquidity(36) + confidence(10) +
+  // momentum(20, centred). Returns the score, 0–3 rating bars, and plain
+  // reasons so a non-technical owner sees WHY a card ranks where it does.
+  function sellScore(c) {
+    var v = num(c.asking_price), reasons = [], score = 0;
+
+    // 1) Value — bigger tickets are worth the listing effort (log scale).
+    score += Math.max(0, Math.min(34, (Math.log(Math.max(v, 1)) / Math.log(1000)) * 34));
+    if (v >= 100) reasons.push("premium value");
+
+    // 2) Liquidity / desirability — what makes a card sell fast.
+    var liq = 0;
+    if (c.graded) { liq += 14; reasons.push(((c.grader || "graded").toUpperCase() + (c.grade ? " " + c.grade : "")).trim()); }
+    if (c.auto) { liq += 10; reasons.push("auto"); }
+    if (c.serial_run) { liq += 6; reasons.push("/" + c.serial_run); }
+    if (c.rookie) { liq += 4; reasons.push("rookie"); }
+    if (/football/i.test(c.sport || "")) { liq += 6; reasons.push("football"); }
+    score += Math.min(36, liq);
+
+    // 3) Price confidence — how much we trust the number we'd list at.
+    score += c.price_basis === "sold" ? 10 : c.price_basis === "est_sold" ? 6 : c.price_basis === "asking" ? 3 : 0;
+
+    // 4) Momentum — rising price = sell into strength (neutral when unknown).
+    var pct = sellMomentum(c);
+    if (pct == null) { score += 10; }
+    else {
+      score += 10 + Math.max(-10, Math.min(10, pct));
+      if (pct >= 3) reasons.push("▲ up " + Math.round(pct) + "% this wk");
+      else if (pct <= -3) reasons.push("▼ down " + Math.abs(Math.round(pct)) + "% this wk");
+    }
+
+    score = Math.max(0, Math.min(100, Math.round(score)));
+    var bars = score >= 70 ? 3 : score >= 45 ? 2 : score >= 22 ? 1 : 0;
+    return { score: score, bars: bars, reasons: reasons };
+  }
+
+  var SELL_RATING = { 3: ["Prime to sell", "great"], 2: ["Good to sell", "good"],
+                      1: ["Fair", "fair"], 0: ["Hold", "over"] };
+
+  // Tiny inline price-history sparkline (SVG, no libraries). Reused in sell
+  // rows and the card modal. Needs 2+ points; returns "" otherwise.
+  function sparkline(series, w, h) {
+    var pts = (series || []).filter(function (p) { return p && typeof p.p === "number"; });
+    if (pts.length < 2) return "";
+    w = w || 88; h = h || 26;
+    var vals = pts.map(function (p) { return p.p; });
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+    if (hi === lo) { hi += 1; lo -= 1; }
+    var X = function (i) { return (w - 2) * (i / (pts.length - 1)) + 1; };
+    var Y = function (v) { return (h - 3) * (1 - (v - lo) / (hi - lo)) + 1.5; };
+    var up = vals[vals.length - 1] >= vals[0];
+    var d = pts.map(function (p, i) { return (i ? "L" : "M") + X(i).toFixed(1) + "," + Y(p.p).toFixed(1); }).join(" ");
+    return '<svg class="spark ' + (up ? "up" : "down") + '" viewBox="0 0 ' + w + " " + h +
+      '" width="' + w + '" height="' + h + '" preserveAspectRatio="none" aria-hidden="true">' +
+      '<path d="' + d + '" fill="none" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>' +
+      '<circle cx="' + X(pts.length - 1).toFixed(1) + '" cy="' + Y(vals[vals.length - 1]).toFixed(1) + '" r="1.9"/></svg>';
+  }
+
+  // The map: a Value × Sell-readiness scatter. Top-right = big-ticket, ready to
+  // sell. Dots colour by rating, tap to open the card.
+  function quadrantMap(scored) {
+    var panel = el('<div class="panel"><div class="ptitle">Sell map · value × readiness</div></div>');
+    if (scored.length < 2) {
+      panel.appendChild(el('<p class="muted" style="font-size:13px;margin:4px 0 2px">Add a few priced cards and the map fills in.</p>'));
+      return panel;
+    }
+    var W = 600, H = 300, PL = 40, PR = 14, PT = 16, PB = 30;
+    var vlog = scored.map(function (s) { return Math.log(Math.max(num(s.c.asking_price), 1)); });
+    var lo = Math.min.apply(null, vlog), hi = Math.max.apply(null, vlog);
+    if (hi === lo) { hi += 1; lo -= 1; }
+    var X = function (lg) { return PL + (W - PL - PR) * (lg - lo) / (hi - lo); };
+    var Y = function (sc) { return PT + (H - PT - PB) * (1 - sc / 100); };
+    var midX = X((lo + hi) / 2), midY = Y(50);
+    var dots = scored.map(function (s) {
+      var r = SELL_RATING[s.bars] || SELL_RATING[0];
+      var rad = 4 + Math.min(7, num(s.c.asking_price) > 0 ? Math.log(num(s.c.asking_price) + 1) : 0);
+      return '<circle class="qd ' + r[1] + '" data-sku="' + esc(s.c.sku) + '" cx="' + X(Math.log(Math.max(num(s.c.asking_price), 1))).toFixed(1) +
+        '" cy="' + Y(s.score).toFixed(1) + '" r="' + rad.toFixed(1) + '"><title>' + esc(s.c.player) +
+        " · " + money0(s.c.asking_price) + " · " + r[0] + " (" + s.score + ")</title></circle>";
+    }).join("");
+    var svg = el(
+      '<svg class="qmap" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Sell map: value versus readiness">' +
+        '<rect class="qquad" x="' + midX + '" y="' + PT + '" width="' + (W - PR - midX) + '" height="' + (midY - PT) + '"/>' +
+        '<line class="qax" x1="' + midX + '" y1="' + PT + '" x2="' + midX + '" y2="' + (H - PB) + '"/>' +
+        '<line class="qax" x1="' + PL + '" y1="' + midY + '" x2="' + (W - PR) + '" y2="' + midY + '"/>' +
+        '<line class="qbord" x1="' + PL + '" y1="' + (H - PB) + '" x2="' + (W - PR) + '" y2="' + (H - PB) + '"/>' +
+        '<text class="qlab hot" x="' + (W - PR - 4) + '" y="' + (PT + 14) + '" text-anchor="end">▲ prime to sell</text>' +
+        '<text class="tx" x="' + (PL) + '" y="' + (H - 10) + '">lower value</text>' +
+        '<text class="tx" x="' + (W - PR) + '" y="' + (H - 10) + '" text-anchor="end">higher value →</text>' +
+        '<text class="tx" x="6" y="' + (PT + 6) + '">ready</text>' +
+        dots +
+      "</svg>");
+    svg.querySelectorAll(".qd").forEach(function (dot) {
+      dot.style.cursor = "pointer";
+      dot.onclick = function () {
+        var sku = dot.getAttribute("data-sku");
+        var card = state.data.cards.filter(function (c) { return c.sku === sku; })[0];
+        if (card) openModal(card);
+      };
+    });
+    panel.appendChild(svg);
+    panel.appendChild(el('<p class="muted qcap">Each dot is a card — right = worth more, up = readier to sell. ' +
+      'Tap a dot to open it. Colour = Prime / Good / Fair / Hold.</p>'));
+    return panel;
+  }
+
+  // one ranked sell-candidate row
+  function sellRowEl(s) {
+    var c = s.c, r = SELL_RATING[s.bars] || SELL_RATING[0];
+    var reasons = s.reasons.slice(0, 3).map(function (x) { return '<span class="rchip">' + esc(x) + "</span>"; }).join("");
+    var spark = sparkline(c.price_series, 74, 24);
+    var row = el(
+      '<button class="srow">' +
+        thumb(c) +
+        '<div class="m"><div class="p">' + esc(c.player) +
+          (c.listed ? ' <span class="badge b-listed">LISTED</span>' : "") + "</div>" +
+          '<div class="sub">' + esc(c.line || "") + "</div>" +
+          '<div class="rchips">' + reasons + "</div></div>" +
+        '<div class="r">' +
+          '<div class="val tnum">' + money0(c.asking_price) + changeChip(c) + "</div>" +
+          (spark ? '<div class="sparkwrap">' + spark + "</div>" : "") +
+          '<div class="drate ' + r[1] + '">' + ratingBars(s.bars) + '<span class="rlabel">' + r[0] + "</span></div>" +
+        "</div>" +
+      "</button>");
+    row.onclick = function () { openModal(c); };
+    return row;
+  }
+
+  function viewSalesMap() {
+    var wrap = el('<div class="view"></div>');
+    wrap.appendChild(el('<div class="eyebrow">Sales Map</div>'));
+    wrap.appendChild(el('<p class="muted" style="font-size:13px;margin:0 2px 12px">Which of your cards are in the best ' +
+      "position to sell — scored on value, how fast the type moves, and price momentum — plus how prices are changing over time.</p>"));
+
+    // held, priced cards → scored & ranked
+    var held = state.data.cards.filter(function (c) { return !c.sold && num(c.asking_price) > 0; });
+    var scored = held.map(function (c) { var s = sellScore(c); s.c = c; return s; })
+      .sort(function (a, b) { return b.score - a.score; });
+
+    if (!scored.length) {
+      wrap.appendChild(el('<div class="card"><p class="muted" style="margin:0">No priced cards to map yet. ' +
+        "Price your cards (weekly eBay re-price does this automatically) and they’ll rank here.</p></div>"));
+      return wrap;
+    }
+
+    // headline tiles: how many are prime / good / worth listing
+    var prime = scored.filter(function (s) { return s.bars >= 3; });
+    var good = scored.filter(function (s) { return s.bars === 2; });
+    var topVal = scored.reduce(function (a, s) { return a + num(s.c.asking_price); }, 0);
+    var tiles = el('<div class="tiles"></div>');
+    tiles.appendChild(el('<div class="tile hero"><div class="k">Prime to sell now</div><div class="v tnum">' +
+      prime.length + ' <small class="hsub">of ' + scored.length + " priced</small></div></div>"));
+    [["Good to sell", good.length, ""],
+     ["Value in play", money0(topVal), ""],
+     ["Listed now", state.data.summary.listed || 0, ""]].forEach(function (t) {
+      tiles.appendChild(el('<div class="tile"><div class="k">' + t[0] + '</div><div class="v tnum ' + t[2] + '">' + t[1] + "</div></div>"));
+    });
+    wrap.appendChild(tiles);
+
+    // the map
+    wrap.appendChild(quadrantMap(scored));
+
+    // ranked sell candidates
+    wrap.appendChild(el('<div class="eyebrow">Best positioned to sell</div>'));
+    var list = el('<div class="list sellist"></div>');
+    scored.slice(0, 12).forEach(function (s) { list.appendChild(sellRowEl(s)); });
+    wrap.appendChild(list);
+
+    // price-change analytics: value trend + weekly gainers / decliners
+    wrap.appendChild(el('<div class="eyebrow">Price changes</div>'));
+    var vgrid = el('<div class="vgrid"></div>');
+    vgrid.appendChild(trendChart(state.data.history));
+    vgrid.appendChild(moversSplitPanel());
+    wrap.appendChild(vgrid);
+
+    return wrap;
+  }
+
+  // Gainers (sell into strength) vs decliners (sell before further slide),
+  // from week-over-week price moves. Populates once re-price history builds.
+  function moversSplitPanel() {
+    var panel = el('<div class="panel"><div class="ptitle">This week · gainers &amp; decliners</div></div>');
+    var moved = state.data.cards.filter(function (c) {
+      return !c.sold && num(c.prev_price) > 0 && num(c.asking_price) > 0 &&
+             Math.abs(num(c.asking_price) - num(c.prev_price)) / num(c.prev_price) >= 0.005;
+    }).map(function (c) {
+      return { c: c, pct: (num(c.asking_price) - num(c.prev_price)) / num(c.prev_price) * 100 };
+    });
+    if (!moved.length) {
+      panel.appendChild(el('<p class="muted" style="font-size:13px;margin:4px 0 2px">No price moves yet — ' +
+        "gainers and decliners appear once the weekly eBay re-price has two snapshots to compare.</p>"));
+      return panel;
+    }
+    var up = moved.filter(function (m) { return m.pct > 0; }).sort(function (a, b) { return b.pct - a.pct; }).slice(0, 4);
+    var down = moved.filter(function (m) { return m.pct < 0; }).sort(function (a, b) { return a.pct - b.pct; }).slice(0, 4);
+    function group(title, arr, cls) {
+      if (!arr.length) return "";
+      var rows = arr.map(function (m) {
+        return '<button class="mover" data-sku="' + esc(m.c.sku) + '"><span class="mp">' + esc(m.c.player) +
+          '</span><span class="ms">' + esc(m.c.line || "") + '</span>' +
+          '<span class="mr tnum">' + money0(m.c.asking_price) + changeChip(m.c) + "</span></button>";
+      }).join("");
+      return '<div class="mgroup ' + cls + '"><div class="mglab">' + title + "</div>" + rows + "</div>";
+    }
+    var box = el('<div class="movers split">' + group("▲ Gainers", up, "g-up") + group("▼ Decliners", down, "g-down") + "</div>");
+    box.querySelectorAll(".mover").forEach(function (b) {
+      b.onclick = function () {
+        var card = state.data.cards.filter(function (c) { return c.sku === b.getAttribute("data-sku"); })[0];
+        if (card) openModal(card);
+      };
+    });
+    panel.appendChild(box);
+    return panel;
+  }
+
   // value rating (like Alt's green bars): 3 Great / 2 Good / 1 Fair / 0 Over
   var RATINGS = { 3: ["Great Value", "great"], 2: ["Good Value", "good"],
                   1: ["Fair Price", "fair"], 0: ["Over Market", "over"] };
@@ -826,6 +1055,22 @@
       (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "");
   }
 
+  // Per-card price-over-time box for the modal — a sparkline of the SKU's
+  // re-price snapshots, with first→latest change. Hidden until 2+ snapshots.
+  function priceHistoryBox(c) {
+    var pts = (c.price_series || []).filter(function (p) { return p && typeof p.p === "number"; });
+    if (pts.length < 2) return "";
+    var first = pts[0].p, last = pts[pts.length - 1].p;
+    var pct = first ? (last - first) / first * 100 : 0;
+    var up = last >= first;
+    var chg = (Math.abs(pct) < 0.5) ? '<span class="muted">flat</span>'
+      : '<span class="chg ' + (up ? "up" : "down") + '">' + (up ? "▲" : "▼") + Math.abs(pct).toFixed(pct >= 10 ? 0 : 1) + "%</span>";
+    return '<div class="compsbox phist"><div class="lab">Price history · ' + pts.length + " snapshots</div>" +
+      '<div class="phrow">' + sparkline(pts, 200, 44) +
+      '<div class="phmeta"><span class="tnum">' + money0(first) + " → " + money0(last) + "</span>" + chg + "</div></div>" +
+      '<div class="cfoot">' + esc(pts[0].d) + " → " + esc(pts[pts.length - 1].d) + " · from weekly eBay re-price</div></div>";
+  }
+
   function openModal(c) {
     var m = document.getElementById("modal");
     var rows = [
@@ -852,6 +1097,7 @@
           '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
           '<dl class="kv">' + kv + "</dl>" +
           '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>" +
+          priceHistoryBox(c) +
           compsBox(c) +
           '<div class="mbtns">' +
             '<a class="mbtn" href="' + ebaySearchUrl(c, false) + '" target="_blank" rel="noopener">🛒 Live listings</a>' +

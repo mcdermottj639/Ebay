@@ -108,6 +108,31 @@ def _price_changes():
     return changes
 
 
+def _price_series():
+    """Per-SKU price-over-time series from data/price_history.csv (written by
+    reprice.py). Returns {sku: [{d, p}, ...]} sorted oldest→newest, one point
+    per date (last write wins for a day), capped to the most recent ~60 so the
+    Sales Map sparklines stay light. Grows automatically as weekly reprice runs
+    append snapshots — with <2 points a card just shows 'tracking started'."""
+    path = DATA / "price_history.csv"
+    if not path.exists():
+        return {}
+    per_sku: dict[str, dict] = {}
+    with path.open(newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            sku = (row.get("sku") or "").strip()
+            date = (row.get("date") or "").strip()
+            price = _num(row.get("price", ""))
+            if not sku or not date or price <= 0:
+                continue
+            per_sku.setdefault(sku, {})[date] = price  # last write per day wins
+    series = {}
+    for sku, by_date in per_sku.items():
+        pts = [{"d": d, "p": round(by_date[d], 2)} for d in sorted(by_date)]
+        series[sku] = pts[-60:]
+    return series
+
+
 def _comps_snapshot():
     """Per-SKU comp listings saved by reprice.py (data/comps_snapshot.json).
     Returns ({sku: {source, broad, items}}, as_of_date)."""
@@ -224,6 +249,7 @@ def build_data(cards) -> dict:
     revenue = _money(sold, "sold_price")
     realized = revenue - _money(sold, "cost")
     changes = _price_changes()
+    series_by_sku = _price_series()
     comps_by_sku, comps_as_of = _comps_snapshot()
 
     return {
@@ -268,6 +294,7 @@ def build_data(cards) -> dict:
                 "sold_price": _num(c.sold_price) if c.is_sold() else "",
                 "sold_date": c.sold_date, "cert": _cert_for(c),
                 "prev_price": changes.get(c.sku, {}).get("prev", ""),
+                "price_series": series_by_sku.get(c.sku, []),
                 "comps": ({"as_of": comps_as_of,
                            "source": comps_by_sku[c.sku].get("source", "active"),
                            "broad": comps_by_sku[c.sku].get("broad", False),

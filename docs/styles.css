@@ -345,6 +345,69 @@ main { max-width: 720px; margin: 0 auto;
   text-overflow: ellipsis; white-space: nowrap; }
 .mover .mr { font-weight: 800; font-size: 13.5px; white-space: nowrap; }
 
+/* gainers/decliners split (Sales Map) */
+.movers.split { display: grid; grid-template-columns: 1fr; gap: 4px; }
+.mgroup { padding-top: 4px; }
+.mgroup + .mgroup { border-top: 1px solid var(--border); margin-top: 4px; }
+.mglab { font-size: 10px; text-transform: uppercase; letter-spacing: .06em;
+  font-weight: 800; margin: 6px 2px 2px; }
+.mgroup.g-up .mglab { color: var(--good); }
+.mgroup.g-down .mglab { color: var(--bad); }
+
+/* ---- Sales Map ---- */
+.hsub { font-size: 13px; font-weight: 600; color: var(--muted); }
+.tile.hero .hsub { font-size: 15px; }
+
+/* the value × readiness scatter */
+.qmap { width: 100%; height: auto; display: block; margin-top: 4px; }
+.qmap .qquad { fill: var(--gold); opacity: .07; }
+.qmap .qax { stroke: var(--border); stroke-dasharray: 3 4; }
+.qmap .qbord { stroke: var(--border); }
+.qmap .tx { font-size: 11px; fill: var(--muted); font-family: inherit; }
+.qmap .qlab { font-size: 11px; font-weight: 800; font-family: inherit; }
+.qmap .qlab.hot { fill: var(--gold); }
+.qmap .qd { opacity: .9; transition: opacity .12s; }
+.qmap .qd:hover { opacity: 1; }
+.qmap .qd.great { fill: #2fbd6e; }
+.qmap .qd.good { fill: #7bc96f; }
+.qmap .qd.fair { fill: var(--gold); }
+.qmap .qd.over { fill: var(--muted); }
+.qcap { font-size: 12px; margin: 8px 2px 0; }
+
+/* sparklines (sell rows + modal) */
+.spark { display: block; overflow: visible; }
+.spark path { stroke: var(--muted); }
+.spark circle { fill: var(--muted); }
+.spark.up path { stroke: var(--good); } .spark.up circle { fill: var(--good); }
+.spark.down path { stroke: var(--bad); } .spark.down circle { fill: var(--bad); }
+
+/* ranked sell-candidate rows */
+.sellist { gap: 9px; }
+.srow { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 10px 12px; box-shadow: var(--shadow); color: inherit; font: inherit;
+  text-align: left; cursor: pointer; }
+.srow:hover { border-color: var(--gold); }
+.srow .m { min-width: 0; }
+.srow .p { font-weight: 700; font-size: 14.5px; }
+.srow .sub { color: var(--muted); font-size: 12px; margin-top: 2px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.rchips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.rchip { font-size: 10.5px; font-weight: 700; color: var(--muted);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+.srow .r { text-align: right; white-space: nowrap; display: flex; flex-direction: column;
+  align-items: flex-end; gap: 3px; }
+.srow .r .val { font-weight: 800; font-size: 15px; }
+.sparkwrap { line-height: 0; }
+.srow .drate { margin-top: 0; }
+
+/* per-card price history in the modal */
+.compsbox.phist .phrow { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+.compsbox.phist .spark { flex: 1; min-width: 0; }
+.compsbox.phist .phmeta { display: flex; flex-direction: column; align-items: flex-end;
+  gap: 2px; font-weight: 800; font-size: 14px; white-space: nowrap; }
+
 /* ---- buy targets ---- */
 .trow { display: flex; align-items: center; gap: 12px; background: var(--surface);
   border: 1px solid var(--border); border-radius: 12px; padding: 13px 15px;

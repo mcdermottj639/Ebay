@@ -121,8 +121,8 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - `docs/` (also holds the web app) — **Card Vault PWA**, the "real app" (à la
   the owner's Sports-Hub). Static HTML/CSS/vanilla-JS, no build step, deploys
   via GitHub Pages. `index.html` shell, `app.js` (renders tabs: Collection /
-  Value / Buy Radar / Targets / Drafts / About, card-detail modal, theme
-  toggle, SW registration),
+  Value / Sales Map / Buy Radar / Targets / Drafts / About, card-detail modal,
+  theme toggle, SW registration),
   `styles.css` (card-hobby theme: felt-green/charcoal + foil-gold, dark default
   + light via tokens), `manifest.webmanifest` + `sw.js` (installable, offline),
   `icon.svg`, `.nojekyll`, `img/` (card photos). Reads `docs/data.json`.
@@ -163,8 +163,29 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   same-day rebuilds, capped ~2yr). Since data.json is committed, the Pages
   Action carries it too. The Value tab renders it as a dependency-free SVG
   line chart (`trendChart`); with <2 points it shows a "tracking started" note.
+- **🗺️ Sales Map tab (v21).** Owner wanted "a tab that's a sales map — which
+  cards I own are in a good position to sell, with analytics of price change
+  over time." Pure client-side over data already in `data.json` (no new keys):
+  `app.js viewSalesMap` scores every held, priced card with a **Sell Score
+  (0–100)** = value(34, log) + liquidity/desirability(36: graded/auto/numbered/
+  rookie/football) + price-confidence(10: sold/est_sold/asking basis) +
+  momentum(20, centred on week-over-week `prev_price`). `sellScore`/
+  `sellMomentum`/`SELL_RATING` → 0–3 rating bars (Prime / Good to sell / Fair /
+  Hold). The tab has: headline tiles (how many are Prime to sell), a **Sell map**
+  SVG scatter (`quadrantMap`: x = value log, y = readiness, top-right =
+  prime-to-sell, dots colour by rating, tap → card modal), a **Best positioned
+  to sell** ranked list (`sellRowEl`, reason chips + a price sparkline), and a
+  **Price changes** section (reuses `trendChart` + a `moversSplitPanel` of
+  weekly gainers vs decliners). Works today off value+liquidity; momentum,
+  sparklines, and gainers/decliners fill in automatically as weekly re-price
+  runs accumulate `price_history.csv`. `build_web._price_series` now bakes each
+  SKU's price-over-time series (`price_series`: [{d,p}], last-per-day, capped 60)
+  into each card, feeding the Sales Map sparklines AND a new **Price history**
+  box in the card modal (`priceHistoryBox`, shows first→latest change; hidden
+  until 2+ snapshots). Sparklines (`sparkline`) are dependency-free SVG.
 - `build_web.py` — regenerates `docs/data.json` from the catalog (incl. per-card
-  `image` + `price_basis`, plus the `history` snapshots above) AND a self-contained
+  `image` + `price_basis` + `price_series`, plus the `history` snapshots above)
+  AND a self-contained
   `output/preview.html` (CSS+JS+data
   inlined) for previewing. Run it after any catalog change so the app reflects it.
   NOTE: the Artifact CSP blocks images, so photos only show on the live Pages
@@ -172,11 +193,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v20. The live
+  this makes the service worker serve stale CSS/JS. Current: v21. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v20.
+  Current: v21.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -290,8 +311,14 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v20**
-  (v20 = **modal close-button fix** — the popup ✕ used `float:right`, so the
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v21**
+  (v21 = new **🗺️ Sales Map tab** — scores every held card on how well-positioned
+  it is to sell (value + liquidity + price momentum → Prime/Good/Fair/Hold), a
+  value×readiness scatter map, a ranked "best positioned to sell" list, and a
+  price-changes section (value trend + weekly gainers/decliners); `build_web`
+  now bakes a per-card `price_series` that also drives a Price-history sparkline
+  in the card modal;
+  v20 = **modal close-button fix** — the popup ✕ used `float:right`, so the
   grid/photo content (later in the DOM) painted over it and swallowed the tap,
   making the card popup feel un-closable. `.modal .close` is now
   `position:absolute; top/right; z-index:3` on a `position:relative` `.modal`
