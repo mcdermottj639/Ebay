@@ -353,6 +353,38 @@ main { max-width: 720px; margin: 0 auto;
   border-radius: 20px; padding: 3px 9px; }
 .tfair { font-size: 11px; font-weight: 700; color: var(--muted); }
 
+/* ---- Buy Radar deals ---- */
+.drow { display: flex; align-items: center; gap: 13px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px;
+  box-shadow: var(--shadow); text-decoration: none; color: inherit;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+.drow:hover { transform: translateY(-1px); border-color: var(--gold);
+  box-shadow: 0 6px 18px rgba(0,0,0,.28); }
+.drow .dthumb { width: 52px; height: 52px; flex: none; border-radius: 9px; }
+.drow .dm { min-width: 0; flex: 1; }
+.drow .dp { font-weight: 800; font-size: 14.5px; }
+.drow .ds { color: var(--muted); font-size: 12px; margin-top: 2px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.drate { display: flex; align-items: center; gap: 7px; margin-top: 6px; }
+.vbars { display: inline-flex; gap: 2px; }
+.vbars .vb { width: 12px; height: 6px; border-radius: 2px; background: rgba(128,128,128,.28); }
+.drate.great .vb.on { background: #2fbd6e; }
+.drate.good  .vb.on { background: #7bc96f; }
+.drate.fair  .vb.on { background: var(--gold); }
+.drate.over  .vb.on { background: #c05a5a; }
+.rlabel { font-size: 11px; font-weight: 800; letter-spacing: .02em; }
+.drate.great .rlabel { color: #2fbd6e; }
+.drate.good  .rlabel { color: #7bc96f; }
+.drate.fair  .rlabel { color: var(--gold); }
+.drate.over  .rlabel { color: #c05a5a; }
+.snipe { font-size: 10px; font-weight: 800; letter-spacing: .03em; color: #e6a400;
+  background: rgba(230,164,0,.15); border: 1px solid rgba(230,164,0,.4);
+  border-radius: 20px; padding: 2px 7px; }
+.drow .dr { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex: none; }
+.dprice { font-weight: 800; font-size: 16px; }
+.ddisc { font-size: 11px; font-weight: 800; color: var(--felt); }
+.dkind { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+
 /* ---- recent eBay comps in the card view ---- */
 .compsbox { margin-top: 14px; background: var(--surface-2); border: 1px solid var(--border);
   border-radius: 10px; padding: 11px; }
@@ -467,6 +499,7 @@ a.comp:hover .ct { color: var(--gold); }
   /* drafts + targets keep a readable width in the grid */
   .list.drafts { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
   .list.targets { grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); }
+  .list.radar { grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); }
   .tiles.biz { grid-template-columns: repeat(4, 1fr); }
   .list.drafts .draft { display: flex; flex-direction: column; }
   .list.drafts .draft .foot { margin-top: auto; padding-top: 10px; }

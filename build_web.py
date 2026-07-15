@@ -121,6 +121,28 @@ def _comps_snapshot():
         return {}, ""
 
 
+def _radar_snapshot():
+    """Buy Radar deals saved by radar.py (data/radar_snapshot.json).
+    Returns {as_of, watch_count, deals:[...]} — the app's 🔎 Buy Radar tab.
+    Absent until the first keyed radar run, so the tab shows a friendly note."""
+    path = DATA / "radar_snapshot.json"
+    empty = {"as_of": "", "watch_count": 0, "scanned": 0, "shown": 0, "deals": []}
+    if not path.exists():
+        return empty
+    try:
+        snap = json.loads(path.read_text(encoding="utf-8"))
+        deals = snap.get("deals", [])
+        return {
+            "as_of": snap.get("as_of", ""),
+            "watch_count": snap.get("watch_count", 0),
+            "scanned": snap.get("scanned", len(deals)),
+            "shown": snap.get("shown", len(deals)),
+            "deals": deals,
+        }
+    except ValueError:
+        return empty
+
+
 def _targets():
     """The owner's buy watchlist (data/watchlist.csv) for the Targets tab."""
     path = DATA / "watchlist.csv"
@@ -206,6 +228,7 @@ def build_data(cards) -> dict:
         "history": _history(total_value, len(unsold)),
         "generated": datetime.now(timezone.utc).strftime("%b %d, %Y · %H:%M UTC"),
         "targets": _targets(),
+        "radar": _radar_snapshot(),
         "summary": {
             "total_cards": len(cards),
             "merch": sum(1 for c in cards if c.is_merch()),

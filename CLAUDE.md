@@ -47,6 +47,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 | `get_comps.py` | pull eBay prices per card | yes |
 | `reprice.py [--dry-run]` | safely refresh asking prices from comps + log history | yes |
 | `find_deals.py` | Buy Radar: watchlist deals under market | yes |
+| `radar.py` | Buy Radar snapshot for the app's 🔎 tab (writes `data/radar_snapshot.json`) | yes |
 | `search_deals.py "query" [price]` | Alt-style value search | yes |
 | `create_listings.py [live]` | preview / publish listings | yes (live) |
 
@@ -116,7 +117,8 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - `docs/` (also holds the web app) — **Card Vault PWA**, the "real app" (à la
   the owner's Sports-Hub). Static HTML/CSS/vanilla-JS, no build step, deploys
   via GitHub Pages. `index.html` shell, `app.js` (renders tabs: Collection /
-  Value / Drafts / About, card-detail modal, theme toggle, SW registration),
+  Value / Buy Radar / Targets / Drafts / About, card-detail modal, theme
+  toggle, SW registration),
   `styles.css` (card-hobby theme: felt-green/charcoal + foil-gold, dark default
   + light via tokens), `manifest.webmanifest` + `sw.js` (installable, offline),
   `icon.svg`, `.nojekyll`, `img/` (card photos). Reads `docs/data.json`.
@@ -166,11 +168,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v13. The live
+  this makes the service worker serve stale CSS/JS. Current: v14. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v13.
+  Current: v14.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -190,6 +192,23 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   always-available **Live listings / Sold on eBay** buttons (public eBay
   search URLs built from the card title — no API needed). The snapshot file
   doesn't exist until the first keyed reprice run; the box just hides.
+- App v14: **🔎 Buy Radar tab (in-app, no backend).** The owner wanted the
+  deal-finder *inside* the app, not just as a terminal tool. Since eBay's API
+  can't run client-side, `radar.py` runs the scan server-side (reuses
+  `deals.scan(watchlist)`) and writes `data/radar_snapshot.json` (committed);
+  `build_web._radar_snapshot` bakes it into `data.json` as top-level `radar`
+  ({as_of, watch_count, scanned, shown, deals[]}); `app.js` `viewRadar()`
+  renders deal rows with Alt-style green **value bars** (Great/Good/Fair via
+  `ratingBars`), photo/placeholder thumb, ▼ %-under chip, market ref, snipe
+  badge, tap-to-open-on-eBay. **Curation matters:** broad watchlist queries
+  pull a median polluted by premium parallels/autos, so raw `scan()` flags
+  cheap base cards as "90% off." `radar._curate` keeps only believable
+  discounts (`MIN_DISCOUNT` 15% – `MAX_DISCOUNT` 65%) and caps to `TOP_N` (24),
+  recording `scanned`/`shown` so the UI honestly says "showing N strongest of
+  M." Refresh model mirrors reprice: a scheduled Routine runs `radar.py` +
+  `build_web.py` and ships to main (needs the same eBay env vars). This is the
+  free "Option A" — the always-on backend for live type-anything search +
+  one-tap listing (Option B) is still Phase 2.
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -216,10 +235,13 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v13**
-  (v13 = `est_sold` price basis — a conservative haircut on asking comps to
-  estimate true market after eBay denied real sold-comp access — shown as a blue
-  EST pill; v12 = eBay comps inside the card view + Live/Sold eBay search buttons) —
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v14**
+  (v14 = in-app **🔎 Buy Radar tab** — watchlist deals with Alt-style value
+  bars, curated from live eBay via `radar.py` → `data/radar_snapshot.json`,
+  free/no-backend "Option A"; v13 = `est_sold` price basis — a conservative
+  haircut on asking comps to estimate true market after eBay denied real
+  sold-comp access — shown as a blue EST pill; v12 = eBay comps inside the card
+  view + Live/Sold eBay search buttons) —
   v10 was the PC Command Center upgrade (sidebar layout, card-grid display
   case, dashboard Value tab, search + sort, daily value-history chart, first
   snapshot 2026-07-14 $2,701.75); v11 added the business layer: sales tracking
