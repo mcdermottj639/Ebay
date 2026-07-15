@@ -214,13 +214,17 @@ main { max-width: 720px; margin: 0 auto;
   text-shadow: 0 1px 3px rgba(0,0,0,.45); }
 .mhero .thumb.big.ph .ini { font-size: 52px; text-shadow: 0 2px 8px rgba(0,0,0,.5); }
 
-/* ---- sold vs asking pill ---- */
+/* ---- price-basis pill (SOLD / EST / ASKING) ---- */
 .basis { display: inline-block; font-size: 9.5px; font-weight: 800; letter-spacing: .04em;
   padding: 2px 7px; border-radius: 20px; vertical-align: middle; }
 .crow .r .basis { margin-top: 5px; }
 .modal h3 .basis { margin-left: 6px; }
 .b-sold { background: rgba(51,157,99,.18); color: var(--felt); border: 1px solid rgba(51,157,99,.42); }
+.b-est  { background: rgba(74,144,217,.16); color: #2f74c0; border: 1px solid rgba(74,144,217,.45); }
 .b-ask  { background: rgba(216,179,80,.16); color: var(--gold); border: 1px solid rgba(216,179,80,.42); }
+@media (prefers-color-scheme: dark) { .b-est { color: #7fb2ec; } }
+:root[data-theme="dark"]  .b-est { color: #7fb2ec; }
+:root[data-theme="light"] .b-est { color: #2f74c0; }
 
 /* ---- drafts ---- */
 .draft { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 13px; box-shadow: var(--shadow); }

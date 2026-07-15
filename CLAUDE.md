@@ -166,11 +166,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v12. The live
+  this makes the service worker serve stale CSS/JS. Current: v13. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v12.
+  Current: v13.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -216,8 +216,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v12**
-  (v12 = eBay comps inside the card view + Live/Sold eBay search buttons) —
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v13**
+  (v13 = `est_sold` price basis — a conservative haircut on asking comps to
+  estimate true market after eBay denied real sold-comp access — shown as a blue
+  EST pill; v12 = eBay comps inside the card view + Live/Sold eBay search buttons) —
   v10 was the PC Command Center upgrade (sidebar layout, card-grid display
   case, dashboard Value tab, search + sort, daily value-history chart, first
   snapshot 2026-07-14 $2,701.75); v11 added the business layer: sales tracking
@@ -233,24 +235,27 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   If an HTTPS call fails TLS/proxy verify in this env, prefix commands with
   `REQUESTS_CA_BUNDLE=/root/.ccr/ca-bundle.crt`.
 - Pricing method used: comps are **active/asking** medians (Browse API), which
-  run ABOVE actual sold — so `asking_price` set at/just-under median for clean
-  comps. Refine down once real SOLD comps are available.
-- **Marketplace Insights (real SOLD comps): code built + wired, APPLIED — awaiting
-  eBay review.** Tested the production keyset (2026-07) — the
-  `buy.marketplace.insights` scope returns `invalid_scope`, i.e. eBay has NOT yet
-  granted this app the gated Limited-Release API. `comps.py` already prefers sold
-  and auto-falls-back to active, so the day access is granted, `get_comps.py`
-  switches to real sold with no code change (it prints "✓ Using REAL SOLD prices"
-  vs the active-fallback notice). STATUS: owner activated Developer Support and
-  submitted the Application Growth Check requesting the "MIP" (Marketplace Insights
-  Program) product on 2026-07-13. eBay Dev Support replied (ticket 260713-000007)
-  asking 8 vetting questions (use case, storage, sharing, categoryIds, eBay
-  UserID, EPN status, contact); owner answered same day — first-party pricing of
-  own inventory, no data sharing, categories 212/213/214/215/216/183444 +
-  64482/1521. Now awaiting eBay's decision. When the owner says "check sold
-  comps", re-probe `comps.sold_available()`; if True, re-run `get_comps.py` and
-  refine every `asking_price` off real sold medians (and flip `price_basis` to
-  `sold` for repriced rows so the app's pill turns green).
+  run ABOVE actual sold. Auto-repricing (`reprice.py`) now shaves a conservative
+  **`SOLD_DISCOUNT`** haircut (default 12%) off the asking median to ESTIMATE the
+  true sold price, and tags those rows `price_basis = "est_sold"` (app shows a
+  blue **EST** pill — distinct from gold ASKING / green SOLD, never passed off as
+  a real sold comp). Tune the haircut via `SOLD_DISCOUNT` in `reprice.py`. If real
+  SOLD comps are ever granted, the haircut is skipped and rows tag `sold` (green).
+- **Marketplace Insights (real SOLD comps): DENIED by eBay (final, 2026-07-15).**
+  eBay Developer Support (ticket 260713-000007, Vartika Singh) reviewed the
+  Application Growth Check with the eBay business unit and declined: the API is a
+  gated Limited-Release scope "highly limited and generally reserved for eBay's
+  approved partners only." Our request was clean (first-party pricing of own ~34
+  items, no data sharing, categories 212/213/214/215/216/183444 + 64482/1521, eBay
+  UserID MichaelScarn, not EPN) — it was a blanket door-policy "no," not a fault in
+  the application. The ticket can be reopened within 10 days but a different answer
+  is unlikely; worth reapplying later with a stronger selling/listing track record.
+  The `buy.marketplace.insights` scope returns `invalid_scope`. **Workaround in
+  place:** the `est_sold` haircut above approximates market from asking comps; for
+  the few high-value cards the owner can eyeball real sold prices via the modal's
+  **Sold on eBay** button (public eBay search, no API). The plumbing is unchanged —
+  `comps.py` still prefers sold + auto-falls-back, so if access is ever granted
+  later, `get_comps.py`/`reprice.py` switch to real sold with no code change.
 - Comp-query fallback added (`comps.broad_query_for`): when the exact-title
   search returns 0 (niche inserts/autos w/ odd card #s), it retries with a
   broadened query (year+brand+player+grade/AUTO/RELIC/serial). These are marked

@@ -2,8 +2,8 @@
    App shell is cache-first (fast, works offline). data.json is network-first
    (always try for the latest, fall back to cache when offline). */
 
-var CACHE = "card-vault-v12";
-var SHELL = ["./", "./index.html", "./styles.css?v=12", "./app.js?v=12",
+var CACHE = "card-vault-v13";
+var SHELL = ["./", "./index.html", "./styles.css?v=13", "./app.js?v=13",
              "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", function (e) {

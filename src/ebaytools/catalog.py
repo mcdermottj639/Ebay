@@ -59,7 +59,8 @@ class Card:
     cost: str = ""
     asking_price: str = ""
     notes: str = ""
-    price_basis: str = ""   # "sold" (real sold comps) or "asking" (active listings)
+    price_basis: str = ""   # "sold" (real sold comps), "est_sold" (asking comps
+                            # minus a haircut to estimate market), or "asking"
     listed: str = ""        # yes = live on eBay right now
     sold_price: str = ""    # actual sale price — filling this marks the item SOLD
     sold_date: str = ""     # when it sold (YYYY-MM-DD)
