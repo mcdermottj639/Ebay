@@ -172,11 +172,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v16. The live
+  this makes the service worker serve stale CSS/JS. Current: v17. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v16.
+  Current: v17.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -246,6 +246,17 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   lots, and breaks that poison the median — `deals._is_single_card`
   (`_NON_SINGLE` regex) drops those in `scan()` (Buy Radar only; the ad-hoc
   `search()` is left alone so box lookups still work).
+- **Buy Radar filters (v17).** The 🔎 tab now has a client-side filter bar
+  (`app.js viewRadar`, `.radartools`) — native `<select>`s for **Type**
+  (Downtown/Kaboom/Other), **Sport**, **Graded** (all/graded/raw), and **PSA
+  grade** (10, 9.5, …). Facets are derived per-deal from the listing
+  title/query (`dealType`/`dealGrader`/`dealGrade`) since the snapshot has no
+  explicit grade field, and each select is only shown when the current deals
+  actually contain those values (no empty facets). `state.radarFilter`
+  ({type,sport,graded,grade}) + `matchRadar` filter the list; changing a select
+  re-renders only the results (via an inner `renderResults`, so the page
+  doesn't jump), with a "Showing N of M · Clear filters" line. No backend/data
+  change — purely presentational over the existing snapshot.
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -272,8 +283,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v16**
-  (v16 = Buy Radar **deal popup + Downtowns/Kabooms** — tapping a deal opens a
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v17**
+  (v17 = Buy Radar **filters** — Type (Downtown/Kaboom/Other), Sport, Graded,
+  PSA grade selects at the top of the 🔎 tab, facets derived per-deal from the
+  listing title, filters the list in place with a Showing-N-of-M + Clear line;
+  v16 = Buy Radar **deal popup + Downtowns/Kabooms** — tapping a deal opens a
   popup with the current cheapest live listings + Open-listing / All-live /
   Recent-sold eBay buttons; premium Downtown/Kaboom inserts get a wider band
   (up to $5000) and are kept over $1000 only on big savings (≥25% off); a
