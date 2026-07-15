@@ -172,11 +172,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v18. The live
+  this makes the service worker serve stale CSS/JS. Current: v19. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v18.
+  Current: v19.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -290,8 +290,14 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v18**
-  (v18 = Buy Radar filter gained a **"No Kaboom/Downtown"** type option, and
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v19**
+  (v19 = **comp-row alignment fix** — the "On eBay now"/"Currently on eBay"
+  boxes (`.comp`/`.ct`) had a flexbox truncation bug: the title had
+  `white-space:nowrap` but no `min-width:0`, so it refused to shrink and shoved
+  the price off the row, clipping it. `.ct` is now `flex:1;min-width:0` and the
+  price `<b>` is `flex:0 0 auto;white-space:nowrap`, so the title ellipsizes and
+  the price always shows — fixes both the card modal and the Buy Radar popup;
+  v18 = Buy Radar filter gained a **"No Kaboom/Downtown"** type option, and
   `radar.py` reserves slots (`OTHER_SLOTS`) for non-premium deals so that
   filter always has cards to show;
   v17 = Buy Radar **filters** — Type (Downtown/Kaboom/Other), Sport, Graded,
