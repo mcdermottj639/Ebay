@@ -172,11 +172,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v19. The live
+  this makes the service worker serve stale CSS/JS. Current: v20. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v19.
+  Current: v20.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -290,8 +290,14 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v19**
-  (v19 = **comp-row alignment fix** — the "On eBay now"/"Currently on eBay"
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v20**
+  (v20 = **modal close-button fix** — the popup ✕ used `float:right`, so the
+  grid/photo content (later in the DOM) painted over it and swallowed the tap,
+  making the card popup feel un-closable. `.modal .close` is now
+  `position:absolute; top/right; z-index:3` on a `position:relative` `.modal`
+  (h3 gets `padding-right` so it doesn't run under it) — reliably closes the
+  card modal, deal popup, and filter sheet;
+  v19 = **comp-row alignment fix** — the "On eBay now"/"Currently on eBay"
   boxes (`.comp`/`.ct`) had a flexbox truncation bug: the title had
   `white-space:nowrap` but no `min-width:0`, so it refused to shrink and shoved
   the price off the row, clipping it. `.ct` is now `flex:1;min-width:0` and the
