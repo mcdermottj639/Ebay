@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v13";
+  var APP_VERSION = "v14";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier" };
 
@@ -40,6 +40,7 @@
     nav.appendChild(el('<div class="navbrand"><span class="logo">🃏</span>Card Vault</div>'));
     [["collection", "🗃️", "Collection"],
      ["value", "💰", "Value"],
+     ["radar", "🔎", "Buy Radar"],
      ["targets", "🎯", "Targets"],
      ["drafts", "🏷️", "Drafts"],
      ["about", "ℹ️", "About"]].forEach(function (t) {
@@ -81,8 +82,8 @@
   function render() {
     var v = document.getElementById("view");
     v.innerHTML = "";
-    v.appendChild({ collection: viewCollection, value: viewValue, targets: viewTargets,
-                    drafts: viewDrafts, about: viewAbout }[state.tab]());
+    v.appendChild({ collection: viewCollection, value: viewValue, radar: viewRadar,
+                    targets: viewTargets, drafts: viewDrafts, about: viewAbout }[state.tab]());
     v.scrollTop = 0; window.scrollTo(0, 0);
   }
 
@@ -508,6 +509,73 @@
     var list = el('<div class="list"></div>');
     top.forEach(function (c) { list.appendChild(crowEl(c)); });
     wrap.appendChild(top.length ? list : el('<p class="muted">No priced cards yet.</p>'));
+    return wrap;
+  }
+
+  // value rating (like Alt's green bars): 3 Great / 2 Good / 1 Fair / 0 Over
+  var RATINGS = { 3: ["Great Value", "great"], 2: ["Good Value", "good"],
+                  1: ["Fair Price", "fair"], 0: ["Over Market", "over"] };
+  function ratingBars(bars) {
+    var n = Math.max(0, Math.min(3, bars | 0));
+    var out = "";
+    for (var i = 0; i < 3; i++) out += '<span class="vb' + (i < n ? " on" : "") + '"></span>';
+    return '<span class="vbars">' + out + "</span>";
+  }
+
+  function viewRadar() {
+    var wrap = el('<div class="view"></div>');
+    var radar = state.data.radar || { as_of: "", watch_count: 0, deals: [] };
+    var deals = radar.deals || [];
+    wrap.appendChild(el('<div class="eyebrow">Buy Radar</div>'));
+    var extra = (radar.scanned && radar.scanned > deals.length)
+      ? " Showing the " + deals.length + " strongest of " + radar.scanned + " under-market finds."
+      : "";
+    var sub = radar.as_of
+      ? "Live eBay deals on your watchlist, priced under market. Rated Great / Good / Fair. " +
+        "Last checked " + esc(radar.as_of) + " · refreshes automatically." + extra
+      : "Scans eBay for deals on your watchlist and rates them Great / Good / Fair. " +
+        "Runs on a schedule and refreshes here — nothing to do.";
+    wrap.appendChild(el('<p class="muted" style="font-size:13px;margin:0 2px 12px">' + sub + "</p>"));
+
+    if (!deals.length) {
+      var msg = radar.as_of
+        ? "No deals under your targets right now — inventory turns over fast, so Buy Radar re-checks on its next run."
+        : "Buy Radar hasn’t run yet. Once it does (it’s scheduled), the best under-market deals on your watchlist show up here.";
+      wrap.appendChild(el('<div class="card"><p class="muted" style="margin:0">' + msg +
+        '</p></div>'));
+      wrap.appendChild(el('<p class="muted" style="font-size:12px;margin:12px 2px">' +
+        "Edit your watchlist in data/watchlist.csv (add a fair value or an alert-below price to sharpen the deals)." +
+        "</p>"));
+      return wrap;
+    }
+
+    var list = el('<div class="list radar"></div>');
+    deals.forEach(function (d) {
+      var r = RATINGS[Math.max(0, Math.min(3, d.bars | 0))] || RATINGS[0];
+      var auction = /AUCTION/i.test(d.buying_option || "");
+      var kind = auction ? "Auction" : "Buy Now";
+      var ph = { image: d.image, player: d.label, team: "" };
+      var row = el('<a class="drow" href="' + esc(d.url) + '" target="_blank" rel="noopener">' +
+        thumb(ph, "dthumb") +
+        '<div class="dm">' +
+          '<div class="dp">' + esc(d.label) + "</div>" +
+          '<div class="ds">' + esc(d.item_title) + "</div>" +
+          '<div class="drate ' + r[1] + '">' + ratingBars(d.bars) +
+            '<span class="rlabel">' + r[0] + "</span>" +
+            (d.snipe ? '<span class="snipe">⏱ ENDS SOON</span>' : "") +
+          "</div>" +
+        "</div>" +
+        '<div class="dr">' +
+          '<div class="dprice tnum">' + money(d.price) + "</div>" +
+          '<div class="ddisc tnum">▼ ' + Math.abs(Math.round(d.discount_pct)) + "% under</div>" +
+          '<div class="dkind">' + kind + " · mkt ~" + money0(d.reference) + "</div>" +
+        "</div></a>");
+      list.appendChild(row);
+    });
+    wrap.appendChild(list);
+    wrap.appendChild(el('<p class="muted" style="font-size:12px;margin:14px 2px">' +
+      "Tap a deal to open it on eBay. Prices are live from eBay’s active listings; " +
+      "“vs” is the market reference we compared against." + "</p>"));
     return wrap;
   }
 

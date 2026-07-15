@@ -1,0 +1,918 @@
+{
+ "as_of": "2026-07-15",
+ "cards": {
+  "CARD-0001": {
+   "source": "active",
+   "broad": true,
+   "items": [
+    {
+     "t": "2025 Panini Prizm - Rookies Jayden Higgins #376 Hyper Prizm /200 (RC)",
+     "p": 9.99,
+     "u": "https://www.ebay.com/itm/257616706055?_skw=2025+Panini+Jayden+Higgins+RC&hash=item3bfb26fa07:g:ElwAAeSw5rNqUXWG"
+    },
+    {
+     "t": "2025 Panini Origins Jayden Higgins RC Holo Silver /149 Houston Texans WR #132",
+     "p": 3.95,
+     "u": "https://www.ebay.com/itm/197741062712?_skw=2025+Panini+Jayden+Higgins+RC&hash=item2e0a492a38:g:xrMAAeSwTzto3d5o"
+    },
+    {
+     "t": "2025 Panini Mosaic - Jayden Higgins #286 Silver Knight Prizm 102/149 (RC)",
+     "p": 7.0,
+     "u": "https://www.ebay.com/itm/198494925773?_skw=2025+Panini+Jayden+Higgins+RC&hash=item2e373833cd:g:-4gAAeSwN09qVNuA"
+    },
+    {
+     "t": "2025 Panini Select Football JAYDEN HIGGINS #136 White Prizm Shock RC #/799 HOU",
+     "p": 3.49,
+     "u": "https://www.ebay.com/itm/407065946561?_skw=2025+Panini+Jayden+Higgins+RC&hash=item5ec70569c1:g:xwYAAeSwROhqUpka"
+    },
+    {
+     "t": "Jayden Higgins 2025 Panini Prizm Green Ice Prizm RC SSP Texans \ud83e\uddca\ud83d\udd25",
+     "p": 7.99,
+     "u": "https://www.ebay.com/itm/168353710109?_skw=2025+Panini+Jayden+Higgins+RC&hash=item2732a9c01d:g:vCIAAeSwTpVp-TW8"
+    }
+   ]
+  },
+  "CARD-0002": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2025 Kenneth Grant 2025 Panini Donruss Optic 216 Green Hyper RC Rookie DOLPHINS",
+     "p": 1.49,
+     "u": "https://www.ebay.com/itm/336591222045?_skw=2025+Panini+Donruss+Optic+Kenneth+Grant+%23216+RC+Green+Rated+Rookie+Dolphins&hash=item4e5e66751d:g:96kAAeSwuhVqDHv2"
+    },
+    {
+     "t": "2025 Panini Donruss Optic - Rated Rookie Kenneth Grant #216 Green Hyper Prizm RC",
+     "p": 1.75,
+     "u": "https://www.ebay.com/itm/389935455892?_skw=2025+Panini+Donruss+Optic+Kenneth+Grant+%23216+RC+Green+Rated+Rookie+Dolphins&hash=item5ac9f6de94:g:15UAAeSwhLRp7Fpr"
+    },
+    {
+     "t": "2025 Panini Donruss Optic - Rated Rookie Kenneth Grant #216 Green Hyper ",
+     "p": 2.0,
+     "u": "https://www.ebay.com/itm/307065303466?_skw=2025+Panini+Donruss+Optic+Kenneth+Grant+%23216+RC+Green+Rated+Rookie+Dolphins&hash=item477e84b1aa:g:zAUAAeSw0VtqV4L0"
+    },
+    {
+     "t": "Kenneth Grant 2025 Donruss Optic Rated Rookie /50 Lime Green #216 RC",
+     "p": 15.0,
+     "u": "https://www.ebay.com/itm/366148615849?_skw=2025+Panini+Donruss+Optic+Kenneth+Grant+%23216+RC+Green+Rated+Rookie+Dolphins&hash=item5540287ea9:g:SIIAAeSwz0NpdYia"
+    },
+    {
+     "t": "2025 Panini Donruss Optic - Rated Rookie Kenneth Grant #216 Green Hyper Prizm",
+     "p": 1.99,
+     "u": "https://www.ebay.com/itm/227321165417?_skw=2025+Panini+Donruss+Optic+Kenneth+Grant+%23216+RC+Green+Rated+Rookie+Dolphins&hash=item34ed65b669:g:4a8AAeSwILhp8YKe"
+    }
+   ]
+  },
+  "CARD-0003": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2025 Panini Donruss Optic Cam Skattebo (RC) Rated Rookie #228 New York Giants",
+     "p": 2.99,
+     "u": "https://www.ebay.com/itm/178308462519?_skw=2025+Panini+Donruss+Optic+Cam+Skattebo+%23228+RC+Rated+Rookie+Giants&hash=item29840337b7:g:JqoAAeSwVRdp5C3X"
+    },
+    {
+     "t": "2025 Donruss Optic Cam Skattebo Rated Rookie Blue Hyper Prizm RC #228 Giants",
+     "p": 4.27,
+     "u": "https://www.ebay.com/itm/377331441061?_skw=2025+Panini+Donruss+Optic+Cam+Skattebo+%23228+RC+Rated+Rookie+Giants&hash=item57dab4dda5:g:UZUAAeSwrFJqT6Tq"
+    },
+    {
+     "t": "2025 Panini Donruss Optic Cam Skattebo RC #228 Blue Rated Rookie Giants",
+     "p": 3.99,
+     "u": "https://www.ebay.com/itm/398162954903?_skw=2025+Panini+Donruss+Optic+Cam+Skattebo+%23228+RC+Rated+Rookie+Giants&hash=item5cb45c8a97:g:JOYAAeSwe41qUZ4A"
+    },
+    {
+     "t": "2025 Panini Donruss Optic Rated Rookie Cam Skattebo RC #228 New York Giants",
+     "p": 1.95,
+     "u": "https://www.ebay.com/itm/358784837212?_skw=2025+Panini+Donruss+Optic+Cam+Skattebo+%23228+RC+Rated+Rookie+Giants&hash=item53893e265c:g:6mwAAeSwIoZqUsVT"
+    },
+    {
+     "t": "2025 Panini Donruss Optic CAM Skattebo RC #228 Blue Rated Rookie Giants Football",
+     "p": 4.95,
+     "u": "https://www.ebay.com/itm/147284492064?_skw=2025+Panini+Donruss+Optic+Cam+Skattebo+%23228+RC+Rated+Rookie+Giants&hash=item224ad6ff20:g:e-gAAeSw3uFp8myw"
+    }
+   ]
+  },
+  "CARD-0004": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2025 Panini Donruss Optic - Rated Rookie Tyler Loop #227 (RC) Ravens",
+     "p": 1.39,
+     "u": "https://www.ebay.com/itm/406902701961?_skw=2025+Panini+Donruss+Optic+Tyler+Loop+%23227+RC+Rated+Rookie+Ravens&hash=item5ebd4a7f89:g:8T4AAeSw5D5p-CVk"
+    },
+    {
+     "t": "2025 Panini Donruss Optic - Rated Rookie Tyler Loop #227 Blue Hyper Prizm (RC)",
+     "p": 1.79,
+     "u": "https://www.ebay.com/itm/257616424685?_skw=2025+Panini+Donruss+Optic+Tyler+Loop+%23227+RC+Rated+Rookie+Ravens&hash=item3bfb22aeed:g:41MAAeSwDDdqURpI"
+    },
+    {
+     "t": "2025 Panini Donruss Optic - Rated Rookie Tyler Loop #227 Fire Prizm (RC)",
+     "p": 0.99,
+     "u": "https://www.ebay.com/itm/318320232620?_skw=2025+Panini+Donruss+Optic+Tyler+Loop+%23227+RC+Rated+Rookie+Ravens&hash=item4a1d5d48ac:g:adMAAeSw~U1qCo4s"
+    },
+    {
+     "t": "2025 Donruss Optic Tyler Loop Rated Rookie Blue Glitter RC #227 Ravens SSP",
+     "p": 1.99,
+     "u": "https://www.ebay.com/itm/318288240315?_skw=2025+Panini+Donruss+Optic+Tyler+Loop+%23227+RC+Rated+Rookie+Ravens&hash=item4a1b751ebb:g:1IoAAeSwxYdqAnpU"
+    },
+    {
+     "t": "Tyler Loop 2025 Panini Donruss Optic Wave Prizm RC /300 #227 Ravens",
+     "p": 2.47,
+     "u": "https://www.ebay.com/itm/168299149468?_skw=2025+Panini+Donruss+Optic+Tyler+Loop+%23227+RC+Rated+Rookie+Ravens&hash=item272f69389c:g:jPwAAeSwOhVp2LJl"
+    }
+   ]
+  },
+  "CARD-0005": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2024 Panini Select - Club Level Luke McCaffrey #279 Silver Prizm Die-Cut (RC)",
+     "p": 0.99,
+     "u": "https://www.ebay.com/itm/137510175411?_skw=2024+Panini+Select+Luke+McCaffrey+%23279+RC+Club+Level+Die-Cut+Commanders&hash=item20043ec2b3:g:cpYAAeSwAxtqD9Hl"
+    },
+    {
+     "t": "Luke McCaffrey 2024 Panini Select - Club Level #279 Silver Prizm Die-Cut (RC)",
+     "p": 1.99,
+     "u": "https://www.ebay.com/itm/206027752963?_skw=2024+Panini+Select+Luke+McCaffrey+%23279+RC+Club+Level+Die-Cut+Commanders&hash=item2ff8360603:g:UNgAAeSwIiNpd4i5"
+    },
+    {
+     "t": "\ud83d\udca52024 Panini Select Luke McCaffrey Silver Die Cut Club Level #279 RC Commanders",
+     "p": 1.99,
+     "u": "https://www.ebay.com/itm/167797704436?_skw=2024+Panini+Select+Luke+McCaffrey+%23279+RC+Club+Level+Die-Cut+Commanders&hash=item271185c6f4:g:lCQAAeSwH4hoyuOg"
+    },
+    {
+     "t": "2024 Panini Select - Club Level Luke McCaffrey #279 Silver Prizm Die-Cut (RC)",
+     "p": 1.49,
+     "u": "https://www.ebay.com/itm/257616267276?_skw=2024+Panini+Select+Luke+McCaffrey+%23279+RC+Club+Level+Die-Cut+Commanders&hash=item3bfb20480c:g:TwUAAeSwK7RqUPop"
+    },
+    {
+     "t": "2024 Panini Select - Club Level Die Cut Luke McCaffrey #279 Silver Prizm (RC)",
+     "p": 1.49,
+     "u": "https://www.ebay.com/itm/366376102251?_skw=2024+Panini+Select+Luke+McCaffrey+%23279+RC+Club+Level+Die-Cut+Commanders&hash=item554db7a96b:g:SuQAAeSwh-VpOIVS"
+    }
+   ]
+  },
+  "CARD-0006": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "Joe Andreessen 2024 Panini Select Concourse RC Gold Prizm Shock #/10 Bills PSA 9",
+     "p": 199.99,
+     "u": "https://www.ebay.com/itm/137485616817?_skw=2024+Panini+Select+Joe+Andreessen+%2320+RC+Gold+Concourse+Bills&hash=item2002c806b1:g:aJYAAeSwgFhqSrNh"
+    },
+    {
+     "t": "2024 Panini Select - Joe Andreessen #20 Black Gold Shock Prizm (RC) Bills NFL",
+     "p": 1.79,
+     "u": "https://www.ebay.com/itm/357865853989?_skw=2024+Panini+Select+Joe+Andreessen+%2320+RC+Gold+Concourse+Bills&hash=item5352779425:g:-oAAAeSwWlVpDAY1"
+    },
+    {
+     "t": "2024 Panini Select - Concourse Joe Andreessen #20 Black & Gold Shock Prizm (RC)",
+     "p": 1.05,
+     "u": "https://www.ebay.com/itm/178111495147?_skw=2024+Panini+Select+Joe+Andreessen+%2320+RC+Gold+Concourse+Bills&hash=item297845bbeb:g:XQAAAeSwZqJp-7Sc"
+    },
+    {
+     "t": "Joe Andreessen 2024 Panini Select #20 Black Gold Prizm Rookie RC Buffalo BILLS",
+     "p": 2.49,
+     "u": "https://www.ebay.com/itm/227175944374?_skw=2024+Panini+Select+Joe+Andreessen+%2320+RC+Gold+Concourse+Bills&hash=item34e4bdd0b6:g:uMwAAeSwm8hpaXXC"
+    },
+    {
+     "t": "Joe Andreessen 2024 Panini Select #20 Black Gold Prizm Rookie RC In Toploader ",
+     "p": 2.24,
+     "u": "https://www.ebay.com/itm/206217202659?_skw=2024+Panini+Select+Joe+Andreessen+%2320+RC+Gold+Concourse+Bills&hash=item300380cbe3:g:5isAAeSwn8tp4wgb"
+    }
+   ]
+  },
+  "CARD-0007": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2024 Panini Select - Select Certified Rookies Ray Davis #22 (RC) Buffalo Bills",
+     "p": 1.99,
+     "u": "https://www.ebay.com/itm/318586740073?_skw=2024+Panini+Select+Ray+Davis+%2322+RC+Select+Certified+Bills&hash=item4a2d3fdd69:g:0qUAAeSwflRqV5xN"
+    },
+    {
+     "t": "2024 Panini Select: Select Certified Rookies Ray Davis #22 - Bills (RC)",
+     "p": 1.24,
+     "u": "https://www.ebay.com/itm/336449129991?_skw=2024+Panini+Select+Ray+Davis+%2322+RC+Select+Certified+Bills&hash=item4e55ee4e07:g:E~0AAeSwxvxpnNuU"
+    },
+    {
+     "t": "2024 Panini Select Football Select Certified Rookies #22 RAY DAVIS RC Bills",
+     "p": 1.65,
+     "u": "https://www.ebay.com/itm/366532450055?_skw=2024+Panini+Select+Ray+Davis+%2322+RC+Select+Certified+Bills&hash=item5557095707:g:r9kAAeSw9MFqT7Iv"
+    },
+    {
+     "t": "2024 Panini Select - Select Certified Rookies Ray Davis #22 (RC)",
+     "p": 1.39,
+     "u": "https://www.ebay.com/itm/327217235593?_skw=2024+Panini+Select+Ray+Davis+%2322+RC+Select+Certified+Bills&hash=item4c2faac689:g:wqUAAeSwShxo48os"
+    },
+    {
+     "t": "2024 Panini Select - Select Certified Rookies Ray Davis #22 Buffalo Bills RC",
+     "p": 1.56,
+     "u": "https://www.ebay.com/itm/147230254881?_skw=2024+Panini+Select+Ray+Davis+%2322+RC+Select+Certified+Bills&hash=item22479b6721:g:gLcAAeSw8Udpfrbe"
+    }
+   ]
+  },
+  "CARD-0008": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2025 Donruss Optic - Rated Rookie Jalon Walker #290 Green Velocity Prizm (RC)",
+     "p": 2.5,
+     "u": "https://www.ebay.com/itm/158054374570?_skw=2025+Panini+Donruss+Optic+Jalon+Walker+%23290+RC+Green+Rated+Rookie+Falcons&hash=item24ccc65caa:g:bPYAAeSwNlxqSS1O"
+    },
+    {
+     "t": "2025 Donruss Optic Jalon Walker RC #290 Green Hyper Rated Rookie Atlanta Falcons",
+     "p": 2.99,
+     "u": "https://www.ebay.com/itm/307058621431?_skw=2025+Panini+Donruss+Optic+Jalon+Walker+%23290+RC+Green+Rated+Rookie+Falcons&hash=item477e1ebbf7:g:PfgAAeSwrsFqU7te"
+    },
+    {
+     "t": "2025 Donruss Optic - Rated Rookie Jalon Walker #290 Teal Velocity Prizm (RC)",
+     "p": 1.0,
+     "u": "https://www.ebay.com/itm/117293541944?_skw=2025+Panini+Donruss+Optic+Jalon+Walker+%23290+RC+Green+Rated+Rookie+Falcons&hash=item1b4f3d6a38:g:22cAAeSw75ZqT7Wi"
+    },
+    {
+     "t": "2025 Panini Donruss Optic Jalon Walker Green Velocity Prizm #290 (RC)",
+     "p": 1.0,
+     "u": "https://www.ebay.com/itm/188360621953?_skw=2025+Panini+Donruss+Optic+Jalon+Walker+%23290+RC+Green+Rated+Rookie+Falcons&hash=item2bdb2aff81:g:k6cAAeSw9Vlp~VjB"
+    },
+    {
+     "t": "2025 Donruss Optic Jalon Walker RC #290 Green Hyper Rated Rookie Atlanta Falcons",
+     "p": 1.66,
+     "u": "https://www.ebay.com/itm/198143569111?_skw=2025+Panini+Donruss+Optic+Jalon+Walker+%23290+RC+Green+Rated+Rookie+Falcons&hash=item2e2246ecd7:g:UukAAeSwS2dpol3j"
+    }
+   ]
+  },
+  "CARD-0009": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2025 Panini Prizm Jack Bech #346 White Disco RC Raiders",
+     "p": 1.99,
+     "u": "https://www.ebay.com/itm/398087378856?_skw=2025+Panini+Prizm+Jack+Bech+%23346+RC+Raiders&hash=item5cafdb57a8:g:PosAAeSw9tRqNqY1"
+    },
+    {
+     "t": "2025 Panini Prizm Jack Bech #346 White Disco RC Las Vegas Raiders",
+     "p": 1.99,
+     "u": "https://www.ebay.com/itm/377291680153?_skw=2025+Panini+Prizm+Jack+Bech+%23346+RC+Raiders&hash=item57d8562999:g:tycAAeSw8HVqO1NB"
+    },
+    {
+     "t": "2025 Panini Prizm - Rookies Jack Bech #346 (RC) Las Vegas Raiders Rookie",
+     "p": 0.99,
+     "u": "https://www.ebay.com/itm/188631397558?_skw=2025+Panini+Prizm+Jack+Bech+%23346+RC+Raiders&hash=item2beb4eb4b6:g:GZgAAeSw7EhqU5uH"
+    },
+    {
+     "t": "JACK BECH 2025 Panini Prizm Black Blue Checker Prizm RC #346 Raiders SSP Rare",
+     "p": 19.99,
+     "u": "https://www.ebay.com/itm/127886996196?_skw=2025+Panini+Prizm+Jack+Bech+%23346+RC+Raiders&hash=item1dc6a8b2e4:g:D2gAAeSwPIZqFiR1"
+    },
+    {
+     "t": "2025 Panini Prizm Jack Bech RC Purple Prizm /125 Las Vegas Raiders #346",
+     "p": 5.95,
+     "u": "https://www.ebay.com/itm/198435365911?_skw=2025+Panini+Prizm+Jack+Bech+%23346+RC+Raiders&hash=item2e33ab6417:g:7CsAAeSwA8BqMzH2"
+    }
+   ]
+  },
+  "CARD-0010": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2025 Panini Prizm Orange Prizm Brashard Smith Rc Chiefs #308/249",
+     "p": 2.49,
+     "u": "https://www.ebay.com/itm/800311764851?_skw=2025+Panini+Prizm+Brashard+Smith+%23308+RC+Chiefs&hash=itemba564c6773:g:58kAAeSw4f5qTwbd"
+    },
+    {
+     "t": "2025 Panini Prizm Brashard Smith No Huddle Prizm Chiefs Rookie #308 RC",
+     "p": 1.75,
+     "u": "https://www.ebay.com/itm/147352022293?_skw=2025+Panini+Prizm+Brashard+Smith+%23308+RC+Chiefs&hash=item224edd6d15:g:bWMAAeSwJk9qIenr"
+    },
+    {
+     "t": "Brashard Smith 2025 Panini Prizm #308 Kansas City Chiefs Red White and Blue RC",
+     "p": 1.0,
+     "u": "https://www.ebay.com/itm/358799641202?_skw=2025+Panini+Prizm+Brashard+Smith+%23308+RC+Chiefs&hash=item538a200a72:g:11AAAeSwUr5qV50h"
+    },
+    {
+     "t": "Brashard Smith 2025 Panini Prizm #308 Kansas City Chiefs Neon Green Pulsar RC",
+     "p": 1.99,
+     "u": "https://www.ebay.com/itm/137392027127?_skw=2025+Panini+Prizm+Brashard+Smith+%23308+RC+Chiefs&hash=item1ffd33f5f7:g:LfgAAeSw2r9qJrGS"
+    },
+    {
+     "t": "2025 Prizm BRASHARD SMITH Neon Green Pulsar # 308 CHIEFS RC",
+     "p": 2.5,
+     "u": "https://www.ebay.com/itm/198422751875?_skw=2025+Panini+Prizm+Brashard+Smith+%23308+RC+Chiefs&hash=item2e32eaea83:g:T8gAAeSwMPVqLLbu"
+    }
+   ]
+  },
+  "CARD-0011": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2023 National Treasures BJ OJULARI RC Auto #/99 Autograph #102 Arizona Cardinals",
+     "p": 9.99,
+     "u": "https://www.ebay.com/itm/127023780566?_skw=2023+Panini+National+Treasures+BJ+Ojulari+%23102+AUTO+%2F99+RC+Cardinals&hash=item1d933512d6:g:sbgAAeSw5PVn6ePM"
+    }
+   ]
+  },
+  "CARD-0012": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2020-21 Prizm Draft Picks DP James Wiseman RC Pink Ice #42 PSA 10 Mint Warriors",
+     "p": 54.99,
+     "u": "https://www.ebay.com/itm/394098191224?_skw=2020+Panini+Prizm+Draft+Picks+James+Wiseman+%2342+PSA+10+RC+Pink+Ice+Warriors&hash=item5bc2152b78:g:i-gAAOSwJE5ilpR6"
+    },
+    {
+     "t": "2020 Panini Prizm Draft Picks James Wiseman Pink Ice Rookie RC #42 PSA 10 GEM MT",
+     "p": 49.99,
+     "u": "https://www.ebay.com/itm/225911860787?_skw=2020+Panini+Prizm+Draft+Picks+James+Wiseman+%2342+PSA+10+RC+Pink+Ice+Warriors&hash=item3499656e33:g:I4gAAOSwDQFlgz8G"
+    },
+    {
+     "t": "2020 PANINI PRIZM DP #42 James Wiseman Rookie Card RC PINK ICE GORGEOUS PSA 10",
+     "p": 56.99,
+     "u": "https://www.ebay.com/itm/236932950649?_skw=2020+Panini+Prizm+Draft+Picks+James+Wiseman+%2342+PSA+10+RC+Pink+Ice+Warriors&hash=item372a4dea79:g:CWEAAOSwiDZjdkI-"
+    },
+    {
+     "t": "2020-21 Prizm Draft Picks DP James Wiseman RC Pink Ice #42 PSA 10 Gem Mint (d4)",
+     "p": 19.99,
+     "u": "https://www.ebay.com/itm/196005244924?_skw=2020+Panini+Prizm+Draft+Picks+James+Wiseman+%2342+PSA+10+RC+Pink+Ice+Warriors&hash=item2da2d2affc:g:AiEAAOSwcGRlFr0G"
+    },
+    {
+     "t": "2020-21 Prizm Draft Picks DP James Wiseman RC Pink Ice #42 PSA 10 Gem Mint",
+     "p": 139.99,
+     "u": "https://www.ebay.com/itm/395209662582?_skw=2020+Panini+Prizm+Draft+Picks+James+Wiseman+%2342+PSA+10+RC+Pink+Ice+Warriors&hash=item5c0454e076:g:LowAAOSwI35l0o8R"
+    }
+   ]
+  },
+  "CARD-0013": {
+   "source": "active",
+   "broad": true,
+   "items": [
+    {
+     "t": "Will Anderson Jr 2023 Panini One No.136 #50/99 Autographed Relic Rookie Card",
+     "p": 77.0,
+     "u": "https://www.ebay.com/itm/406678404138?_skw=2024+Panini+Will+Anderson+Jr+RELIC+%2F99&hash=item5eafebfc2a:g:4fUAAeSw0wpphyTx"
+    }
+   ]
+  },
+  "CARD-0014": {
+   "source": "active",
+   "broad": true,
+   "items": [
+    {
+     "t": "2021 Panini Flawless Collegiate  Kyler Murray Auto 15/15 Bookend Ruby",
+     "p": 250.0,
+     "u": "https://www.ebay.com/itm/366445045110?_skw=2021+Panini+Kyler+Murray+AUTO+%2F15&hash=item5551d3a576:g:sCEAAeSwQh9qG133"
+    },
+    {
+     "t": "2021 Panini Elements Kyler Murray Mettle Moments Auto /15 Pop 1 Non Higher",
+     "p": 200.0,
+     "u": "https://www.ebay.com/itm/127734160885?_skw=2021+Panini+Kyler+Murray+AUTO+%2F15&hash=item1dbd8c9df5:g:da4AAeSw1-NpselA"
+    },
+    {
+     "t": "2021 Panini Certified Kyler Murray Certified Potential Mirror Teal Auto /15 PSA",
+     "p": 700.0,
+     "u": "https://www.ebay.com/itm/177957345655?_skw=2021+Panini+Kyler+Murray+AUTO+%2F15&hash=item296f159977:g:NikAAeSwDwJpuK~Y"
+    },
+    {
+     "t": "Certified Kyler Murray Certified Potential Mirror Blue Auto 11/15 Cardinals Card",
+     "p": 104.99,
+     "u": "https://www.ebay.com/itm/156733103658?_skw=2021+Panini+Kyler+Murray+AUTO+%2F15&hash=item247e055e2a:g:LpwAAOSwZnllT-wd"
+    },
+    {
+     "t": "2021 Panini Absolute Football Absolute Heroes Kyler Murray AUTO 10/15 Cardinals ",
+     "p": 150.0,
+     "u": "https://www.ebay.com/itm/154745811578?_skw=2021+Panini+Kyler+Murray+AUTO+%2F15&hash=item240791b27a:g:myUAAOSwaudhth6Z"
+    }
+   ]
+  },
+  "CARD-0015": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2024 Panini Luminance Rookies Gold 115/299 Jayden Daniels #102 Rookie RC g1d",
+     "p": 32.82,
+     "u": "https://www.ebay.com/itm/336679960561?_skw=2024+Panini+Luminance+Jayden+Daniels+%23102+%2F299+RC+Gold+Commanders&hash=item4e63b07ff1:g:5QIAAeSw5iJqT5qj"
+    },
+    {
+     "t": "2024 Panini Luminance Jayden Daniels Gold Rookie /299 PSA 9 #102 RC",
+     "p": 59.99,
+     "u": "https://www.ebay.com/itm/147204779236?_skw=2024+Panini+Luminance+Jayden+Daniels+%23102+%2F299+RC+Gold+Commanders&hash=item224616ace4:g:58kAAeSwBhJptgnd"
+    },
+    {
+     "t": "2024 Panini Luminance Jayden Daniels Gold Rookie /299 RC - LSU",
+     "p": 47.99,
+     "u": "https://www.ebay.com/itm/256983028003?_skw=2024+Panini+Luminance+Jayden+Daniels+%23102+%2F299+RC+Gold+Commanders&hash=item3bd561d123:g:0rIAAOSwct5oVK6C"
+    },
+    {
+     "t": "2024 Panini Luminance Rookies Gold #102 Jayden Daniels /299 RC",
+     "p": 69.99,
+     "u": "https://www.ebay.com/itm/156482096788?_skw=2024+Panini+Luminance+Jayden+Daniels+%23102+%2F299+RC+Gold+Commanders&hash=item246f0f4e94:g:aOUAAOSwsEBnH-0J"
+    },
+    {
+     "t": "2024 Panini Luminance- Jayden Daniels #102 Gold RC /299",
+     "p": 23.0,
+     "u": "https://www.ebay.com/itm/398126898153?_skw=2024+Panini+Luminance+Jayden+Daniels+%23102+%2F299+RC+Gold+Commanders&hash=item5cb2365be9:g:wc4AAeSwEZtqRLgO"
+    }
+   ]
+  },
+  "CARD-0016": {
+   "source": "active",
+   "broad": true,
+   "items": [
+    {
+     "t": "2023 Panini Select - Premier Level Jahmyr Gibbs #198 Blue Prizm /149 (RC)",
+     "p": 50.0,
+     "u": "https://www.ebay.com/itm/287442789501?_skw=2023+Panini+Jahmyr+Gibbs+%2F149+RC&hash=item42ecece47d:g:C2oAAeSw38VqTDZC"
+    },
+    {
+     "t": "JAHMYR GIBBS 2023 PANINI NATIONAL BLUE ICE ROOKIE RC #D 068/149 ",
+     "p": 99.99,
+     "u": "https://www.ebay.com/itm/188543469734?_skw=2023+Panini+Jahmyr+Gibbs+%2F149+RC&hash=item2be61108a6:g:guUAAeSwY3xqOG0e"
+    },
+    {
+     "t": "2023 Panini Illusions - Jahmyr Gibbs #38 Blue /149 (RC)",
+     "p": 29.99,
+     "u": "https://www.ebay.com/itm/336673200645?_skw=2023+Panini+Jahmyr+Gibbs+%2F149+RC&hash=item4e63495a05:g:6sQAAeSwyk1qSoys"
+    },
+    {
+     "t": "2023 Panini Contenders Jahmyr Gibbs Playoff Ticket ROOKIE RC AUTO #'d/149",
+     "p": 149.99,
+     "u": "https://www.ebay.com/itm/117281614313?_skw=2023+Panini+Jahmyr+Gibbs+%2F149+RC&hash=item1b4e8769e9:g:pjcAAeSwVNZqRvqy"
+    },
+    {
+     "t": "2023 Panini Donruss Elite Rookies Jahmyr Gibbs #144 Maroon /149 (RC)  Book End",
+     "p": 25.0,
+     "u": "https://www.ebay.com/itm/157608218922?_skw=2023+Panini+Jahmyr+Gibbs+%2F149+RC&hash=item24b22e912a:g:fpUAAeSwkkJpZIh3"
+    }
+   ]
+  },
+  "CARD-0017": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2023 Panini Donruss Optic - Rated Rookie C.J. Stroud #244 Pink Prizm (RC)",
+     "p": 10.0,
+     "u": "https://www.ebay.com/itm/287449532339?_skw=2023+Panini+Donruss+Optic+CJ+Stroud+%23244+RC+Pink+Rated+Rookie+Texans&hash=item42ed53c7b3:g:FJMAAeSwwK1qT4ca"
+    },
+    {
+     "t": "2023 Panini Donruss Optic - Rated Rookie C.J. Stroud #244 Pink Prizm (RC)",
+     "p": 18.0,
+     "u": "https://www.ebay.com/itm/800342593973?_skw=2023+Panini+Donruss+Optic+CJ+Stroud+%23244+RC+Pink+Rated+Rookie+Texans&hash=itemba5822d1b5:g:zE4AAeSwimlqVsQW"
+    },
+    {
+     "t": "2023 Panini Donruss Optic CJ STROUD RC PINK PSA 10 GEM MT #244 Texans Rookie",
+     "p": 75.0,
+     "u": "https://www.ebay.com/itm/298439675605?_skw=2023+Panini+Donruss+Optic+CJ+Stroud+%23244+RC+Pink+Rated+Rookie+Texans&hash=item457c640ed5:g:VI8AAeSwMtBqOHYy"
+    },
+    {
+     "t": " 2023 Donruss Optic Football CJ Stroud Rated Rookie Pink Prizm RC",
+     "p": 18.0,
+     "u": "https://www.ebay.com/itm/266828310188?_skw=2023+Panini+Donruss+Optic+CJ+Stroud+%23244+RC+Pink+Rated+Rookie+Texans&hash=item3e2034e6ac:g:c34AAOSwAnNmS6QH"
+    },
+    {
+     "t": "C.J. Stroud 2023 Optic Rated Rookie Pink Prizm RC #244 TEXANS",
+     "p": 14.99,
+     "u": "https://www.ebay.com/itm/376245970383?_skw=2023+Panini+Donruss+Optic+CJ+Stroud+%23244+RC+Pink+Rated+Rookie+Texans&hash=item579a01e5cf:g:qVEAAeSw1yNoI--K"
+    }
+   ]
+  },
+  "CARD-0018": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2023 Panini Rookies & Stars - Thrillers Anthony Richardson #TH-13 40/75 (RC)",
+     "p": 79.99,
+     "u": "https://www.ebay.com/itm/226946538474?_skw=2023+Panini+Rookies+%26+Stars+Anthony+Richardson+%23TH-13+%2F75+RC+Thrillers+Colts&hash=item34d7115bea:g:xv4AAeSwEU5osQQF"
+    },
+    {
+     "t": "2023 Panini Prizm Rookies And Stars Thrillers Anthony Richardson 22/75 Pandora",
+     "p": 99.99,
+     "u": "https://www.ebay.com/itm/176310494790?_skw=2023+Panini+Rookies+%26+Stars+Anthony+Richardson+%23TH-13+%2F75+RC+Thrillers+Colts&hash=item290ceca646:g:CREAAOSwWLZmBwAD"
+    }
+   ]
+  },
+  "CARD-0019": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2023 Panini Prizm C.J. Stroud RC Orange Disco Rookie #339 Texans PSA 10 GEM MINT",
+     "p": 120.0,
+     "u": "https://www.ebay.com/itm/206368241037?_skw=2023+Panini+Prizm+CJ+Stroud+%23339+PSA+10+RC+Disco+Texans&hash=item300c81758d:g:OYQAAeSw0-1qMsH0"
+    },
+    {
+     "t": "CJ Stroud 2023 Prizm Orange Disco RC PSA 10 Gem Mint Texans #339 Rookie",
+     "p": 194.5,
+     "u": "https://www.ebay.com/itm/307043207081?_skw=2023+Panini+Prizm+CJ+Stroud+%23339+PSA+10+RC+Disco+Texans&hash=item477d3387a9:g:CfEAAeSwrFRqRBUJ"
+    },
+    {
+     "t": "2023 PANINI PRIZM #339 ROOKIE ORANGE DISCO PRIZM (RC/SSP) CJ STROUD PSA 10\ud83d\udc8e",
+     "p": 125.0,
+     "u": "https://www.ebay.com/itm/287080289601?_skw=2023+Panini+Prizm+CJ+Stroud+%23339+PSA+10+RC+Disco+Texans&hash=item42d7519541:g:kl0AAeSwdMlpasKU"
+    },
+    {
+     "t": "2023 Panini Prizm Orange DISCO CJ Stroud RC Rookie Card 339 PSA 10 Football C J",
+     "p": 131.09,
+     "u": "https://www.ebay.com/itm/257601351135?_skw=2023+Panini+Prizm+CJ+Stroud+%23339+PSA+10+RC+Disco+Texans&hash=item3bfa3caddf:g:fMUAAeSw5nRqRtMZ"
+    },
+    {
+     "t": "2023 Prizm CJ Stroud Orange Disco Prizm RC PSA 10",
+     "p": 120.0,
+     "u": "https://www.ebay.com/itm/227414088393?_skw=2023+Panini+Prizm+CJ+Stroud+%23339+PSA+10+RC+Disco+Texans&hash=item34f2ef9ac9:g:~60AAeSw6FlqRwcy"
+    }
+   ]
+  },
+  "CARD-0020": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2023 PANINI ZENITH 1994 PACIFIC BLUE #5 CJ STROUD ROOKIE RC PSA 10",
+     "p": 59.95,
+     "u": "https://www.ebay.com/itm/167882887282?_skw=2023+Panini+Zenith+CJ+Stroud+%235+PSA+10+RC+Blue+1994+Pacific+Texans&hash=item2716999072:g:~9YAAeSwMf9o-9Eb"
+    },
+    {
+     "t": "PSA 10 CJ STROUD 2023 PANINI ZENITH '94 PACIFIC BLUE #5 RC ROOKIE HOUSTON TEXANS",
+     "p": 149.95,
+     "u": "https://www.ebay.com/itm/327215192705?_skw=2023+Panini+Zenith+CJ+Stroud+%235+PSA+10+RC+Blue+1994+Pacific+Texans&hash=item4c2f8b9a81:g:-AQAAeSwBrJqMGHc"
+    },
+    {
+     "t": "PSA 10 CJ STROUD ROOKIE 2023 PANINI ZENITH 1994 PACIFIC BLUE PRIZM RC #5 GEM SP",
+     "p": 64.99,
+     "u": "https://www.ebay.com/itm/145985772769?_skw=2023+Panini+Zenith+CJ+Stroud+%235+PSA+10+RC+Blue+1994+Pacific+Texans&hash=item21fd6e1ce1:g:gIIAAOSwtqNmz4IZ"
+    },
+    {
+     "t": "PSA 10 CJ STROUD ROOKIE 2023 PANINI ZENITH 1994 PACIFIC BLUE PRIZM RC #5 GEM SP",
+     "p": 64.99,
+     "u": "https://www.ebay.com/itm/146880677461?_skw=2023+Panini+Zenith+CJ+Stroud+%235+PSA+10+RC+Blue+1994+Pacific+Texans&hash=item2232c54655:g:mw0AAeSwcmdo5fUY"
+    }
+   ]
+  },
+  "CARD-0021": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2019 PANINI PRIZM AUTO-GOLD PRIZM #339 TONY POLLARD ROOKIE RC 1/10 PSA 10",
+     "p": 1500.0,
+     "u": "https://www.ebay.com/itm/395810017248?_skw=2019+Panini+Prizm+Tony+Pollard+%23339+PSA+10+AUTO+RC+Autograph+Cowboys&hash=item5c281d8fe0:g:fw8AAOSwTBlnEye0"
+    },
+    {
+     "t": "2019 PANINI PRIZM #339 TONY POLLARD CAMO PRIZM AUTO /25 ROOKIE PSA 10 GEM MINT",
+     "p": 885.0,
+     "u": "https://www.ebay.com/itm/297593844784?_skw=2019+Panini+Prizm+Tony+Pollard+%23339+PSA+10+AUTO+RC+Autograph+Cowboys&hash=item4549f9b430:g:AqoAAOSwW~Nko3~V"
+    },
+    {
+     "t": "\ud83d\udd25 2019 Tony Pollard Camo Prizm /25 #339 Rookie rc auto gem Dallas/ Titans \ud83d\udd25 ",
+     "p": 225.0,
+     "u": "https://www.ebay.com/itm/266990758822?_skw=2019+Panini+Prizm+Tony+Pollard+%23339+PSA+10+AUTO+RC+Autograph+Cowboys&hash=item3e29e3aba6:g:vooAAOSw5s1m5iEP"
+    }
+   ]
+  },
+  "CARD-0023": {
+   "source": "active",
+   "broad": true,
+   "items": [
+    {
+     "t": "2023 Panini Prizm CJ Stroud RC #339 PSA 9 Mint Houston Texans Rookie",
+     "p": 28.0,
+     "u": "https://www.ebay.com/itm/168537851868?_skw=2023+Panini+CJ+Stroud+PSA+9+RC&hash=item273da387dc:g:EdgAAeSw0ttqV54Z"
+    },
+    {
+     "t": "2023 PANINI PRIZM #339 LAZER CJ STROUD RC #339 PSA 9 MINT SP (SEE DESCRIPTION)",
+     "p": 29.99,
+     "u": "https://www.ebay.com/itm/366542587513?_skw=2023+Panini+CJ+Stroud+PSA+9+RC&hash=item5557a40679:g:AjwAAeSw2AdqVni-"
+    },
+    {
+     "t": "2023 PANINI RED/WHITE/BLUE PRIZM #339 CJ STROUD RC PSA 9 Houston Texans ",
+     "p": 25.13,
+     "u": "https://www.ebay.com/itm/127942090847?_skw=2023+Panini+CJ+Stroud+PSA+9+RC&hash=item1dc9f1605f:g:rp8AAeSwlhpqPZz8"
+    },
+    {
+     "t": "2023 PANINI PRIZM LAZER PRIZM ROOKIE CJ STROUD RC #339 PSA 9 MINT",
+     "p": 29.99,
+     "u": "https://www.ebay.com/itm/287412737169?_skw=2023+Panini+CJ+Stroud+PSA+9+RC&hash=item42eb225491:g:ZRsAAeSwaHRqOggn"
+    },
+    {
+     "t": "2023 Donruss Optic - CJ Stroud Rated Rookie Holo Prizm #244 PSA 9 (RC)",
+     "p": 28.99,
+     "u": "https://www.ebay.com/itm/327260903937?_skw=2023+Panini+CJ+Stroud+PSA+9+RC&hash=item4c32451a01:g:K64AAeSw7ehqVlGl"
+    }
+   ]
+  },
+  "CARD-0024": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "Sam Laporta 2023 Mosaic No Huddle Blue Scripts RC Auto PSA 9",
+     "p": 150.0,
+     "u": "https://www.ebay.com/itm/315285179764?_skw=2023+Panini+Mosaic+Sam+LaPorta+%23RS-SL+PSA+9+AUTO+RC+Rookie+Scripts+Auto+Lions&hash=item4968760d74:g:WiIAAOSw2ZJmFtcE"
+    },
+    {
+     "t": "2023 Panini Mosaic - Rookies #360 Sam LaPorta (RC) Rookie Scripts Auto PSA9",
+     "p": 99.0,
+     "u": "https://www.ebay.com/itm/267116641392?_skw=2023+Panini+Mosaic+Sam+LaPorta+%23RS-SL+PSA+9+AUTO+RC+Rookie+Scripts+Auto+Lions&hash=item3e31647c70:g:L0cAAOSwkNRnewxo"
+    }
+   ]
+  },
+  "CARD-0025": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2005 Upper Deck Rookie Class Henrik Lundqvist RC Mint PSA 9",
+     "p": 23.95,
+     "u": "https://www.ebay.com/itm/136992378591?_skw=2005+Upper+Deck+Rookie+Class+Henrik+Lundqvist+%233+PSA+9+RC+Rangers&hash=item1fe561cedf:g:izkAAeSwAfRpehHB"
+    },
+    {
+     "t": "2005-06 Upper Deck Rookie Class Henrik Lundqvist #3 PSA 9 MINT Rookie RC HOF",
+     "p": 53.35,
+     "u": "https://www.ebay.com/itm/158074500631?_skw=2005+Upper+Deck+Rookie+Class+Henrik+Lundqvist+%233+PSA+9+RC+Rangers&hash=item24cdf97617:g:xgEAAeSwlhpqPgsl"
+    },
+    {
+     "t": "2005-06 Upper Deck Rookie Class Henrik Lundqvist #3 PSA 9 MINT Rookie RC HOF",
+     "p": 32.01,
+     "u": "https://www.ebay.com/itm/406974419144?_skw=2005+Upper+Deck+Rookie+Class+Henrik+Lundqvist+%233+PSA+9+RC+Rangers&hash=item5ec190d0c8:g:2K4AAeSwJ~ZqIdpl"
+    },
+    {
+     "t": "2005-06 Upper Deck Rookie Class Henrik Lundqvist #3 PSA 9 MINT Rookie RC HOF",
+     "p": 35.53,
+     "u": "https://www.ebay.com/itm/116829959336?_skw=2005+Upper+Deck+Rookie+Class+Henrik+Lundqvist+%233+PSA+9+RC+Rangers&hash=item1b339bb4a8:g:mv4AAeSwrNRo8FbZ"
+    },
+    {
+     "t": "2005 Upper Deck Rookie Class Henrik Lundqvist Jumbo Boxtopper RC Mint BGS 9",
+     "p": 27.95,
+     "u": "https://www.ebay.com/itm/134600551558?_skw=2005+Upper+Deck+Rookie+Class+Henrik+Lundqvist+%233+PSA+9+RC+Rangers&hash=item1f56d16c86:g:BQAAAOSwxmxkfj4a"
+    }
+   ]
+  },
+  "CARD-0026": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2023-24 Panini Instant- LeBron James, Victor Wembanyama #371, /5496, PSA 10",
+     "p": 165.0,
+     "u": "https://www.ebay.com/itm/407062273537?_skw=2023+Panini+Instant+LeBron+James+%2F+Victor+Wembanyama+%23371+PSA+10&hash=item5ec6cd5e01:g:xE0AAeSwLuxqUGKf"
+    },
+    {
+     "t": "2023-24 Panini Instant- LeBron James, Victor Wembanyama #371, /5496, PSA 10",
+     "p": 189.99,
+     "u": "https://www.ebay.com/itm/168169674206?_skw=2023+Panini+Instant+LeBron+James+%2F+Victor+Wembanyama+%23371+PSA+10&hash=item2727b195de:g:-tcAAeSwHbtpmmji"
+    },
+    {
+     "t": "2023-24 Victor Wembanyama Rookie LeBron James #371 PSA 10 Spurs PSA 10 Spurs",
+     "p": 225.0,
+     "u": "https://www.ebay.com/itm/287455445066?_skw=2023+Panini+Instant+LeBron+James+%2F+Victor+Wembanyama+%23371+PSA+10&hash=item42edae004a:g:3n8AAeSwMttqUuoA"
+    },
+    {
+     "t": "2023 Panini #371 LeBron James VS Wembanyama Rookie Card BGS Pristine 10  PSA 10",
+     "p": 300.0,
+     "u": "https://www.ebay.com/itm/188494174056?_skw=2023+Panini+Instant+LeBron+James+%2F+Victor+Wembanyama+%23371+PSA+10&hash=item2be320d768:g:dzUAAeSwbdxqKdKw"
+    }
+   ]
+  },
+  "CARD-0027": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2017 Panini Select Light Blue Prizm 40/99 Deshaun Watson #164 Rookie RC 1lc0",
+     "p": 46.46,
+     "u": "https://www.ebay.com/itm/257615136562?_skw=2017+Panini+Select+Deshaun+Watson+%23164+PSA+9+RC+Texans&hash=item3bfb0f0732:g:W8UAAeSwYmxqUBre"
+    },
+    {
+     "t": "DESHAUN WATSON Browns 2017 Select #164 Premier Level Rookie RC PSA Mint 9",
+     "p": 12.0,
+     "u": "https://www.ebay.com/itm/387292209009?_skw=2017+Panini+Select+Deshaun+Watson+%23164+PSA+9+RC+Texans&hash=item5a2c6a1f71:g:L6kAAOSwcmtkWDi0"
+    },
+    {
+     "t": "Deshaun Watson 2017 Select PREMIER LEVEL RC #164 TRI-COLOR Prizm /199 PSA 9 Mint",
+     "p": 89.0,
+     "u": "https://www.ebay.com/itm/127899746868?_skw=2017+Panini+Select+Deshaun+Watson+%23164+PSA+9+RC+Texans&hash=item1dc76b4234:g:bs4AAeSwM~xqHyk4"
+    },
+    {
+     "t": "2017 Panini Select Premier Level Silver Prizm Deshaun Watson #164 Rookie RC 0o3b",
+     "p": 19.8,
+     "u": "https://www.ebay.com/itm/236933421488?_skw=2017+Panini+Select+Deshaun+Watson+%23164+PSA+9+RC+Texans&hash=item372a5519b0:g:M-0AAeSwpAlqU8kA"
+    },
+    {
+     "t": "DeShaun Watson Texans Rookie 2017 Panini Select Premier RC #164 PSA 9 MINT ",
+     "p": 99.99,
+     "u": "https://www.ebay.com/itm/225453015332?_skw=2017+Panini+Select+Deshaun+Watson+%23164+PSA+9+RC+Texans&hash=item347e0c0124:g:0hgAAOSwVP1iQhrF"
+    }
+   ]
+  },
+  "CARD-0028": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2018 Panini Donruss Optic Kylian Mbappe #53 PSA 10 - PSG Rookie - FRANCE \ud83c\uddeb\ud83c\uddf7",
+     "p": 120.0,
+     "u": "https://www.ebay.com/itm/318550601805?_skw=2018+Panini+Donruss+Kylian+Mbappe+%2353+PSA+10+PSG&hash=item4a2b18704d:g:EOoAAeSwUKBqJGzf"
+    },
+    {
+     "t": "2018 Panini Donruss Kylian Mbappe Card #53 PSA 10 Gem Mint",
+     "p": 71.25,
+     "u": "https://www.ebay.com/itm/800298156549?_skw=2018+Panini+Donruss+Kylian+Mbappe+%2353+PSA+10+PSG&hash=itemba557cc205:g:dzYAAeSwcxVqS7fs"
+    },
+    {
+     "t": "2018 Panini Donruss Optic Kylian Mbappe #132 PSA 10 Gem Mint France",
+     "p": 115.0,
+     "u": "https://www.ebay.com/itm/168514272350?_skw=2018+Panini+Donruss+Kylian+Mbappe+%2353+PSA+10+PSG&hash=item273c3bbc5e:g:sDEAAeSwCDpqSZL6"
+    },
+    {
+     "t": "2018-19 Panini Donruss Kylian Mbappe #53 Optic Holo RC Rookie PSA 10 France PSG",
+     "p": 598.0,
+     "u": "https://www.ebay.com/itm/227373193521?_skw=2018+Panini+Donruss+Kylian+Mbappe+%2353+PSA+10+PSG&hash=item34f07f9931:g:Yo4AAeSwYQpqIekg"
+    },
+    {
+     "t": "2018 PANINI DONRUSS KYLIAN MBAPPE PRESS PROOF RED ROOKIE #53 PSA 10 GEM MINT",
+     "p": 289.99,
+     "u": "https://www.ebay.com/itm/298424918575?_skw=2018+Panini+Donruss+Kylian+Mbappe+%2353+PSA+10+PSG&hash=item457b82e22f:g:SZsAAeSwmqxqMpYV"
+    }
+   ]
+  },
+  "CARD-0029": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2021-22 Panini Prizm Cade Cunningham #282 Pink Ice Prizm (RC) PSA 10",
+     "p": 279.95,
+     "u": "https://www.ebay.com/itm/117297906577?_skw=2021+Panini+Prizm+Cade+Cunningham+%23282+PSA+10+RC+Pink+Ice+Pistons&hash=item1b4f800391:g:MPIAAeSwl-1qU5lR"
+    }
+   ]
+  },
+  "CARD-0030": {
+   "source": "active",
+   "broad": true,
+   "items": [
+    {
+     "t": "2023 Bowman Scouts Top 100 Matt McLain RC Auto /99 PSA 10 GEM MT - Reds #BTP53",
+     "p": 69.99,
+     "u": "https://www.ebay.com/itm/227363966522?_skw=2023+Topps+Matt+McLain+PSA+10+AUTO+RC&hash=item34eff2ce3a:g:mSsAAeSwcVtqGfte"
+    },
+    {
+     "t": "2023 Topps Update -1988 Gold Matt McLain RC Auto 49/50 Reds #88BA-MM - PSA 10",
+     "p": 400.0,
+     "u": "https://www.ebay.com/itm/236881443587?_skw=2023+Topps+Matt+McLain+PSA+10+AUTO+RC&hash=item37273bfb03:g:uMYAAeSwZVNqMfIH"
+    },
+    {
+     "t": "Topps 2023 Chrome Update Red Wave Refractor Auto 1/5 Matt McLain RC PSA 10/10",
+     "p": 2500.0,
+     "u": "https://www.ebay.com/itm/306990451650?_skw=2023+Topps+Matt+McLain+PSA+10+AUTO+RC&hash=item477a0e8bc2:g:vjQAAeSwpl1qJvDf"
+    },
+    {
+     "t": "2023 Topps Chrome Platinum #MMC Matt Mclain /75 PSA 10 Auto Green Reds Rookie RC",
+     "p": 250.0,
+     "u": "https://www.ebay.com/itm/327158672316?_skw=2023+Topps+Matt+McLain+PSA+10+AUTO+RC&hash=item4c2c2d2bbc:g:k9wAAeSwseRqBirz"
+    },
+    {
+     "t": "Matt McLain RC 2023 Topps Chrome Update Blue Refractor Auto /150 PSA 10",
+     "p": 300.0,
+     "u": "https://www.ebay.com/itm/375515546531?_skw=2023+Topps+Matt+McLain+PSA+10+AUTO+RC&hash=item576e7883a3:g:W0AAAOSwvtZmg1rd"
+    }
+   ]
+  },
+  "CARD-0031": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "2023 Panini Donruss  CJ Stroud PSA 10 Base Rookie Card RC TEXANS #339 \ud83d\udd25\ud83d\udcb0\ud83d\udd25",
+     "p": 35.0,
+     "u": "https://www.ebay.com/itm/318573005776?_skw=2023+Panini+Donruss+CJ+Stroud+%23339+PSA+10+RC+Texans&hash=item4a2c6e4bd0:g:aigAAeSwDnNoK6wt"
+    },
+    {
+     "t": "2023 Panini Prizm CJ Stroud RC Rookie Card #339 PSA 10 Texans Free S&H! Football",
+     "p": 52.21,
+     "u": "https://www.ebay.com/itm/377251334152?_skw=2023+Panini+Donruss+CJ+Stroud+%23339+PSA+10+RC+Texans&hash=item57d5ee8808:g:-DcAAeSwpkhqKa25"
+    },
+    {
+     "t": "2023 Panini Donruss Optic CJ STROUD RC PINK PSA 10 GEM MT #244 Texans Rookie",
+     "p": 75.0,
+     "u": "https://www.ebay.com/itm/298439675605?_skw=2023+Panini+Donruss+CJ+Stroud+%23339+PSA+10+RC+Texans&hash=item457c640ed5:g:VI8AAeSwMtBqOHYy"
+    },
+    {
+     "t": "2023 Donruss CJ Stroud RC #339 Pink Optic Preview PSA 10 GEM MT TEXANS ROY",
+     "p": 80.0,
+     "u": "https://www.ebay.com/itm/187503065960?_skw=2023+Panini+Donruss+CJ+Stroud+%23339+PSA+10+RC+Texans&hash=item2ba80dbb68:g:dmoAAeSwOnJopMyO"
+    },
+    {
+     "t": "2023 PANINI DONRUSS #339 CJ STROUD RATED ROOKIE RC PSA 10 INVEST MVP? TEXANS!$",
+     "p": 99.99,
+     "u": "https://www.ebay.com/itm/389160688621?_skw=2023+Panini+Donruss+CJ+Stroud+%23339+PSA+10+RC+Texans&hash=item5a9bc8dbed:g:qhYAAeSwd3lpAnJ-"
+    }
+   ]
+  },
+  "CARD-0032": {
+   "source": "active",
+   "broad": true,
+   "items": [
+    {
+     "t": "2022 Chronicles Score Premium Rookies SP-401 Brock Purdy (RC) Auto PSA 9 36/75\ud83d\udd25",
+     "p": 440.0,
+     "u": "https://www.ebay.com/itm/178313125381?_skw=2022+Panini+Brock+Purdy+PSA+9+AUTO+RC&hash=item29844a5e05:g:va4AAeSwU7toteHd"
+    },
+    {
+     "t": "2022 Panini Chronicles Score Brock Purdy RC Auto /75 PSA 9 Mint SP401",
+     "p": 450.0,
+     "u": "https://www.ebay.com/itm/358498390930?_skw=2022+Panini+Brock+Purdy+PSA+9+AUTO+RC&hash=item53782b5392:g:kPAAAeSwWxpp8TlD"
+    },
+    {
+     "t": "2022 Panini Prizm Auto-Green Scope Brock Purdy RC /75 #353 PSA 9/Auto 10!",
+     "p": 1150.0,
+     "u": "https://www.ebay.com/itm/147323336943?_skw=2022+Panini+Brock+Purdy+PSA+9+AUTO+RC&hash=item224d27b8ef:g:0XwAAeSwtmpqD3PW"
+    },
+    {
+     "t": "2022 Donruss Optic Brock Purdy Rated Rookie Purple /35 PSA 9, Auto 10 RC SSP ",
+     "p": 1250.0,
+     "u": "https://www.ebay.com/itm/198469248307?_skw=2022+Panini+Brock+Purdy+PSA+9+AUTO+RC&hash=item2e35b06533:g:-G4AAeSwQc1qReon"
+    },
+    {
+     "t": "2022 Panini Chronicles Score Premium End Zone Brock Purdy RC Auto #3/6 PSA 9",
+     "p": 1299.99,
+     "u": "https://www.ebay.com/itm/377334246149?_skw=2022+Panini+Brock+Purdy+PSA+9+AUTO+RC&hash=item57dadfab05:g:uLcAAeSwHJ5qPykt"
+    }
+   ]
+  },
+  "MERCH-0001": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "Kyren Williams Autographed Los Angeles Rams Jersey Beckett Digital COA",
+     "p": 60.0,
+     "u": "https://www.ebay.com/itm/127570412434?_skw=Kyren+Williams+Autographed+Framed+Jersey+Los+Angeles+Rams+Beckett+COA&hash=item1db3ca0392:g:OdMAAeSwfjZpRCTi"
+    },
+    {
+     "t": "Los Angeles Rams KYREN WILLIAMS Signed Autographed Blue Jersey Beckett COA",
+     "p": 180.0,
+     "u": "https://www.ebay.com/itm/177851282060?_skw=Kyren+Williams+Autographed+Framed+Jersey+Los+Angeles+Rams+Beckett+COA&hash=item2968c3328c:g:FEUAAeSwXMRpizvX&amdata=enc%3AAQALAAABIACCtXRWQnOEpyOqnQQ8KGYUlWEL5o0aCxoTuRzq6zAAGm2zjOhyzD0PjXQRXL1%2BZ3htRp2ldGF1vpHEQZidF%2BluLCtX0OvFw%2B9xVYganE8e%2BMCBW8mixYxk4UEdyp%2BCqb2CJauzFLiqzxfn1DUDmYXnrGJlpl0GjJ%2FxIYV4F98yp2MvbyJhWlX097O986RdZjM0Ht9v1Kwk51lNSRp9k8NlIVzvMnr04QUV%2B%2BUMRQ9hEmczvoc46TVx4lLffarE4bJKtAN%2FC6NybSnx0T8OE7qj0uJD4IKef1%2F9csZNIhd4ERjzQADX9fyGsVIiWdkb2c%2FHBHK%2BCPXroRhKtrrmCYrBDMNgkRXBcn9cfomJNfaLn8zX2hq5KuUcYP1%2BmoSKsg%3D%3D"
+    },
+    {
+     "t": "Kyren Williams Los Angeles Rams #23 Signed Jersey, Beckett BAS Authenticated",
+     "p": 125.0,
+     "u": "https://www.ebay.com/itm/188623176122?_skw=Kyren+Williams+Autographed+Framed+Jersey+Los+Angeles+Rams+Beckett+COA&hash=item2bead141ba:g:gNMAAeSwOk1qUBmP&amdata=enc%3AAQALAAABIACCtXRWQnOEpyOqnQQ8KGZmbKQ8P%2F8t8r8WGEOFHqs4w9RFaJ%2B--RLxo9UDe4d4FlEvMI0RCJq1SZ3lr%2BZ04QWgkAwuxVCHgfRlhfP421Zjv0M6B6Ng9SAeijZMAXAY6%2BFiXjZOEKksViPFnt50IVD6DOcfDJGBmwlnFl2ym2g1cfX7U7AunZ%2BDy8czLDe4Kwq9Tqy%2FxMweDMN5bLWszHd1OWNQ3hr1CRIHssDQANFu3CkJGRQUEGNQyVGeK2tHJlov%2FuiLvV6zVqX6OLV3nDT%2Bc2MKUPPEG%2F6IJe7z66hnWjJ9hGcctQKl4Aia2ocviL3LQioyfSaFqdQ75AvvctPjWSJcHaGr5jmHsviTpaEs3pO3DnqlFBWM5KBWUiWPug%3D%3D"
+    },
+    {
+     "t": "Kyren Williams Autographed Custom White Jersey! BAS COA! LOS ANGELES RAMS!",
+     "p": 89.0,
+     "u": "https://www.ebay.com/itm/307056532684?_skw=Kyren+Williams+Autographed+Framed+Jersey+Los+Angeles+Rams+Beckett+COA&hash=item477dfedccc:g:L~oAAeSwW1hqUoUA"
+    },
+    {
+     "t": "Kyren Williams Los Angeles Rams AUTOGRAPHED FRAMED JERSEY Beckett Authentication",
+     "p": 550.0,
+     "u": "https://www.ebay.com/itm/198046503164?_skw=Kyren+Williams+Autographed+Framed+Jersey+Los+Angeles+Rams+Beckett+COA&hash=item2e1c7dd0fc:g:fLgAAeSw-JdpcjT9"
+    }
+   ]
+  },
+  "MERCH-0002": {
+   "source": "active",
+   "broad": false,
+   "items": [
+    {
+     "t": "Baker Mayfield Signed Bucs Eclipse Full Size Replica Helmet Beckett COA",
+     "p": 350.0,
+     "u": "https://www.ebay.com/itm/366513743921?_skw=Baker+Mayfield+Autographed+Full+Size+Helmet+Tampa+Bay+Buccaneers+Beckett+COA&hash=item5555ebe831:g:sx4AAeSwTmlp0dY0"
+    },
+    {
+     "t": "Baker Mayfield Autographed Tampa Bay Buccaneers (Throwback) Deluxe Full-Size Rep",
+     "p": 550.0,
+     "u": "https://www.ebay.com/itm/377116656200?_skw=Baker+Mayfield+Autographed+Full+Size+Helmet+Tampa+Bay+Buccaneers+Beckett+COA&hash=item57cde78248:g:ZTkAAeSwMndqVUqF&amdata=enc%3AAQALAAABMACCtXRWQnOEpyOqnQQ8KGaODwtWVm49cyT5GoxczSFXfiOzfhb73d%2BioXmJQjrf%2BBLM5dbxktaeZz2nnQNsVeGeGpdK0cSvUjUNzwEO7Cl%2BnJ0UVXPuO%2BSuIBj92IfRbR8hCEgSJDYek5cBADHaJzKWLNcCGZppmRnwwU%2FMrlWwGh64%2BLcTYCIg58govPWuPAcUcHE7u6pb4teC%2FlPsNRDgKqrzwBU%2BVvKYl%2FCdGK2O37REoPvVTvX2OXNPrAT8BjVDkIYzra8AHWnT%2BWjEg1kPLWhPSbLgEQ6NAuJBD7qGETezMdD23HXB8PzhCHhU5rgUz5RpDyshY50mm40nqu%2Byu2NGT4bjqK1ygVggV471GVWGehQHFyen%2FZqYfYyVSrDbqwvio3p2Pr5YJOidgE0%3D"
+    },
+    {
+     "t": "Baker Mayfield Tampa Bay Buccaneers Signed Football Helmet 50 Seasons",
+     "p": 539.0,
+     "u": "https://www.ebay.com/itm/198499828499?_skw=Baker+Mayfield+Autographed+Full+Size+Helmet+Tampa+Bay+Buccaneers+Beckett+COA&hash=item2e37830313:g:5tUAAeSwQtRqV7V9"
+    },
+    {
+     "t": "Baker Mayfield Signed Tampa Bay Buccaneers Full Size Authentic Helmet BAS",
+     "p": 599.0,
+     "u": "https://www.ebay.com/itm/336565096884?_skw=Baker+Mayfield+Autographed+Full+Size+Helmet+Tampa+Bay+Buccaneers+Beckett+COA&hash=item4e5cd7d1b4:g:3LAAAeSw5D5p9ncC"
+    },
+    {
+     "t": "CUSTOM BAKER MAYFIELD TAMPA BAY BUCCANEERS SIGNED MIDI SPEEDFLEX  COA",
+     "p": 450.0,
+     "u": "https://www.ebay.com/itm/147438404420?_skw=Baker+Mayfield+Autographed+Full+Size+Helmet+Tampa+Bay+Buccaneers+Beckett+COA&hash=item2254038344:g:Vl0AAeSwAbdqV6q5"
+    }
+   ]
+  }
+ }
+}
