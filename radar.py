@@ -37,11 +37,28 @@ MIN_DISCOUNT = 15.0   # below this isn't worth flagging as a deal
 MAX_DISCOUNT = 65.0   # above this the reference is almost certainly polluted
 TOP_N = 24            # show the best two dozen
 
+# Price band the owner wants to shop in: the more expensive, premium end.
+# We pass this to the eBay search so both the listings AND the market
+# reference stay inside the window (no cheap base cards muddying it), and we
+# keep only deals whose asking price lands here.
+MIN_PRICE = 100.0
+MAX_PRICE = 1000.0
+
+# Owner preference: surface football first, then everything else (baseball etc.).
+SPORT_ORDER = {"football": 0}
+
 
 def _curate(found):
-    """Drop implausible discounts, keep the best TOP_N. Returns (kept, dropped)."""
-    believable = [d for d in found if MIN_DISCOUNT <= d.discount_pct <= MAX_DISCOUNT]
-    believable.sort(key=lambda d: d.discount_pct, reverse=True)
+    """Keep believable, in-band deals; football first, then best discount.
+
+    Returns (kept, dropped)."""
+    believable = [
+        d for d in found
+        if MIN_DISCOUNT <= d.discount_pct <= MAX_DISCOUNT
+        and MIN_PRICE <= d.price <= MAX_PRICE
+    ]
+    # Sort key: football (0) before other sports (1), then biggest discount.
+    believable.sort(key=lambda d: (SPORT_ORDER.get(d.sport, 1), -d.discount_pct))
     return believable[:TOP_N], len(found) - len(believable[:TOP_N])
 
 
@@ -57,13 +74,16 @@ def main() -> int:
         print("See docs/01-getting-ebay-api-keys.md.")
         return 1
 
-    print(f"Scanning eBay for {len(items)} watchlist item(s)...\n")
-    found = deals.scan(items)
+    print(f"Scanning eBay for {len(items)} watchlist item(s) "
+          f"(${MIN_PRICE:.0f}–${MAX_PRICE:.0f}, football first)...\n")
+    found = deals.scan(items, price_min=MIN_PRICE, price_max=MAX_PRICE)
     kept, dropped = _curate(found)
 
     payload = {
         "as_of": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "watch_count": len(items),
+        "price_min": MIN_PRICE,     # the band we shopped in
+        "price_max": MAX_PRICE,
         "scanned": len(found),      # total under-market listings eBay returned
         "shown": len(kept),         # believable deals we kept
         "deals": [asdict(d) for d in kept],
@@ -73,7 +93,8 @@ def main() -> int:
 
     if not kept:
         print(f"Scanned {len(found)} under-market listing(s), but none in the believable "
-              f"{MIN_DISCOUNT:.0f}–{MAX_DISCOUNT:.0f}% range right now.")
+              f"{MIN_DISCOUNT:.0f}–{MAX_DISCOUNT:.0f}% range and ${MIN_PRICE:.0f}–${MAX_PRICE:.0f} "
+              f"band right now.")
         print(f"Saved an empty snapshot → {SNAPSHOT.name}. Run build_web.py to refresh the app.")
         return 0
 

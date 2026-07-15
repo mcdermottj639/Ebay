@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v14";
+  var APP_VERSION = "v15";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier" };
 
@@ -530,11 +530,15 @@
     var extra = (radar.scanned && radar.scanned > deals.length)
       ? " Showing the " + deals.length + " strongest of " + radar.scanned + " under-market finds."
       : "";
+    var band = (radar.price_min && radar.price_max)
+      ? " Focused on " + money0(radar.price_min) + "–" + money0(radar.price_max) +
+        " cards, football first."
+      : "";
     var sub = radar.as_of
-      ? "Live eBay deals on your watchlist, priced under market. Rated Great / Good / Fair. " +
-        "Last checked " + esc(radar.as_of) + " · refreshes automatically." + extra
-      : "Scans eBay for deals on your watchlist and rates them Great / Good / Fair. " +
-        "Runs on a schedule and refreshes here — nothing to do.";
+      ? "Live eBay deals on your watchlist, priced under market. Rated Great / Good / Fair." +
+        band + " Last checked " + esc(radar.as_of) + " · refreshes automatically." + extra
+      : "Scans eBay for deals on your watchlist and rates them Great / Good / Fair." + band +
+        " Runs on a schedule and refreshes here — nothing to do.";
     wrap.appendChild(el('<p class="muted" style="font-size:13px;margin:0 2px 12px">' + sub + "</p>"));
 
     if (!deals.length) {
@@ -555,10 +559,11 @@
       var auction = /AUCTION/i.test(d.buying_option || "");
       var kind = auction ? "Auction" : "Buy Now";
       var ph = { image: d.image, player: d.label, team: "" };
+      var sportBadge = /^football$/i.test(d.sport || "") ? ' <span class="sportbadge">🏈</span>' : "";
       var row = el('<a class="drow" href="' + esc(d.url) + '" target="_blank" rel="noopener">' +
         thumb(ph, "dthumb") +
         '<div class="dm">' +
-          '<div class="dp">' + esc(d.label) + "</div>" +
+          '<div class="dp">' + esc(d.label) + sportBadge + "</div>" +
           '<div class="ds">' + esc(d.item_title) + "</div>" +
           '<div class="drate ' + r[1] + '">' + ratingBars(d.bars) +
             '<span class="rlabel">' + r[0] + "</span>" +

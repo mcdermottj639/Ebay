@@ -135,6 +135,8 @@ def _radar_snapshot():
         return {
             "as_of": snap.get("as_of", ""),
             "watch_count": snap.get("watch_count", 0),
+            "price_min": snap.get("price_min", 0),
+            "price_max": snap.get("price_max", 0),
             "scanned": snap.get("scanned", len(deals)),
             "shown": snap.get("shown", len(deals)),
             "deals": deals,
