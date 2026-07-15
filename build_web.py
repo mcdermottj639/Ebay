@@ -57,9 +57,10 @@ def _image_for(sku):
 
 
 def _price_basis(card):
-    """'sold' (real sold comps), 'asking' (active listings), or '' if unpriced."""
+    """'sold' (real sold comps), 'est_sold' (asking comps, haircut to estimate
+    market), 'asking' (active listings), or '' if unpriced."""
     basis = card.price_basis.strip().lower()
-    if basis in ("sold", "asking"):
+    if basis in ("sold", "est_sold", "asking"):
         return basis
     return "asking" if card.asking_price.strip() else ""
 

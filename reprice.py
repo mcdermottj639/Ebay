@@ -38,6 +38,15 @@ MIN_COMPS = 3        # need at least this many listings to trust a median
 MAX_SWING = 0.35     # >35% move → flag for review instead of auto-applying
 MIN_MOVE = 0.01      # <1% move → leave the price alone (no churn)
 
+# eBay denied us the real SOLD-comp API (Marketplace Insights), so our comps are
+# ACTIVE/asking listings — which sit ABOVE what cards actually sell for. To land
+# closer to true market we shave a conservative haircut off the asking median to
+# ESTIMATE the sold price. Only used when real sold comps aren't granted; the day
+# they are, we price off the raw sold median with no haircut. Tune here (0.12 =
+# 12% under asking). Rows priced this way are tagged basis "est_sold" so the app
+# shows a distinct EST pill — an estimate, never passed off as a real sold comp.
+SOLD_DISCOUNT = 0.12
+
 # Prices set by hand from noisy broad-match comps — never auto-reprice these.
 SKIP_SKUS = {"CARD-0001", "CARD-0011", "CARD-0013", "CARD-0014",
              "CARD-0016", "CARD-0023", "CARD-0030", "CARD-0032"}
@@ -88,9 +97,10 @@ def main() -> int:
 
     cards = catalog.load()
     sold_comps = comps.sold_available()
-    basis = "sold" if sold_comps else "asking"
+    basis = "sold" if sold_comps else "est_sold"
     print(("✓ Using REAL SOLD prices (Marketplace Insights)." if sold_comps
-           else "Using ACTIVE/asking prices (Browse API).") + "\n")
+           else f"Using ACTIVE/asking prices (Browse API), minus a {SOLD_DISCOUNT:.0%} "
+                "haircut to estimate true sold value.") + "\n")
 
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     history, applied, flagged, skipped, held = [], [], [], [], []
@@ -129,15 +139,18 @@ def main() -> int:
 
         ok = r.median and r.count >= MIN_COMPS and not broad
         if ok:
-            move = abs(r.median - current) / current
+            # Real sold comps → use as-is. Active/asking comps → haircut to
+            # estimate the true sold price (see SOLD_DISCOUNT above).
+            target = r.median if sold_comps else round(r.median * (1 - SOLD_DISCOUNT), 2)
+            move = abs(target - current) / current
             if move > MAX_SWING:
-                flagged.append(f"{c.sku} {c.player}: ${current:.2f} → ${r.median:.2f} "
+                flagged.append(f"{c.sku} {c.player}: ${current:.2f} → ${target:.2f} "
                                f"({move * 100:+.0f}% — too big, review by hand)")
             elif move >= MIN_MOVE:
-                updates[c.sku] = (round(r.median, 2), basis)
-                rec["price"], rec["applied"] = f"{r.median:.2f}", "yes"
-                applied.append(f"{c.sku} {c.player}: ${current:.2f} → ${r.median:.2f} "
-                               f"({(r.median - current) / current * 100:+.1f}%, {r.count} comps)")
+                updates[c.sku] = (target, basis)
+                rec["price"], rec["applied"] = f"{target:.2f}", "yes"
+                applied.append(f"{c.sku} {c.player}: ${current:.2f} → ${target:.2f} "
+                               f"({(target - current) / current * 100:+.1f}%, {r.count} comps)")
         history.append(rec)
 
     if dry:

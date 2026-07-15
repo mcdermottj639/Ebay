@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v12";
+  var APP_VERSION = "v13";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier" };
 
@@ -143,11 +143,14 @@
       '<span class="ini">' + esc(initials(c.player)) + "</span></div>";
   }
 
-  // sold-vs-asking pill: green SOLD (real sold comps) vs gold ASKING (active listings)
+  // price-basis pill: green SOLD (real sold comps), blue EST (asking comps
+  // haircut to estimate market — eBay denied us the sold-comp API), gold ASKING
+  // (raw active listings).
   function basisPill(c) {
     if (c.status !== "priced" || !c.price_basis) return "";
-    var sold = c.price_basis === "sold";
-    return '<span class="basis ' + (sold ? "b-sold" : "b-ask") + '">' + (sold ? "SOLD" : "ASKING") + "</span>";
+    var map = { sold: ["b-sold", "SOLD"], est_sold: ["b-est", "EST"], asking: ["b-ask", "ASKING"] };
+    var p = map[c.price_basis] || map.asking;
+    return '<span class="basis ' + p[0] + '">' + p[1] + "</span>";
   }
 
   // ▲/▼ week-over-week movement chip (needs a prior price from reprice runs)
@@ -599,6 +602,7 @@
       ["Sport", c.sport], ["SKU", c.sku],
       ["Est. value", c.asking_price ? money(c.asking_price) : ""],
       ["Price basis", c.price_basis === "sold" ? "Real eBay sold comps"
+                    : c.price_basis === "est_sold" ? "Estimated market (asking comps − haircut)"
                     : c.price_basis === "asking" ? "Active listings (asking)" : ""],
       ["Notes", c.notes]
     ].filter(function (r) { return r[1]; });
