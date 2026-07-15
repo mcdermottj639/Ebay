@@ -229,6 +229,12 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   no-op until the owner adds EBAY_APP_ID / EBAY_CERT_ID / EBAY_ENV=production
   as environment variables in the Claude Code environment settings — fresh
   cloud containers have no .env. (Helmet: confirm full-size vs mini.)
+- **Reprice run 2026-07-15 (owner-approved, applied):** `reprice.py` against
+  live eBay comps applied **17** price updates (est_sold basis, 12% haircut),
+  **flagged 2** as too-big-to-auto-apply for hand review — **CARD-0021 Tony
+  Pollard** ($189 → ~$779, +312%) and **CARD-0028 Kylian Mbappe** ($99 → ~$157,
+  +59%) — and **held 10** at hand-set prices. Refreshed `price_history.csv` +
+  `comps_snapshot.json`, rebuilt `docs/data.json`. Keys confirmed live.
 - **eBay Production API is LIVE** (2026-07). Keys approved and in `.env`
   (`EBAY_ENV=production`, git-ignored). OAuth app token works against
   `api.ebay.com`. Pricing / Buy Radar / value search all pull real data.
