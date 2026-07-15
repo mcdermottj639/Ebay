@@ -4,9 +4,10 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v16";
+  var APP_VERSION = "v17";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
-                collapsed: {}, q: "", sort: "tier" };
+                collapsed: {}, q: "", sort: "tier",
+                radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
 
   // ---------- helpers ----------
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
@@ -553,40 +554,139 @@
       return wrap;
     }
 
-    var list = el('<div class="list radar"></div>');
-    deals.forEach(function (d) {
-      var r = RATINGS[Math.max(0, Math.min(3, d.bars | 0))] || RATINGS[0];
-      var auction = /AUCTION/i.test(d.buying_option || "");
-      var kind = auction ? "Auction" : "Buy Now";
-      var ph = { image: d.image, player: d.label, team: "" };
-      var sportBadge = /^football$/i.test(d.sport || "") ? ' <span class="sportbadge">🏈</span>' : "";
-      var premiumBadge = d.premium ? ' <span class="badge b-num">💥</span>' : "";
-      var row = el('<div class="drow" role="button" tabindex="0">' +
-        thumb(ph, "dthumb") +
-        '<div class="dm">' +
-          '<div class="dp">' + esc(d.label) + sportBadge + premiumBadge + "</div>" +
-          '<div class="ds">' + esc(d.item_title) + "</div>" +
-          '<div class="drate ' + r[1] + '">' + ratingBars(d.bars) +
-            '<span class="rlabel">' + r[0] + "</span>" +
-            (d.snipe ? '<span class="snipe">⏱ ENDS SOON</span>' : "") +
-          "</div>" +
-        "</div>" +
-        '<div class="dr">' +
-          '<div class="dprice tnum">' + money(d.price) + "</div>" +
-          '<div class="ddisc tnum">▼ ' + Math.abs(Math.round(d.discount_pct)) + "% under</div>" +
-          '<div class="dkind">' + kind + " · mkt ~" + money0(d.reference) + "</div>" +
-        "</div></div>");
-      row.onclick = function () { openDeal(d); };
-      row.onkeydown = function (e) {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDeal(d); }
-      };
-      list.appendChild(row);
+    // ---- Filter bar: Type (Downtown/Kaboom/Other), Sport, Graded, PSA grade.
+    // Options are built from what's actually in the current deals, so we never
+    // show an empty facet.
+    var TYPE_LABEL = { downtown: "Downtown", kaboom: "Kaboom", other: "Other" };
+    var typesPresent = ["downtown", "kaboom", "other"].filter(function (t) {
+      return deals.some(function (d) { return dealType(d) === t; });
     });
-    wrap.appendChild(list);
-    wrap.appendChild(el('<p class="muted" style="font-size:12px;margin:14px 2px">' +
-      "Tap a deal to see what’s on eBay now + recent sold prices, then open the listing. " +
-      "Prices are live from eBay’s active listings; “mkt” is the market reference we compared against." + "</p>"));
+    var sportsPresent = deals.map(function (d) { return (d.sport || "").toLowerCase(); })
+      .filter(function (s, i, a) { return s && a.indexOf(s) === i; });
+    var gradesPresent = deals.map(dealGrade).filter(function (g, i, a) {
+      return g && a.indexOf(g) === i;
+    }).sort(function (a, b) { return parseFloat(b) - parseFloat(a); });
+    var hasGraded = deals.some(function (d) { return dealGrader(d); });
+
+    function sel(name, opts) {
+      var cur = state.radarFilter[name];
+      var o = opts.map(function (op) {
+        return '<option value="' + op[0] + '"' + (cur === op[0] ? " selected" : "") +
+          ">" + esc(op[1]) + "</option>";
+      }).join("");
+      return '<select class="sortsel" data-rf="' + name + '">' + o + "</select>";
+    }
+
+    var controls = "";
+    controls += sel("type", [["all", "All types"]].concat(typesPresent.map(function (t) {
+      return [t, TYPE_LABEL[t]]; })));
+    if (sportsPresent.length) {
+      controls += sel("sport", [["all", "All sports"]].concat(sportsPresent.map(function (s) {
+        return [s, s.charAt(0).toUpperCase() + s.slice(1)]; })));
+    }
+    if (hasGraded) {
+      controls += sel("graded", [["all", "Graded: all"], ["graded", "Graded only"], ["raw", "Raw only"]]);
+    }
+    if (gradesPresent.length) {
+      controls += sel("grade", [["all", "Any PSA grade"]].concat(gradesPresent.map(function (g) {
+        return [g, "PSA " + g]; })));
+    }
+    var bar = el('<div class="radartools">' + controls + "</div>");
+    bar.querySelectorAll("select").forEach(function (s) {
+      s.onchange = function () {
+        state.radarFilter[s.getAttribute("data-rf")] = s.value;
+        renderResults();
+      };
+    });
+    wrap.appendChild(bar);
+
+    var results = el("<div></div>");
+    wrap.appendChild(results);
+
+    function renderResults() {
+      results.innerHTML = "";
+      var f = state.radarFilter;
+      var shown = deals.filter(function (d) { return matchRadar(d, f); });
+      var active = f.type !== "all" || f.sport !== "all" || f.graded !== "all" || f.grade !== "all";
+      var head = el('<div class="rescount">Showing ' + shown.length + " of " + deals.length +
+        " deals" + (active ? ' · <a href="#" class="clearf">Clear filters</a>' : "") + "</div>");
+      results.appendChild(head);
+      var clr = head.querySelector(".clearf");
+      if (clr) clr.onclick = function (e) {
+        e.preventDefault();
+        state.radarFilter = { type: "all", sport: "all", graded: "all", grade: "all" };
+        render();
+      };
+
+      if (!shown.length) {
+        results.appendChild(el('<div class="card"><p class="muted" style="margin:0">' +
+          "No deals match these filters right now. Try clearing one — inventory changes on every scan." +
+          "</p></div>"));
+        return;
+      }
+
+      var list = el('<div class="list radar"></div>');
+      shown.forEach(function (d) {
+        var r = RATINGS[Math.max(0, Math.min(3, d.bars | 0))] || RATINGS[0];
+        var auction = /AUCTION/i.test(d.buying_option || "");
+        var kind = auction ? "Auction" : "Buy Now";
+        var ph = { image: d.image, player: d.label, team: "" };
+        var sportBadge = /^football$/i.test(d.sport || "") ? ' <span class="sportbadge">🏈</span>' : "";
+        var premiumBadge = d.premium ? ' <span class="badge b-num">💥</span>' : "";
+        var row = el('<div class="drow" role="button" tabindex="0">' +
+          thumb(ph, "dthumb") +
+          '<div class="dm">' +
+            '<div class="dp">' + esc(d.label) + sportBadge + premiumBadge + "</div>" +
+            '<div class="ds">' + esc(d.item_title) + "</div>" +
+            '<div class="drate ' + r[1] + '">' + ratingBars(d.bars) +
+              '<span class="rlabel">' + r[0] + "</span>" +
+              (d.snipe ? '<span class="snipe">⏱ ENDS SOON</span>' : "") +
+            "</div>" +
+          "</div>" +
+          '<div class="dr">' +
+            '<div class="dprice tnum">' + money(d.price) + "</div>" +
+            '<div class="ddisc tnum">▼ ' + Math.abs(Math.round(d.discount_pct)) + "% under</div>" +
+            '<div class="dkind">' + kind + " · mkt ~" + money0(d.reference) + "</div>" +
+          "</div></div>");
+        row.onclick = function () { openDeal(d); };
+        row.onkeydown = function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDeal(d); }
+        };
+        list.appendChild(row);
+      });
+      results.appendChild(list);
+      results.appendChild(el('<p class="muted" style="font-size:12px;margin:14px 2px">' +
+        "Tap a deal to see what’s on eBay now + recent sold prices, then open the listing. " +
+        "Prices are live from eBay’s active listings; “mkt” is the market reference we compared against." + "</p>"));
+    }
+
+    renderResults();
     return wrap;
+  }
+
+  // ---- Buy Radar deal facets, derived from each deal's title/query ----------
+  function dealType(d) {
+    var s = ((d.query || "") + " " + (d.item_title || "")).toLowerCase();
+    if (s.indexOf("kaboom") >= 0) return "kaboom";
+    if (s.indexOf("downtown") >= 0) return "downtown";
+    return "other";
+  }
+  function dealGrader(d) {
+    var m = (d.item_title || "").match(/\b(PSA|BGS|BVG|SGC|CGC|CSG|HGA)\b/i);
+    return m ? m[1].toUpperCase() : "";
+  }
+  function dealGrade(d) {
+    // PSA grade specifically (owner asked "what PSA grade").
+    var m = (d.item_title || "").match(/\bPSA\s*(10|9\.5|9|8\.5|8|7|6|5)\b/i);
+    return m ? m[1] : "";
+  }
+  function matchRadar(d, f) {
+    if (f.type !== "all" && dealType(d) !== f.type) return false;
+    if (f.sport !== "all" && (d.sport || "").toLowerCase() !== f.sport) return false;
+    if (f.graded === "graded" && !dealGrader(d)) return false;
+    if (f.graded === "raw" && dealGrader(d)) return false;
+    if (f.grade !== "all" && dealGrade(d) !== f.grade) return false;
+    return true;
   }
 
   // eBay public search URL for a deal — live listings, or completed/sold.
