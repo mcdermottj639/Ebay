@@ -15,8 +15,9 @@ this finds the deals and you place the bid (manually or via a sniping service).
 from __future__ import annotations
 
 import csv
+import re
 import statistics
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -27,6 +28,23 @@ from . import config, ebay_auth
 SNIPE_WINDOW_HOURS = 24
 DEFAULT_DISCOUNT = 0.15  # flag listings 15%+ under market when no alert price set
 
+# We hunt SINGLE cards. Broad queries (esp. Kaboom/Downtown) drag in sealed wax,
+# box lots, and case breaks — those aren't the card and they poison the median.
+# Drop any listing whose title looks like sealed product / a lot / a break.
+_NON_SINGLE = re.compile(
+    r"\b("
+    r"sealed|mega\s*box|hobby\s*box|blaster|retail\s*box|value\s*box|cello|"
+    r"boxes|bundle|hunt(?:ing)?|break|repack|packs?|"
+    r"lot\s*of|box\s*lot|case\s*hit\s*lot|\d+\s*x\b|\bx\s*\d+\b"
+    r")\b",
+    re.IGNORECASE,
+)
+
+
+def _is_single_card(title: str) -> bool:
+    """False for sealed wax / box lots / breaks — we only want single cards."""
+    return not _NON_SINGLE.search(title or "")
+
 
 @dataclass
 class WatchItem:
@@ -36,6 +54,12 @@ class WatchItem:
     alert_below: str = ""
     notes: str = ""
     sport: str = ""         # "football", "baseball", etc. — used to prefer football
+    # Optional per-item price band + premium flag, set programmatically by the
+    # caller (radar.py) — e.g. Downtowns/Kabooms get a wider band. None = use
+    # the band passed to scan().
+    price_min: float | None = None
+    price_max: float | None = None
+    premium: bool = False
 
 
 @dataclass
@@ -52,6 +76,11 @@ class Deal:
     image: str = ""         # thumbnail URL
     bars: int = 0           # value rating 0-3 (like Alt's green bars)
     sport: str = ""         # from the watchlist row (football preferred)
+    query: str = ""         # the watchlist query (for eBay live/sold search URLs)
+    premium: bool = False   # a Downtown/Kaboom-style premium insert
+    # A few of the cheapest current listings for this card, for the app popup:
+    # [{"t": title, "p": price, "u": url}].
+    samples: list = field(default_factory=list)
 
 
 def load_watchlist(path: Path | None = None) -> list[WatchItem]:
@@ -90,8 +119,14 @@ def scan(items: list[WatchItem], per_item_limit: int = 50,
     token = ebay_auth.application_token()
     deals: list[Deal] = []
     for item in items:
+        # Per-item band override (premium inserts get a wider one) falls back to
+        # the band passed to scan().
+        band_min = item.price_min if item.price_min is not None else price_min
+        band_max = item.price_max if item.price_max is not None else price_max
         listings = _search(token, item.query, per_item_limit,
-                           price_min=price_min, price_max=price_max)
+                           price_min=band_min, price_max=band_max)
+        # Keep single cards only — no sealed wax / box lots / breaks.
+        listings = [l for l in listings if _is_single_card(l["title"])]
         if not listings:
             continue
         prices = [l["price"] for l in listings if l["price"] is not None]
@@ -99,6 +134,13 @@ def scan(items: list[WatchItem], per_item_limit: int = 50,
             continue
         reference = _num(item.fair_value) or statistics.median(prices)
         alert = _num(item.alert_below) or reference * (1 - DEFAULT_DISCOUNT)
+
+        # The cheapest current listings — shown in the app popup as "currently
+        # on eBay" so the owner can eyeball the going rate before buying.
+        samples = sorted(
+            ({"t": l["title"], "p": l["price"], "u": l["url"]}
+             for l in listings if l["price"] is not None),
+            key=lambda s: s["p"])[:6]
 
         for l in listings:
             if l["price"] is None or l["price"] > alert:
@@ -118,6 +160,9 @@ def scan(items: list[WatchItem], per_item_limit: int = 50,
                 image=l.get("image", ""),
                 bars=bars,
                 sport=item.sport,
+                query=item.query,
+                premium=item.premium,
+                samples=samples,
             ))
     # Best deals first
     deals.sort(key=lambda d: d.discount_pct, reverse=True)

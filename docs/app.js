@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v15";
+  var APP_VERSION = "v16";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier" };
 
@@ -560,10 +560,11 @@
       var kind = auction ? "Auction" : "Buy Now";
       var ph = { image: d.image, player: d.label, team: "" };
       var sportBadge = /^football$/i.test(d.sport || "") ? ' <span class="sportbadge">🏈</span>' : "";
-      var row = el('<a class="drow" href="' + esc(d.url) + '" target="_blank" rel="noopener">' +
+      var premiumBadge = d.premium ? ' <span class="badge b-num">💥</span>' : "";
+      var row = el('<div class="drow" role="button" tabindex="0">' +
         thumb(ph, "dthumb") +
         '<div class="dm">' +
-          '<div class="dp">' + esc(d.label) + sportBadge + "</div>" +
+          '<div class="dp">' + esc(d.label) + sportBadge + premiumBadge + "</div>" +
           '<div class="ds">' + esc(d.item_title) + "</div>" +
           '<div class="drate ' + r[1] + '">' + ratingBars(d.bars) +
             '<span class="rlabel">' + r[0] + "</span>" +
@@ -574,14 +575,76 @@
           '<div class="dprice tnum">' + money(d.price) + "</div>" +
           '<div class="ddisc tnum">▼ ' + Math.abs(Math.round(d.discount_pct)) + "% under</div>" +
           '<div class="dkind">' + kind + " · mkt ~" + money0(d.reference) + "</div>" +
-        "</div></a>");
+        "</div></div>");
+      row.onclick = function () { openDeal(d); };
+      row.onkeydown = function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDeal(d); }
+      };
       list.appendChild(row);
     });
     wrap.appendChild(list);
     wrap.appendChild(el('<p class="muted" style="font-size:12px;margin:14px 2px">' +
-      "Tap a deal to open it on eBay. Prices are live from eBay’s active listings; " +
-      "“vs” is the market reference we compared against." + "</p>"));
+      "Tap a deal to see what’s on eBay now + recent sold prices, then open the listing. " +
+      "Prices are live from eBay’s active listings; “mkt” is the market reference we compared against." + "</p>"));
     return wrap;
+  }
+
+  // eBay public search URL for a deal — live listings, or completed/sold.
+  function dealSearchUrl(d, soldOnly) {
+    var q = d.query || d.item_title || d.label;
+    return "https://www.ebay.com/sch/i.html?_nkw=" + encodeURIComponent(q) +
+      (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "");
+  }
+
+  // "Currently on eBay" box — the cheapest live listings radar.py captured.
+  function samplesBox(d) {
+    if (!d.samples || !d.samples.length) return "";
+    var rows = d.samples.map(function (s) {
+      var inner = '<span class="ct">' + esc(s.t) + '</span><b class="tnum">' + money0(s.p) + "</b>";
+      return s.u ? '<a class="comp" href="' + esc(s.u) + '" target="_blank" rel="noopener">' + inner + "</a>"
+                 : '<span class="comp">' + inner + "</span>";
+    }).join("");
+    return '<div class="compsbox"><div class="lab">Currently on eBay · cheapest</div>' + rows +
+      '<div class="cfoot">live active listings · tap one to open it on eBay</div></div>';
+  }
+
+  // Buy Radar deal popup: the listing, current market, what’s on eBay now, and
+  // buttons to the listing / all live listings / recent sold prices.
+  function openDeal(d) {
+    var m = document.getElementById("modal");
+    var r = RATINGS[Math.max(0, Math.min(3, d.bars | 0))] || RATINGS[0];
+    var auction = /AUCTION/i.test(d.buying_option || "");
+    var kind = auction ? "Auction" : "Buy Now";
+    var ph = { image: d.image, player: d.label, team: "" };
+    var sportBadge = /^football$/i.test(d.sport || "") ? ' <span class="sportbadge">🏈</span>' : "";
+    var premiumBadge = d.premium ? ' <span class="badge b-num">💥 Premium insert</span>' : "";
+    m.innerHTML =
+      '<button class="close" id="mClose">✕</button>' +
+      '<div class="mgrid">' +
+        '<div class="mhero">' + thumb(ph, "big") + "</div>" +
+        '<div class="mbody">' +
+          "<h3>" + esc(d.label) + sportBadge + premiumBadge + "</h3>" +
+          '<div class="muted" style="font-size:13px">' + esc(d.item_title) + "</div>" +
+          '<div class="dealhead">' +
+            '<span class="dhprice tnum">' + money(d.price) + "</span>" +
+            '<span class="dhkind"> · ' + kind +
+              (d.snipe ? " · ⏱ ends soon" : "") + "</span>" +
+          "</div>" +
+          '<div class="drate ' + r[1] + '" style="margin:2px 0 4px">' + ratingBars(d.bars) +
+            '<span class="rlabel">' + r[0] + "</span>" +
+            '<span class="dhdisc"> · ▼ ' + Math.abs(Math.round(d.discount_pct)) +
+            "% under mkt ~" + money0(d.reference) + "</span>" +
+          "</div>" +
+          samplesBox(d) +
+          '<div class="mbtns">' +
+            '<a class="mbtn prime" href="' + esc(d.url) + '" target="_blank" rel="noopener">🛒 Open this listing on eBay</a>' +
+            '<a class="mbtn" href="' + dealSearchUrl(d, false) + '" target="_blank" rel="noopener">🔎 All live listings</a>' +
+            '<a class="mbtn" href="' + dealSearchUrl(d, true) + '" target="_blank" rel="noopener">✅ Recent sold prices</a>' +
+          "</div>" +
+        "</div>" +
+      "</div>";
+    m.querySelector("#mClose").onclick = closeModal;
+    document.getElementById("modalWrap").classList.add("open");
   }
 
   function viewTargets() {

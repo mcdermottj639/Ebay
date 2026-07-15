@@ -362,8 +362,15 @@ main { max-width: 720px; margin: 0 auto;
   box-shadow: 0 6px 18px rgba(0,0,0,.28); }
 .drow .dthumb { width: 52px; height: 52px; flex: none; border-radius: 9px; }
 .drow .dm { min-width: 0; flex: 1; }
+.drow { cursor: pointer; }
 .drow .dp { font-weight: 800; font-size: 14.5px; }
 .sportbadge { font-size: 12px; }
+/* Buy Radar deal popup */
+.dealhead { margin: 8px 0 2px; }
+.dhprice { font-weight: 800; font-size: 21px; }
+.dhkind { font-weight: 600; font-size: 12px; color: var(--muted); }
+.dhdisc { font-weight: 700; font-size: 12px; }
+.mbtn.prime { background: var(--gold); color: #1a1200; border-color: var(--gold); font-weight: 800; }
 .drow .ds { color: var(--muted); font-size: 12px; margin-top: 2px; overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap; }
 .drate { display: flex; align-items: center; gap: 7px; margin-top: 6px; }

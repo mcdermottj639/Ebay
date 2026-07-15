@@ -44,22 +44,45 @@ TOP_N = 24            # show the best two dozen
 MIN_PRICE = 100.0
 MAX_PRICE = 1000.0
 
+# Premium inserts the owner specifically hunts (Downtowns + Kabooms). These run
+# well over $1000, and the owner says that's fine WHEN the savings are big — so
+# we widen their band and keep the pricey ones only if the discount is meaty.
+PREMIUM_TERMS = ("downtown", "kaboom")
+PREMIUM_MAX_PRICE = 5000.0
+PREMIUM_MIN_DISCOUNT = 25.0   # over $1000, only flag a real bargain
+
 # Owner preference: surface football first, then everything else (baseball etc.).
 SPORT_ORDER = {"football": 0}
 
 
-def _curate(found):
-    """Keep believable, in-band deals; football first, then best discount.
+def _is_premium(item) -> bool:
+    """True for Downtown/Kaboom-style premium inserts (by label or query)."""
+    hay = f"{item.label} {item.query}".lower()
+    return any(term in hay for term in PREMIUM_TERMS)
 
-    Returns (kept, dropped)."""
-    believable = [
-        d for d in found
-        if MIN_DISCOUNT <= d.discount_pct <= MAX_DISCOUNT
-        and MIN_PRICE <= d.price <= MAX_PRICE
-    ]
-    # Sort key: football (0) before other sports (1), then biggest discount.
-    believable.sort(key=lambda d: (SPORT_ORDER.get(d.sport, 1), -d.discount_pct))
-    return believable[:TOP_N], len(found) - len(believable[:TOP_N])
+
+def _keep(d) -> bool:
+    """Is this deal believable and in the owner's price rules?"""
+    if not (MIN_DISCOUNT <= d.discount_pct <= MAX_DISCOUNT):
+        return False
+    if d.price < MIN_PRICE:
+        return False
+    if d.price <= MAX_PRICE:
+        return True
+    # Above $1000: only Downtowns/Kabooms, and only with big savings.
+    return bool(d.premium and d.price <= PREMIUM_MAX_PRICE
+                and d.discount_pct >= PREMIUM_MIN_DISCOUNT)
+
+
+def _curate(found):
+    """Keep believable, in-band deals; football first, premium next, then best
+    discount. Returns (kept, dropped)."""
+    kept = [d for d in found if _keep(d)]
+    # Sort: football (0) before other sports, Downtowns/Kabooms before base,
+    # then biggest discount.
+    kept.sort(key=lambda d: (SPORT_ORDER.get(d.sport, 1), 0 if d.premium else 1,
+                             -d.discount_pct))
+    return kept[:TOP_N], len(found) - len(kept[:TOP_N])
 
 
 def main() -> int:
@@ -74,8 +97,20 @@ def main() -> int:
         print("See docs/01-getting-ebay-api-keys.md.")
         return 1
 
+    # Downtowns/Kabooms can run past $1000 — the owner wants those too, so give
+    # them a wider band and flag them premium.
+    premium_n = 0
+    for it in items:
+        if _is_premium(it):
+            it.premium = True
+            it.price_max = PREMIUM_MAX_PRICE
+            premium_n += 1
+
+    band = f"${MIN_PRICE:.0f}–${MAX_PRICE:.0f}"
+    if premium_n:
+        band += f" (Downtowns/Kabooms up to ${PREMIUM_MAX_PRICE:.0f})"
     print(f"Scanning eBay for {len(items)} watchlist item(s) "
-          f"(${MIN_PRICE:.0f}–${MAX_PRICE:.0f}, football first)...\n")
+          f"({band}, football first)...\n")
     found = deals.scan(items, price_min=MIN_PRICE, price_max=MAX_PRICE)
     kept, dropped = _curate(found)
 
