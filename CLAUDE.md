@@ -202,7 +202,15 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v22.
+  Current: v23. **`sw.js` is network-first for HTML navigations + data.json
+  (v23):** the shell used to be pure cache-first, so after a ship the app kept
+  loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
+  a fix could be live yet still look broken on the owner's screen. Now
+  `networkFirst()` serves `index.html`/`data.json` from the network when online
+  (cached fallback offline), so a new build's asset versions load on the very
+  next open. Versioned assets (`styles.css?v=N`, `app.js?v=N`, icons) stay
+  cache-first (immutable per version). If the owner ever still sees a stale
+  build, one full close-and-reopen of the app clears it.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -316,8 +324,15 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v22**
-  (v22 = **Sales Map PC layout** — on ≥1000px the tab reflows into a Command-
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v23**
+  (v23 = **comp-price never clips + network-first SW** — the "On eBay now" box
+  rows are now a CSS **grid** (`minmax(0,1fr) auto`) so the price column always
+  sizes to its content and can't be pushed off/clipped (the earlier flex fix was
+  right but the owner kept seeing the old clip because the cache-first SW served
+  a stale `index.html`/CSS); `sw.js` is now **network-first for HTML +
+  data.json** so a shipped fix loads on the next app open instead of after a
+  full SW cycle;
+  v22 = **Sales Map PC layout** — on ≥1000px the tab reflows into a Command-
   Center dashboard: hero + 3 stat tiles, then a 2-column grid with the sell map
   **and** the price-change analytics (value trend + gainers/decliners) stacked
   in the left column and the ranked "best positioned to sell" leaderboard
