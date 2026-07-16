@@ -392,6 +392,20 @@ main { max-width: 720px; margin: 0 auto;
 .srow .p { font-weight: 700; font-size: 14.5px; }
 .srow .sub { color: var(--muted); font-size: 12px; margin-top: 2px; overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap; }
+/* "usually going for" market line under a sell row */
+.smkt { font-size: 11.5px; color: var(--muted); margin-top: 5px; }
+.smkt .room { color: var(--good); font-weight: 700; }
+.smkt .thin { color: var(--warn); font-weight: 700; }
+
+/* "What it's going for" box in the card modal */
+.compsbox.market .mkrow { display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; font-size: 13.5px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+.compsbox.market .mkrow:last-of-type { border-bottom: none; }
+.compsbox.market .mkrow span { color: var(--muted); }
+.compsbox.market .mkrow b { font-weight: 800; }
+.compsbox.market .mkrow small { color: var(--muted); font-weight: 600; }
+.compsbox.market .mkrow.up b { color: var(--good); }
+
 .rchips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
 .rchip { font-size: 10.5px; font-weight: 700; color: var(--muted);
   background: var(--surface-2); border: 1px solid var(--border);
@@ -621,7 +635,8 @@ a.comp:hover .ct { color: var(--gold); }
   .modal-wrap { align-items: center; padding: 24px; }
   .modal { max-width: 880px; border-radius: 20px; border-bottom: 1px solid var(--border);
     padding: 24px 26px 26px; max-height: 88vh; }
-  .mgrid { display: grid; grid-template-columns: 320px 1fr; gap: 24px; align-items: start; }
+  .mgrid { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 24px; align-items: start; }
+  .mgrid .mbody { min-width: 0; }   /* let long comp titles ellipsize instead of widening the dialog */
   .mgrid .mhero { margin: 0; }
   .mgrid .mhero .thumb.big { height: 400px; }
   .about { max-width: 760px; }

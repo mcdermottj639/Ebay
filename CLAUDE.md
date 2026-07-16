@@ -189,8 +189,8 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   `@media (min-width:1000px)` `.salesmap` rules use grid-row/column placement to
   put map+analytics in the left column and the ranked list spanning the right.
 - `build_web.py` — regenerates `docs/data.json` from the catalog (incl. per-card
-  `image` + `price_basis` + `price_series`, plus the `history` snapshots above)
-  AND a self-contained
+  `image` + `price_basis` + `price_series` + `market` {median,count}, plus the
+  `history` snapshots above) AND a self-contained
   `output/preview.html` (CSS+JS+data
   inlined) for previewing. Run it after any catalog change so the app reflects it.
   NOTE: the Artifact CSP blocks images, so photos only show on the live Pages
@@ -198,11 +198,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v22. The live
+  this makes the service worker serve stale CSS/JS. Current: v23. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v23. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v24. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -324,8 +324,21 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v23**
-  (v23 = **comp-price never clips + network-first SW** — the "On eBay now" box
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v24**
+  (v24 = **Sales Map "what it's going for"** — every repriced card now surfaces
+  the market reference the owner asked for: sell rows show "Usually ~$median ·
+  N on eBay", and the card modal has a **What it's going for** box (typical
+  asking · live range · your estimate · room up to typical). `build_web._market`
+  bakes the latest comps median+count per SKU into a card `market` field;
+  `app.js goingFor`/`marketSolid`/`marketLine`/`marketBox` render it. Honest by
+  design: it's the ASKING median (eBay denied real SOLD comps), thin counts are
+  flagged "thin data" and the "room to" suggestion is withheld unless the read
+  is solid (count ≥5 and our price 0–50% under median) so noisy comps like the
+  flagged Tony Pollard $189-vs-$885 don't imply a bogus upside. Also fixed a
+  latent PC modal bug — `.mgrid` used `320px 1fr`, whose `1fr` min-content let
+  long comp titles widen the dialog and push values off-screen; now
+  `320px minmax(0,1fr)` + `.mbody{min-width:0}` so titles ellipsize;
+  v23 = **comp-price never clips + network-first SW** — the "On eBay now" box
   rows are now a CSS **grid** (`minmax(0,1fr) auto`) so the price column always
   sizes to its content and can't be pushed off/clipped (the earlier flex fix was
   right but the owner kept seeing the old clip because the cache-first SW served

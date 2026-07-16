@@ -133,6 +133,34 @@ def _price_series():
     return series
 
 
+def _market():
+    """Latest market reference per SKU from data/price_history.csv — the comps
+    median reprice.py saw and how many listings backed it. This is the "usually
+    going for" number. NOTE: eBay denied us real SOLD comps (Marketplace
+    Insights), so this is the ASKING market (active listings); our est_sold
+    asking_price already haircuts it. Count matters — a thin count (few
+    listings) means the median is noisy, so the app shows it and holds back the
+    'room to' suggestion."""
+    path = DATA / "price_history.csv"
+    if not path.exists():
+        return {}
+    latest: dict[str, tuple] = {}  # sku -> (date, median, count)
+    with path.open(newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            sku = (row.get("sku") or "").strip()
+            date = (row.get("date") or "").strip()
+            median = _num(row.get("median", ""))
+            try:
+                count = int(float(row.get("count", "") or 0))
+            except ValueError:
+                count = 0
+            if not sku or median <= 0:
+                continue
+            if sku not in latest or date > latest[sku][0]:
+                latest[sku] = (date, median, count)
+    return {sku: {"median": round(m, 2), "count": c} for sku, (d, m, c) in latest.items()}
+
+
 def _comps_snapshot():
     """Per-SKU comp listings saved by reprice.py (data/comps_snapshot.json).
     Returns ({sku: {source, broad, items}}, as_of_date)."""
@@ -250,6 +278,7 @@ def build_data(cards) -> dict:
     realized = revenue - _money(sold, "cost")
     changes = _price_changes()
     series_by_sku = _price_series()
+    market_by_sku = _market()
     comps_by_sku, comps_as_of = _comps_snapshot()
 
     return {
@@ -295,6 +324,7 @@ def build_data(cards) -> dict:
                 "sold_date": c.sold_date, "cert": _cert_for(c),
                 "prev_price": changes.get(c.sku, {}).get("prev", ""),
                 "price_series": series_by_sku.get(c.sku, []),
+                "market": market_by_sku.get(c.sku),
                 "comps": ({"as_of": comps_as_of,
                            "source": comps_by_sku[c.sku].get("source", "active"),
                            "broad": comps_by_sku[c.sku].get("broad", False),
