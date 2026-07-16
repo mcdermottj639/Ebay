@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v24";
+  var APP_VERSION = "v25";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -15,6 +15,8 @@
   function money(n) { return "$" + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
   function money0(n) { return "$" + Math.round(Number(n || 0)).toLocaleString(); }
   function num(v) { var n = parseFloat(String(v).replace(/[$,]/g, "")); return isNaN(n) ? 0 : n; }
+  function copyText(t) { try { if (navigator.clipboard) navigator.clipboard.writeText(t); } catch (e) {} }
+  function flashBtn(btn, msg) { var o = btn.innerHTML; btn.textContent = msg; setTimeout(function () { btn.innerHTML = o; }, 1900); }
 
   // ---------- shell ----------
   function shell() {
@@ -430,9 +432,12 @@
     wrap.appendChild(el('<div class="eyebrow">Collection value</div>'));
     var tiles = el('<div class="tiles"></div>');
     tiles.appendChild(el('<div class="tile hero"><div class="k">Estimated value</div><div class="v tnum">' + money(s.total_value) + "</div></div>"));
-    var profitCls = s.profit >= 0 ? "pos" : "neg";
-    [["Total cost", money(s.total_cost), ""],
-     ["Est. profit", money(s.profit), profitCls],
+    // profit/cost only read once a cost is entered (else blank cost = $0 makes
+    // profit == full value, which isn't true).
+    var hasCost = (s.cost_count || 0) > 0;
+    var profitCls = hasCost ? (s.profit >= 0 ? "pos" : "neg") : "";
+    [["Total cost", hasCost ? money(s.total_cost) : "—", ""],
+     ["Est. profit", hasCost ? money(s.profit) : "—", profitCls],
      ["Cards", s.total_cards, ""],
      ["Priced", s.priced + " / " + (s.total_cards - (s.sold || 0)), ""],
      ["Graded", s.graded, ""],
@@ -440,6 +445,11 @@
       tiles.appendChild(el('<div class="tile"><div class="k">' + t[0] + '</div><div class="v tnum ' + t[2] + '">' + t[1] + "</div></div>"));
     });
     wrap.appendChild(tiles);
+    if (!hasCost) {
+      wrap.appendChild(el('<p class="muted" style="font-size:12.5px;margin:8px 2px 0">' +
+        "💡 Add what you paid (the <b>cost</b> column in your sheet) to turn on profit — " +
+        "it’ll show here and on the Sales Map.</p>"));
+    }
 
     // the business row — only once something is listed or sold
     if (s.listed || s.sold) {
@@ -583,6 +593,25 @@
     return m && m.count >= 5 && cur > 0 && cur < m.median && cur >= m.median * 0.5;
   }
 
+  // Profit from the owner's recorded cost (gross, before eBay/shipping fees).
+  // null when no cost is entered yet, so the UI can leave a labelled spot to
+  // add it rather than pretending profit == full value.
+  function profitOf(c) {
+    var cost = num(c.cost), est = num(c.asking_price);
+    if (cost <= 0 || est <= 0) return null;
+    return { cost: cost, est: est, profit: est - cost, margin: (est - cost) / cost * 100 };
+  }
+
+  // compact profit chip for a sell row — the number when we have cost, or a
+  // dashed "add cost" placeholder (the spot to fill) when we don't.
+  function profitChip(c) {
+    var pf = profitOf(c);
+    if (!pf) return '<div class="rpf addcost">＋ add cost</div>';
+    var up = pf.profit >= 0;
+    return '<div class="rpf ' + (up ? "up" : "down") + '">' + (up ? "+" : "−") +
+      money0(Math.abs(pf.profit)) + " profit</div>";
+  }
+
   // compact market line under a sell row: typical price + listing count, and
   // (only when solid) the room up toward that typical price.
   function marketLine(c) {
@@ -675,6 +704,7 @@
           '<div class="rchips">' + reasons + "</div>" + marketLine(c) + "</div>" +
         '<div class="r">' +
           '<div class="val tnum">' + money0(c.asking_price) + changeChip(c) + "</div>" +
+          profitChip(c) +
           (spark ? '<div class="sparkwrap">' + spark + "</div>" : "") +
           '<div class="drate ' + r[1] + '">' + ratingBars(s.bars) + '<span class="rlabel">' + r[0] + "</span></div>" +
         "</div>" +
@@ -700,18 +730,26 @@
       return wrap;
     }
 
-    // headline tiles: how many are prime / good / worth listing
+    // headline tiles: how many are prime / good / worth listing + est. profit
+    var sm = state.data.summary;
     var prime = scored.filter(function (s) { return s.bars >= 3; });
     var good = scored.filter(function (s) { return s.bars === 2; });
     var topVal = scored.reduce(function (a, s) { return a + num(s.c.asking_price); }, 0);
+    var costCount = sm.cost_count || 0, pricedM = sm.priced || scored.length;
     var tiles = el('<div class="tiles"></div>');
     tiles.appendChild(el('<div class="tile hero"><div class="k">Prime to sell now</div><div class="v tnum">' +
       prime.length + ' <small class="hsub">of ' + scored.length + " priced</small></div></div>"));
     [["Good to sell", good.length, ""],
-     ["Value in play", money0(topVal), ""],
-     ["Listed now", state.data.summary.listed || 0, ""]].forEach(function (t) {
+     ["Value in play", money0(topVal), ""]].forEach(function (t) {
       tiles.appendChild(el('<div class="tile"><div class="k">' + t[0] + '</div><div class="v tnum ' + t[2] + '">' + t[1] + "</div></div>"));
     });
+    // Est. profit — only meaningful over cards with a cost entered; otherwise a
+    // gentle prompt to add cost (the "spot to fill").
+    var pVal = costCount ? ((sm.profit >= 0 ? "+" : "−") + money0(Math.abs(sm.profit))) : "—";
+    var pCls = costCount ? (sm.profit >= 0 ? "pos" : "neg") : "";
+    var pSub = costCount ? "on " + costCount + " of " + pricedM + " with cost" : "add cost to unlock";
+    tiles.appendChild(el('<div class="tile"><div class="k">Est. profit</div><div class="v tnum ' + pCls +
+      '">' + pVal + ' <small class="tsub">' + pSub + "</small></div></div>"));
     wrap.appendChild(tiles);
 
     // Dashboard grid. DOM order (map → list → price changes) is the phone
@@ -1093,12 +1131,32 @@
       (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "");
   }
 
+  // A ready-to-paste prompt for drafting the eBay listing in Claude chat.
+  function listPrompt(c) {
+    var d = [c.year, c.brand, c.set, c.player, c.card_number ? "#" + c.card_number : "",
+             c.parallel, c.insert, c.graded ? (c.grader + " " + c.grade) : "",
+             c.serial_run ? "/" + c.serial_run : "", c.team].filter(Boolean).join(" ");
+    return "Help me create and post an eBay listing for this sports card.\n\n" +
+      "Card: " + d + "\nSuggested title: " + c.title +
+      (num(c.asking_price) > 0 ? "\nMy asking price: " + money0(c.asking_price) : "") +
+      "\n\nPlease give me an optimized 80-character title, eBay item specifics, and a short " +
+      "description I can paste — then remind me to add photos before publishing.";
+  }
+
   // "What it's going for" box for the modal — the typical asking price, the
   // live range, our estimate, and (when the read is solid) the room up toward
   // typical. Honest about the ASKING-vs-SOLD gap eBay left us with.
   function marketBox(c) {
     var m = goingFor(c);
-    if (!m) return "";
+    if (!m) {
+      // Priced but no comps captured (e.g. a niche insert/auto the auto-pricer
+      // found zero matches for) — explain instead of silently showing nothing.
+      if (num(c.asking_price) <= 0) return "";
+      return '<div class="compsbox nomarket"><div class="lab">What it’s going for</div>' +
+        '<div class="addcostrow">No eBay comps captured for this exact card yet — the value here is hand-set.</div>' +
+        '<div class="cfoot">Niche inserts/autos often return no match on the weekly auto-price run. ' +
+        "Tap “Live listings” / “Sold on eBay” below to check the market yourself.</div></div>";
+    }
     var cur = num(c.asking_price);
     var prices = ((c.comps && c.comps.items) || []).map(function (it) { return num(it.p); })
       .filter(function (p) { return p > 0; });
@@ -1120,6 +1178,24 @@
     return '<div class="compsbox market"><div class="lab">What it’s going for</div>' + rows +
       '<div class="cfoot">Typical = eBay <b>asking</b> median (' + basisTxt + "). " +
       "Real sold prices need eBay approval — tap “Sold on eBay” below for actuals.</div></div>";
+  }
+
+  // Cost & profit box for the modal — the real numbers when a cost is entered,
+  // or a labelled prompt (the spot to add it) when it isn't.
+  function costProfitBox(c) {
+    var pf = profitOf(c);
+    if (pf) {
+      var cls = pf.profit >= 0 ? "up" : "down";
+      return '<div class="compsbox cprofit"><div class="lab">Cost &amp; profit</div>' +
+        '<div class="mkrow"><span>You paid</span><b class="tnum">' + money0(pf.cost) + "</b></div>" +
+        '<div class="mkrow"><span>Est. value</span><b class="tnum">' + money0(pf.est) + "</b></div>" +
+        '<div class="mkrow ' + cls + '"><span>Est. profit if sold</span><b class="tnum">' +
+          (pf.profit >= 0 ? "+" : "−") + money0(Math.abs(pf.profit)) + " · " + Math.round(pf.margin) + "%</b></div>" +
+        '<div class="cfoot">Gross — before eBay &amp; shipping fees.</div></div>';
+    }
+    return '<div class="compsbox addcostbox"><div class="lab">Cost &amp; profit</div>' +
+      '<div class="addcostrow">＋ No cost recorded yet — add what you paid to unlock profit for this card.</div>' +
+      '<div class="cfoot">Put it in the <b>cost</b> column of data/inventory.csv (or just tell me the amount).</div></div>';
   }
 
   // Per-card price-over-time box for the modal — a sparkline of the SKU's
@@ -1165,8 +1241,16 @@
           '<dl class="kv">' + kv + "</dl>" +
           '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>" +
           marketBox(c) +
+          costProfitBox(c) +
           priceHistoryBox(c) +
           compsBox(c) +
+          '<div class="listbar"><div class="lblab">🏷️ List this card</div>' +
+            '<div class="lbbtns">' +
+              '<button class="mbtn prime" id="mListEbay">List on eBay</button>' +
+              '<button class="mbtn" id="mListClaude">✨ Draft in Claude</button>' +
+            "</div>" +
+            '<div class="lbfoot">eBay opens the sell page (title copied to paste). Claude opens a chat to draft the title, specifics &amp; description.</div>' +
+          "</div>" +
           '<div class="mbtns">' +
             '<a class="mbtn" href="' + ebaySearchUrl(c, false) + '" target="_blank" rel="noopener">🛒 Live listings</a>' +
             '<a class="mbtn" href="' + ebaySearchUrl(c, true) + '" target="_blank" rel="noopener">✅ Sold on eBay</a>' +
@@ -1178,6 +1262,20 @@
         "</div>" +
       "</div>";
     m.querySelector("#mClose").onclick = closeModal;
+    // quick-list widget: eBay sell page (title on clipboard) or draft in Claude
+    var listEbay = m.querySelector("#mListEbay");
+    listEbay.onclick = function () {
+      copyText(c.title);
+      window.open("https://www.ebay.com/sl/sell", "_blank", "noopener");
+      flashBtn(listEbay, "✓ Title copied — paste on eBay");
+    };
+    var listClaude = m.querySelector("#mListClaude");
+    listClaude.onclick = function () {
+      var q = listPrompt(c);
+      copyText(q);
+      window.open("https://claude.ai/new?q=" + encodeURIComponent(q), "_blank", "noopener");
+      flashBtn(listClaude, "✓ Prompt copied — paste in Claude");
+    };
     var share = m.querySelector("#mShare");
     share.onclick = function () {
       var url = location.href.split("#")[0] + "#sku=" + encodeURIComponent(c.sku);

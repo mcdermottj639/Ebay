@@ -16,7 +16,7 @@
       "n": 34
     }
   ],
-  "generated": "Jul 16, 2026 \u00b7 00:19 UTC",
+  "generated": "Jul 16, 2026 \u00b7 00:31 UTC",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1612,7 +1612,8 @@
     "priced": 34,
     "total_cost": 0.0,
     "total_value": 2724.03,
-    "profit": 2724.03,
+    "profit": 0,
+    "cost_count": 0,
     "listed": 0,
     "sold": 0,
     "revenue": 0,
