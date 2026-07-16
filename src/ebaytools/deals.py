@@ -46,6 +46,27 @@ def _is_single_card(title: str) -> bool:
     return not _NON_SINGLE.search(title or "")
 
 
+# Oversized / jumbo / box-topper cards (esp. oversized Downtowns) are a SEPARATE
+# market priced very differently from the standard 2.5x3.5 single — mixing them
+# into a standard-size median gives a bogus discount. Detect them so scan() can
+# drop them from a standard query (but keep them when the query hunts oversized).
+_OVERSIZED = re.compile(
+    r"\b("
+    r"oversized?|jumbo|box\s*topper|boxtopper|blow\s*up|giant|"
+    r"5\s*[x×]\s*7|3\s*[x×]\s*5|\d{2,}\s*[x×]\s*\d{2,}"
+    r")\b",
+    re.IGNORECASE,
+)
+
+
+def _is_oversized(title: str) -> bool:
+    return bool(_OVERSIZED.search(title or ""))
+
+
+def _query_wants_oversized(query: str) -> bool:
+    return bool(re.search(r"oversized?|jumbo|box\s*topper|boxtopper", query or "", re.IGNORECASE))
+
+
 @dataclass
 class WatchItem:
     label: str
@@ -127,6 +148,10 @@ def scan(items: list[WatchItem], per_item_limit: int = 50,
                            price_min=band_min, price_max=band_max)
         # Keep single cards only — no sealed wax / box lots / breaks.
         listings = [l for l in listings if _is_single_card(l["title"])]
+        # Oversized/jumbo Downtowns price differently — drop them so they don't
+        # skew a standard-size median, unless this watchlist row hunts oversized.
+        if not _query_wants_oversized(item.query):
+            listings = [l for l in listings if not _is_oversized(l["title"])]
         if not listings:
             continue
         prices = [l["price"] for l in listings if l["price"] is not None]
