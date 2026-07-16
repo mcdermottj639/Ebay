@@ -512,8 +512,28 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   (`auth.ebay.com/oauth2/authorize?...&response_type=code`) with the RuName, then
   POST the returned `code` to `identity/v1/oauth2/token` with
   `grant_type=authorization_code`.
-- Next: live listing is now unblocked EXCEPT for eBay **business policies**
-  (shipping / payment / return) + item location — `check_ebay_login.py` flags
-  these as still needed before a real publish (docs/01 Step 4). Set those up,
-  then list the best cards. Consider a PSA cert/pop lookup. (Marketplace
-  Insights / real SOLD comps remain DENIED by eBay — see the note above.)
+- **Business policies + item location are LIVE (2026-07-16).** Created via the
+  Sell **Account API** (needs the `sell.account` scope the new token carries).
+  First had to opt the account into eBay's Business Policies program
+  (`POST /sell/account/v1/program/opt_in` `{"programType":"SELLING_POLICY_MANAGEMENT"}`)
+  — before that, policy calls 400'd with "User is not eligible for Business
+  Policy." Then created three policies + one inventory location:
+    - Fulfillment (shipping): **free standard shipping, 3-day handling** —
+      id `274028114016`. NOTE: `USPSGroundAdvantage` 400'd with an LSAS
+      "LOGISTICS_INFO_IS_MISSING" ship-eligibility error on this fresh account;
+      the generic **`ShippingMethodStandard`** service code worked (same free
+      standard shipping to the buyer). Use that generic code for new policies.
+    - Payment: immediate pay (managed payments) — id `274028107016`.
+    - Return: **30-day, buyer pays** return shipping — id `274028109016`.
+    - Location: `STAMFORD-CT` (Stamford, CT 06901, ENABLED).
+  Owner saves these as env vars in the Claude Code environment settings (they're
+  not secret): `EBAY_FULFILLMENT_POLICY_ID`, `EBAY_PAYMENT_POLICY_ID`,
+  `EBAY_RETURN_POLICY_ID`, `EBAY_MERCHANT_LOCATION_KEY` (read by `lister.py` +
+  `check_ebay_login.py`). With these + the user token, `check_ebay_login.py`
+  reports "✅ you're ready to try a live listing."
+- Next: live listing is now fully unblocked — pick the best cards and publish
+  with `create_listings.py` / `lister.py` (dry-run first, then `live`).
+  Photograph cards first (eBay requires ≥1 photo; `lister.image_urls_for`
+  auto-attaches `docs/img/<SKU>.jpg`). Consider a PSA cert/pop lookup.
+  (Marketplace Insights / real SOLD comps remain DENIED by eBay — see the note
+  above.)
