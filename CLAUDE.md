@@ -50,6 +50,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 | `radar.py` | Buy Radar snapshot for the app's 🔎 tab (writes `data/radar_snapshot.json`) | yes |
 | `search_deals.py "query" [price]` | Alt-style value search | yes |
 | `create_listings.py [live]` | preview / publish listings | yes (live) |
+| `check_ebay_login.py` | verify the SELLING user token works (lists nothing) | yes |
 
 ## Architecture
 - `data/inventory.csv` — the catalog (one row per card). Master source of truth.
@@ -117,7 +118,16 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
     (`docs/img/<SKU>.*` → `https://…github.io/Ebay/img/<SKU>.jpg`, base overridable
     via `SITE_IMAGE_BASE`) so eBay listings carry images. Cards without a photo
     list with no image — eBay requires ≥1 photo, so photograph before going live.
-- Top-level `*.py` = thin owner-facing commands. `run.py` = menu.
+- Top-level `*.py` = thin owner-facing commands. `run.py` = menu (menu option
+  **9** = `check_ebay_login.py`, **0** = quit).
+- `check_ebay_login.py` — owner-facing check for the **user token** (selling).
+  Mints a user access token from `EBAY_USER_REFRESH_TOKEN` via
+  `ebay_auth.user_token()` and reports ✅/❌ in plain English; also flags any
+  missing business-policy IDs needed for a real listing. Lists nothing. This is
+  the "did my one-time consent work?" button after minting the token per
+  docs/01 Step 3. NOTE: the eBay App ID/Cert/ENV are already present as env vars
+  in this cloud environment, so adding `EBAY_USER_REFRESH_TOKEN` as an env var
+  here is enough to enable listing from the cloud (no local .env needed).
 - `docs/` (also holds the web app) — **Card Vault PWA**, the "real app" (à la
   the owner's Sports-Hub). Static HTML/CSS/vanilla-JS, no build step, deploys
   via GitHub Pages. `index.html` shell, `app.js` (renders tabs: Collection /

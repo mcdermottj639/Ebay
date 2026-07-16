@@ -46,19 +46,51 @@ data, so counts may be low — that's expected. Real data comes in production.)
 
 ---
 
-## Step 3 — Let the app act on YOUR account (only needed to LIST)
+## Step 3 — Let the app act on YOUR account (the "user token", only needed to LIST)
 
 Pulling public prices only needs the keys above. **Creating listings** needs a
-"user token" that proves you gave the app permission to touch your account.
+one-time **user token** that proves you gave the app permission to list on your
+behalf. You do this once; it lasts a long time.
 
-1. In the developer portal, open **User Tokens** → **Get a User Token**
-   (OAuth). Choose your keyset and the **sell.inventory** scope.
-2. Sign in as your seller account and click **Agree**.
-3. eBay gives you a **Refresh Token**. Paste it into `.env`:
-   ```
-   EBAY_USER_REFRESH_TOKEN=v^1.1#i^1#...
-   ```
-   (Refresh tokens last a long time; you regenerate it if it ever expires.)
+You do the login in your browser on eBay's site — nobody sees your password.
+At the end eBay hands you a **Refresh Token** (a long string), which is the
+thing you save.
+
+1. Go to **https://developer.ebay.com**, sign in, open your **Production**
+   application keyset, and find the **User Tokens** area
+   ("Get a User Token" / "User access tokens").
+2. **One-time setup — a redirect URL (RuName).** The first time, eBay asks for
+   a "redirect URL name." Click **Add eBay Redirect URL**, give it any display
+   title (e.g. "Card Vault"), and for the URLs you can use your GitHub Pages
+   site (`https://mcdermottj639.github.io/Ebay/`) as both the privacy-policy and
+   the accepted URL. Save it. (This is just a formality so eBay knows where to
+   send you back; you only set it up once.)
+3. Click the button to **get a token** / **sign in**. When it asks which
+   permissions (scopes), choose **sell.inventory** (and **sell.account** if
+   offered — that lets us read your shipping/return policies for Step 4).
+4. Sign in as **the eBay account you sell from** and click **Agree**.
+5. eBay shows you a **User access token** and a **Refresh Token**. Copy the
+   **Refresh Token** — that's the one that lasts.
+
+**Where to put it — important:** this is a secret, like your other keys.
+- If you run the tools on your own computer, paste it into your local `.env`:
+  ```
+  EBAY_USER_REFRESH_TOKEN=v^1.1#i^1#...
+  ```
+- If Claude runs things in the cloud for you (the weekly auto-price, etc.),
+  add it as an **environment variable** in your **Claude Code environment
+  settings** — the same place you added `EBAY_APP_ID` / `EBAY_CERT_ID` /
+  `EBAY_ENV`. Name it `EBAY_USER_REFRESH_TOKEN`.
+
+**Never paste the token into a chat message, a commit, or an email.** Put it in
+`.env` or the environment settings only.
+
+### Test it
+```bash
+python3 check_ebay_login.py
+```
+(or **menu option 9**). It doesn't list anything — it just tells you ✅ if the
+connection works, or ❌ with a plain reason if something's off.
 
 ## Step 4 — Business policy IDs (only needed to LIST)
 
