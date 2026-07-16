@@ -498,6 +498,22 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   to `main`. So: edit `data/inventory.csv` → merge to `main` → site updates
   itself (no manual Pages steps, no manual rebuild). Deploy status via the
   Actions tab / `pages.yml` runs.
-- Next: mint a user token (consent flow) to enable live listing + Marketplace
-  Insights (sold comps), then refine prices off SOLD data and list the best
-  cards. Consider a PSA cert/pop lookup.
+- **User token (selling) is LIVE (2026-07-16).** The one-time consent flow is
+  done — `check_ebay_login.py` passes ✅ against production. The earlier token
+  failed with `invalid_grant` "issued to another client" because it had been
+  minted under a different App ID; re-consented against the current keyset
+  (App ID `JackMcDe-CardVaul-PRD-…`, RuName `Jack_McDermott-JackMcDe-CardVa-nawpzdw`,
+  scopes sell.inventory + sell.account) via the authorization-code flow and
+  exchanged the code for a fresh refresh token (valid ~18 mo). Owner saved it as
+  the `EBAY_USER_REFRESH_TOKEN` **environment variable** in the Claude Code
+  environment settings (not a committed .env). NOTE for future token issues: the
+  developer-site "Get a User Token Here" quick tool only returns a 2-hour ACCESS
+  token — for the long-lived REFRESH token you must run the real consent link
+  (`auth.ebay.com/oauth2/authorize?...&response_type=code`) with the RuName, then
+  POST the returned `code` to `identity/v1/oauth2/token` with
+  `grant_type=authorization_code`.
+- Next: live listing is now unblocked EXCEPT for eBay **business policies**
+  (shipping / payment / return) + item location — `check_ebay_login.py` flags
+  these as still needed before a real publish (docs/01 Step 4). Set those up,
+  then list the best cards. Consider a PSA cert/pop lookup. (Marketplace
+  Insights / real SOLD comps remain DENIED by eBay — see the note above.)
