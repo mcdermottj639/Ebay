@@ -23,7 +23,8 @@ MENU = """
   6) Build my visual dashboard (opens in browser)
   7) Buy Radar: find cards to buy under market  (needs API keys)
   8) Search eBay for any card, ranked by value  (needs API keys)
-  9) Quit
+  9) Check my eBay selling login (for listing)  (needs API keys)
+  0) Quit
 ========================================
 """
 
@@ -35,6 +36,7 @@ ACTIONS = {
     "5": ["create_listings.py", "live"],
     "6": ["dashboard.py"],
     "7": ["find_deals.py"],
+    "9": ["check_ebay_login.py"],
 }
 
 
@@ -42,7 +44,7 @@ def main() -> int:
     while True:
         print(MENU)
         choice = input("Pick a number: ").strip()
-        if choice == "9":
+        if choice == "0":
             print("Bye! Happy selling.")
             return 0
         if choice == "8":
