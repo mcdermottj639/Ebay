@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v25";
+  var APP_VERSION = "v26";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1169,7 +1169,7 @@
       '<div class="mkrow"><span>Usually going for</span><b class="tnum">~' + money0(m.median) +
         (m.count ? ' <small>· ' + m.count + " listed</small>" : "") + "</b></div>" +
       (range ? '<div class="mkrow"><span>Live range now</span><b class="tnum">' + range + "</b></div>" : "") +
-      '<div class="mkrow"><span>Your estimate</span><b class="tnum">' + money0(cur) + "</b></div>";
+      '<div class="mkrow"><span>Card Vault value</span><b class="tnum">' + money0(cur) + "</b></div>";
     if (marketSolid(c, m)) {
       var pct = Math.round((m.median - cur) / cur * 100);
       rows += '<div class="mkrow up"><span>Room up to typical</span><b class="tnum">+' +
@@ -1188,7 +1188,7 @@
       var cls = pf.profit >= 0 ? "up" : "down";
       return '<div class="compsbox cprofit"><div class="lab">Cost &amp; profit</div>' +
         '<div class="mkrow"><span>You paid</span><b class="tnum">' + money0(pf.cost) + "</b></div>" +
-        '<div class="mkrow"><span>Est. value</span><b class="tnum">' + money0(pf.est) + "</b></div>" +
+        '<div class="mkrow"><span>Card Vault value</span><b class="tnum">' + money0(pf.est) + "</b></div>" +
         '<div class="mkrow ' + cls + '"><span>Est. profit if sold</span><b class="tnum">' +
           (pf.profit >= 0 ? "+" : "−") + money0(Math.abs(pf.profit)) + " · " + Math.round(pf.margin) + "%</b></div>" +
         '<div class="cfoot">Gross — before eBay &amp; shipping fees.</div></div>';
@@ -1224,7 +1224,7 @@
       ["Authentication", c.is_merch ? c.authentication : ""],
       ["Condition", c.graded ? "" : c.condition], ["Serial", c.serial_run ? "/" + c.serial_run : ""],
       ["Sport", c.sport], ["SKU", c.sku],
-      ["Est. value", c.asking_price ? money(c.asking_price) : ""],
+      ["Card Vault value", c.asking_price ? money(c.asking_price) : ""],
       ["Price basis", c.price_basis === "sold" ? "Real eBay sold comps"
                     : c.price_basis === "est_sold" ? "Estimated market (asking comps − haircut)"
                     : c.price_basis === "asking" ? "Active listings (asking)" : ""],

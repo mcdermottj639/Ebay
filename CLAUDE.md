@@ -198,11 +198,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v25. The live
+  this makes the service worker serve stale CSS/JS. Current: v26. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v25. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v26. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -324,8 +324,18 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v25**
-  (v25 = **profit column + quick-list widget + honest fills** — three owner
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v26**
+  (v26 = **oversized-Downtown guard + "Card Vault value" relabel** — (a) owner
+  flagged that **oversized/jumbo Downtowns are a different market priced
+  differently**, so `deals.py` now has `_is_oversized`/`_query_wants_oversized`
+  and `scan()` drops oversized/jumbo/box-topper/5x7 listings from a standard
+  query (so they can't skew the standard-size median) UNLESS the watchlist
+  query itself hunts oversized; (b) owner objected to the label "Your estimate"
+  ("I don't have any estimates") — the value is the app's estimate from eBay
+  asking comps, not something they entered, so the modal now says **"Card Vault
+  value"** (kv row + What-it's-going-for + Cost & profit boxes); price basis
+  still spells out "Estimated market (asking comps − haircut)";
+  v25 = **profit column + quick-list widget + honest fills** — three owner
   asks: (1) **Profit** from cost — Sales Map rows show a profit chip when a
   card has a `cost`, else a dashed **"＋ add cost"** placeholder (the spot to
   fill); the card modal has a **Cost & profit** box (you paid / est. value /
