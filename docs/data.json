@@ -9,9 +9,14 @@
       "d": "2026-07-15",
       "v": 2724.03,
       "n": 34
+    },
+    {
+      "d": "2026-07-16",
+      "v": 2724.03,
+      "n": 34
     }
   ],
-  "generated": "Jul 15, 2026 \u00b7 23:58 UTC",
+  "generated": "Jul 16, 2026 \u00b7 00:07 UTC",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1701,7 +1706,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 6.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -1777,7 +1782,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 2.2,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -1853,7 +1858,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 4.39,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -1929,7 +1934,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 1.32,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2005,7 +2010,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 1.75,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2081,7 +2086,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 1.98,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2157,7 +2162,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 1.31,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2233,7 +2238,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 1.75,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2309,7 +2314,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 5.25,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2385,7 +2390,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 2.1,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2461,7 +2466,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 12.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2517,7 +2522,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "67423370",
-      "prev_price": "",
+      "prev_price": 48.39,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2593,7 +2598,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 59.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2649,7 +2654,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 49.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2725,7 +2730,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 42.23,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2801,7 +2806,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 39.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2877,7 +2882,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 30.8,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2953,7 +2958,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 74.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3014,7 +3019,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "89222827",
-      "prev_price": "",
+      "prev_price": 136.4,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3090,7 +3095,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 57.19,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3161,7 +3166,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 189.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3227,7 +3232,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "83143720",
-      "prev_price": "",
+      "prev_price": 349.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3272,7 +3277,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 24.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3348,7 +3353,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 99.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3409,7 +3414,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 29.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3485,7 +3490,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "90720092",
-      "prev_price": "",
+      "prev_price": 182.6,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3556,7 +3561,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 39.27,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3632,7 +3637,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "67269227",
-      "prev_price": "",
+      "prev_price": 99.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3708,7 +3713,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 249.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3764,7 +3769,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "85776346",
-      "prev_price": "",
+      "prev_price": 149.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3840,7 +3845,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 57.2,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3916,7 +3921,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "75510176",
-      "prev_price": "",
+      "prev_price": 199.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3992,7 +3997,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "prev_price": "",
+      "prev_price": 124.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4068,7 +4073,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "1W622369",
-      "prev_price": "",
+      "prev_price": 349.99,
       "price_series": [
         {
           "d": "2026-07-15",
