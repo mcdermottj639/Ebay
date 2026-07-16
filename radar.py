@@ -67,6 +67,12 @@ def _is_premium(item) -> bool:
 
 def _keep(d) -> bool:
     """Is this deal believable and in the owner's price rules?"""
+    # Oversized/jumbo Downtowns are a separate, differently-priced market — never
+    # rate one against a standard-size median (it shows as a fake "great value").
+    # deals.scan already drops these from a standard query; this guards the
+    # snapshot too, unless the watchlist row is specifically hunting oversized.
+    if deals._is_oversized(d.item_title) and not deals._query_wants_oversized(d.query or ""):
+        return False
     if not (MIN_DISCOUNT <= d.discount_pct <= MAX_DISCOUNT):
         return False
     if d.price < MIN_PRICE:

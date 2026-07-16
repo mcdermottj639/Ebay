@@ -340,7 +340,12 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   differently**, so `deals.py` now has `_is_oversized`/`_query_wants_oversized`
   and `scan()` drops oversized/jumbo/box-topper/5x7 listings from a standard
   query (so they can't skew the standard-size median) UNLESS the watchlist
-  query itself hunts oversized; (b) owner objected to the label "Your estimate"
+  query itself hunts oversized; `radar._keep` carries the same guard as
+  belt-and-suspenders on the committed snapshot. (Buy Radar shows a SAVED
+  snapshot, so the fix only shows once radar re-scans — an oversized Jayden
+  Daniels Downtown still showed "64% under mkt ~$980 / Great Value" off the
+  2026-07-15 snapshot; re-ran `radar.py` 2026-07-16, live snapshot is clean.)
+  (b) owner objected to the label "Your estimate"
   ("I don't have any estimates") — the value is the app's estimate from eBay
   asking comps, not something they entered, so the modal now says **"Card Vault
   value"** (kv row + What-it's-going-for + Cost & profit boxes); price basis
