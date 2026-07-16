@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v23";
+  var APP_VERSION = "v24";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -566,6 +566,34 @@
   var SELL_RATING = { 3: ["Prime to sell", "great"], 2: ["Good to sell", "good"],
                       1: ["Fair", "fair"], 0: ["Hold", "over"] };
 
+  // "Usually going for" — the asking-comps median reprice.py captured (with the
+  // listing count it was based on). eBay denied us real SOLD comps, so this is
+  // the typical ASKING price; our est_sold value already haircuts it. null when
+  // we have no market read yet for this card.
+  function goingFor(c) {
+    return (c.market && num(c.market.median) > 0)
+      ? { median: num(c.market.median), count: c.market.count | 0 } : null;
+  }
+
+  // Is the market read solid enough to suggest headroom? Needs a real sample
+  // and our price sitting sensibly below the median (guards the noisy, thin
+  // comps that reprice.py flags — e.g. a $189 card whose 3 comps median $885).
+  function marketSolid(c, m) {
+    var cur = num(c.asking_price);
+    return m && m.count >= 5 && cur > 0 && cur < m.median && cur >= m.median * 0.5;
+  }
+
+  // compact market line under a sell row: typical price + listing count, and
+  // (only when solid) the room up toward that typical price.
+  function marketLine(c) {
+    var m = goingFor(c);
+    if (!m) return "";
+    var room = marketSolid(c, m) ? ' · <span class="room">room to ~' + money0(m.median) + "</span>" : "";
+    var thin = (m.count && m.count < 5) ? ' · <span class="thin">thin data</span>' : "";
+    return '<div class="smkt">Usually ~' + money0(m.median) +
+      (m.count ? " · " + m.count + " on eBay" : "") + room + thin + "</div>";
+  }
+
   // Tiny inline price-history sparkline (SVG, no libraries). Reused in sell
   // rows and the card modal. Needs 2+ points; returns "" otherwise.
   function sparkline(series, w, h) {
@@ -644,7 +672,7 @@
         '<div class="m"><div class="p">' + esc(c.player) +
           (c.listed ? ' <span class="badge b-listed">LISTED</span>' : "") + "</div>" +
           '<div class="sub">' + esc(c.line || "") + "</div>" +
-          '<div class="rchips">' + reasons + "</div></div>" +
+          '<div class="rchips">' + reasons + "</div>" + marketLine(c) + "</div>" +
         '<div class="r">' +
           '<div class="val tnum">' + money0(c.asking_price) + changeChip(c) + "</div>" +
           (spark ? '<div class="sparkwrap">' + spark + "</div>" : "") +
@@ -1065,6 +1093,35 @@
       (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "");
   }
 
+  // "What it's going for" box for the modal — the typical asking price, the
+  // live range, our estimate, and (when the read is solid) the room up toward
+  // typical. Honest about the ASKING-vs-SOLD gap eBay left us with.
+  function marketBox(c) {
+    var m = goingFor(c);
+    if (!m) return "";
+    var cur = num(c.asking_price);
+    var prices = ((c.comps && c.comps.items) || []).map(function (it) { return num(it.p); })
+      .filter(function (p) { return p > 0; });
+    var range = prices.length >= 2
+      ? money0(Math.min.apply(null, prices)) + "–" + money0(Math.max.apply(null, prices)) : "";
+    var basisTxt = c.price_basis === "sold" ? "real eBay sold comps"
+      : c.price_basis === "est_sold" ? "estimated — typical asking − 12%"
+      : "active eBay listings";
+    var rows =
+      '<div class="mkrow"><span>Usually going for</span><b class="tnum">~' + money0(m.median) +
+        (m.count ? ' <small>· ' + m.count + " listed</small>" : "") + "</b></div>" +
+      (range ? '<div class="mkrow"><span>Live range now</span><b class="tnum">' + range + "</b></div>" : "") +
+      '<div class="mkrow"><span>Your estimate</span><b class="tnum">' + money0(cur) + "</b></div>";
+    if (marketSolid(c, m)) {
+      var pct = Math.round((m.median - cur) / cur * 100);
+      rows += '<div class="mkrow up"><span>Room up to typical</span><b class="tnum">+' +
+        money0(m.median - cur) + " · " + pct + "%</b></div>";
+    }
+    return '<div class="compsbox market"><div class="lab">What it’s going for</div>' + rows +
+      '<div class="cfoot">Typical = eBay <b>asking</b> median (' + basisTxt + "). " +
+      "Real sold prices need eBay approval — tap “Sold on eBay” below for actuals.</div></div>";
+  }
+
   // Per-card price-over-time box for the modal — a sparkline of the SKU's
   // re-price snapshots, with first→latest change. Hidden until 2+ snapshots.
   function priceHistoryBox(c) {
@@ -1107,6 +1164,7 @@
           '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
           '<dl class="kv">' + kv + "</dl>" +
           '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>" +
+          marketBox(c) +
           priceHistoryBox(c) +
           compsBox(c) +
           '<div class="mbtns">' +

@@ -16,7 +16,7 @@
       "n": 34
     }
   ],
-  "generated": "Jul 16, 2026 \u00b7 00:12 UTC",
+  "generated": "Jul 16, 2026 \u00b7 00:19 UTC",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1713,6 +1713,10 @@
           "p": 6.99
         }
       ],
+      "market": {
+        "median": 7.99,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -1789,6 +1793,10 @@
           "p": 2.2
         }
       ],
+      "market": {
+        "median": 2.5,
+        "count": 25
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -1865,6 +1873,10 @@
           "p": 4.39
         }
       ],
+      "market": {
+        "median": 4.99,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -1941,6 +1953,10 @@
           "p": 1.32
         }
       ],
+      "market": {
+        "median": 1.5,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2017,6 +2033,10 @@
           "p": 1.75
         }
       ],
+      "market": {
+        "median": 1.99,
+        "count": 31
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2093,6 +2113,10 @@
           "p": 1.98
         }
       ],
+      "market": {
+        "median": 2.25,
+        "count": 13
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2169,6 +2193,10 @@
           "p": 1.31
         }
       ],
+      "market": {
+        "median": 1.49,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2245,6 +2273,10 @@
           "p": 1.75
         }
       ],
+      "market": {
+        "median": 1.99,
+        "count": 36
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2321,6 +2353,10 @@
           "p": 5.25
         }
       ],
+      "market": {
+        "median": 5.97,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2397,6 +2433,10 @@
           "p": 2.1
         }
       ],
+      "market": {
+        "median": 2.39,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2473,6 +2513,10 @@
           "p": 12.99
         }
       ],
+      "market": {
+        "median": 9.99,
+        "count": 1
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2529,6 +2573,10 @@
           "p": 48.39
         }
       ],
+      "market": {
+        "median": 54.99,
+        "count": 7
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2605,6 +2653,10 @@
           "p": 59.99
         }
       ],
+      "market": {
+        "median": 77.0,
+        "count": 1
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2661,6 +2713,10 @@
           "p": 49.99
         }
       ],
+      "market": {
+        "median": 10.99,
+        "count": 28
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2737,6 +2793,10 @@
           "p": 42.23
         }
       ],
+      "market": {
+        "median": 47.99,
+        "count": 5
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2813,6 +2873,10 @@
           "p": 39.99
         }
       ],
+      "market": {
+        "median": 52.5,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2889,6 +2953,10 @@
           "p": 30.8
         }
       ],
+      "market": {
+        "median": 35.0,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -2965,6 +3033,10 @@
           "p": 74.99
         }
       ],
+      "market": {
+        "median": 89.99,
+        "count": 2
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3026,6 +3098,10 @@
           "p": 136.4
         }
       ],
+      "market": {
+        "median": 155.0,
+        "count": 30
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3102,6 +3178,10 @@
           "p": 57.19
         }
       ],
+      "market": {
+        "median": 64.99,
+        "count": 4
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3173,6 +3253,10 @@
           "p": 189.0
         }
       ],
+      "market": {
+        "median": 885.0,
+        "count": 3
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3239,6 +3323,7 @@
           "p": 349.0
         }
       ],
+      "market": null,
       "comps": null
     },
     {
@@ -3284,6 +3369,10 @@
           "p": 24.99
         }
       ],
+      "market": {
+        "median": 39.99,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3360,6 +3449,10 @@
           "p": 99.0
         }
       ],
+      "market": {
+        "median": 124.5,
+        "count": 2
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3421,6 +3514,10 @@
           "p": 29.99
         }
       ],
+      "market": {
+        "median": 33.77,
+        "count": 10
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3497,6 +3594,10 @@
           "p": 182.6
         }
       ],
+      "market": {
+        "median": 207.5,
+        "count": 4
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3568,6 +3669,10 @@
           "p": 39.27
         }
       ],
+      "market": {
+        "median": 44.63,
+        "count": 18
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3644,6 +3749,10 @@
           "p": 99.0
         }
       ],
+      "market": {
+        "median": 178.58,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3720,6 +3829,10 @@
           "p": 249.0
         }
       ],
+      "market": {
+        "median": 279.95,
+        "count": 1
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3776,6 +3889,10 @@
           "p": 149.0
         }
       ],
+      "market": {
+        "median": 300.0,
+        "count": 30
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3852,6 +3969,10 @@
           "p": 57.2
         }
       ],
+      "market": {
+        "median": 65.0,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -3928,6 +4049,10 @@
           "p": 199.0
         }
       ],
+      "market": {
+        "median": 974.5,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -4004,6 +4129,10 @@
           "p": 124.99
         }
       ],
+      "market": {
+        "median": 117.0,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
@@ -4080,6 +4209,10 @@
           "p": 349.99
         }
       ],
+      "market": {
+        "median": 409.99,
+        "count": 50
+      },
       "comps": {
         "as_of": "2026-07-15",
         "source": "active",
