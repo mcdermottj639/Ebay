@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v21";
+  var APP_VERSION = "v22";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -656,7 +656,7 @@
   }
 
   function viewSalesMap() {
-    var wrap = el('<div class="view"></div>');
+    var wrap = el('<div class="view salesmap"></div>');
     wrap.appendChild(el('<div class="eyebrow">Sales Map</div>'));
     wrap.appendChild(el('<p class="muted" style="font-size:13px;margin:0 2px 12px">Which of your cards are in the best ' +
       "position to sell — scored on value, how fast the type moves, and price momentum — plus how prices are changing over time.</p>"));
@@ -686,22 +686,32 @@
     });
     wrap.appendChild(tiles);
 
-    // the map
-    wrap.appendChild(quadrantMap(scored));
+    // Dashboard grid. DOM order (map → list → price changes) is the phone
+    // stack; on PC the grid re-flows to map+analytics on the left, ranked
+    // list spanning the right — so phones keep the order the owner liked.
+    var grid = el('<div class="smgrid"></div>');
 
-    // ranked sell candidates
-    wrap.appendChild(el('<div class="eyebrow">Best positioned to sell</div>'));
+    var mapcol = el('<div class="smmap"></div>');
+    mapcol.appendChild(quadrantMap(scored));
+    grid.appendChild(mapcol);
+
+    var listcol = el('<div class="smlist"></div>');
+    listcol.appendChild(el('<div class="eyebrow">Best positioned to sell</div>'));
     var list = el('<div class="list sellist"></div>');
     scored.slice(0, 12).forEach(function (s) { list.appendChild(sellRowEl(s)); });
-    wrap.appendChild(list);
+    listcol.appendChild(list);
+    grid.appendChild(listcol);
 
     // price-change analytics: value trend + weekly gainers / decliners
-    wrap.appendChild(el('<div class="eyebrow">Price changes</div>'));
+    var trendcol = el('<div class="smtrends"></div>');
+    trendcol.appendChild(el('<div class="eyebrow">Price changes</div>'));
     var vgrid = el('<div class="vgrid"></div>');
     vgrid.appendChild(trendChart(state.data.history));
     vgrid.appendChild(moversSplitPanel());
-    wrap.appendChild(vgrid);
+    trendcol.appendChild(vgrid);
+    grid.appendChild(trendcol);
 
+    wrap.appendChild(grid);
     return wrap;
   }
 

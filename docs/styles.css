@@ -593,6 +593,29 @@ a.comp:hover .ct { color: var(--gold); }
   .trend svg { height: 220px; }
   .barrow { grid-template-columns: 110px 1fr 34px; }
 
+  /* ---- Sales Map: widescreen dashboard ---- */
+  /* hero banner + 3 stat tiles across (not the 6-up Value grid) */
+  .salesmap .tiles { grid-template-columns: repeat(3, 1fr); max-width: 1040px; }
+  /* Left column: map (row 1) + price-change analytics (row 2).
+     Right column: the ranked "best positioned to sell" list, spanning both. */
+  .salesmap .smgrid {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+    grid-template-rows: auto 1fr;
+    gap: 20px 22px; align-items: start; margin-top: 6px;
+  }
+  .salesmap .smmap    { grid-column: 1; grid-row: 1; }
+  .salesmap .smtrends { grid-column: 1; grid-row: 2; align-self: start; }
+  .salesmap .smlist   { grid-column: 2; grid-row: 1 / span 2; }
+  .salesmap .smmap .panel { margin: 0; }
+  .salesmap .qmap { max-height: 420px; }
+  /* keep the sell list a single-column leaderboard (override the card grid) */
+  .salesmap .smlist .eyebrow:first-child { margin-top: 0; }
+  .salesmap .list.sellist { display: flex; flex-direction: column; gap: 10px; }
+  .salesmap .srow { border-radius: 14px; }
+  /* analytics panels sit side by side under the map */
+  .salesmap .smtrends .eyebrow { margin-top: 2px; }
+  .salesmap .smtrends .vgrid { grid-template-columns: 1fr 1fr; gap: 14px; }
+
   /* detail sheet becomes a centered two-pane dialog */
   .modal-wrap { align-items: center; padding: 24px; }
   .modal { max-width: 880px; border-radius: 20px; border-bottom: 1px solid var(--border);

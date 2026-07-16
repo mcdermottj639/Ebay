@@ -182,7 +182,12 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   SKU's price-over-time series (`price_series`: [{d,p}], last-per-day, capped 60)
   into each card, feeding the Sales Map sparklines AND a new **Price history**
   box in the card modal (`priceHistoryBox`, shows first→latest change; hidden
-  until 2+ snapshots). Sparklines (`sparkline`) are dependency-free SVG.
+  until 2+ snapshots). Sparklines (`sparkline`) are dependency-free SVG. The
+  tab wraps its content in `.smgrid` (map=`.smmap`, list=`.smlist`,
+  analytics=`.smtrends`) — a plain stack on phones, a 2-column dashboard on PC
+  (v22): DOM order stays map→list→analytics so phones are untouched, while the
+  `@media (min-width:1000px)` `.salesmap` rules use grid-row/column placement to
+  put map+analytics in the left column and the ranked list spanning the right.
 - `build_web.py` — regenerates `docs/data.json` from the catalog (incl. per-card
   `image` + `price_basis` + `price_series`, plus the `history` snapshots above)
   AND a self-contained
@@ -193,11 +198,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v21. The live
+  this makes the service worker serve stale CSS/JS. Current: v22. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v21.
+  Current: v22.
 - App v11 additions: **Targets tab** (🎯 watchlist with fair/buy-under chips),
   **Business row** on Value (revenue/realized profit/listed/sold — only shows
   once something is listed or sold), **Movers · this week** panel + ▲▼ chips
@@ -311,8 +316,16 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v21**
-  (v21 = new **🗺️ Sales Map tab** — scores every held card on how well-positioned
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v22**
+  (v22 = **Sales Map PC layout** — on ≥1000px the tab reflows into a Command-
+  Center dashboard: hero + 3 stat tiles, then a 2-column grid with the sell map
+  **and** the price-change analytics (value trend + gainers/decliners) stacked
+  in the left column and the ranked "best positioned to sell" leaderboard
+  spanning the right. DOM order is unchanged so the phone stack (map → list →
+  price changes) the owner liked is untouched; the map no longer balloons to
+  full width on widescreen. Verified both themes at 1920×1080 via headless
+  Chromium;
+  v21 = new **🗺️ Sales Map tab** — scores every held card on how well-positioned
   it is to sell (value + liquidity + price momentum → Prime/Good/Fair/Hold), a
   value×readiness scatter map, a ranked "best positioned to sell" list, and a
   price-changes section (value trend + weekly gainers/decliners); `build_web`
