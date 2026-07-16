@@ -198,11 +198,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v23. The live
+  this makes the service worker serve stale CSS/JS. Current: v25. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v24. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v25. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -324,8 +324,27 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v24**
-  (v24 = **Sales Map "what it's going for"** — every repriced card now surfaces
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v25**
+  (v25 = **profit column + quick-list widget + honest fills** — three owner
+  asks: (1) **Profit** from cost — Sales Map rows show a profit chip when a
+  card has a `cost`, else a dashed **"＋ add cost"** placeholder (the spot to
+  fill); the card modal has a **Cost & profit** box (you paid / est. value /
+  est. profit · margin, or an add-cost prompt); an **Est. profit** tile
+  (`summary.profit`/`cost_count`, computed ONLY over cards with a cost — fixed a
+  bug where blank cost made profit == full value, e.g. the Value tab showed
+  $2,724 "profit"). Nothing has a cost yet, so it all shows the add-cost state
+  until the owner fills `cost` in inventory.csv. (2) **Why some cards show a
+  market price and others don't** — a priced card with no captured comps (niche
+  inserts/autos the auto-pricer found 0 matches for, e.g. Bijan Robinson
+  #TC-BRO) now says so in the modal ("No eBay comps captured … value is
+  hand-set") instead of showing nothing. (3) **Quick-list widget** — the modal
+  has a **List this card** bar: **List on eBay** (copies the title, opens
+  eBay's sell page) and **✨ Draft in Claude** (copies a filled prompt +
+  opens claude.ai/new?q=… to draft the title/specifics/description). Helpers:
+  `profitOf`/`profitChip`/`costProfitBox`, `listPrompt`/`copyText`/`flashBtn`,
+  marketBox null-note. NOTE: real API listing (`lister.py`) is still Phase 2
+  (needs a user token); this widget is the no-backend copy-and-open path;
+  v24 = **Sales Map "what it's going for"** — every repriced card now surfaces
   the market reference the owner asked for: sell rows show "Usually ~$median ·
   N on eBay", and the card modal has a **What it's going for** box (typical
   asking · live range · your estimate · room up to typical). `build_web._market`

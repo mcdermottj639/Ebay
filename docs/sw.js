@@ -5,8 +5,8 @@
    cache-first — they're immutable per version, so a fresh build busts them via
    the bumped ?v and the always-fresh index.html that references them. */
 
-var CACHE = "card-vault-v24";
-var SHELL = ["./", "./index.html", "./styles.css?v=24", "./app.js?v=24",
+var CACHE = "card-vault-v25";
+var SHELL = ["./", "./index.html", "./styles.css?v=25", "./app.js?v=25",
              "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", function (e) {

@@ -276,6 +276,11 @@ def build_data(cards) -> dict:
     total_value = _money(unsold, "asking_price")   # estimated value of what you still HOLD
     revenue = _money(sold, "sold_price")
     realized = revenue - _money(sold, "cost")
+
+    # Unrealized profit only over the cards where we actually KNOW the cost —
+    # otherwise a blank cost reads as $0 and profit == full value (misleading).
+    costed = [c for c in unsold if c.asking_price.strip() and _num(c.cost) > 0]
+    profit_known = _money(costed, "asking_price") - _money(costed, "cost")
     changes = _price_changes()
     series_by_sku = _price_series()
     market_by_sku = _market()
@@ -296,7 +301,8 @@ def build_data(cards) -> dict:
             "priced": sum(1 for c in unsold if c.asking_price.strip()),
             "total_cost": round(total_cost, 2),
             "total_value": round(total_value, 2),
-            "profit": round(total_value - _money(unsold, "cost"), 2),
+            "profit": round(profit_known, 2),          # only over cards with a cost
+            "cost_count": len(costed),                 # how many priced cards have cost
             "listed": sum(1 for c in cards if c.is_listed()),
             "sold": len(sold),
             "revenue": round(revenue, 2),
