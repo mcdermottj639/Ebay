@@ -30,6 +30,7 @@ import requests
 from . import config, ebay_auth
 from .catalog import Card
 from .titles import build_title
+from .deals import _matches_query, _norm_tokens, _FILLER_TOKENS
 
 
 @dataclass
@@ -99,6 +100,23 @@ def _collapse(text: str) -> str:
     return " ".join(out)
 
 
+def _player_tokens(card: Card) -> set[str]:
+    """The player-name tokens (minus filler) — the ONE thing a broad-match
+    listing must still contain, so a broadened search doesn't sweep in a
+    different player entirely."""
+    return {t for t in _norm_tokens(card.player) if t not in _FILLER_TOKENS}
+
+
+def _filter_relevant(items: list, keep) -> tuple[list[float], list[str], list]:
+    """Keep only listings whose title passes `keep(title)`; rebuild the aligned
+    price / title / item lists from what survives. Filtering here (before the
+    median) is what keeps a loose eBay match from polluting the price."""
+    kept = [it for it in items if keep(it.get("t", ""))]
+    prices = sorted(it["p"] for it in kept if it.get("p") is not None)
+    titles = [it["t"] for it in kept]
+    return prices, titles, kept
+
+
 def get_comps(card_or_query, limit: int = 50) -> CompResult:
     """Look up comps for a Card object OR a raw search string."""
     query = card_or_query if isinstance(card_or_query, str) else query_for(card_or_query)
@@ -111,21 +129,29 @@ def get_comps(card_or_query, limit: int = 50) -> CompResult:
             "toolkit works without keys — you can catalog and draft first.)"
         )
 
-    prices, titles, items, source = _search_best(query, limit)
+    _, _, items, source = _search_best(query, limit)
+    # Relevance gate: eBay keyword search matches loosely, so require the title
+    # to actually be this card (right player, set, parallel, year, grade) before
+    # it counts toward the median. Same gate Buy Radar uses.
+    prices, titles, items = _filter_relevant(items, lambda t: _matches_query(query, t))
 
     # If the exact-title query found nothing and we have a Card, retry with a
-    # broadened query so niche inserts/autos still get a ballpark comp.
+    # broadened query so niche inserts/autos still get a ballpark comp. Broad
+    # match is knowingly loose — only require the player-name tokens so we don't
+    # sweep in a different player.
     if not prices and not isinstance(card_or_query, str):
         broad = broad_query_for(card_or_query)
         if broad and broad != query:
-            prices, titles, items, source = _search_best(broad, limit)
+            _, _, b_items, source = _search_best(broad, limit)
+            ptokens = _player_tokens(card_or_query)
+            prices, titles, items = _filter_relevant(
+                b_items, lambda t: ptokens <= set(_norm_tokens(t)))
             if prices:
                 query = f"{broad}  (broad match)"
 
     if not prices:
         return CompResult(query, source, 0, None, None, None, [], [])
 
-    prices.sort()
     return CompResult(
         query=query,
         source=source,

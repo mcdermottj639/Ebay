@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v26";
+  var APP_VERSION = "v27";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -951,7 +951,7 @@
           '<div class="dr">' +
             '<div class="dprice tnum">' + money(d.price) + "</div>" +
             '<div class="ddisc tnum">▼ ' + Math.abs(Math.round(d.discount_pct)) + "% under</div>" +
-            '<div class="dkind">' + kind + " · mkt ~" + money0(d.reference) + "</div>" +
+            '<div class="dkind">' + kind + " · vs " + refLine(d) + thinChip(d) + "</div>" +
           "</div></div>");
         row.onclick = function () { openDeal(d); };
         row.onkeydown = function (e) {
@@ -967,6 +967,27 @@
 
     renderResults();
     return wrap;
+  }
+
+  // ---- Honest reference labels: how many comps, which grade pool, thin-data --
+  var POOL_LABEL = { psa10: "PSA 10 pool", psa9: "PSA 9 pool",
+    graded_other: "graded pool", raw: "raw pool" };
+  function poolLabel(d) {
+    return POOL_LABEL[d.grade_key] || "";
+  }
+  // "~$980 · 7 comps · PSA 10 pool" — the reference, made honest.
+  function refLine(d) {
+    var out = "~" + money0(d.reference);
+    if (d.ref_count) out += " · " + d.ref_count + " comp" + (d.ref_count === 1 ? "" : "s");
+    var pool = poolLabel(d);
+    if (pool) out += " · " + pool;
+    return out;
+  }
+  // A small caution chip when the reference came from very few comps.
+  function thinChip(d) {
+    return (d.ref_count && d.ref_count < 5)
+      ? ' <span class="thinchip" title="Market reference from few listings — treat as a rough guide">thin data</span>'
+      : "";
   }
 
   // ---- Buy Radar deal facets, derived from each deal's title/query ----------
@@ -1038,7 +1059,7 @@
           '<div class="drate ' + r[1] + '" style="margin:2px 0 4px">' + ratingBars(d.bars) +
             '<span class="rlabel">' + r[0] + "</span>" +
             '<span class="dhdisc"> · ▼ ' + Math.abs(Math.round(d.discount_pct)) +
-            "% under mkt ~" + money0(d.reference) + "</span>" +
+            "% under · vs " + refLine(d) + thinChip(d) + "</span>" +
           "</div>" +
           samplesBox(d) +
           '<div class="mbtns">' +

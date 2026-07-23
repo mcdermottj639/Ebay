@@ -213,11 +213,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v26. The live
+  this makes the service worker serve stale CSS/JS. Current: v27. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v26. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v27. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -314,6 +314,52 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   `TOP_N`, now 30) via `_order`, so that filter always has cards. The type
   value for those is `"other"` (dealType = neither kaboom nor downtown),
   labelled **"No Kaboom/Downtown"**.
+  **v27 — relevance gate + grade buckets + seller guard + honest refs (the big
+  accuracy fix).** The owner reported Buy Radar showing fake "Great Values" —
+  wrong-player / wrong-set listings rated against a polluted median. Root cause:
+  eBay keyword search matches loosely and we computed the market reference from
+  that same loose pool, so garbage rated garbage. Four fixes, all in
+  `deals.py`/`radar.py`, plus the app labels:
+  - **Relevance gate (`_matches_query`)** — normalizes both sides (lowercase,
+    strip `.`/`'` so "C.J."=="CJ", tokenize on non-alphanumerics) and requires
+    EVERY meaningful query token to appear as a WHOLE token in the title (token
+    equality, never substring — so "prizm" ≠ "prizmatic", and the "10" of
+    "psa 10" is required). `_FILLER_TOKENS` (panini/card/football/1st) are not
+    required; `_SYNONYMS` (rookie↔rc, auto↔autograph) count as matches. Plus a
+    **base-set conflict guard** (`_BASE_SETS` = prizm/select/mosaic/score/
+    chronicles/phoenix/certified): if the query pins one base set and the title
+    names a DIFFERENT one, reject — this is what stops a "Select … Shock Prizm"
+    card matching a Prizm query (Panini reuses "Prizm" as a parallel word).
+    Deliberately excludes donruss/optic/absolute so Downtown/Kaboom CATEGORY
+    queries (which span Donruss+Optic+Absolute) aren't over-filtered.
+  - **Junk filter (`_is_junk`)** — drops reprint/rp/display/custom/aceo/
+    facsimile/novelty/proxy/digital/calendar/countdown/"you pick"/choose (kills
+    the Kaboom advent-CALENDAR box and "RP … DISPLAY CARD" reprints).
+  - **Grade buckets (`_grade_key`: psa10/psa9/graded_other/raw)** — in `scan()`
+    the gate+junk filters run BEFORE the median (un-polluting the reference),
+    then each listing is rated ONLY against the median of its OWN grade bucket,
+    and only when that bucket has ≥`MIN_BUCKET` (3) comps. Kills raw-vs-PSA10
+    and PSA9-vs-mixed fake deals. Popup samples come from the deal's own bucket.
+  - **Dedup** (`_item_id` from the itemWebUrl, falling back to title+price) so a
+    listing can't appear twice. **Seller guard** — `_search` now captures
+    `seller.feedbackScore`/`feedbackPercentage`; `radar._keep` drops deals from
+    sellers with a real-but-poor record (score <10 or pct <95; score 0 = eBay
+    returned no seller block = unknown, kept). Scam guard for the misspelled
+    "Dunruss … Gem Rare" $700-type listings.
+  - **Honest reference labels** — `Deal` gained `ref_count`/`grade_key`/
+    `seller_score`/`seller_pct` (flow through `asdict`→snapshot→`build_web`
+    unchanged). `app.js` `refLine`/`poolLabel`/`thinChip` show "vs ~$980 · 7
+    comps · PSA 10 pool" in rows + popup, with a gold **thin data** chip when
+    ref_count <5. Result on the 2026-07-23 snapshot: same 30 shown, but the
+    junk (Deebo under Jayden, Warren Moon under Mahomes, the calendar box, 4
+    Select-under-Prizm) is gone; 0 set-conflicts, 0 dups, buckets isolated.
+  - **Same gate fixes owner-card PRICING too:** `comps.py get_comps` now filters
+    the exact-match pool by `_matches_query` before the median (broad-match
+    fallback only requires the player tokens, `_player_tokens`). This ended the
+    recurring bogus reprice flags — CARD-0021 Tony Pollard's median dropped from
+    a polluted ~$779 (+312% flag) to a sane $150 (held, broad match); Mbappe
+    went from a flagged +64% to a clean +20%. `deals.search()` (ad-hoc value
+    search) is left loose on purpose.
 - iOS: the app uses `viewport-fit=cover` + `env(safe-area-inset-*)` on the
   appbar/main/nav/modal so it respects the Dynamic Island, rounded corners, and
   home indicator. Preserve these on any layout change.
@@ -340,8 +386,16 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v26**
-  (v26 = **oversized-Downtown guard + "Card Vault value" relabel** — (a) owner
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v27**
+  (v27 = **Buy Radar accuracy fix — relevance gate + grade buckets + seller
+  guard + honest reference labels** — the owner reported false "Great Values"
+  from wrong-player/wrong-set listings; the same missing-relevance flaw also
+  polluted the repricer's comps. Now every comp (Buy Radar AND own-card pricing)
+  must actually match the searched card before it counts toward the median, and
+  cards are only rated within their own grade bucket. Full detail in the Buy
+  Radar architecture section above. Fixed the recurring Tony Pollard +312%
+  bogus flag as a side effect;
+  v26 = **oversized-Downtown guard + "Card Vault value" relabel** — (a) owner
   flagged that **oversized/jumbo Downtowns are a different market priced
   differently**, so `deals.py` now has `_is_oversized`/`_query_wants_oversized`
   and `scan()` drops oversized/jumbo/box-topper/5x7 listings from a standard
@@ -550,3 +604,12 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   auto-attaches `docs/img/<SKU>.jpg`). Consider a PSA cert/pop lookup.
   (Marketplace Insights / real SOLD comps remain DENIED by eBay — see the note
   above.)
+- Backlog (post-v27, not yet built): (a) after the cleaned comps, hand-set or
+  add to `SKIP_SKUS` the two remaining outliers — CARD-0021 Tony Pollard
+  (broad-match median ~$150, currently held at hand-set) and CARD-0028 Mbappe
+  (now a clean +20%, no longer flagged); also eyeball CARD-0027 Deshaun Watson,
+  which flags +124% on thin data (only 3 exact comps). (b) Seed
+  `watchlist.csv` `fair_value` from the new clean per-grade medians so premium
+  rows rate against a fixed reference, not a per-run median. (c) Auction/snipe
+  alerts are underused — everything surfacing is FIXED_PRICE; consider weighting
+  or a dedicated ending-soon view. (d) Photograph cards for listing (above).
