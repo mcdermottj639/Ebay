@@ -497,6 +497,11 @@ main { max-width: 720px; margin: 0 auto;
 .dprice { font-weight: 800; font-size: 16px; }
 .ddisc { font-size: 11px; font-weight: 800; color: var(--felt); }
 .dkind { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+/* "thin data" caution chip — reference came from few comps, treat as rough. */
+.thinchip { font-size: 9px; font-weight: 800; letter-spacing: .03em;
+  text-transform: uppercase; color: #c47f00; background: rgba(230,164,0,.14);
+  border: 1px solid rgba(230,164,0,.38); border-radius: 20px; padding: 1px 6px;
+  white-space: nowrap; }
 
 /* ---- recent eBay comps in the card view ---- */
 .compsbox { margin-top: 14px; background: var(--surface-2); border: 1px solid var(--border);

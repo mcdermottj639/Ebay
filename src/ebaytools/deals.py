@@ -27,6 +27,7 @@ from . import config, ebay_auth
 
 SNIPE_WINDOW_HOURS = 24
 DEFAULT_DISCOUNT = 0.15  # flag listings 15%+ under market when no alert price set
+MIN_BUCKET = 3           # a grade bucket needs ≥3 comps to trust its median
 
 # We hunt SINGLE cards. Broad queries (esp. Kaboom/Downtown) drag in sealed wax,
 # box lots, and case breaks — those aren't the card and they poison the median.
@@ -44,6 +45,97 @@ _NON_SINGLE = re.compile(
 def _is_single_card(title: str) -> bool:
     """False for sealed wax / box lots / breaks — we only want single cards."""
     return not _NON_SINGLE.search(title or "")
+
+
+# Not a real card: reprints, display/dummy cards, customs, digital, and the
+# Kaboom "advent calendar / countdown" box that keeps sneaking into results.
+# These pollute both the deal list and the market median, so drop them.
+_JUNK = re.compile(
+    r"\b("
+    r"reprint|rp|display|custom|aceo|facsimile|novelty|proxy|digital|"
+    r"calendar|countdown|you\s*pick|u\s*pick|pick\s*your|choose"
+    r")\b",
+    re.IGNORECASE,
+)
+
+
+def _is_junk(title: str) -> bool:
+    """True for reprints / display cards / calendars / customs / 'you pick'."""
+    return bool(_JUNK.search(title or ""))
+
+
+# ---- Relevance gate: does a listing title actually match the search query? ----
+# eBay keyword search matches loosely, so a "Jayden Daniels Kaboom" query returns
+# Deebo Samuel Kabooms, a "Prizm PSA 10" query returns Score/Select cards, etc.
+# We require every meaningful query token to appear as a WHOLE token in the title.
+
+# Tokens that don't have to appear in the title — brand/format noise a buyer may
+# omit. Everything else in the query (player, set, parallel, year, grade) is
+# required.
+_FILLER_TOKENS = {"panini", "card", "football", "1st"}
+
+# Synonym groups: any member in the title satisfies a query token from the group.
+_SYNONYMS = [
+    {"rookie", "rc"},
+    {"auto", "autograph", "autographed"},
+]
+
+# Flagship single-card BASE SETS are mutually exclusive — a card is a Prizm OR a
+# Select OR a Score, never two. But Panini reuses the word "Prizm" as a parallel/
+# finish inside other sets ("Select … Shock Prizm"), so the plain token gate lets
+# a Select card through a Prizm query. When the query names one of these base sets
+# and the title names a DIFFERENT one, it's the wrong card — reject it. Deliberately
+# excludes donruss/optic/absolute so the Downtown/Kaboom category queries (which
+# legitimately span Donruss + Optic + Absolute) are untouched.
+_BASE_SETS = {"prizm", "select", "mosaic", "score", "chronicles", "phoenix", "certified"}
+
+
+def _base_set_conflict(query_tokens: set, title_tokens: set) -> bool:
+    """True if the title's base set contradicts the query's (Select under Prizm)."""
+    q_sets = query_tokens & _BASE_SETS
+    if not q_sets:
+        return False  # query doesn't pin a base set — don't over-filter
+    t_sets = title_tokens & _BASE_SETS
+    # A base set in the title that the query didn't ask for = wrong product.
+    return bool(t_sets - q_sets)
+
+
+def _norm_tokens(text: str) -> list[str]:
+    """Lowercase, drop periods/apostrophes (so 'C.J.' == 'CJ'), split on
+    non-alphanumerics into whole tokens."""
+    text = (text or "").lower().replace(".", "").replace("'", "").replace("’", "")
+    return [t for t in re.split(r"[^a-z0-9]+", text) if t]
+
+
+def _synonyms_for(token: str) -> set[str]:
+    """All tokens that should count as a match for this query token."""
+    for group in _SYNONYMS:
+        if token in group:
+            return group
+    return {token}
+
+
+def _matches_query(query: str, title: str) -> bool:
+    """True only if the title contains every meaningful token of the query.
+
+    Whole-token equality, never substring — so 'prizm' does NOT match
+    'prizmatic', and the '10' of 'psa 10' is required. Filler brand/format
+    tokens (panini, card, football, 1st) are not required; synonym groups
+    (rookie/rc, auto/autograph) count as a match.
+    """
+    title_tokens = set(_norm_tokens(title))
+    if not title_tokens:
+        return False
+    query_tokens = _norm_tokens(query)
+    for tok in query_tokens:
+        if tok in _FILLER_TOKENS:
+            continue
+        if not (_synonyms_for(tok) & title_tokens):
+            return False
+    # Right words, wrong product (a Select card under a Prizm query) → reject.
+    if _base_set_conflict(set(query_tokens), title_tokens):
+        return False
+    return True
 
 
 # Oversized / jumbo / box-topper cards (esp. oversized Downtowns) are a SEPARATE
@@ -65,6 +157,34 @@ def _is_oversized(title: str) -> bool:
 
 def _query_wants_oversized(query: str) -> bool:
     return bool(re.search(r"oversized?|jumbo|box\s*topper|boxtopper", query or "", re.IGNORECASE))
+
+
+# ---- Grade bucketing: a raw card and a PSA 10 are different markets ----------
+# Rating a raw "Lazer Prizm" against a PSA-10 median gives a fake 60%-off deal,
+# and a PSA 9 against a median mixing 10s and raw looks like a steal when it's
+# just normal PSA-9 pricing. So we compare each listing only against others in
+# its own grade bucket.
+_PSA10 = re.compile(r"\bpsa\s*10\b", re.IGNORECASE)
+_PSA9 = re.compile(r"\bpsa\s*9(?:\.0)?\b", re.IGNORECASE)
+_ANY_GRADE = re.compile(r"\b(psa|bgs|bvg|sgc|cgc|csg|hga)\s*\d", re.IGNORECASE)
+
+
+def _grade_key(title: str) -> str:
+    """Bucket a listing by grade: psa10 / psa9 / graded_other / raw."""
+    t = title or ""
+    if _PSA10.search(t):
+        return "psa10"
+    if _PSA9.search(t):
+        return "psa9"
+    if _ANY_GRADE.search(t):
+        return "graded_other"
+    return "raw"
+
+
+def _item_id(url: str) -> str:
+    """eBay item id parsed from an itemWebUrl (…/itm/1234567890…), for dedup."""
+    m = re.search(r"/itm/(?:[^/]+/)?(\d{9,})", url or "")
+    return m.group(1) if m else ""
 
 
 @dataclass
@@ -99,6 +219,10 @@ class Deal:
     sport: str = ""         # from the watchlist row (football preferred)
     query: str = ""         # the watchlist query (for eBay live/sold search URLs)
     premium: bool = False   # a Downtown/Kaboom-style premium insert
+    ref_count: int = 0      # how many comps the reference median came from
+    grade_key: str = ""     # grade bucket this deal was rated within
+    seller_score: int = 0   # seller feedbackScore (scam guard)
+    seller_pct: float = 0.0 # seller feedbackPercentage
     # A few of the cheapest current listings for this card, for the app popup:
     # [{"t": title, "p": price, "u": url}].
     samples: list = field(default_factory=list)
@@ -148,47 +272,82 @@ def scan(items: list[WatchItem], per_item_limit: int = 50,
                            price_min=band_min, price_max=band_max)
         # Keep single cards only — no sealed wax / box lots / breaks.
         listings = [l for l in listings if _is_single_card(l["title"])]
+        # Drop reprints / display cards / calendars / customs / "you pick".
+        listings = [l for l in listings if not _is_junk(l["title"])]
+        # Relevance gate: the title must actually be the card we searched for
+        # (right player, set, parallel, year, grade) — kills the loose keyword
+        # matches (Deebo under a Jayden query, Score under a Prizm query, …).
+        # This runs BEFORE the median so the reference isn't polluted either.
+        listings = [l for l in listings if _matches_query(item.query, l["title"])]
         # Oversized/jumbo Downtowns price differently — drop them so they don't
         # skew a standard-size median, unless this watchlist row hunts oversized.
         if not _query_wants_oversized(item.query):
             listings = [l for l in listings if not _is_oversized(l["title"])]
+        # Drop listings with no price, then dedup by eBay item id (falling back
+        # to a title+price key) so the same listing can't appear twice.
+        seen: set = set()
+        deduped = []
+        for l in listings:
+            if l["price"] is None:
+                continue
+            key = _item_id(l["url"]) or (l["title"], l["price"])
+            if key in seen:
+                continue
+            seen.add(key)
+            deduped.append(l)
+        listings = deduped
         if not listings:
             continue
-        prices = [l["price"] for l in listings if l["price"] is not None]
-        if not prices:
-            continue
-        reference = _num(item.fair_value) or statistics.median(prices)
-        alert = _num(item.alert_below) or reference * (1 - DEFAULT_DISCOUNT)
 
-        # The cheapest current listings — shown in the app popup as "currently
-        # on eBay" so the owner can eyeball the going rate before buying.
-        samples = sorted(
-            ({"t": l["title"], "p": l["price"], "u": l["url"]}
-             for l in listings if l["price"] is not None),
-            key=lambda s: s["p"])[:6]
-
+        # Grade-bucket the pool: a listing is only ever rated against comps in
+        # its own bucket (psa10 / psa9 / graded_other / raw), and only when that
+        # bucket has at least MIN_BUCKET prices — so a raw card is never rated
+        # against a PSA-10 median, and a PSA 9 never against a mixed one.
+        buckets: dict = {}
         for l in listings:
-            if l["price"] is None or l["price"] > alert:
-                continue
-            discount = (reference - l["price"]) / reference * 100 if reference else 0
-            _, bars = value_rating(discount)
-            deals.append(Deal(
-                label=item.label or item.query,
-                item_title=l["title"],
-                price=l["price"],
-                buying_option=l["buying_option"],
-                ends=l["ends"],
-                reference=round(reference, 2),
-                discount_pct=round(discount, 1),
-                snipe=l["snipe"],
-                url=l["url"],
-                image=l.get("image", ""),
-                bars=bars,
-                sport=item.sport,
-                query=item.query,
-                premium=item.premium,
-                samples=samples,
-            ))
+            buckets.setdefault(_grade_key(l["title"]), []).append(l)
+
+        for gkey, group in buckets.items():
+            prices = [l["price"] for l in group]
+            # An owner-set fair_value overrides the median for every bucket.
+            fair = _num(item.fair_value)
+            if fair is None and len(prices) < MIN_BUCKET:
+                continue  # too few comps in this grade to trust a reference
+            reference = fair or statistics.median(prices)
+            alert = _num(item.alert_below) or reference * (1 - DEFAULT_DISCOUNT)
+
+            # Cheapest listings in THIS bucket — shown in the app popup so the
+            # owner eyeballs the going rate for the same grade before buying.
+            samples = sorted(
+                ({"t": l["title"], "p": l["price"], "u": l["url"]} for l in group),
+                key=lambda s: s["p"])[:6]
+
+            for l in group:
+                if l["price"] > alert:
+                    continue
+                discount = (reference - l["price"]) / reference * 100 if reference else 0
+                _, bars = value_rating(discount)
+                deals.append(Deal(
+                    label=item.label or item.query,
+                    item_title=l["title"],
+                    price=l["price"],
+                    buying_option=l["buying_option"],
+                    ends=l["ends"],
+                    reference=round(reference, 2),
+                    discount_pct=round(discount, 1),
+                    snipe=l["snipe"],
+                    url=l["url"],
+                    image=l.get("image", ""),
+                    bars=bars,
+                    sport=item.sport,
+                    query=item.query,
+                    premium=item.premium,
+                    ref_count=len(prices),
+                    grade_key=gkey,
+                    seller_score=l.get("seller_score", 0),
+                    seller_pct=l.get("seller_pct", 0.0),
+                    samples=samples,
+                ))
     # Best deals first
     deals.sort(key=lambda d: d.discount_pct, reverse=True)
     return deals
@@ -225,6 +384,15 @@ def _search(token: str, query: str, limit: int,
         image = (it.get("image", {}) or {}).get("imageUrl", "")
         if not image and it.get("thumbnailImages"):
             image = it["thumbnailImages"][0].get("imageUrl", "")
+        seller = it.get("seller", {}) or {}
+        try:
+            seller_score = int(seller.get("feedbackScore") or 0)
+        except (TypeError, ValueError):
+            seller_score = 0
+        try:
+            seller_pct = float(seller.get("feedbackPercentage") or 0)
+        except (TypeError, ValueError):
+            seller_pct = 0.0
         out.append({
             "title": it.get("title", ""),
             "price": _num(str(it.get("price", {}).get("value", ""))),
@@ -233,6 +401,8 @@ def _search(token: str, query: str, limit: int,
             "snipe": bool(is_auction and _ends_soon(ends)),
             "url": it.get("itemWebUrl", ""),
             "image": image,
+            "seller_score": seller_score,
+            "seller_pct": seller_pct,
         })
     return out
 

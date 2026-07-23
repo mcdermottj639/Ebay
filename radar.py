@@ -58,6 +58,14 @@ PREMIUM_MIN_DISCOUNT = 25.0   # over $1000, only flag a real bargain
 # Owner preference: surface football first, then everything else (baseball etc.).
 SPORT_ORDER = {"football": 0}
 
+# Scam guard for pricey cards: a "too good" deal from a brand-new / low-rated
+# seller is a red flag (e.g. a misspelled "Dunruss … Gem Rare" $700 listing).
+# Require a real track record. eBay returns feedbackScore 0 / pct 0 when it
+# omits the seller block; treat that as "unknown" and keep it rather than nuking
+# every deal, but drop clearly-bad sellers.
+MIN_SELLER_SCORE = 10
+MIN_SELLER_PCT = 95.0
+
 
 def _is_premium(item) -> bool:
     """True for Downtown/Kaboom-style premium inserts (by label or query)."""
@@ -72,6 +80,12 @@ def _keep(d) -> bool:
     # deals.scan already drops these from a standard query; this guards the
     # snapshot too, unless the watchlist row is specifically hunting oversized.
     if deals._is_oversized(d.item_title) and not deals._query_wants_oversized(d.query or ""):
+        return False
+    # Scam guard: drop a deal from a seller with a real but poor record. A score
+    # of 0 means eBay didn't return seller data (unknown) — don't punish that.
+    if d.seller_score and d.seller_score < MIN_SELLER_SCORE:
+        return False
+    if d.seller_pct and d.seller_pct < MIN_SELLER_PCT:
         return False
     if not (MIN_DISCOUNT <= d.discount_pct <= MAX_DISCOUNT):
         return False
