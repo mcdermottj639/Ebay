@@ -71,10 +71,15 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   listings, moves >35% are flagged not applied, <1% ignored; never touches
   merch, sold items, or the hand-priced broad-match SKUs in `SKIP_SKUS`.
   Exits 1 with a plain message when keys are missing (safe under cron).
-  **A weekly Routine (Mondays ~9am ET, fresh session) runs it, rebuilds, and
-  merges to main — it needs EBAY_APP_ID/EBAY_CERT_ID/EBAY_ENV as environment
-  variables in the Claude Code environment settings (there's no .env in fresh
-  cloud containers; config.py reads os.environ, so env vars just work).**
+  **A weekly Routine (Mondays ~9am ET, fresh session) runs it, then `radar.py`
+  (folded in 2026-07-23 — before that no radar Routine existed and the Buy Radar
+  snapshot went stale), rebuilds, and merges to main — it needs
+  EBAY_APP_ID/EBAY_CERT_ID/EBAY_ENV as environment variables in the Claude Code
+  environment settings (there's no .env in fresh cloud containers; config.py
+  reads os.environ, so env vars just work). ⚠️ The 2026-07-20 firing produced
+  no branch/PR/data — a silent failure; the prompt now tells the run to always
+  end with an explicit note on failure. If a Monday passes with no "Weekly
+  reprice" PR on main, check `list_triggers` last_fired and re-run by hand.**
 - `src/ebaytools/`
   - `config.py` — loads `.env`, sandbox/production hosts, key checks.
   - `catalog.py` — load/validate/summarize inventory; `Card` model + flags
@@ -253,8 +258,9 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   cheap base cards as "90% off." `radar._curate` keeps only believable
   discounts (`MIN_DISCOUNT` 15% – `MAX_DISCOUNT` 65%) and caps to `TOP_N` (24),
   recording `scanned`/`shown` so the UI honestly says "showing N strongest of
-  M." Refresh model mirrors reprice: a scheduled Routine runs `radar.py` +
-  `build_web.py` and ships to main (needs the same eBay env vars). This is the
+  M." Refresh: `radar.py` runs inside the SAME weekly Monday reprice Routine
+  (added to its prompt 2026-07-23 — previously no Routine ran radar, so the
+  snapshot sat stale from 07-16). This is the
   free "Option A" — the always-on backend for live type-anything search +
   one-tap listing (Option B) is still Phase 2.
 - **Buy Radar price band + sport preference (v15).** Owner wants pricier cards,
@@ -446,6 +452,13 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   no-op until the owner adds EBAY_APP_ID / EBAY_CERT_ID / EBAY_ENV=production
   as environment variables in the Claude Code environment settings — fresh
   cloud containers have no .env. (Helmet: confirm full-size vs mini.)
+- **Reprice + radar run 2026-07-23 (manual catch-up):** the 07-20 scheduled
+  Routine fired but silently produced nothing, so this run made up for it.
+  `reprice.py` applied **10** updates (biggest: CARD-0019 CJ Stroud $136.40 →
+  $158.40, CARD-0031 CJ Stroud $57.20 → $43.99), re-flagged the same 2 for hand
+  review (CARD-0021 Tony Pollard +312%, CARD-0028 Mbappe +64%), held 10.
+  `radar.py` refreshed 30 deals. Routine prompt updated: now also runs
+  `radar.py`, commits `radar_snapshot.json`, and must report failures loudly.
 - **Reprice run 2026-07-15 (owner-approved, applied):** `reprice.py` against
   live eBay comps applied **17** price updates (est_sold basis, 12% haircut),
   **flagged 2** as too-big-to-auto-apply for hand review — **CARD-0021 Tony
