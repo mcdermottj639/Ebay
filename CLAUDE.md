@@ -213,11 +213,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v27. The live
+  this makes the service worker serve stale CSS/JS. Current: v28. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v27. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v28. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -386,8 +386,18 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v27**
-  (v27 = **Buy Radar accuracy fix — relevance gate + grade buckets + seller
+  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v28**
+  (v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
+  ~$1,548 · 4 comps · graded pool" + thin-data chip) had been placed in the
+  narrow right-hand price column (`.dr`, `flex:none`), so the long text shoved
+  the price + discount off the right edge of the phone. Moved that detail into a
+  new `.dmeta` line inside the flexible middle column (`.dm`, `min-width:0`)
+  where it wraps cleanly with nothing hidden; the right column now holds only
+  price + ▼%-under. Also gave the deal-popup rating row `flex-wrap` so a long
+  reference can't overflow the modal. Verified both themes at 390px via headless
+  Chromium (no horizontal overflow). Keep the reference detail in `.dmeta`, NOT
+  `.dr`, on any future Buy Radar row edit;
+  v27 = **Buy Radar accuracy fix — relevance gate + grade buckets + seller
   guard + honest reference labels** — the owner reported false "Great Values"
   from wrong-player/wrong-set listings; the same missing-relevance flaw also
   polluted the repricer's comps. Now every comp (Buy Radar AND own-card pricing)

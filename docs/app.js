@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v27";
+  var APP_VERSION = "v28";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -947,11 +947,11 @@
               '<span class="rlabel">' + r[0] + "</span>" +
               (d.snipe ? '<span class="snipe">⏱ ENDS SOON</span>' : "") +
             "</div>" +
+            '<div class="dmeta">' + kind + " · vs " + refLine(d) + thinChip(d) + "</div>" +
           "</div>" +
           '<div class="dr">' +
             '<div class="dprice tnum">' + money(d.price) + "</div>" +
             '<div class="ddisc tnum">▼ ' + Math.abs(Math.round(d.discount_pct)) + "% under</div>" +
-            '<div class="dkind">' + kind + " · vs " + refLine(d) + thinChip(d) + "</div>" +
           "</div></div>");
         row.onclick = function () { openDeal(d); };
         row.onkeydown = function (e) {
