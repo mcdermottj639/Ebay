@@ -701,3 +701,15 @@ a.comp:hover .ct { color: var(--gold); }
 /* Terapeak / eBay sold lookup row inside My numbers (v30) */
 .mdlookup { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
 .mdlookup .mbtn { flex: 1 1 130px; justify-content: center; text-align: center; }
+
+/* One-tap save setup (v31) */
+.mdsetup { margin-top: 8px; }
+.mdsetup a { font-size: 11.5px; color: var(--muted); text-decoration: none; font-weight: 700; }
+.mdsetup a:hover { color: var(--gold); }
+.mdtoken { display: flex; align-items: flex-end; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.mdtoken label { display: flex; flex-direction: column; gap: 3px; font-size: 10.5px;
+  color: var(--muted); font-weight: 700; flex: 1 1 150px; min-width: 0; }
+.mdtoken input { width: 100%; box-sizing: border-box; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px; color: var(--fg);
+  padding: 7px 9px; font-size: 14px; }
+.mdtoken .cfoot { flex-basis: 100%; margin-top: 2px; }

@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v30";
+  var APP_VERSION = "v31";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -91,6 +91,56 @@
     Object.keys(myData.costs).forEach(function (k) { if (num(myData.costs[k]) > 0) n++; });
     Object.keys(myData.sales).forEach(function (k) { n += (myData.sales[k] || []).length; });
     return n;
+  }
+
+  // ---- One-tap save: the app commits data/my_numbers.json to the repo ----
+  // With a GitHub key saved (once, on this device), "Save to my sheet" writes
+  // entries straight to GitHub — the Pages build then bakes them into
+  // data.json for every device. No Claude step needed. The key never leaves
+  // this device (localStorage only).
+  var GHTOKEN_KEY = "cv-gh-token";
+  var GH_API = "https://api.github.com/repos/mcdermottj639/Ebay/contents/data/my_numbers.json";
+  function ghToken() { try { return localStorage.getItem(GHTOKEN_KEY) || ""; } catch (e) { return ""; } }
+  function b64utf8(s) { return btoa(unescape(encodeURIComponent(s))); }
+  function ghHeaders() {
+    return { "Authorization": "Bearer " + ghToken(), "Accept": "application/vnd.github+json",
+             "Content-Type": "application/json" };
+  }
+  // Read the current file (sha + other devices' entries), merge ours in, PUT.
+  function ghSaveMyNumbers(done) {
+    fetch(GH_API + "?ref=main", { headers: ghHeaders() })
+      .then(function (r) {
+        if (r.status === 404) return { sha: null, json: { costs: {}, sales: {} } };
+        if (!r.ok) throw new Error("GitHub said " + r.status);
+        return r.json().then(function (f) {
+          var json = {};
+          try { json = JSON.parse(decodeURIComponent(escape(atob(String(f.content || "").replace(/\n/g, ""))))); }
+          catch (e) {}
+          return { sha: f.sha, json: { costs: json.costs || {}, sales: json.sales || {} } };
+        });
+      })
+      .then(function (cur) {
+        var out = cur.json;
+        Object.keys(myData.costs).forEach(function (sku) {
+          if (num(myData.costs[sku]) > 0) out.costs[sku] = num(myData.costs[sku]);
+        });
+        Object.keys(myData.sales).forEach(function (sku) {
+          var have = (out.sales[sku] = out.sales[sku] || []);
+          (myData.sales[sku] || []).forEach(function (s) {
+            var dup = have.some(function (x) { return (x.d || "") === (s.d || "") && num(x.p) === num(s.p); });
+            if (!dup) have.push({ d: s.d || "", p: s.p });
+          });
+        });
+        var body = { message: "Card Vault app: save my numbers",
+                     content: b64utf8(JSON.stringify(out, null, 2) + "\n"), branch: "main" };
+        if (cur.sha) body.sha = cur.sha;
+        return fetch(GH_API, { method: "PUT", headers: ghHeaders(), body: JSON.stringify(body) });
+      })
+      .then(function (r) {
+        if (!r.ok) throw new Error("GitHub said " + r.status);
+        done(null);
+      })
+      .catch(function (e) { done(e); });
   }
 
   // the message "Send to Claude" ships — Claude writes it into the sheet
@@ -1374,10 +1424,31 @@
         '<button class="mbtn sm" id="mySaleAdd">Add</button>' +
       "</div>" +
       (rows ? '<div class="mylist">' + rows + "</div>" : "") +
-      (pend ? '<div class="mdsync"><button class="mbtn" id="mySync">📤 Send ' + pend +
-              (pend === 1 ? " entry" : " entries") + " to Claude → saves to your sheet</button></div>" : "") +
+      syncSection(pend) +
       '<div class="cfoot">Tap a lookup button above — Terapeak (in your eBay Seller Hub, free) shows real ' +
-      "sold prices — then type what you see. Everything saves on this phone instantly; “Send to Claude” makes it permanent on every device.</div></div>";
+      "sold prices — then type what you see. Everything saves on this phone instantly" +
+      (ghToken() ? "; “Save to my sheet” backs it up to every device." : "; sending backs it up to every device.") +
+      "</div></div>";
+  }
+
+  // The backup row of the My-numbers box. With one-tap save ON: a direct
+  // 💾 save button. Without: the Send-to-Claude button + a setup link that
+  // reveals the paste-your-GitHub-key form.
+  function syncSection(pend) {
+    var n = pend === 1 ? "1 entry" : pend + " entries";
+    if (ghToken()) {
+      return (pend ? '<div class="mdsync"><button class="mbtn prime" id="myGhSave">💾 Save ' + n +
+                     " to my sheet</button></div>" : "") +
+        '<div class="mdsetup"><a href="#" id="ghTokenDrop">⚙️ One-tap save is on · turn off</a></div>';
+    }
+    return (pend ? '<div class="mdsync"><button class="mbtn" id="mySync">📤 Send ' + n +
+                   " to Claude → saves to your sheet</button></div>" : "") +
+      '<div class="mdsetup"><a href="#" id="mdSetup">⚙️ Set up one-tap save (skip the Claude step)</a></div>' +
+      '<div class="mdtoken" id="mdTokenForm" hidden><label>GitHub key' +
+        '<input type="password" id="ghTokenInput" placeholder="github_pat_…" autocomplete="off"></label>' +
+        '<button class="mbtn sm" id="ghTokenSave">Turn on</button>' +
+        '<div class="cfoot">One-time setup — ask Claude for the 2-minute walkthrough. ' +
+        "The key stays on this phone only (never in the sheet or the app).</div></div>";
   }
 
   function wireMyNumbers(m, c) {
@@ -1416,6 +1487,37 @@
       copyText(q);
       window.open("https://claude.ai/new?q=" + encodeURIComponent(q), "_blank", "noopener");
       flashBtn(sync, "✓ Copied — paste in Claude if it’s not pre-filled");
+    };
+    // one-tap GitHub save + its setup form
+    var ghBtn = m.querySelector("#myGhSave");
+    if (ghBtn) ghBtn.onclick = function () {
+      ghBtn.disabled = true;
+      ghBtn.textContent = "Saving…";
+      ghSaveMyNumbers(function (err) {
+        ghBtn.disabled = false;
+        if (err) flashBtn(ghBtn, "⚠ Couldn’t save — check the key, or ask Claude");
+        else flashBtn(ghBtn, "✓ Saved — on every device in ~2 min");
+      });
+    };
+    var setup = m.querySelector("#mdSetup");
+    if (setup) setup.onclick = function (e) {
+      e.preventDefault();
+      var f = m.querySelector("#mdTokenForm");
+      f.hidden = !f.hidden;
+      if (!f.hidden) f.querySelector("input").focus();
+    };
+    var tokSave = m.querySelector("#ghTokenSave");
+    if (tokSave) tokSave.onclick = function () {
+      var v = (m.querySelector("#ghTokenInput").value || "").trim();
+      if (!v) { flashBtn(tokSave, "Paste it first"); return; }
+      try { localStorage.setItem(GHTOKEN_KEY, v); } catch (e) {}
+      refreshAfterMyData(c);
+    };
+    var tokDrop = m.querySelector("#ghTokenDrop");
+    if (tokDrop) tokDrop.onclick = function (e) {
+      e.preventDefault();
+      try { localStorage.removeItem(GHTOKEN_KEY); } catch (err) {}
+      refreshAfterMyData(c);
     };
   }
 
