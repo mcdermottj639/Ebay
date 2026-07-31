@@ -697,3 +697,7 @@ a.comp:hover .ct { color: var(--gold); }
   flex: 0 0 auto; padding-bottom: 8px; }
 .compsbox.mydata .mylist + .mdsync, .compsbox.mydata .mdsync { margin-top: 10px; }
 .mdsync .mbtn { width: 100%; justify-content: center; text-align: center; }
+
+/* Terapeak / eBay sold lookup row inside My numbers (v30) */
+.mdlookup { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.mdlookup .mbtn { flex: 1 1 130px; justify-content: center; text-align: center; }
