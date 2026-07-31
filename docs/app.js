@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v31";
+  var APP_VERSION = "v32";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1372,6 +1372,63 @@
       "Real sold prices need eBay approval — tap “Sold on eBay” below for actuals.</div></div>";
   }
 
+  // ---- The money headline: first thing in the card popup ------------------
+  // Owner's ask (2026-07-31): opening a card should lead with what it could
+  // sell for right now, what they paid, and the profit — not a spec sheet.
+  // Big number + three stats + the price-history sparkline, all above the fold.
+  function moneyHero(c) {
+    var pf = profitOf(c), ms = mySold(c);
+    var pts = (c.price_series || []).filter(function (p) { return p && typeof p.p === "number"; });
+
+    // SOLD cards report what actually happened instead of an estimate.
+    var big, lab, sub;
+    if (c.sold) {
+      lab = "Sold for";
+      big = money(c.sold_price);
+      sub = c.sold_date ? "on " + esc(c.sold_date) : "";
+    } else {
+      lab = "Could sell for now";
+      big = num(c.asking_price) > 0 ? money(c.asking_price) : "—";
+      sub = num(c.asking_price) > 0
+        ? (ms ? "real sold ~" + money0(ms.median) + " · " + ms.count + " you tracked"
+              : c.price_basis === "sold" ? "from real eBay sold comps"
+              : c.price_basis === "est_sold" ? "estimated market · typical asking − 12%"
+              : "from active eBay listings (asking)")
+        : "no price yet — the weekly eBay re-price sets this";
+    }
+
+    // Three stats: paid / profit / margin. "＋ add" jumps to the entry box.
+    var paidCell = pf ? money0(pf.cost)
+      : '<button class="mhadd" id="mhAddCost">＋ add</button>';
+    var realized = c.sold && pf ? num(c.sold_price) - pf.cost : null;
+    var shown = c.sold ? realized : (pf ? pf.profit : null);
+    var base = c.sold ? (pf ? pf.cost : 0) : (pf ? pf.cost : 0);
+    var profitCell = shown == null ? "—"
+      : '<span class="' + (shown >= 0 ? "up" : "down") + '">' + (shown >= 0 ? "+" : "−") +
+        money0(Math.abs(shown)) + "</span>";
+    var marginCell = (shown == null || !base) ? "—"
+      : '<span class="' + (shown >= 0 ? "up" : "down") + '">' + Math.round(shown / base * 100) + "%</span>";
+
+    return '<div class="mhero-money' + (c.sold ? " issold" : "") + '">' +
+      '<div class="mhtop">' +
+        '<div class="mhbig"><span class="mhlab">' + lab + "</span>" +
+          '<span class="mhval tnum">' + big + changeChip(c) + "</span>" +
+          (sub ? '<span class="mhsub">' + sub + "</span>" : "") + "</div>" +
+        (pts.length >= 2 ? '<div class="mhspark">' + sparkline(pts, 96, 40) +
+          '<span class="mhsparklab">' + pts.length + " snapshots</span></div>" : "") +
+      "</div>" +
+      '<div class="mhstats">' +
+        '<div class="mhstat"><span class="k">You paid</span><span class="v tnum">' + paidCell + "</span></div>" +
+        '<div class="mhstat"><span class="k">' + (c.sold ? "Profit" : "Est. profit") +
+          '</span><span class="v tnum">' + profitCell + "</span></div>" +
+        '<div class="mhstat"><span class="k">Margin</span><span class="v tnum">' + marginCell + "</span></div>" +
+      "</div>" +
+      '<div class="mhfoot">' + (pf ? "Gross — before eBay &amp; shipping fees." :
+        "Add what you paid to see profit and margin.") +
+        (c.cost_local ? " Saved on this phone." : "") + "</div>" +
+    "</div>";
+  }
+
   // Cost & profit box for the modal — the real numbers when a cost is entered,
   // or a labelled prompt (the spot to add it) when it isn't.
   function costProfitBox(c) {
@@ -1452,6 +1509,14 @@
   }
 
   function wireMyNumbers(m, c) {
+    // the money headline's "＋ add" jumps down to the cost field and focuses it
+    var mhAdd = m.querySelector("#mhAddCost");
+    if (mhAdd) mhAdd.onclick = function () {
+      var input = m.querySelector("#myCost");
+      if (!input) return;
+      input.scrollIntoView({ block: "center" });
+      input.focus();
+    };
     var costSave = m.querySelector("#myCostSave");
     if (costSave) costSave.onclick = function () {
       var v = num(m.querySelector("#myCost").value);
@@ -1555,10 +1620,6 @@
       ["Authentication", c.is_merch ? c.authentication : ""],
       ["Condition", c.graded ? "" : c.condition], ["Serial", c.serial_run ? "/" + c.serial_run : ""],
       ["Sport", c.sport], ["SKU", c.sku],
-      ["Card Vault value", c.asking_price ? money(c.asking_price) : ""],
-      ["Price basis", c.price_basis === "sold" ? "Real eBay sold comps"
-                    : c.price_basis === "est_sold" ? "Estimated market (asking comps − haircut)"
-                    : c.price_basis === "asking" ? "Active listings (asking)" : ""],
       ["Notes", c.notes]
     ].filter(function (r) { return r[1]; });
     var kv = rows.map(function (r) { return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("");
@@ -1569,12 +1630,11 @@
         '<div class="mbody">' +
           "<h3>" + esc(c.player) + badges(c) + basisPill(c) + "</h3>" +
           '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
-          '<dl class="kv">' + kv + "</dl>" +
-          '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>" +
+          // MONEY FIRST — what it's worth, what you paid, profit, history.
+          moneyHero(c) +
           marketBox(c) +
-          costProfitBox(c) +
-          myNumbersBox(c) +
           priceHistoryBox(c) +
+          myNumbersBox(c) +
           compsBox(c) +
           '<div class="listbar"><div class="lblab">🏷️ List this card</div>' +
             '<div class="lbbtns">' +
@@ -1591,6 +1651,11 @@
               '<a class="mbtn" href="https://www.psacard.com/cert/' + esc(c.cert) +
               '" target="_blank" rel="noopener">🔍 PSA cert ' + esc(c.cert) + "</a>" : "") +
           "</div>" +
+          // Card details last, folded away — the owner knows their own cards.
+          '<details class="cardspecs"><summary>Card details &amp; eBay title</summary>' +
+            '<dl class="kv">' + kv + "</dl>" +
+            '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>" +
+          "</details>" +
         "</div>" +
       "</div>";
     m.querySelector("#mClose").onclick = closeModal;
