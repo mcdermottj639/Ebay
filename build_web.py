@@ -161,6 +161,33 @@ def _market():
     return {sku: {"median": round(m, 2), "count": c} for sku, (d, m, c) in latest.items()}
 
 
+def _manual_sales():
+    """Owner-entered REAL sold prices from data/manual_sales.csv (sku, date,
+    price, note). This is the workaround for eBay denying the sold-comps API:
+    the owner looks sales up (eBay sold search / Terapeak / 130point) and
+    records them — in the app's card popup ("My numbers", synced here via
+    Claude) or straight in the CSV. Returns {sku: [{d, p, n}, ...]} oldest
+    first; the app treats these as real SOLD data (green)."""
+    path = DATA / "manual_sales.csv"
+    if not path.exists():
+        return {}
+    per_sku: dict[str, list] = {}
+    with path.open(newline="", encoding="utf-8-sig") as f:
+        for row in csv.DictReader(f):
+            sku = (row.get("sku") or "").strip().upper()
+            price = _num(row.get("price", ""))
+            if not sku or price <= 0:
+                continue
+            per_sku.setdefault(sku, []).append({
+                "d": (row.get("date") or "").strip(),
+                "p": round(price, 2),
+                "n": (row.get("note") or "").strip(),
+            })
+    for sku in per_sku:
+        per_sku[sku].sort(key=lambda s: s["d"])
+    return per_sku
+
+
 def _comps_snapshot():
     """Per-SKU comp listings saved by reprice.py (data/comps_snapshot.json).
     Returns ({sku: {source, broad, items}}, as_of_date)."""
@@ -285,6 +312,7 @@ def build_data(cards) -> dict:
     series_by_sku = _price_series()
     market_by_sku = _market()
     comps_by_sku, comps_as_of = _comps_snapshot()
+    manual_by_sku = _manual_sales()
 
     return {
         "history": _history(total_value, len(unsold)),
@@ -328,6 +356,7 @@ def build_data(cards) -> dict:
                 "listed": c.is_listed(), "sold": c.is_sold(),
                 "sold_price": _num(c.sold_price) if c.is_sold() else "",
                 "sold_date": c.sold_date, "cert": _cert_for(c),
+                "my_sales": manual_by_sku.get(c.sku.upper(), []),
                 "prev_price": changes.get(c.sku, {}).get("prev", ""),
                 "price_series": series_by_sku.get(c.sku, []),
                 "market": market_by_sku.get(c.sku),

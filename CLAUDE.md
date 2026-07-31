@@ -63,6 +63,15 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   sorts football-first). Owner preference: premium **$100–$1000** cards,
   **football preferred**, baseball OK — so rows target graded/parallel/auto
   versions that naturally list in that band (raw base RCs are too cheap).
+- `data/manual_sales.csv` — owner-entered REAL sold prices (sku, date, price,
+  note), the workaround for eBay denying the sold-comps API. Fed two ways: the
+  owner types them into the app's card popup (**✍️ My numbers**, v29) and taps
+  "Send to Claude" (a pre-filled claude.ai message — parse lines like
+  `CARD-0019 — cost $55` into inventory.csv's `cost` column and
+  `CARD-0019 — sold for $150 on 2026-07-28` into this CSV, then rebuild +
+  ship), or Claude appends rows directly when the owner reports a sale in
+  chat. `build_web._manual_sales` bakes them into each card as `my_sales`;
+  committed, starts as just a header row.
 - `data/price_history.csv` — per-SKU price observations appended by
   `reprice.py` (date, price, basis, median, count, applied). Committed, so the
   app's Movers panel + week-over-week ▲▼ chips (`build_web._price_changes`,
@@ -213,11 +222,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v28. The live
+  this makes the service worker serve stale CSS/JS. Current: v29. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v28. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v29. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -245,6 +254,22 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   always-available **Live listings / Sold on eBay** buttons (public eBay
   search URLs built from the card title — no API needed). The snapshot file
   doesn't exist until the first keyed reprice run; the box just hides.
+- App v29: **✍️ My numbers — manual cost + real sold prices, entered in-app.**
+  The card popup has an entry box: "What you paid" (cost) and "It sold for"
+  (price + date) — real sales the owner looks up via the modal's Sold-on-eBay
+  button, Terapeak (free in eBay Seller Hub), or 130point.com. Entries save
+  instantly to localStorage (`cv-mydata`: {costs:{sku:$}, sales:{sku:[{d,p}]}})
+  and merge with sheet-baked entries (`card.my_sales` from manual_sales.csv)
+  in `recalcMyData()` — idempotent via `_csvCost`/`_bakedSales` raw copies,
+  auto-prunes device entries once they appear baked (so the pending count is
+  honest). Integration: device costs feed the profit tiles/boxes (summary
+  recomputed client-side), tracked sales produce a green **"Real sold — yours
+  ~$X · N tracked"** row in the modal's What-it's-going-for box + Sales-Map row
+  lines (`mySold` = median of last 5), and `sellScore` gives full price
+  confidence (+ a "real sold ✓" chip). **📤 Send to Claude** copies/opens a
+  pre-filled claude.ai message; Claude writes costs → inventory.csv, sales →
+  manual_sales.csv (see the data/manual_sales.csv entry above), making entries
+  permanent across devices. Sheet always wins over device on conflict.
 - App v14: **🔎 Buy Radar tab (in-app, no backend).** The owner wanted the
   deal-finder *inside* the app, not just as a terminal tool. Since eBay's API
   can't run client-side, `radar.py` runs the scan server-side (reuses
