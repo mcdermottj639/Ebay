@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v28";
+  var APP_VERSION = "v29";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -17,6 +17,97 @@
   function num(v) { var n = parseFloat(String(v).replace(/[$,]/g, "")); return isNaN(n) ? 0 : n; }
   function copyText(t) { try { if (navigator.clipboard) navigator.clipboard.writeText(t); } catch (e) {} }
   function flashBtn(btn, msg) { var o = btn.innerHTML; btn.textContent = msg; setTimeout(function () { btn.innerHTML = o; }, 1900); }
+
+  // ---------- My numbers (owner-entered cost + real sold prices) ----------
+  // eBay denied us the sold-comps API, so the truest data is what the owner
+  // records themself: what a card actually cost, and real sold prices seen on
+  // eBay's sold search / Terapeak / 130point. Entries save instantly on this
+  // device (localStorage) and merge with entries already baked into the sheet
+  // (card.my_sales from data.json). "Send to Claude" makes device entries
+  // permanent in the spreadsheet — then they show on every device.
+  var MYDATA_KEY = "cv-mydata";
+  function loadMyData() {
+    try {
+      var d = JSON.parse(localStorage.getItem(MYDATA_KEY) || "{}");
+      return { costs: d.costs || {}, sales: d.sales || {} };
+    } catch (e) { return { costs: {}, sales: {} }; }
+  }
+  function saveMyData() { try { localStorage.setItem(MYDATA_KEY, JSON.stringify(myData)); } catch (e) {} }
+  var myData = loadMyData();
+
+  // Merge device entries into the loaded data. Idempotent: raw sheet values
+  // are kept on the card (_csvCost/_bakedSales) so re-running after an edit
+  // can't double-apply. Also prunes device entries that have since been baked
+  // into the sheet, so the "send to Claude" count stays honest.
+  function recalcMyData() {
+    var data = state.data;
+    if (!data) return;
+    var dirty = false;
+    data.cards.forEach(function (c) {
+      if (c._csvCost === undefined) c._csvCost = c.cost;
+      if (!c._bakedSales) c._bakedSales = (c.my_sales || []).slice();
+      // cost: the sheet wins; a device-entered cost fills a blank sheet cost
+      if (num(c._csvCost) > 0 && myData.costs[c.sku]) { delete myData.costs[c.sku]; dirty = true; }
+      var localCost = num(myData.costs[c.sku]);
+      c.cost = num(c._csvCost) > 0 ? c._csvCost : (localCost > 0 ? String(localCost) : c._csvCost);
+      c.cost_local = num(c._csvCost) <= 0 && localCost > 0;
+      // sales: sheet entries + device entries, deduped on date|price
+      var baked = {};
+      c._bakedSales.forEach(function (s) { baked[(s.d || "") + "|" + s.p] = 1; });
+      var local = (myData.sales[c.sku] || []).filter(function (s) { return !baked[(s.d || "") + "|" + s.p]; });
+      if (local.length !== (myData.sales[c.sku] || []).length) {
+        if (local.length) myData.sales[c.sku] = local; else delete myData.sales[c.sku];
+        dirty = true;
+      }
+      c.my_sales_all = c._bakedSales.map(function (s) { return { d: s.d, p: s.p, n: s.n || "" }; })
+        .concat(local.map(function (s) { return { d: s.d, p: s.p, n: s.n || "", local: true }; }))
+        .sort(function (a, b) { return String(a.d).localeCompare(String(b.d)); });
+    });
+    if (dirty) saveMyData();
+    // profit tiles react to device-entered costs too (same rule as the build:
+    // only cards with a known cost count toward profit).
+    var costed = data.cards.filter(function (c) { return !c.sold && num(c.asking_price) > 0 && num(c.cost) > 0; });
+    data.summary.cost_count = costed.length;
+    data.summary.total_cost = Math.round(data.cards.reduce(function (a, c) { return a + num(c.cost); }, 0) * 100) / 100;
+    data.summary.profit = Math.round(costed.reduce(function (a, c) { return a + num(c.asking_price) - num(c.cost); }, 0) * 100) / 100;
+  }
+
+  // Real SOLD reference from the owner's tracked sales — median of the most
+  // recent 5. null when nothing is tracked for this card.
+  function mySold(c) {
+    var s = c.my_sales_all || c.my_sales || [];
+    if (!s.length) return null;
+    var vals = s.slice(-5).map(function (x) { return num(x.p); })
+      .filter(function (p) { return p > 0; }).sort(function (a, b) { return a - b; });
+    if (!vals.length) return null;
+    var mid = Math.floor(vals.length / 2);
+    var med = vals.length % 2 ? vals[mid] : (vals[mid - 1] + vals[mid]) / 2;
+    return { median: med, count: s.length, last: s[s.length - 1].d || "" };
+  }
+
+  // how many device entries haven't made it into the sheet yet
+  function pendingCount() {
+    var n = 0;
+    Object.keys(myData.costs).forEach(function (k) { if (num(myData.costs[k]) > 0) n++; });
+    Object.keys(myData.sales).forEach(function (k) { n += (myData.sales[k] || []).length; });
+    return n;
+  }
+
+  // the message "Send to Claude" ships — Claude writes it into the sheet
+  function syncMessage() {
+    var lines = [];
+    Object.keys(myData.costs).sort().forEach(function (sku) {
+      if (num(myData.costs[sku]) > 0) lines.push(sku + " — cost $" + myData.costs[sku]);
+    });
+    Object.keys(myData.sales).sort().forEach(function (sku) {
+      (myData.sales[sku] || []).forEach(function (s) {
+        lines.push(sku + " — sold for $" + s.p + (s.d ? " on " + s.d : "") + (s.n ? " (" + s.n + ")" : ""));
+      });
+    });
+    return "Save these numbers into my Card Vault sheet (costs go in the cost column of " +
+      "data/inventory.csv, sold prices are real sold comps for data/manual_sales.csv), " +
+      "then rebuild and ship the app:\n\n" + lines.join("\n");
+  }
 
   // ---------- shell ----------
   function shell() {
@@ -556,8 +647,10 @@
     if (/football/i.test(c.sport || "")) { liq += 6; reasons.push("football"); }
     score += Math.min(36, liq);
 
-    // 3) Price confidence — how much we trust the number we'd list at.
-    score += c.price_basis === "sold" ? 10 : c.price_basis === "est_sold" ? 6 : c.price_basis === "asking" ? 3 : 0;
+    // 3) Price confidence — how much we trust the number we'd list at. The
+    // owner's own tracked REAL sold prices are the strongest signal we have.
+    if (mySold(c)) { score += 10; reasons.push("real sold ✓"); }
+    else score += c.price_basis === "sold" ? 10 : c.price_basis === "est_sold" ? 6 : c.price_basis === "asking" ? 3 : 0;
 
     // 4) Momentum — rising price = sell into strength (neutral when unknown).
     var pct = sellMomentum(c);
@@ -612,15 +705,21 @@
       money0(Math.abs(pf.profit)) + " profit</div>";
   }
 
-  // compact market line under a sell row: typical price + listing count, and
+  // compact market line under a sell row: the owner's tracked REAL sold price
+  // first (when they have one), then typical asking + listing count, and
   // (only when solid) the room up toward that typical price.
   function marketLine(c) {
-    var m = goingFor(c);
-    if (!m) return "";
-    var room = marketSolid(c, m) ? ' · <span class="room">room to ~' + money0(m.median) + "</span>" : "";
-    var thin = (m.count && m.count < 5) ? ' · <span class="thin">thin data</span>' : "";
-    return '<div class="smkt">Usually ~' + money0(m.median) +
-      (m.count ? " · " + m.count + " on eBay" : "") + room + thin + "</div>";
+    var m = goingFor(c), ms = mySold(c);
+    if (!m && !ms) return "";
+    var bits = [];
+    if (ms) bits.push('<span class="room">real sold ~' + money0(ms.median) + " (yours)</span>");
+    if (m) {
+      var t = "Usually ~" + money0(m.median) + (m.count ? " · " + m.count + " on eBay" : "");
+      if (marketSolid(c, m)) t += ' · <span class="room">room to ~' + money0(m.median) + "</span>";
+      if (m.count && m.count < 5) t += ' · <span class="thin">thin data</span>';
+      bits.push(t);
+    }
+    return '<div class="smkt">' + bits.join(" · ") + "</div>";
   }
 
   // Tiny inline price-history sparkline (SVG, no libraries). Reused in sell
@@ -1168,15 +1267,26 @@
   // live range, our estimate, and (when the read is solid) the room up toward
   // typical. Honest about the ASKING-vs-SOLD gap eBay left us with.
   function marketBox(c) {
-    var m = goingFor(c);
+    var m = goingFor(c), ms = mySold(c);
+    var soldRow = ms
+      ? '<div class="mkrow up"><span>Real sold — yours</span><b class="tnum">~' + money0(ms.median) +
+        ' <small>· ' + ms.count + " tracked</small></b></div>"
+      : "";
     if (!m) {
-      // Priced but no comps captured (e.g. a niche insert/auto the auto-pricer
-      // found zero matches for) — explain instead of silently showing nothing.
+      // No comps captured. If the owner has tracked real sales, show those —
+      // they're the truest read we have. Otherwise explain the gap (e.g. a
+      // niche insert/auto the auto-pricer found zero matches for).
+      if (ms) {
+        return '<div class="compsbox market"><div class="lab">What it’s going for</div>' + soldRow +
+          (num(c.asking_price) > 0
+            ? '<div class="mkrow"><span>Card Vault value</span><b class="tnum">' + money0(num(c.asking_price)) + "</b></div>" : "") +
+          '<div class="cfoot">Real sold prices you tracked in “My numbers” below — actual sales, not asking.</div></div>';
+      }
       if (num(c.asking_price) <= 0) return "";
       return '<div class="compsbox nomarket"><div class="lab">What it’s going for</div>' +
         '<div class="addcostrow">No eBay comps captured for this exact card yet — the value here is hand-set.</div>' +
         '<div class="cfoot">Niche inserts/autos often return no match on the weekly auto-price run. ' +
-        "Tap “Live listings” / “Sold on eBay” below to check the market yourself.</div></div>";
+        "Tap “Live listings” / “Sold on eBay” below to check the market yourself — and record what it sold for in “My numbers” below.</div></div>";
     }
     var cur = num(c.asking_price);
     var prices = ((c.comps && c.comps.items) || []).map(function (it) { return num(it.p); })
@@ -1187,6 +1297,7 @@
       : c.price_basis === "est_sold" ? "estimated — typical asking − 12%"
       : "active eBay listings";
     var rows =
+      soldRow +
       '<div class="mkrow"><span>Usually going for</span><b class="tnum">~' + money0(m.median) +
         (m.count ? ' <small>· ' + m.count + " listed</small>" : "") + "</b></div>" +
       (range ? '<div class="mkrow"><span>Live range now</span><b class="tnum">' + range + "</b></div>" : "") +
@@ -1212,11 +1323,94 @@
         '<div class="mkrow"><span>Card Vault value</span><b class="tnum">' + money0(pf.est) + "</b></div>" +
         '<div class="mkrow ' + cls + '"><span>Est. profit if sold</span><b class="tnum">' +
           (pf.profit >= 0 ? "+" : "−") + money0(Math.abs(pf.profit)) + " · " + Math.round(pf.margin) + "%</b></div>" +
-        '<div class="cfoot">Gross — before eBay &amp; shipping fees.</div></div>';
+        '<div class="cfoot">Gross — before eBay &amp; shipping fees.' +
+        (c.cost_local ? " Cost saved on this phone — “Send to Claude” below makes it permanent." : "") +
+        "</div></div>";
     }
     return '<div class="compsbox addcostbox"><div class="lab">Cost &amp; profit</div>' +
       '<div class="addcostrow">＋ No cost recorded yet — add what you paid to unlock profit for this card.</div>' +
-      '<div class="cfoot">Put it in the <b>cost</b> column of data/inventory.csv (or just tell me the amount).</div></div>';
+      '<div class="cfoot">Type it in <b>✍️ My numbers</b> right below — it saves instantly.</div></div>';
+  }
+
+  // "My numbers" — the owner's own data entry, right in the card popup: what
+  // the card cost, and real prices it has sold for (look them up with the
+  // “Sold on eBay” button below, or Terapeak in eBay Seller Hub). Saves
+  // instantly on this device; "Send to Claude" writes it into the sheet.
+  function myNumbersBox(c) {
+    var today = new Date().toISOString().slice(0, 10);
+    var sheetCost = num(c._csvCost) > 0;
+    var sales = c.my_sales_all || [];
+    var rows = sales.map(function (s, i) {
+      return '<div class="myrow"><span class="tnum">' + money(s.p) + "</span>" +
+        '<span class="myd">' + esc(s.d || "") + (s.n ? " · " + esc(s.n) : "") + "</span>" +
+        (s.local ? '<button class="mydel" data-i="' + i + '" title="Remove">✕</button>'
+                 : '<span class="myok" title="Saved in your sheet">✓ in sheet</span>') +
+        "</div>";
+    }).join("");
+    var pend = pendingCount();
+    return '<div class="compsbox mydata"><div class="lab">✍️ My numbers</div>' +
+      '<div class="mdform"><label>What you paid ($)' +
+        '<input type="number" inputmode="decimal" min="0" step="0.01" id="myCost" placeholder="e.g. 45" value="' +
+        (num(c.cost) > 0 ? esc(num(c.cost)) : "") + '"' + (sheetCost ? " disabled" : "") + "></label>" +
+        (sheetCost ? '<span class="myok">✓ in sheet</span>' : '<button class="mbtn sm" id="myCostSave">Save</button>') +
+      "</div>" +
+      '<div class="mdform"><label>It sold for ($)' +
+        '<input type="number" inputmode="decimal" min="0" step="0.01" id="mySalePrice" placeholder="e.g. 120"></label>' +
+        '<label>When<input type="date" id="mySaleDate" value="' + today + '"></label>' +
+        '<button class="mbtn sm" id="mySaleAdd">Add</button>' +
+      "</div>" +
+      (rows ? '<div class="mylist">' + rows + "</div>" : "") +
+      (pend ? '<div class="mdsync"><button class="mbtn" id="mySync">📤 Send ' + pend +
+              (pend === 1 ? " entry" : " entries") + " to Claude → saves to your sheet</button></div>" : "") +
+      '<div class="cfoot">Sold prices: real sales you’ve seen (tap “Sold on eBay” below to look them up). ' +
+      "Everything saves on this phone instantly; “Send to Claude” makes it permanent on every device.</div></div>";
+  }
+
+  function wireMyNumbers(m, c) {
+    var costSave = m.querySelector("#myCostSave");
+    if (costSave) costSave.onclick = function () {
+      var v = num(m.querySelector("#myCost").value);
+      if (v > 0) myData.costs[c.sku] = Math.round(v * 100) / 100;
+      else delete myData.costs[c.sku];
+      saveMyData();
+      refreshAfterMyData(c);
+    };
+    var add = m.querySelector("#mySaleAdd");
+    if (add) add.onclick = function () {
+      var p = num(m.querySelector("#mySalePrice").value);
+      if (p <= 0) { flashBtn(add, "Price?"); return; }
+      (myData.sales[c.sku] = myData.sales[c.sku] || []).push({
+        d: m.querySelector("#mySaleDate").value || "", p: Math.round(p * 100) / 100 });
+      saveMyData();
+      refreshAfterMyData(c);
+    };
+    m.querySelectorAll(".mydel").forEach(function (b) {
+      b.onclick = function () {
+        var s = (c.my_sales_all || [])[Number(b.getAttribute("data-i"))];
+        if (!s) return;
+        var arr = (myData.sales[c.sku] || []).filter(function (x) {
+          return !((x.d || "") === (s.d || "") && x.p === s.p);
+        });
+        if (arr.length) myData.sales[c.sku] = arr; else delete myData.sales[c.sku];
+        saveMyData();
+        refreshAfterMyData(c);
+      };
+    });
+    var sync = m.querySelector("#mySync");
+    if (sync) sync.onclick = function () {
+      var q = syncMessage();
+      copyText(q);
+      window.open("https://claude.ai/new?q=" + encodeURIComponent(q), "_blank", "noopener");
+      flashBtn(sync, "✓ Copied — paste in Claude if it’s not pre-filled");
+    };
+  }
+
+  // after any My-numbers edit: re-merge, repaint the view behind the popup
+  // (profit tiles, Sales Map chips), and repaint the popup itself.
+  function refreshAfterMyData(c) {
+    recalcMyData();
+    render();
+    openModal(c);
   }
 
   // Per-card price-over-time box for the modal — a sparkline of the SKU's
@@ -1263,6 +1457,7 @@
           '<div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div>" +
           marketBox(c) +
           costProfitBox(c) +
+          myNumbersBox(c) +
           priceHistoryBox(c) +
           compsBox(c) +
           '<div class="listbar"><div class="lblab">🏷️ List this card</div>' +
@@ -1283,6 +1478,7 @@
         "</div>" +
       "</div>";
     m.querySelector("#mClose").onclick = closeModal;
+    wireMyNumbers(m, c);
     // quick-list widget: eBay sell page (title on clipboard) or draft in Claude
     var listEbay = m.querySelector("#mListEbay");
     listEbay.onclick = function () {
@@ -1340,6 +1536,7 @@
   // ---------- boot ----------
   function boot(data) {
     state.data = data;
+    recalcMyData();               // merge this device's costs + sold entries
     shell();
     document.getElementById("gen").textContent = data.summary.total_cards + " cards · " + money0(data.summary.total_value);
     setTab("collection");

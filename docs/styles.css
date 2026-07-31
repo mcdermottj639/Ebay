@@ -674,3 +674,26 @@ a.comp:hover .ct { color: var(--gold); }
 }
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ✍️ My numbers (v29) — owner-entered cost + real sold prices in the modal */
+.compsbox.mydata .mdform { display: flex; align-items: flex-end; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.compsbox.mydata label { display: flex; flex-direction: column; gap: 3px; font-size: 10.5px;
+  color: var(--muted); font-weight: 700; flex: 1 1 96px; min-width: 0; }
+.compsbox.mydata input { width: 100%; box-sizing: border-box; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px; color: var(--fg);
+  padding: 7px 9px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.compsbox.mydata input:disabled { opacity: .55; }
+.mbtn.sm { padding: 7px 12px; flex: 0 0 auto; }
+.mylist { margin-top: 8px; border-top: 1px solid var(--border); }
+.myrow { display: flex; align-items: center; gap: 8px; padding: 6px 0;
+  border-bottom: 1px solid var(--border); font-size: 13px; }
+.myrow:last-child { border-bottom: none; }
+.myrow > .tnum { font-weight: 800; flex: 0 0 auto; }
+.myrow .myd { color: var(--muted); flex: 1; min-width: 0; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.mydel { background: none; border: 1px solid var(--border); color: var(--muted);
+  border-radius: 7px; width: 24px; height: 24px; line-height: 1; cursor: pointer; flex: 0 0 auto; }
+.myok { font-size: 10.5px; color: var(--good); font-weight: 800; white-space: nowrap;
+  flex: 0 0 auto; padding-bottom: 8px; }
+.compsbox.mydata .mylist + .mdsync, .compsbox.mydata .mdsync { margin-top: 10px; }
+.mdsync .mbtn { width: 100%; justify-content: center; text-align: center; }
