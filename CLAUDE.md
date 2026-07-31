@@ -229,11 +229,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v31. The live
+  this makes the service worker serve stale CSS/JS. Current: v32. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v31. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v32. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -261,6 +261,20 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   always-available **Live listings / Sold on eBay** buttons (public eBay
   search URLs built from the card title — no API needed). The snapshot file
   doesn't exist until the first keyed reprice run; the box just hides.
+- App v32: **card popup leads with money, specs fold to the bottom.** Owner
+  (2026-07-31, with a screenshot): opening a card showed a 13-row spec sheet
+  they already know, with value/profit buried below it — "at the top should be
+  what I could sell it for right now, how much I bought it for, the profit
+  margins, the price history." New order in `openModal`: title → **`moneyHero`**
+  → `marketBox` → `priceHistoryBox` → `myNumbersBox` → `compsBox` → list bar →
+  buttons → **`<details class="cardspecs">` (closed)** holding the kv specs +
+  eBay title. `moneyHero` = big "Could sell for now" value (green "Sold for"
+  on sold items) + basis/real-sold subline + inline sparkline, then a 3-up
+  You paid / Est. profit / Margin row, where a missing cost renders a dashed
+  **＋ add** button that scrolls to and focuses the My-numbers cost input
+  (`#mhAddCost`). Replaced `costProfitBox` in the modal (still defined but
+  unused there — the hero carries its numbers + the gross-before-fees note);
+  dropped the now-duplicated "Card Vault value"/"Price basis" kv rows.
 - App v31: **💾 one-tap save — the app writes the sheet itself (no Claude
   step).** The My-numbers box has a "⚙️ Set up one-tap save" link → paste a
   GitHub fine-grained PAT (repo: mcdermottj639/Ebay only, permission:

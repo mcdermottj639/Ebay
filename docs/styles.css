@@ -713,3 +713,42 @@ a.comp:hover .ct { color: var(--gold); }
   border: 1px solid var(--border); border-radius: 8px; color: var(--fg);
   padding: 7px 9px; font-size: 14px; }
 .mdtoken .cfoot { flex-basis: 100%; margin-top: 2px; }
+
+/* ---- Money headline: the top of the card popup (v32) --------------------
+   Owner's ask: open a card and see what it could sell for, what they paid,
+   profit + margin, and the price trend — before any spec sheet. */
+.mhero-money { margin-top: 12px; background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 14px; padding: 14px 14px 11px; }
+.mhero-money .mhtop { display: flex; align-items: flex-start; gap: 12px; }
+.mhero-money .mhbig { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.mhero-money .mhlab { font-size: 10px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--gold); font-weight: 800; }
+.mhero-money .mhval { font-size: 34px; font-weight: 800; line-height: 1.05; color: var(--fg);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mhero-money .mhval .chg { font-size: 12px; }
+.mhero-money .mhsub { font-size: 11.5px; color: var(--muted); font-weight: 600; }
+.mhero-money.issold .mhval { color: var(--good); }
+.mhero-money .mhspark { display: flex; flex-direction: column; align-items: flex-end;
+  gap: 2px; flex: 0 0 auto; }
+.mhero-money .mhsparklab { font-size: 9.5px; color: var(--muted); font-weight: 700; }
+
+.mhero-money .mhstats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px; margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--border); }
+.mhero-money .mhstat { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.mhero-money .mhstat .k { font-size: 10px; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--muted); font-weight: 800; }
+.mhero-money .mhstat .v { font-size: 17px; font-weight: 800; color: var(--fg); }
+.mhero-money .mhstat .v .up { color: var(--good); }
+.mhero-money .mhstat .v .down { color: var(--bad); }
+.mhero-money .mhadd { background: none; border: 1px dashed var(--gold); color: var(--gold);
+  border-radius: 8px; padding: 3px 9px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+.mhero-money .mhfoot { font-size: 10.5px; color: var(--muted); margin-top: 9px; }
+
+/* Card details, folded away at the bottom */
+.cardspecs { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px; }
+.cardspecs > summary { cursor: pointer; font-size: 11.5px; font-weight: 800; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .05em; list-style: none; padding: 4px 0; }
+.cardspecs > summary::-webkit-details-marker { display: none; }
+.cardspecs > summary::before { content: "▸ "; color: var(--gold); }
+.cardspecs[open] > summary::before { content: "▾ "; }
+.cardspecs > summary:hover { color: var(--gold); }
