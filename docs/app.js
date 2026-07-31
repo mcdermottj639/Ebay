@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v29";
+  var APP_VERSION = "v30";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1165,6 +1165,7 @@
             '<a class="mbtn prime" href="' + esc(d.url) + '" target="_blank" rel="noopener">🛒 Open this listing on eBay</a>' +
             '<a class="mbtn" href="' + dealSearchUrl(d, false) + '" target="_blank" rel="noopener">🔎 All live listings</a>' +
             '<a class="mbtn" href="' + dealSearchUrl(d, true) + '" target="_blank" rel="noopener">✅ Recent sold prices</a>' +
+            '<a class="mbtn" href="' + terapeakUrl(d.query || d.item_title || d.label) + '" target="_blank" rel="noopener">📊 Terapeak sold data</a>' +
           "</div>" +
         "</div>" +
       "</div>";
@@ -1249,6 +1250,15 @@
   function ebaySearchUrl(c, soldOnly) {
     return "https://www.ebay.com/sch/i.html?_nkw=" + encodeURIComponent(c.title) +
       (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "");
+  }
+
+  // Terapeak product research (eBay Seller Hub) pre-searched for this card —
+  // REAL sold data, free for sellers. No API exists, so this deep-link + the
+  // "My numbers" box IS the integration: look it up, type it in, done.
+  // 90-day window, sold tab. Needs the owner's eBay seller login (they have one).
+  function terapeakUrl(q) {
+    return "https://www.ebay.com/sh/research?marketplace=EBAY-US&tabName=SOLD&dayRange=90&keywords=" +
+      encodeURIComponent(q);
   }
 
   // A ready-to-paste prompt for drafting the eBay listing in Claude chat.
@@ -1349,6 +1359,10 @@
     }).join("");
     var pend = pendingCount();
     return '<div class="compsbox mydata"><div class="lab">✍️ My numbers</div>' +
+      '<div class="mdlookup">' +
+        '<a class="mbtn sm" href="' + terapeakUrl(c.title) + '" target="_blank" rel="noopener">📊 Terapeak sold data</a>' +
+        '<a class="mbtn sm" href="' + ebaySearchUrl(c, true) + '" target="_blank" rel="noopener">✅ eBay sold search</a>' +
+      "</div>" +
       '<div class="mdform"><label>What you paid ($)' +
         '<input type="number" inputmode="decimal" min="0" step="0.01" id="myCost" placeholder="e.g. 45" value="' +
         (num(c.cost) > 0 ? esc(num(c.cost)) : "") + '"' + (sheetCost ? " disabled" : "") + "></label>" +
@@ -1362,8 +1376,8 @@
       (rows ? '<div class="mylist">' + rows + "</div>" : "") +
       (pend ? '<div class="mdsync"><button class="mbtn" id="mySync">📤 Send ' + pend +
               (pend === 1 ? " entry" : " entries") + " to Claude → saves to your sheet</button></div>" : "") +
-      '<div class="cfoot">Sold prices: real sales you’ve seen (tap “Sold on eBay” below to look them up). ' +
-      "Everything saves on this phone instantly; “Send to Claude” makes it permanent on every device.</div></div>";
+      '<div class="cfoot">Tap a lookup button above — Terapeak (in your eBay Seller Hub, free) shows real ' +
+      "sold prices — then type what you see. Everything saves on this phone instantly; “Send to Claude” makes it permanent on every device.</div></div>";
   }
 
   function wireMyNumbers(m, c) {

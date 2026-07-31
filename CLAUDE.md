@@ -222,11 +222,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v29. The live
+  this makes the service worker serve stale CSS/JS. Current: v30. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v29. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v30. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -254,6 +254,17 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   always-available **Live listings / Sold on eBay** buttons (public eBay
   search URLs built from the card title — no API needed). The snapshot file
   doesn't exist until the first keyed reprice run; the box just hides.
+- App v30: **📊 Terapeak deep-links.** Terapeak (eBay Seller Hub product
+  research — real sold data, free for sellers) has NO API; the API version of
+  its data is the Marketplace Insights scope eBay denied us. So the
+  integration is one-tap deep-links: `terapeakUrl(q)` →
+  `ebay.com/sh/research?marketplace=EBAY-US&tabName=SOLD&dayRange=90&keywords=…`,
+  surfaced as a **Terapeak sold data** button (with an eBay-sold-search twin,
+  `.mdlookup` row) at the top of the My-numbers box — look up real solds,
+  type them in, same popup — and as a 4th button in the Buy Radar deal popup.
+  Needs the owner's eBay seller login in the browser; URL can't be verified
+  from this env (network locked to api.ebay.com), so if the owner reports it
+  landing on a generic Seller Hub page, re-check the query params.
 - App v29: **✍️ My numbers — manual cost + real sold prices, entered in-app.**
   The card popup has an entry box: "What you paid" (cost) and "It sold for"
   (price + date) — real sales the owner looks up via the modal's Sold-on-eBay
