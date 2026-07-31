@@ -188,6 +188,38 @@ def _manual_sales():
     return per_sku
 
 
+def _my_numbers():
+    """App-written data/my_numbers.json — costs + real sold prices the owner
+    saves from the Card Vault app itself (the one-tap GitHub save, app v31).
+    Shape: {"costs": {sku: price}, "sales": {sku: [{d, p, n}]}}. Returns
+    (costs, sales) with the same per-sale shape as _manual_sales; either file
+    works, the app writes this one. Absent until the first in-app save."""
+    path = DATA / "my_numbers.json"
+    if not path.exists():
+        return {}, {}
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except ValueError:
+        return {}, {}
+    costs = {}
+    for sku, p in (raw.get("costs") or {}).items():
+        v = _num(str(p))
+        if v > 0:
+            costs[sku.strip().upper()] = round(v, 2)
+    sales: dict[str, list] = {}
+    for sku, arr in (raw.get("sales") or {}).items():
+        for s in arr or []:
+            price = _num(str((s or {}).get("p", "")))
+            if price <= 0:
+                continue
+            sales.setdefault(sku.strip().upper(), []).append({
+                "d": str(s.get("d") or "").strip(),
+                "p": round(price, 2),
+                "n": str(s.get("n") or "").strip(),
+            })
+    return costs, sales
+
+
 def _comps_snapshot():
     """Per-SKU comp listings saved by reprice.py (data/comps_snapshot.json).
     Returns ({sku: {source, broad, items}}, as_of_date)."""
@@ -275,6 +307,13 @@ def _history(total_value: float, n_cards: int) -> list:
 
 
 def build_data(cards) -> dict:
+    # App-saved costs fill blank sheet costs BEFORE any money math, so the
+    # profit tiles and per-card cost all agree with what the owner entered.
+    app_costs, app_sales = _my_numbers()
+    for c in cards:
+        if _num(c.cost) <= 0 and c.sku.upper() in app_costs:
+            c.cost = str(app_costs[c.sku.upper()])
+
     unsold = [c for c in cards if not c.is_sold()]
     sold = [c for c in cards if c.is_sold()]
 
@@ -313,6 +352,11 @@ def build_data(cards) -> dict:
     market_by_sku = _market()
     comps_by_sku, comps_as_of = _comps_snapshot()
     manual_by_sku = _manual_sales()
+    for sku, arr in app_sales.items():          # merge app-saved sales in
+        have = {(s["d"], s["p"]) for s in manual_by_sku.get(sku, [])}
+        manual_by_sku.setdefault(sku, []).extend(
+            s for s in arr if (s["d"], s["p"]) not in have)
+        manual_by_sku[sku].sort(key=lambda s: s["d"])
 
     return {
         "history": _history(total_value, len(unsold)),

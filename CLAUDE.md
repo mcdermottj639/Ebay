@@ -72,6 +72,13 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   ship), or Claude appends rows directly when the owner reports a sale in
   chat. `build_web._manual_sales` bakes them into each card as `my_sales`;
   committed, starts as just a header row.
+- `data/my_numbers.json` — the SAME data, written by the app itself via the
+  **one-tap GitHub save** (v31): `{"costs":{sku:$}, "sales":{sku:[{d,p,n}]}}`.
+  Doesn't exist until the owner's first in-app save; `build_web._my_numbers`
+  merges it with manual_sales.csv (sales deduped on date+price) and overlays
+  its costs onto blank inventory costs before the money math. Either file
+  works — Claude edits the CSV, the app commits this JSON. Never put secrets
+  in it (it's committed + its numbers are public in docs/data.json anyway).
 - `data/price_history.csv` — per-SKU price observations appended by
   `reprice.py` (date, price, basis, median, count, applied). Committed, so the
   app's Movers panel + week-over-week ▲▼ chips (`build_web._price_changes`,
@@ -222,11 +229,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v30. The live
+  this makes the service worker serve stale CSS/JS. Current: v31. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v30. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v31. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -254,6 +261,21 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   always-available **Live listings / Sold on eBay** buttons (public eBay
   search URLs built from the card title — no API needed). The snapshot file
   doesn't exist until the first keyed reprice run; the box just hides.
+- App v31: **💾 one-tap save — the app writes the sheet itself (no Claude
+  step).** The My-numbers box has a "⚙️ Set up one-tap save" link → paste a
+  GitHub fine-grained PAT (repo: mcdermottj639/Ebay only, permission:
+  Contents read/write — walk the owner through creating it at
+  github.com/settings/personal-access-tokens/new; ~1yr max expiry, so expect
+  a re-setup ask when it lapses). Token lives ONLY in localStorage
+  (`cv-gh-token`) — never committed, never in data.json. With it set, the
+  Send-to-Claude button becomes **💾 Save N to my sheet**: `ghSaveMyNumbers`
+  GETs `data/my_numbers.json` via the GitHub contents API (404 = first save),
+  merges this device's entries in (sales deduped on date+price, so two
+  devices can't clobber each other), and PUTs to `main` — the Pages workflow
+  then rebuilds data.json (~2 min) and `recalcMyData`'s pruning flips entries
+  to "✓ in sheet" on next open. Errors flash "check the key"; the
+  Send-to-Claude path remains as the no-token fallback. GH_API const in
+  app.js pins owner/repo.
 - App v30: **📊 Terapeak deep-links.** Terapeak (eBay Seller Hub product
   research — real sold data, free for sellers) has NO API; the API version of
   its data is the Marketplace Insights scope eBay denied us. So the
