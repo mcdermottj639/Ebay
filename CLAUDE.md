@@ -724,12 +724,40 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   **Corrected 80-char titles handed to the owner 2026-08-10** (they must paste
   these in by hand — `lister.py` can't edit an existing listing, and the user
   token is broken anyway):
-    - MERCH-0002 `Baker Mayfield Signed Buccaneers Flash Chrome Full Size Helmet Red Visor BAS COA`
+    - MERCH-0002 `Baker Mayfield Signed Bucs Flash Chrome Full Size Replica Helmet Red Visor BAS`
     - MERCH-0001 `Kyren Williams Signed Rams Framed Jersey Shadow Box Beckett BAS COA Autographed`
     - MERCH-0003 `Justin Jefferson Signed Minnesota Vikings Framed Jersey Beckett BAS COA Auto`
   If the owner reports doing it, note it here. Next nudge after that: turn
   returns ON (30-day buyer-paid policy `274028109016` already exists) and add
   more photos — both lift conversion on memorabilia.
+- **Merch re-pricing 2026-08-10 — all three were listed too low.** Owner asked
+  "what should I list these at." Pulled live Browse comps per item and
+  segmented them, because the naive median is badly misleading on merch:
+  - **Helmet tier is everything.** Single-signature Mayfield Bucs full-size
+    comps split into **replica** (n=15, median **$450**, range $300–550) vs
+    **authentic/SpeedFlex** (n=46, median **$674**, up to $2699). Owner
+    confirmed **REPLICA**, so `item_type` is now `Full Size Replica Helmet`.
+    Pricing an authentic off replica comps (or vice versa) is a ~$250 error —
+    always ask which. Also filter out mini helmets and multi-signature
+    (Evans/Irving/dual) listings; both wreck the median.
+  - **Framed-jersey queries pull framed PHOTOS.** The Jefferson pool was 20%
+    16x20 photos/canvas/spotlight prints plus LSU jerseys. After stripping
+    those: n=46, median **$742**, 25th $591, 75th $900. The $900+ tier is
+    authentic Nike Limited/Vapor; owner's is **custom/pro-style** → the
+    $500–700 cluster is the right comparison.
+  - Kyren framed: n=21, median **$399**, 25th $234, 75th $445. The sub-$250
+    listings are cheap dealer "custom framed display" frames.
+  New asking prices set (live eBay price → recommended): jersey $250 → **$399**
+  (floor ~$300), helmet $300 → **$449** (floor ~$375), Jefferson $500 → **$699**
+  (floor ~$575). ⚠️ These are ASKING comps, not sold — Marketplace Insights is
+  still denied, so real sales run roughly 10–15% under these. The catalog now
+  carries the recommended prices (not the stale live ones) so the app values the
+  collection at market; each `notes` field records "LIVE at $X - REVISE to $Y"
+  until the owner confirms the revision. **`reprice.py` skips merch, so these
+  will NOT be auto-corrected — revisit by hand.**
+  Gotcha for future comp scripts: `bool(MINI.search(t)) != mini`, not
+  `MINI.search(t) != bool(mini)` — a Match object never equals False, so the
+  latter silently filters out every row (cost a debug cycle here).
 - Next: live listing is now fully unblocked — pick the best cards and publish
   with `create_listings.py` / `lister.py` (dry-run first, then `live`).
   Photograph cards first (eBay requires ≥1 photo; `lister.image_urls_for`

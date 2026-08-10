@@ -27,11 +27,11 @@
     },
     {
       "d": "2026-08-10",
-      "v": 3304.93,
+      "v": 3801.93,
       "n": 35
     }
   ],
-  "generated": "Aug 10, 2026 \u00b7 10:39 UTC",
+  "generated": "Aug 10, 2026 \u00b7 10:48 UTC",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1711,7 +1711,7 @@
     "graded": 15,
     "priced": 35,
     "total_cost": 0.0,
-    "total_value": 3304.93,
+    "total_value": 3801.93,
     "profit": 0,
     "cost_count": 0,
     "listed": 3,
@@ -1729,7 +1729,7 @@
       {
         "name": "Football",
         "count": 29,
-        "value": 2547.28
+        "value": 3044.28
       },
       {
         "name": "Basketball",
@@ -4361,8 +4361,8 @@
       "condition": "Excellent",
       "authentication": "Beckett",
       "cost": "",
-      "asking_price": "250.00",
-      "notes": "Framed black shadow box - owner CONFIRMED framed 2026-08-10; #23 white Rams jersey; Beckett BAS COA hologram; LIVE on eBay item 336728703040 @ $250 + Best Offer; eBay title is missing Framed and needs correcting",
+      "asking_price": "399.00",
+      "notes": "Framed black shadow box (owner CONFIRMED framed); #23 white Rams jersey; Beckett BAS COA hologram; eBay 336728703040 LIVE at $250 - REVISE to $399 + Best Offer, floor ~$300. Comps 2026-08-10: n=21 framed asking, median $399, 25th $234, 75th $445",
       "price_basis": "asking",
       "image": "",
       "line": "Los Angeles Rams \u00b7 Framed Jersey",
@@ -4424,7 +4424,7 @@
     },
     {
       "sku": "MERCH-0002",
-      "item_type": "Full Size Helmet",
+      "item_type": "Full Size Replica Helmet",
       "is_merch": true,
       "sport": "Football",
       "year": "",
@@ -4446,12 +4446,12 @@
       "condition": "Excellent",
       "authentication": "Beckett",
       "cost": "",
-      "asking_price": "300.00",
-      "notes": "Bucs Flash (orange chrome) alternate - owner CONFIRMED 2026-08-10, NOT creamsicle; RED VISOR; #6; Beckett Witness cert 1W622369; LIVE on eBay item 336728712522 @ $300 + Best Offer; eBay title says Creamsicle and needs correcting",
+      "asking_price": "449.00",
+      "notes": "Bucs FLASH (orange chrome) alternate, RED VISOR, #6 - owner CONFIRMED Flash not creamsicle, and REPLICA not authentic; Beckett Witness cert 1W622369; eBay 336728712522 LIVE at $300 - REVISE to $449 + Best Offer, floor ~$375. Comps 2026-08-10: replica tier n=15, median $450, range $300-550 (authentic tier medians $674 - do not use)",
       "price_basis": "asking",
       "image": "",
-      "line": "Tampa Bay Buccaneers \u00b7 Full Size Helmet",
-      "title": "Baker Mayfield Autographed Full Size Helmet Tampa Bay Buccaneers Beckett COA",
+      "line": "Tampa Bay Buccaneers \u00b7 Full Size Replica Helmet",
+      "title": "Baker Mayfield Autographed Full Size Replica Helmet Tampa Bay Buccaneers",
       "status": "priced",
       "listed": true,
       "sold": false,
@@ -4531,8 +4531,8 @@
       "condition": "Excellent",
       "authentication": "Beckett",
       "cost": "",
-      "asking_price": "500.00",
-      "notes": "Framed autographed Vikings jersey; Beckett authenticated; LIVE on eBay item 336728700531 @ $500 + Best Offer",
+      "asking_price": "699.00",
+      "notes": "Custom/pro-style framed autographed Vikings jersey (owner CONFIRMED pro-style, not Nike authentic); Beckett; eBay 336728700531 LIVE at $500 - REVISE to $699 + Best Offer, floor ~$575. Comps 2026-08-10: n=46 framed jersey asking, median $742, 25th $591, 75th $900",
       "price_basis": "asking",
       "image": "",
       "line": "Minnesota Vikings \u00b7 Framed Jersey",
