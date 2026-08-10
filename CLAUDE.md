@@ -453,12 +453,15 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
-- Catalog: **34 items** — 32 cards + **2 merch** (`MERCH-0001` Kyren Williams
-  framed signed Rams jersey, Beckett COA; `MERCH-0002` Baker Mayfield signed
-  Bucs Flash helmet, Beckett Witness cert 1W622369). Cards span 5 sports;
+- Catalog: **35 items** — 32 cards + **3 merch** (`MERCH-0001` Kyren Williams
+  signed Rams jersey, Beckett COA; `MERCH-0002` Baker Mayfield signed Bucs
+  helmet, Beckett Witness cert 1W622369; `MERCH-0003` Justin Jefferson framed
+  signed Vikings jersey, Beckett — added 2026-08-10, see the live-listings note
+  below). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
-  **All 34 now priced** from live eBay comps (catalog value ≈ $2,702). Merch:
-  jersey $124.99, helmet $349.99. All validate clean + drafted. App: **v28**
+  **All 35 priced** from live eBay comps / real listed prices. Merch (all three
+  LIVE on eBay): jersey $250, helmet $300, Jefferson jersey $500.
+  All validate clean + drafted. App: **v28**
   (v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
   ~$1,548 · 4 comps · graded pool" + thin-data chip) had been placed in the
   narrow right-hand price column (`.dr`, `flex:none`), so the long text shoved
@@ -680,6 +683,43 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   `EBAY_RETURN_POLICY_ID`, `EBAY_MERCHANT_LOCATION_KEY` (read by `lister.py` +
   `check_ebay_login.py`). With these + the user token, `check_ebay_login.py`
   reports "✅ you're ready to try a live listing."
+- **FIRST REAL LISTINGS ARE LIVE (found 2026-08-10).** The owner listed the
+  merch by hand on eBay (not via `lister.py`) and asked "can u see that at all."
+  Answer: **yes, via the public Browse API filtered by seller** — no user token
+  needed. Two gotchas learned:
+  - **The eBay seller ID is `michaelscarn-2`, NOT `MichaelScarn`** (the older
+    note near the Marketplace Insights entry has the wrong handle). Query:
+    `GET /buy/browse/v1/item_summary/search?q=<any>&filter=sellers:{michaelscarn-2}`
+    with an APPLICATION token. Browse needs a `q`, so sweep several keywords and
+    dedupe on `itemId` to enumerate a seller's whole store.
+  - **`EBAY_USER_REFRESH_TOKEN` is BROKEN — truncated to 5 chars (`v^1.1`).**
+    eBay refresh tokens are `v^1.1#i^1#p^3#...`; whatever set the env var cut it
+    at the first `#` (shell comment). So `ebay_auth.user_token()` fails with
+    `invalid_grant` "issued to another client" — that error is misleading here,
+    it's a truncation, not a keyset mismatch. Seller-side APIs (Sell Inventory,
+    Trading `GetMyeBaySelling`) are therefore unavailable until the owner
+    re-saves the FULL token in the environment settings, ideally quoted. The
+    app/public token is fine (Browse, comps, Buy Radar all still work).
+  What was found live (all FIXED_PRICE + Best Offer, free shipping, **returns
+  NOT accepted**, category Autographs-Original|Football-NFL):
+    - `336728712522` Baker Mayfield Tampa Bay Autographed Helmet Creamsicle
+      Authenticated — **$300** (catalog had $349.99). 2 photos.
+      ⚠️ Title says **Creamsicle**; our catalog row says **Flash (orange chrome)**
+      — colorway unconfirmed, ask the owner.
+    - `336728703040` Kyren Williams Los Angeles Rams Autographed Jersey Beckett
+      Authenticated — **$250** (catalog had $124.99, so we were undervaluing it
+      by half). 1 photo. ⚠️ Catalog says FRAMED shadow box; the eBay title omits
+      "Framed" — confirm, it's worth money in the title.
+    - `336728700531` Autographed Jersey Justin Jefferson Vikings Framed Beckett
+      Authenticated — **$500**. **Was missing from the catalog entirely** →
+      added as `MERCH-0003`.
+  Catalog synced: all three merch rows now `listed=yes` with the real asking
+  prices and the eBay item IDs in `notes`. `reprice.py` skips merch, so those
+  prices won't be overwritten. Listing-quality gaps worth fixing (all reduce
+  search visibility / buyer trust): thin titles (no year, no "Full Size", no
+  "COA", Kyren missing "Framed"), descriptions are just the title repeated,
+  1–2 photos each, and returns are switched off. `make_drafts.py` already
+  generates stronger titles for all three — offer them to the owner.
 - Next: live listing is now fully unblocked — pick the best cards and publish
   with `create_listings.py` / `lister.py` (dry-run first, then `live`).
   Photograph cards first (eBay requires ≥1 photo; `lister.image_urls_for`

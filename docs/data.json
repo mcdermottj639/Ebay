@@ -24,9 +24,14 @@
       "d": "2026-07-31",
       "v": 2729.91,
       "n": 34
+    },
+    {
+      "d": "2026-08-10",
+      "v": 3304.93,
+      "n": 35
     }
   ],
-  "generated": "Jul 31, 2026 \u00b7 13:10 UTC",
+  "generated": "Aug 10, 2026 \u00b7 10:37 UTC",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1698,23 +1703,23 @@
     ]
   },
   "summary": {
-    "total_cards": 34,
-    "merch": 2,
-    "physical": 34,
+    "total_cards": 35,
+    "merch": 3,
+    "physical": 35,
     "rookies": 28,
-    "autos": 9,
+    "autos": 10,
     "graded": 15,
-    "priced": 34,
+    "priced": 35,
     "total_cost": 0.0,
-    "total_value": 2729.91,
+    "total_value": 3304.93,
     "profit": 0,
     "cost_count": 0,
-    "listed": 0,
+    "listed": 3,
     "sold": 0,
     "revenue": 0,
     "realized_profit": 0,
     "by_sport": {
-      "Football": 28,
+      "Football": 29,
       "Basketball": 3,
       "Hockey": 1,
       "Soccer": 1,
@@ -1723,8 +1728,8 @@
     "sport_stats": [
       {
         "name": "Football",
-        "count": 28,
-        "value": 1972.26
+        "count": 29,
+        "value": 2547.28
       },
       {
         "name": "Basketball",
@@ -1803,7 +1808,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 6.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -1888,7 +1893,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 2.2,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -1973,7 +1978,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 5.27,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2058,7 +2063,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 1.51,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2143,7 +2148,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 1.75,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2228,7 +2233,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 1.98,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2313,7 +2318,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 1.31,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2398,7 +2403,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 1.75,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2483,7 +2488,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 4.38,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2568,7 +2573,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 2.58,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2653,7 +2658,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 12.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2718,7 +2723,7 @@
       "sold_date": "",
       "cert": "67423370",
       "my_sales": [],
-      "prev_price": 48.39,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2803,7 +2808,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 59.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2868,7 +2873,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 49.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2953,7 +2958,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 47.51,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3038,7 +3043,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 39.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3103,7 +3108,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 34.14,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3188,7 +3193,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 74.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3258,7 +3263,7 @@
       "sold_date": "",
       "cert": "89222827",
       "my_sales": [],
-      "prev_price": 158.4,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3343,7 +3348,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 57.19,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3423,7 +3428,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 189.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3498,7 +3503,7 @@
       "sold_date": "",
       "cert": "83143720",
       "my_sales": [],
-      "prev_price": 349.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3549,7 +3554,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 24.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3634,7 +3639,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 87.12,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3709,7 +3714,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 29.66,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3794,7 +3799,7 @@
       "sold_date": "",
       "cert": "90720092",
       "my_sales": [],
-      "prev_price": 182.6,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3874,7 +3879,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 39.27,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3959,7 +3964,7 @@
       "sold_date": "",
       "cert": "67269227",
       "my_sales": [],
-      "prev_price": 99.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4044,7 +4049,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 249.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4114,7 +4119,7 @@
       "sold_date": "",
       "cert": "85776346",
       "my_sales": [],
-      "prev_price": 149.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4199,7 +4204,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 43.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4284,7 +4289,7 @@
       "sold_date": "",
       "cert": "75510176",
       "my_sales": [],
-      "prev_price": 199.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4356,20 +4361,20 @@
       "condition": "Excellent",
       "authentication": "Beckett",
       "cost": "",
-      "asking_price": "124.99",
-      "notes": "Framed black shadow box; #23 white Rams jersey; Beckett BAS COA hologram",
+      "asking_price": "250.00",
+      "notes": "Framed black shadow box; #23 white Rams jersey; Beckett BAS COA hologram; LIVE on eBay item 336728703040 @ $250 + Best Offer",
       "price_basis": "asking",
       "image": "",
       "line": "Los Angeles Rams \u00b7 Framed Jersey",
       "title": "Kyren Williams Autographed Framed Jersey Los Angeles Rams Beckett COA",
       "status": "priced",
-      "listed": false,
+      "listed": true,
       "sold": false,
       "sold_price": "",
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 124.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4441,20 +4446,20 @@
       "condition": "Excellent",
       "authentication": "Beckett",
       "cost": "",
-      "asking_price": "349.99",
-      "notes": "Bucs Flash (orange chrome) alternate; RED VISOR; #6; Beckett Witness cert 1W622369",
+      "asking_price": "300.00",
+      "notes": "Bucs alternate; RED VISOR; #6; Beckett Witness cert 1W622369; LIVE on eBay item 336728712522 @ $300 + Best Offer; eBay title says Creamsicle - confirm colorway",
       "price_basis": "asking",
       "image": "",
       "line": "Tampa Bay Buccaneers \u00b7 Full Size Helmet",
       "title": "Baker Mayfield Autographed Full Size Helmet Tampa Bay Buccaneers Beckett COA",
       "status": "priced",
-      "listed": false,
+      "listed": true,
       "sold": false,
       "sold_price": "",
       "sold_date": "",
       "cert": "1W622369",
       "my_sales": [],
-      "prev_price": 349.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4501,6 +4506,48 @@
           }
         ]
       }
+    },
+    {
+      "sku": "MERCH-0003",
+      "item_type": "Framed Jersey",
+      "is_merch": true,
+      "sport": "Football",
+      "year": "",
+      "brand": "",
+      "set": "",
+      "player": "Justin Jefferson",
+      "card_number": "",
+      "parallel": "",
+      "insert": "",
+      "team": "Minnesota Vikings",
+      "league": "NFL",
+      "rookie": false,
+      "auto": true,
+      "graded": false,
+      "relic": false,
+      "grader": "Beckett",
+      "grade": "",
+      "serial_run": "",
+      "condition": "Excellent",
+      "authentication": "Beckett",
+      "cost": "",
+      "asking_price": "500.00",
+      "notes": "Framed autographed Vikings jersey; Beckett authenticated; LIVE on eBay item 336728700531 @ $500 + Best Offer",
+      "price_basis": "asking",
+      "image": "",
+      "line": "Minnesota Vikings \u00b7 Framed Jersey",
+      "title": "Justin Jefferson Autographed Framed Jersey Minnesota Vikings Beckett COA",
+      "status": "priced",
+      "listed": true,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "my_sales": [],
+      "prev_price": "",
+      "price_series": [],
+      "market": null,
+      "comps": null
     }
   ]
 }
