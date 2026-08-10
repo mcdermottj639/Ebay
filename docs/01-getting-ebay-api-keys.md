@@ -56,6 +56,22 @@ You do the login in your browser on eBay's site — nobody sees your password.
 At the end eBay hands you a **Refresh Token** (a long string), which is the
 thing you save.
 
+### The easy way (recommended)
+
+```bash
+python3 get_user_token.py
+```
+(or **menu option 10**.) It prints a sign-in link, you click Agree on eBay, you
+paste the address of the page it sends you back to, and it hands you the
+refresh token. Skip to **"Where to put it"** below.
+
+> ⚠️ **Don't use the "Get a User Token Here" button on eBay's developer site.**
+> It looks like the right thing but only gives you a 2-hour **access** token,
+> which stops working the same afternoon. The long-lasting **refresh** token
+> only comes from the sign-in link the script prints.
+
+### The manual way (if the script won't run)
+
 1. Go to **https://developer.ebay.com**, sign in, open your **Production**
    application keyset, and find the **User Tokens** area
    ("Get a User Token" / "User access tokens").
@@ -73,14 +89,24 @@ thing you save.
    **Refresh Token** — that's the one that lasts.
 
 **Where to put it — important:** this is a secret, like your other keys.
-- If you run the tools on your own computer, paste it into your local `.env`:
+
+> ⚠️ **Wrap it in double quotes.** The token contains `#` characters, and in a
+> `.env` file or an environment setting a bare `#` starts a comment — so
+> everything after the first one gets thrown away and you're left with a
+> useless 5-character stub. This has bitten us once already (Aug 2026): the
+> saved token was silently cut down to `v^1.1`, and eBay's error message
+> ("issued to another client") pointed at completely the wrong problem.
+
+- If you run the tools on your own computer, paste it into your local `.env`,
+  in quotes:
   ```
-  EBAY_USER_REFRESH_TOKEN=v^1.1#i^1#...
+  EBAY_USER_REFRESH_TOKEN="v^1.1#i^1#..."
   ```
 - If Claude runs things in the cloud for you (the weekly auto-price, etc.),
   add it as an **environment variable** in your **Claude Code environment
   settings** — the same place you added `EBAY_APP_ID` / `EBAY_CERT_ID` /
-  `EBAY_ENV`. Name it `EBAY_USER_REFRESH_TOKEN`.
+  `EBAY_ENV`. Name it `EBAY_USER_REFRESH_TOKEN`, and quote the value the same
+  way: `"v^1.1#i^1#..."`.
 
 **Never paste the token into a chat message, a commit, or an email.** Put it in
 `.env` or the environment settings only.

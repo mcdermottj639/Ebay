@@ -51,6 +51,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 | `search_deals.py "query" [price]` | Alt-style value search | yes |
 | `create_listings.py [live]` | preview / publish listings | yes (live) |
 | `check_ebay_login.py` | verify the SELLING user token works (lists nothing) | yes |
+| `get_user_token.py` | mint a NEW selling refresh token (consent flow, menu 10) | app keys only |
 
 ## Architecture
 - `data/inventory.csv` — the catalog (one row per card). Master source of truth.
@@ -693,6 +694,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
     with an APPLICATION token. Browse needs a `q`, so sweep several keywords and
     dedupe on `itemId` to enumerate a seller's whole store.
   - **`EBAY_USER_REFRESH_TOKEN` is BROKEN — truncated to 5 chars (`v^1.1`).**
+    **(Tooling added 2026-08-10 — see the `get_user_token.py` entry below.)**
     eBay refresh tokens are `v^1.1#i^1#p^3#...`; whatever set the env var cut it
     at the first `#` (shell comment). So `ebay_auth.user_token()` fails with
     `invalid_grant` "issued to another client" — that error is misleading here,
@@ -758,6 +760,28 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Gotcha for future comp scripts: `bool(MINI.search(t)) != mini`, not
   `MINI.search(t) != bool(mini)` — a Match object never equals False, so the
   latter silently filters out every row (cost a debug cycle here).
+- **`get_user_token.py` — self-serve refresh-token minting (added 2026-08-10).**
+  Owner asked "where do I get eBay refresh token." Previously the answer lived
+  only in prose in docs/01 and CLAUDE.md, and the one place eBay's own site
+  points you (the "Get a User Token Here" button) hands back a **2-hour ACCESS
+  token**, not the ~18-month refresh token — the single biggest trap here.
+  The script does the real authorization-code flow end to end: builds the
+  `auth.ebay.com/oauth2/authorize` consent URL from `EBAY_APP_ID` + the
+  `RUNAME` constant (`Jack_McDermott-JackMcDe-CardVa-nawpzdw`) with
+  sell.inventory + sell.account, takes the pasted redirect URL back (accepts a
+  full URL or a bare code via `code_from`), POSTs it to the token endpoint with
+  `grant_type=authorization_code`, and prints the refresh token plus
+  save-it-in-quotes instructions. It writes the token NOWHERE — no file, no
+  commit, no chat. Wired as **menu option 10** in `run.py`. If eBay ever
+  reissues the keyset, update `RUNAME`.
+  Paired guard: **`ebay_auth.user_token()` now rejects a refresh token shorter
+  than 40 chars or missing `#` before calling eBay**, with a message naming the
+  real cause (unquoted paste → `#` treated as a comment). Without it eBay
+  answers `invalid_grant` "issued to another client", which sends you hunting a
+  keyset mismatch that doesn't exist — exactly the wrong turn taken this
+  session. `check_ebay_login.py` surfaces the new message unchanged.
+  docs/01 Step 3 rewritten around the script, with the quote-your-token warning
+  and an explicit "don't use the developer-site button" callout.
 - Next: live listing is now fully unblocked — pick the best cards and publish
   with `create_listings.py` / `lister.py` (dry-run first, then `live`).
   Photograph cards first (eBay requires ≥1 photo; `lister.image_urls_for`
