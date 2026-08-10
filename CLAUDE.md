@@ -704,22 +704,32 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   NOT accepted**, category Autographs-Original|Football-NFL):
     - `336728712522` Baker Mayfield Tampa Bay Autographed Helmet Creamsicle
       Authenticated — **$300** (catalog had $349.99). 2 photos.
-      ⚠️ Title says **Creamsicle**; our catalog row says **Flash (orange chrome)**
-      — colorway unconfirmed, ask the owner.
+      ⚠️ **The eBay title is WRONG** — owner confirmed 2026-08-10 it's the
+      **Flash (orange chrome) with red visor, NOT a Creamsicle**. Creamsicle is
+      a different (throwback) helmet, so the listing is misdescribed and will
+      draw the wrong buyers.
     - `336728703040` Kyren Williams Los Angeles Rams Autographed Jersey Beckett
       Authenticated — **$250** (catalog had $124.99, so we were undervaluing it
-      by half). 1 photo. ⚠️ Catalog says FRAMED shadow box; the eBay title omits
-      "Framed" — confirm, it's worth money in the title.
+      by half). 1 photo. ⚠️ **The eBay title is missing "Framed"** — owner
+      confirmed 2026-08-10 it IS the framed shadow box. Framed jerseys command
+      more and buyers search the word, so this is lost money/visibility.
     - `336728700531` Autographed Jersey Justin Jefferson Vikings Framed Beckett
       Authenticated — **$500**. **Was missing from the catalog entirely** →
       added as `MERCH-0003`.
   Catalog synced: all three merch rows now `listed=yes` with the real asking
   prices and the eBay item IDs in `notes`. `reprice.py` skips merch, so those
   prices won't be overwritten. Listing-quality gaps worth fixing (all reduce
-  search visibility / buyer trust): thin titles (no year, no "Full Size", no
-  "COA", Kyren missing "Framed"), descriptions are just the title repeated,
-  1–2 photos each, and returns are switched off. `make_drafts.py` already
-  generates stronger titles for all three — offer them to the owner.
+  search visibility / buyer trust): thin titles, descriptions are just the
+  title repeated, 1–2 photos each, and returns are switched off.
+  **Corrected 80-char titles handed to the owner 2026-08-10** (they must paste
+  these in by hand — `lister.py` can't edit an existing listing, and the user
+  token is broken anyway):
+    - MERCH-0002 `Baker Mayfield Signed Buccaneers Flash Chrome Full Size Helmet Red Visor BAS COA`
+    - MERCH-0001 `Kyren Williams Signed Rams Framed Jersey Shadow Box Beckett BAS COA Autographed`
+    - MERCH-0003 `Justin Jefferson Signed Minnesota Vikings Framed Jersey Beckett BAS COA Auto`
+  If the owner reports doing it, note it here. Next nudge after that: turn
+  returns ON (30-day buyer-paid policy `274028109016` already exists) and add
+  more photos — both lift conversion on memorabilia.
 - Next: live listing is now fully unblocked — pick the best cards and publish
   with `create_listings.py` / `lister.py` (dry-run first, then `live`).
   Photograph cards first (eBay requires ≥1 photo; `lister.image_urls_for`
