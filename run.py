@@ -24,6 +24,7 @@ MENU = """
   7) Buy Radar: find cards to buy under market  (needs API keys)
   8) Search eBay for any card, ranked by value  (needs API keys)
   9) Check my eBay selling login (for listing)  (needs API keys)
+ 10) Reconnect my eBay selling account (new token)
   0) Quit
 ========================================
 """
@@ -37,6 +38,7 @@ ACTIONS = {
     "6": ["dashboard.py"],
     "7": ["find_deals.py"],
     "9": ["check_ebay_login.py"],
+    "10": ["get_user_token.py"],
 }
 
 

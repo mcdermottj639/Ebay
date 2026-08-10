@@ -83,6 +83,21 @@ def user_token(scope: str = SCOPE_SELL_INVENTORY) -> str:
             "only need it to CREATE listings, not to look up comps."
         )
 
+    # A real refresh token looks like v^1.1#i^1#p^3#r^1#... — long, with '#'s.
+    # If it was pasted into an unquoted shell/env setting, everything from the
+    # first '#' onward is read as a comment and silently dropped. eBay then
+    # answers "issued to another client", which sends you hunting a keyset
+    # mismatch that isn't there. Catch the real cause here instead.
+    if len(refresh) < 40 or "#" not in refresh:
+        raise EbayAuthError(
+            f"EBAY_USER_REFRESH_TOKEN looks cut off (only {len(refresh)} "
+            f"characters, starts '{refresh[:12]}'). A real one is hundreds of "
+            "characters and contains '#'. It was probably pasted without "
+            "quotes, so everything after the first '#' was treated as a "
+            "comment. Re-save it wrapped in double quotes, or mint a new one "
+            "with:  python3 get_user_token.py"
+        )
+
     cache_key = f"user::{scope}"
     cached = _cache.get(cache_key)
     if cached and cached[1] > time.time() + 60:
