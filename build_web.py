@@ -407,6 +407,7 @@ def build_data(cards) -> dict:
                 "comps": ({"as_of": comps_as_of,
                            "source": comps_by_sku[c.sku].get("source", "active"),
                            "broad": comps_by_sku[c.sku].get("broad", False),
+                           "level": comps_by_sku[c.sku].get("level", ""),
                            "items": comps_by_sku[c.sku].get("items", [])[:5]}
                           if c.sku in comps_by_sku else None),
             }

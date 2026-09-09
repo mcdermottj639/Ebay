@@ -45,6 +45,10 @@ class CompResult:
     # top matching listings [{"t": title, "p": price, "u": url}] — powers the
     # app's "Recent eBay comps" section in the card view.
     sample_items: list = None
+    # which query tier produced this: "exact" (full title), "focused" (insert +
+    # parallel + grade, card number dropped), "focused_raw" (same, grade
+    # dropped — so raw comps for a graded card), "broad" (player only, noisy).
+    match_level: str = "exact"
 
     def pretty(self) -> str:
         if self.count == 0:
@@ -61,6 +65,37 @@ def query_for(card: Card) -> str:
     """A search string tuned to find this exact card."""
     # The title is already keyword-ordered; it doubles as a great search query.
     return build_title(card)
+
+
+def focused_query_for(card: Card, with_grade: bool = True) -> str:
+    """Between exact and broad: everything identifying EXCEPT the card number.
+
+    The exact-title query includes the card number (#TC-BRO, #TH-13). Sellers
+    rarely put those in a title, so the query returns zero and we fall all the
+    way back to `broad_query_for`, which drops the insert/parallel name — the
+    one term buyers actually search ("Turn of the Century", "Thrillers"). That
+    is how a PSA 10 Bijan auto ended up priced against every other Bijan card.
+    Keeping insert + parallel + serial and dropping only the card number finds
+    the real market for these.
+
+    with_grade=False drops the grade, for when a graded card has too few graded
+    comps to be meaningful — the caller must then treat the result as RAW comps.
+    """
+    if card.is_merch():
+        return broad_query_for(card)
+
+    grade = (f"{card.grader.upper()} {card.grade}"
+             if (with_grade and card.is_graded() and card.grader and card.grade) else "")
+    parts = [
+        card.year, card.brand, card.set, card.player,
+        card.insert, card.parallel,
+        "AUTO" if card.is_auto() else "",
+        "RELIC" if card.is_relic() else "",
+        f"/{card.serial_run}" if card.serial_run else "",
+        grade,
+        "RC" if card.is_rookie() else "",
+    ]
+    return _collapse(" ".join(p.strip() for p in parts if p and p.strip()))
 
 
 def broad_query_for(card: Card) -> str:
@@ -117,10 +152,35 @@ def _filter_relevant(items: list, keep) -> tuple[list[float], list[str], list]:
     return prices, titles, kept
 
 
-def get_comps(card_or_query, limit: int = 50) -> CompResult:
-    """Look up comps for a Card object OR a raw search string."""
-    query = card_or_query if isinstance(card_or_query, str) else query_for(card_or_query)
+# How many relevant comps we want before we stop widening the search. Below
+# this a median is one lucky listing, not a market.
+MIN_GOOD_COMPS = 3
 
+
+def _run_query(query: str, limit: int, accept) -> tuple:
+    _, _, items, source = _search_best(query, limit)
+    prices, titles, items = _filter_relevant(items, accept)
+    return prices, titles, items, source
+
+
+def get_comps(card_or_query, limit: int = 50) -> CompResult:
+    """Look up comps for a Card object OR a raw search string.
+
+    For a Card this walks a query ladder from most to least specific and stops
+    at the first tier with enough relevant comps to mean something:
+
+      exact       full eBay title, card number and all
+      focused     same minus the card number (sellers don't type "#TC-BRO")
+      focused_raw same minus the grade — RAW comps for a graded card, so the
+                  median understates a slabbed copy
+      broad       year/brand/player only — sweeps in the player's other cards
+
+    Before this ladder existed, anything with an insert name fell straight from
+    "exact" (0 hits, because of the card number) to "broad", pricing a PSA 10
+    Turn-of-the-Century auto off every other card of that player. `match_level`
+    on the result says which tier answered, so callers can decide how much to
+    trust it — `reprice.py` only auto-applies exact and focused.
+    """
     if not config.have_api_keys():
         missing = ", ".join(config.missing_keys())
         raise RuntimeError(
@@ -129,31 +189,54 @@ def get_comps(card_or_query, limit: int = 50) -> CompResult:
             "toolkit works without keys — you can catalog and draft first.)"
         )
 
-    _, _, items, source = _search_best(query, limit)
-    # Relevance gate: eBay keyword search matches loosely, so require the title
-    # to actually be this card (right player, set, parallel, year, grade) before
-    # it counts toward the median. Same gate Buy Radar uses.
-    prices, titles, items = _filter_relevant(items, lambda t: _matches_query(query, t))
+    # Raw search string: one query, no ladder — the caller said what they want.
+    if isinstance(card_or_query, str):
+        query = card_or_query
+        prices, titles, items, source = _run_query(
+            query, limit, lambda t: _matches_query(query, t))
+        if not prices:
+            return CompResult(query, source, 0, None, None, None, [], [], "exact")
+        return CompResult(query=query, source=source, count=len(prices),
+                          low=min(prices), median=statistics.median(prices),
+                          high=max(prices), sample_titles=titles[:5],
+                          sample_items=items[:8], match_level="exact")
 
-    # If the exact-title query found nothing and we have a Card, retry with a
-    # broadened query so niche inserts/autos still get a ballpark comp. Broad
-    # match is knowingly loose — only require the player-name tokens so we don't
-    # sweep in a different player.
-    if not prices and not isinstance(card_or_query, str):
-        broad = broad_query_for(card_or_query)
-        if broad and broad != query:
-            _, _, b_items, source = _search_best(broad, limit)
-            ptokens = _player_tokens(card_or_query)
-            prices, titles, items = _filter_relevant(
-                b_items, lambda t: ptokens <= set(_norm_tokens(t)))
-            if prices:
-                query = f"{broad}  (broad match)"
+    card = card_or_query
+    ptokens = _player_tokens(card)
+    tiers = [
+        (query_for(card), "exact", False),
+        (focused_query_for(card), "focused", False),
+        (focused_query_for(card, with_grade=False), "focused_raw", False),
+        (broad_query_for(card), "broad", True),
+    ]
 
-    if not prices:
-        return CompResult(query, source, 0, None, None, None, [], [])
+    seen: set[str] = set()
+    best = None          # most specific tier that returned anything at all
+    source = "active"
+    for query, level, player_only in tiers:
+        if not query or query in seen:
+            continue
+        seen.add(query)
+        if player_only:
+            accept = lambda t: ptokens <= set(_norm_tokens(t))       # noqa: E731
+        else:
+            accept = lambda t, q=query: _matches_query(q, t)         # noqa: E731
+        prices, titles, items, source = _run_query(query, limit, accept)
+        if not prices:
+            continue
+        if best is None:
+            best = (query, level, prices, titles, items, source)
+        if len(prices) >= MIN_GOOD_COMPS:
+            best = (query, level, prices, titles, items, source)
+            break
 
+    if best is None:
+        return CompResult(query_for(card), source, 0, None, None, None, [], [], "exact")
+
+    query, level, prices, titles, items, source = best
+    label = query if level == "exact" else f"{query}  ({level.replace('_', ' ')} match)"
     return CompResult(
-        query=query,
+        query=label,
         source=source,
         count=len(prices),
         low=min(prices),
@@ -161,6 +244,7 @@ def get_comps(card_or_query, limit: int = 50) -> CompResult:
         high=max(prices),
         sample_titles=titles[:5],
         sample_items=items[:8],
+        match_level=level,
     )
 
 

@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v35";
+  var APP_VERSION = "v36";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1309,6 +1309,26 @@
       (sold ? " · real sold prices" : " · sold prices unlock with eBay approval") + "</div></div>";
   }
 
+  // How much to trust this card's number, from the comp tier that produced it.
+  // Levels come from comps.get_comps' query ladder (see comps.py).
+  var MATCH_TRUST = {
+    exact:       ["good",  "Matched this exact card"],
+    focused:     ["good",  "Matched this card (minus the card number, which sellers rarely list)"],
+    focused_raw: ["weak",  "Matched ungraded copies of this card — a graded one is usually worth more"],
+    broad:       ["weak",  "No listing of this exact card found — estimated from other cards of this player, so treat it as a ballpark"]
+  };
+  function trustNote(c) {
+    var lv = (c.comps && c.comps.level) || "";
+    var t = MATCH_TRUST[lv];
+    var n = (c.market && c.market.count) || 0;
+    if (!t) {
+      return num(c.asking_price) > 0
+        ? '<div class="trust weak">⚠ No eBay listings captured for this card — the price is hand-set, not measured.</div>' : "";
+    }
+    var thin = n && n < 5 ? " · only " + n + " listing" + (n === 1 ? "" : "s") + " to go on" : "";
+    return '<div class="trust ' + t[0] + '">' + (t[0] === "good" ? "✓ " : "⚠ ") + t[1] + thin + "</div>";
+  }
+
   function ebaySearchUrl(c, soldOnly) {
     return "https://www.ebay.com/sch/i.html?_nkw=" + encodeURIComponent(c.title) +
       (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "");
@@ -1381,7 +1401,7 @@
       rows += '<div class="mkrow up"><span>Room up to typical</span><b class="tnum">+' +
         money0(m.median - cur) + " · " + pct + "%</b></div>";
     }
-    return '<div class="compsbox market"><div class="lab">What it’s going for</div>' + rows +
+    return '<div class="compsbox market"><div class="lab">What it’s going for</div>' + rows + trustNote(c) +
       '<div class="cfoot">Typical = eBay <b>asking</b> median (' + basisTxt + "). " +
       "Real sold prices need eBay approval — tap “Sold on eBay” below for actuals.</div></div>";
   }
