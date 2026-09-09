@@ -32,11 +32,11 @@
     },
     {
       "d": "2026-09-09",
-      "v": 3140.85,
+      "v": 2762.85,
       "n": 34
     }
   ],
-  "generated": "Sep 09, 2026 \u00b7 16:12 UTC",
+  "generated": "Sep 09, 2026 \u00b7 16:20 UTC",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1731,7 +1731,7 @@
     "graded": 15,
     "priced": 34,
     "total_cost": 120.0,
-    "total_value": 3140.85,
+    "total_value": 2762.85,
     "profit": 279.0,
     "cost_count": 1,
     "listed": 2,
@@ -1749,7 +1749,7 @@
       {
         "name": "Football",
         "count": 28,
-        "value": 2350.2
+        "value": 1972.2
       },
       {
         "name": "Basketball",
@@ -4478,9 +4478,9 @@
       "condition": "Excellent",
       "authentication": "Beckett",
       "cost": "",
-      "asking_price": "399.00",
-      "notes": "Framed black shadow box (owner CONFIRMED framed); #23 white Rams jersey; Beckett BAS COA hologram; eBay 336728703040 LIVE at $250 - REVISE to $399 + Best Offer, floor ~$300. Comps 2026-08-10: n=21 framed asking, median $399, 25th $234, 75th $445",
-      "price_basis": "asking",
+      "asking_price": "220.00",
+      "notes": "Framed black shadow box (owner CONFIRMED framed); #23 white Rams jersey; Beckett BAS COA hologram; eBay 336728703040 LIVE at $250 + Best Offer. REPRICED 2026-09-09 from $399 to $220 est_sold: the MERCH-0003 sale (sold $255 vs a $742 asking median = 34%) is our only real merch sold datapoint, and the owner read it as fair-but-maybe-a-low-offer, so we apply a 45% haircut to the asking median ($399 x 0.55) rather than the observed 66%. Floor ~$185 - do NOT accept below. DO NOT revise the live listing UP (the old $399 advice is cancelled); $250 + Best Offer is about right. Comps 2026-08-10: n=21 framed asking, median $399, 25th $234, 75th $445",
+      "price_basis": "est_sold",
       "image": "",
       "line": "Los Angeles Rams \u00b7 Framed Jersey",
       "title": "Kyren Williams Autographed Framed Jersey Los Angeles Rams Beckett COA",
@@ -4567,9 +4567,9 @@
       "condition": "Excellent",
       "authentication": "Beckett",
       "cost": "",
-      "asking_price": "449.00",
-      "notes": "Bucs FLASH (orange chrome) alternate, RED VISOR, #6 - owner CONFIRMED Flash not creamsicle, and REPLICA not authentic; Beckett Witness cert 1W622369; eBay 336728712522 LIVE at $300 - REVISE to $449 + Best Offer, floor ~$375. Comps 2026-08-10: replica tier n=15, median $450, range $300-550 (authentic tier medians $674 - do not use)",
-      "price_basis": "asking",
+      "asking_price": "250.00",
+      "notes": "Bucs FLASH (orange chrome) alternate, RED VISOR, #6 - owner CONFIRMED Flash not creamsicle, and REPLICA not authentic; Beckett Witness cert 1W622369; eBay 336728712522 LIVE at $300 + Best Offer. REPRICED 2026-09-09 from $449 to $250 est_sold: same 45% haircut on the replica-tier asking median ($450 x 0.55), per the MERCH-0003 sold datapoint. Floor ~$215 - do NOT accept below. DO NOT revise the live listing UP (the old $449 advice is cancelled); $300 + Best Offer leaves room to land near $250. Comps 2026-08-10: replica tier n=15, median $450, range $300-550 (authentic tier medians $674 - do not use)",
+      "price_basis": "est_sold",
       "image": "",
       "line": "Tampa Bay Buccaneers \u00b7 Full Size Replica Helmet",
       "title": "Baker Mayfield Autographed Full Size Replica Helmet Tampa Bay Buccaneers",
