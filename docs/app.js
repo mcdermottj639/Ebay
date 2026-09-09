@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v33";
+  var APP_VERSION = "v34";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -304,6 +304,7 @@
   // haircut to estimate market — eBay denied us the sold-comp API), gold ASKING
   // (raw active listings).
   function basisPill(c) {
+    if (c.sold) return "";   // the SOLD badge + real price say it better
     if (c.status !== "priced" || !c.price_basis) return "";
     var map = { sold: ["b-sold", "SOLD"], est_sold: ["b-est", "EST"], asking: ["b-ask", "ASKING"] };
     var p = map[c.price_basis] || map.asking;
@@ -668,7 +669,8 @@
     wrap.appendChild(vgrid);
 
     wrap.appendChild(el('<div class="eyebrow">Top cards by value</div>'));
-    var top = state.data.cards.slice().filter(function (c) { return num(c.asking_price) > 0; })
+    var top = state.data.cards.slice()
+                .filter(function (c) { return !c.sold && num(c.asking_price) > 0; })
                 .sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); }).slice(0, 6);
     var list = el('<div class="list"></div>');
     top.forEach(function (c) { list.appendChild(crowEl(c)); });
@@ -1349,7 +1351,8 @@
       if (ms) {
         return '<div class="compsbox market"><div class="lab">What it’s going for</div>' + soldRow +
           (num(c.asking_price) > 0
-            ? '<div class="mkrow"><span>Card Vault value</span><b class="tnum">' + money0(num(c.asking_price)) + "</b></div>" : "") +
+            ? '<div class="mkrow"><span>' + (c.sold ? "Was valued at" : "Card Vault value") +
+              '</span><b class="tnum">' + money0(num(c.asking_price)) + "</b></div>" : "") +
           '<div class="cfoot">Real sold prices you tracked in “My numbers” below — actual sales, not asking.</div></div>';
       }
       if (num(c.asking_price) <= 0) return "";
@@ -1371,8 +1374,9 @@
       '<div class="mkrow"><span>Usually going for</span><b class="tnum">~' + money0(m.median) +
         (m.count ? ' <small>· ' + m.count + " listed</small>" : "") + "</b></div>" +
       (range ? '<div class="mkrow"><span>Live range now</span><b class="tnum">' + range + "</b></div>" : "") +
-      '<div class="mkrow"><span>Card Vault value</span><b class="tnum">' + money0(cur) + "</b></div>";
-    if (marketSolid(c, m)) {
+      '<div class="mkrow"><span>' + (c.sold ? "Was valued at" : "Card Vault value") +
+        '</span><b class="tnum">' + money0(cur) + "</b></div>";
+    if (!c.sold && marketSolid(c, m)) {
       var pct = Math.round((m.median - cur) / cur * 100);
       rows += '<div class="mkrow up"><span>Room up to typical</span><b class="tnum">+' +
         money0(m.median - cur) + " · " + pct + "%</b></div>";

@@ -230,11 +230,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v33. The live
+  this makes the service worker serve stale CSS/JS. Current: v34. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v33. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v34. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -276,6 +276,16 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   (`#mhAddCost`). Replaced `costProfitBox` in the modal (still defined but
   unused there — the hero carries its numbers + the gross-before-fees note);
   dropped the now-duplicated "Card Vault value"/"Price basis" kv rows.
+- App v34: **a SOLD card stops advertising a price it no longer has.** With the
+  first real sale in the data (MERCH-0003), three stale-value warts showed up:
+  the sold card still wore the gold **ASKING** pill next to "Sold for $255"
+  (`basisPill` now returns "" when `c.sold` — the SOLD badge says it better),
+  the What-it's-going-for box still called $699 the **"Card Vault value"**
+  (now **"Was valued at"** on sold items, and the "Room up to typical"
+  suggestion is suppressed — there's no room left on something you no longer
+  own), and the Value tab's **Top cards by value** still listed it (now filters
+  `!c.sold`, matching `total_value`, which has always excluded sold items; it
+  was also sorting on the stale $699 while displaying $255).
 - App v33: **the save button no longer lies (stuck on "Saving…") + typed
   numbers can't be lost.** Owner set up one-tap save 2026-09-09, tapped 💾, and
   the button read "Saving…" forever — so they tapped it twice more. The save had
@@ -494,7 +504,23 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   **30** Buy Radar deals (Jayden Daniels Kabooms/Downtowns still leading).
   Catalog re-validated clean (35 items). New total collection value:
   **$3,839.85**. Shipped as PR "Weekly reprice 2026-09-09," merged to main.
-- Catalog: **35 items** — 32 cards + **3 merch** (`MERCH-0001` Kyren Williams
+- **FIRST REAL SALE 2026-09-09 — MERCH-0003 Justin Jefferson framed jersey sold
+  for $255** (bought for $50 → **+$205 realized**). Owner recorded it in the app
+  (cost + sold price via ✍️ My numbers), then asked to move it out of inventory;
+  `inventory.csv` now has `cost=50.00`, `sold_price=255.00`,
+  `sold_date=2026-09-09`, `listed` cleared. App Business row is live for the
+  first time: **Revenue $255 · Realized profit $205 · Listed now 2 · Sold 1**;
+  held collection value dropped $3,395.85 → **$3,140.85**.
+  ⚠️ **The big lesson — our merch valuations are way high.** It was LIVE at $500
+  and valued at $699 off asking comps (n=46, median $742), and sold at **$255**:
+  **49% under its own asking price and 64% under our valuation.** That is the
+  first hard evidence for how far asking medians sit above true sold on framed
+  jerseys — far more than the 12% `SOLD_DISCOUNT` haircut assumes. Before
+  trusting the other two merch numbers (MERCH-0001 Kyren framed $399,
+  MERCH-0002 Mayfield replica helmet $449), ask the owner whether $255 was a
+  quick-sale Best Offer or a fair read, then reprice accordingly — a comparable
+  haircut would put Kyren nearer ~$200 and the helmet nearer ~$230.
+- Catalog: **35 items** (34 held + **1 sold**) — 32 cards + **3 merch** (`MERCH-0001` Kyren Williams
   signed Rams jersey, Beckett COA; `MERCH-0002` Baker Mayfield signed Bucs
   helmet, Beckett Witness cert 1W622369; `MERCH-0003` Justin Jefferson framed
   signed Vikings jersey, Beckett — added 2026-08-10, see the live-listings note
@@ -759,7 +785,8 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
       more and buyers search the word, so this is lost money/visibility.
     - `336728700531` Autographed Jersey Justin Jefferson Vikings Framed Beckett
       Authenticated — **$500**. **Was missing from the catalog entirely** →
-      added as `MERCH-0003`.
+      added as `MERCH-0003`. **SOLD 2026-09-09 for $255** (see the first-real-sale
+      entry above) — so of the three, only MERCH-0001 and MERCH-0002 are still live.
   Catalog synced: all three merch rows now `listed=yes` with the real asking
   prices and the eBay item IDs in `notes`. `reprice.py` skips merch, so those
   prices won't be overwritten. Listing-quality gaps worth fixing (all reduce
