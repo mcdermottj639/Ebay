@@ -230,11 +230,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v34. The live
+  this makes the service worker serve stale CSS/JS. Current: v35. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v34. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v35. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -276,6 +276,12 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   (`#mhAddCost`). Replaced `costProfitBox` in the modal (still defined but
   unused there — the hero carries its numbers + the gross-before-fees note);
   dropped the now-duplicated "Card Vault value"/"Price basis" kv rows.
+- App v35: the `est_sold` basis label no longer hardcodes **"− 12%"**. That was
+  true only for `reprice.py`'s card haircut; the merch rows repriced 2026-09-09
+  use a 45% haircut off the asking median, so the modal now says "typical
+  asking, discounted toward real sold" in both places (`marketBox` basisTxt and
+  the price-basis explainer). If the haircut ever needs to be shown per row,
+  bake it into the data rather than re-hardcoding a number in the UI.
 - App v34: **a SOLD card stops advertising a price it no longer has.** With the
   first real sale in the data (MERCH-0003), three stale-value warts showed up:
   the sold card still wore the gold **ASKING** pill next to "Sold for $255"
@@ -526,9 +532,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   signed Vikings jersey, Beckett — added 2026-08-10, see the live-listings note
   below). Cards span 5 sports;
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
-  **All 35 priced** from live eBay comps / real listed prices. Merch (all three
-  LIVE on eBay): jersey $250, helmet $300, Jefferson jersey $500.
-  All validate clean + drafted. App: **v33**
+  **All 35 priced** from live eBay comps / real listed prices. Merch: MERCH-0001
+  Kyren jersey + MERCH-0002 Mayfield helmet still LIVE on eBay at $250 / $300
+  (valued $220 / $250 after the 2026-09-09 markdown); MERCH-0003 Jefferson
+  jersey **SOLD $255**.
+  All validate clean + drafted. App: **v35**
   (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
   numbers, and an honest saved state — see the App v33 entry above;
   v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
@@ -826,6 +834,22 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   collection at market; each `notes` field records "LIVE at $X - REVISE to $Y"
   until the owner confirms the revision. **`reprice.py` skips merch, so these
   will NOT be auto-corrected — revisit by hand.**
+- **Merch REPRICED DOWN 2026-09-09 (after the first real sale).** Asked whether
+  the $255 Jefferson sale was fair or a low offer, the owner said **"seemed fair
+  but may have been low offer"** — an ambiguous read, so we took the midpoint
+  rather than either extreme. The observed ratio was sold ÷ asking-median =
+  **34%** (a 66% haircut); we applied a **45% haircut** (×0.55) to the remaining
+  merch instead, which is far more conservative than the 12% `SOLD_DISCOUNT`
+  used for cards but stops short of assuming the one sale was a clean market
+  read. Both rows flipped `price_basis` `asking` → **`est_sold`** (blue EST pill):
+    - MERCH-0001 Kyren framed jersey: **$399 → $220** (median $399 × 0.55), floor ~$185.
+    - MERCH-0002 Mayfield replica helmet: **$449 → $250** (median $450 × 0.55), floor ~$215.
+  Held collection value $3,140.85 → **$2,762.85**. ⚠️ **The 2026-08-10 "REVISE
+  UP" advice is CANCELLED** — those listings are live at $250 and $300 + Best
+  Offer, which is roughly right now; raising them would have been exactly the
+  wrong move. Revisit if a second merch sale lands: one datapoint is one
+  datapoint, and if the next item clears near its asking price the haircut
+  should shrink. `reprice.py` still skips merch, so these stay hand-set.
   Gotcha for future comp scripts: `bool(MINI.search(t)) != mini`, not
   `MINI.search(t) != bool(mini)` — a Match object never equals False, so the
   latter silently filters out every row (cost a debug cycle here).

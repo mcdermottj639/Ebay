@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v34";
+  var APP_VERSION = "v35";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1367,7 +1367,7 @@
     var range = prices.length >= 2
       ? money0(Math.min.apply(null, prices)) + "–" + money0(Math.max.apply(null, prices)) : "";
     var basisTxt = c.price_basis === "sold" ? "real eBay sold comps"
-      : c.price_basis === "est_sold" ? "estimated — typical asking − 12%"
+      : c.price_basis === "est_sold" ? "estimated — typical asking, discounted toward real sold"
       : "active eBay listings";
     var rows =
       soldRow +
@@ -1406,7 +1406,7 @@
       sub = num(c.asking_price) > 0
         ? (ms ? "real sold ~" + money0(ms.median) + " · " + ms.count + " you tracked"
               : c.price_basis === "sold" ? "from real eBay sold comps"
-              : c.price_basis === "est_sold" ? "estimated market · typical asking − 12%"
+              : c.price_basis === "est_sold" ? "estimated market · typical asking, discounted toward real sold"
               : "from active eBay listings (asking)")
         : "no price yet — the weekly eBay re-price sets this";
     }
