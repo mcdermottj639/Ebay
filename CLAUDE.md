@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v41. The live
+  this makes the service worker serve stale CSS/JS. Current: v42. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v41. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v42. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,27 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v42 — iOS zoom bug fixed (two causes, not one).** Owner: *"when I'm
+  clicking stuff it keeps zooming in like I'm double tapping."* Both causes
+  were real and needed different fixes:
+  1. **Double-tap-to-zoom** fires on any tappable that hasn't opted out.
+     `touch-action: manipulation` was set on `button` ONLY — so tapping a card
+     row (`.crow`), a comp link (`.comp`), a Buy Radar deal (`role=button`) or a
+     label zoomed the page. Now set on `html, body` (touch-action applies down
+     the ancestor chain) plus the interactive selectors. `manipulation` kills
+     the double-tap only — **pinch-zoom still works**, so nothing is taken away
+     from accessibility. Never "fix" this with `maximum-scale=1` /
+     `user-scalable=no`: it disables pinch-zoom and modern iOS ignores it anyway.
+  2. **Focus zoom** — Safari zooms the whole page when a text field smaller
+     than **16px** takes focus, and every input here was 14px, so typing a cost
+     or using search zoomed in. All `input`/`textarea` are now 16px (`.search
+     input`, `.compsbox.mydata input`, `.mdtoken input`); `.search input`
+     padding trimmed 10px → 9px to keep the toolbar the same height. `<select>`
+     is left alone — iOS opens a picker for those, it doesn't zoom.
+  Verified at 390px in BOTH themes with a touch-enabled mobile context: every
+  input computes 16px, `touch-action: manipulation` resolves on body/rows/
+  search/select, all six popup inputs still fit inside 390px, no horizontal
+  overflow anywhere.
 - **v41 — the update check also runs on RESUME, not just cold start.** Owner:
   *"Browser on v40 and app on v38."* Two lessons: (a) the installed iOS PWA has
   its own storage, separate from Safari's, so Safari being current says nothing
@@ -681,7 +702,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Kyren jersey + MERCH-0002 Mayfield helmet still LIVE on eBay at $250 / $300
   (valued $220 / $250 after the 2026-09-09 markdown); MERCH-0003 Jefferson
   jersey **SOLD $255**.
-  All validate clean + drafted. App: **v41**
+  All validate clean + drafted. App: **v42**
   (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
   numbers, and an honest saved state — see the App v33 entry above;
   v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
