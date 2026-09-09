@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v39";
+  var APP_VERSION = "v40";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1883,6 +1883,47 @@
   }
 
   // ---------- boot ----------
+  // A shipped fix is worthless if the phone keeps serving the old build. The
+  // service worker is network-first for data.json, so even a stale shell gets
+  // the fresh file — and the version baked into it tells us the running app.js
+  // is behind. One tap then clears every cache, drops the old service worker
+  // and reloads, which is the thing that actually works on an installed iOS
+  // PWA (a plain reload often doesn't).
+  function updateBanner(want) {
+    var bar = el('<div class="updbar" role="button" tabindex="0">' +
+      "🔄 Update ready (" + esc(want) + ") — tap to load it" +
+      '<span class="updsub">You’re on ' + APP_VERSION + "</span></div>");
+    function go() {
+      bar.textContent = "Updating…";
+      var jobs = [];
+      if (window.caches && caches.keys) {
+        jobs.push(caches.keys().then(function (ks) {
+          return Promise.all(ks.map(function (k) { return caches.delete(k); }));
+        }));
+      }
+      if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+        jobs.push(navigator.serviceWorker.getRegistrations().then(function (rs) {
+          return Promise.all(rs.map(function (r) { return r.unregister(); }));
+        }));
+      }
+      Promise.all(jobs).catch(function () {}).then(function () {
+        location.replace(location.pathname + "?u=" + Date.now() + location.hash);
+      });
+    }
+    bar.onclick = go;
+    bar.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") go(); };
+    document.body.appendChild(bar);
+    // Sit clear of the tab bar, whose height varies (it wraps to two rows on
+    // narrow phones and becomes a side rail on desktop) — measure, don't guess.
+    function place() {
+      var nav = document.querySelector(".nav");
+      var h = nav && getComputedStyle(nav).position === "fixed" ? nav.offsetHeight : 0;
+      bar.style.bottom = "calc(" + (h + 12) + "px + env(safe-area-inset-bottom, 0px))";
+    }
+    place();
+    window.addEventListener("resize", place);
+  }
+
   function boot(data) {
     state.data = data;
     recalcMyData();               // merge this device's costs + sold entries
@@ -1892,6 +1933,7 @@
     setTab("collection");
     openFromHash();               // shared link straight to a card
     window.addEventListener("hashchange", openFromHash);
+    if (data.app_version && data.app_version !== APP_VERSION) updateBanner(data.app_version);
   }
 
   try { var t = localStorage.getItem("cv-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}

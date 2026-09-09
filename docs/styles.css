@@ -699,6 +699,16 @@ a.comp:hover .ct { color: var(--gold); }
 .mdsync .mbtn { width: 100%; justify-content: center; text-align: center; }
 /* "nothing left to save" state — replaces the Save button once this phone's
    entries are in the sheet, so a finished save never looks unfinished */
+/* "a newer build is live" bar — sits above the tab bar so it can't be missed
+   and can't cover content */
+.updbar { position: fixed; left: 12px; right: 12px;
+  bottom: calc(var(--navh, 64px) + 12px + env(safe-area-inset-bottom, 0px));
+  z-index: 60; background: var(--gold); color: #1a1408; border-radius: 12px;
+  padding: 11px 14px; font-size: 13px; font-weight: 800; text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35); cursor: pointer; line-height: 1.35; }
+.updbar .updsub { display: block; font-size: 11px; font-weight: 700; opacity: .75; }
+@media (min-width: 1000px) { .updbar { left: auto; right: 20px; bottom: 20px; max-width: 320px; } }
+
 /* My-numbers: the two entry paths must never be confusable — a comp prices
    the card, your own sale retires it */
 .mysec { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line);
