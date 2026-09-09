@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v40. The live
+  this makes the service worker serve stale CSS/JS. Current: v41. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v40. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v41. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,22 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v41 — the update check also runs on RESUME, not just cold start.** Owner:
+  *"Browser on v40 and app on v38."* Two lessons: (a) the installed iOS PWA has
+  its own storage, separate from Safari's, so Safari being current says nothing
+  about the home-screen app; (b) **the v40 banner could not rescue a phone on
+  v38 — the version check ships INSIDE the app, so a shell older than v40 has no
+  code to run it.** Chicken-and-egg: the first upgrade past a stale shell is
+  always manual. The escape hatch that reliably works on iOS is **delete the
+  home-screen icon and re-add it from Safari** (Share → Add to Home Screen);
+  a swipe-away relaunch works only if iOS actually performs a navigation.
+  `sw.js` was already doing everything right (skipWaiting + clients.claim +
+  network-first HTML/data), so this was not a service-worker bug.
+  v41 adds a `visibilitychange` re-check (`checkVersion`, guarded so it can't
+  stack banners): a phone app is resumed far more often than cold-started, so a
+  ship landing while it sits backgrounded now surfaces the moment the owner
+  comes back to it. Verified: no banner when versions agree, none while hidden,
+  banner on return to foreground, exactly one bar after repeated resumes.
 - **v40 — the app tells the owner when it's out of date (and fixes itself).**
   Owner shipped-but-stale AGAIN ("Still on v38. It's live?" — it was; their
   screenshot predated the deploy by 4 minutes, and the phone then held the old
@@ -665,7 +681,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Kyren jersey + MERCH-0002 Mayfield helmet still LIVE on eBay at $250 / $300
   (valued $220 / $250 after the 2026-09-09 markdown); MERCH-0003 Jefferson
   jersey **SOLD $255**.
-  All validate clean + drafted. App: **v40**
+  All validate clean + drafted. App: **v41**
   (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
   numbers, and an honest saved state — see the App v33 entry above;
   v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
