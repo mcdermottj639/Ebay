@@ -60,6 +60,19 @@ body {
   padding-bottom: calc(76px + env(safe-area-inset-bottom));
 }
 button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+/* iOS zoom, two separate causes, both of which made tapping feel broken:
+   1) double-tap-to-zoom fires on any tappable that hasn't opted out. Only
+      <button> had, so tapping a card row, a comp link or a deal zoomed the
+      page. touch-action on html/body applies down the ancestor chain, and
+      "manipulation" keeps pinch-zoom — we disable the double-tap, not the
+      accessibility gesture.
+   2) Safari zooms the whole page when a text field under 16px takes focus.
+      Every input here was 14px, so typing a cost or a search zoomed in. */
+html, body { touch-action: manipulation; }
+a, button, select, summary, label, input, [role="button"],
+.crow, .comp, .row, .drow, .seg button, .tab, .mbtn { touch-action: manipulation; }
+input, textarea { font-size: 16px; }
 a { color: inherit; }
 .tnum { font-variant-numeric: tabular-nums; }
 
@@ -294,7 +307,7 @@ main { max-width: 720px; margin: 0 auto;
 .search .si { color: var(--muted); font-size: 14px; }
 .search input {
   flex: 1; min-width: 0; border: none; background: none; color: var(--fg);
-  font: inherit; font-size: 14px; padding: 10px 0; outline: none;
+  font: inherit; font-size: 16px; padding: 9px 0; outline: none;   /* 16px: no iOS focus zoom */
 }
 .search input::placeholder { color: var(--muted); }
 .search kbd {
@@ -681,7 +694,7 @@ a.comp:hover .ct { color: var(--gold); }
   color: var(--muted); font-weight: 700; flex: 1 1 96px; min-width: 0; }
 .compsbox.mydata input { width: 100%; box-sizing: border-box; background: var(--surface);
   border: 1px solid var(--border); border-radius: 8px; color: var(--fg);
-  padding: 7px 9px; font-size: 14px; font-variant-numeric: tabular-nums; }
+  padding: 7px 9px; font-size: 16px;   /* <16px makes iOS zoom on focus */ font-variant-numeric: tabular-nums; }
 .compsbox.mydata input:disabled { opacity: .55; }
 .mbtn.sm { padding: 7px 12px; flex: 0 0 auto; }
 .mylist { margin-top: 8px; border-top: 1px solid var(--border); }
@@ -743,7 +756,7 @@ a.comp:hover .ct { color: var(--gold); }
   color: var(--muted); font-weight: 700; flex: 1 1 150px; min-width: 0; }
 .mdtoken input { width: 100%; box-sizing: border-box; background: var(--surface);
   border: 1px solid var(--border); border-radius: 8px; color: var(--fg);
-  padding: 7px 9px; font-size: 14px; }
+  padding: 7px 9px; font-size: 16px;   /* <16px makes iOS zoom on focus */ }
 .mdtoken .cfoot { flex-basis: 100%; margin-top: 2px; }
 
 /* ---- Money headline: the top of the card popup (v32) --------------------
