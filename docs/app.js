@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v42";
+  var APP_VERSION = "v43";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -319,9 +319,15 @@
   function basisPill(c) {
     if (c.sold) return "";   // the SOLD badge + real price say it better
     if (c.status !== "priced" || !c.price_basis) return "";
-    var map = { sold: ["b-sold", "SOLD"], est_sold: ["b-est", "EST"], asking: ["b-ask", "ASKING"] };
+    // "REAL", not "SOLD": this pill says where the PRICE came from, and a
+    // green SOLD here sat inches from the red SOLD status badge on cards the
+    // owner still owns — which is exactly the "does it think I sold it?"
+    // confusion. The status badge owns the word "sold".
+    var map = { sold: ["b-sold", "REAL", "Priced from real sold prices you recorded"],
+                est_sold: ["b-est", "EST", "Estimated: eBay asking prices, discounted toward sold"],
+                asking: ["b-ask", "ASKING", "From what sellers are asking on eBay right now"] };
     var p = map[c.price_basis] || map.asking;
-    return '<span class="basis ' + p[0] + '">' + p[1] + "</span>";
+    return '<span class="basis ' + p[0] + '" title="' + p[2] + '">' + p[1] + "</span>";
   }
 
   // ▲/▼ week-over-week movement chip (needs a prior price from reprice runs)
@@ -797,7 +803,7 @@
     var m = goingFor(c), ms = mySold(c);
     if (!m && !ms) return "";
     var bits = [];
-    if (ms) bits.push('<span class="room">real sold ~' + money0(ms.median) + " (yours)</span>");
+    if (ms) bits.push('<span class="room">real sold ~' + money0(ms.median) + " (your comps)</span>");
     if (m) {
       var t = "Usually ~" + money0(m.median) + (m.count ? " · " + m.count + " on eBay" : "");
       if (marketSolid(c, m)) t += ' · <span class="room">room to ~' + money0(m.median) + "</span>";
@@ -1341,12 +1347,19 @@
     broad:       ["weak",  "No listing of this exact card found — estimated from other cards of this player, so treat it as a ballpark"]
   };
   function trustNote(c) {
+    // Entries still only on this phone haven't reached the price yet — the
+    // value is set by the rebuild, so say where they are in that journey.
+    var local = (c.my_sales_all || []).filter(function (s) { return s.local; }).length;
+    if (local) {
+      return '<div class="trust weak">⏳ ' + local + " comp" + (local === 1 ? "" : "s") +
+        " added on this phone — save below and they set this card’s value in ~2 min</div>";
+    }
     // A real sold price the owner recorded beats any asking comp — and since
     // build_web now prices the card off it, say so first.
     var mine = (c.my_sales || []).length;
     if (c.price_basis === "sold" && mine) {
       return '<div class="trust good">✓ Priced off ' + mine + " real sold price" +
-        (mine === 1 ? "" : "s") + " you recorded — the best data we have" +
+        (mine === 1 ? "" : "s") + " you recorded for this card — the best data we have" +
         (mine === 1 ? " (add a couple more and it steadies out)" : "") + "</div>";
     }
     var lv = (c.comps && c.comps.level) || "";
@@ -1392,7 +1405,7 @@
   function marketBox(c) {
     var m = goingFor(c), ms = mySold(c);
     var soldRow = ms
-      ? '<div class="mkrow up"><span>Real sold — yours</span><b class="tnum">~' + money0(ms.median) +
+      ? '<div class="mkrow up"><span>Real sold — comps you added</span><b class="tnum">~' + money0(ms.median) +
         ' <small>· ' + ms.count + " tracked</small></b></div>"
       : "";
     if (!m) {
@@ -1404,7 +1417,8 @@
           (num(c.asking_price) > 0
             ? '<div class="mkrow"><span>' + (c.sold ? "Was valued at" : "Card Vault value") +
               '</span><b class="tnum">' + money0(num(c.asking_price)) + "</b></div>" : "") +
-          '<div class="cfoot">Real sold prices you tracked in “My numbers” below — actual sales, not asking.</div></div>';
+          '<div class="cfoot">Real sold prices you recorded in “My numbers” below — what other copies ' +
+          "actually sold for, not what you got.</div></div>";
       }
       if (num(c.asking_price) <= 0) return "";
       return '<div class="compsbox nomarket"><div class="lab">What it’s going for</div>' +
@@ -1464,7 +1478,7 @@
       lab = "Could sell for now";
       big = num(c.asking_price) > 0 ? money(c.asking_price) : "—";
       sub = num(c.asking_price) > 0
-        ? (ms ? "real sold ~" + money0(ms.median) + " · " + ms.count + " you tracked"
+        ? (ms ? "real sold ~" + money0(ms.median) + " · " + ms.count + " comps you added"
               : c.price_basis === "sold" ? "from real eBay sold comps"
               : c.price_basis === "est_sold" ? "estimated market · typical asking, discounted toward real sold"
               : "from active eBay listings (asking)")
