@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v43. The live
+  this makes the service worker serve stale CSS/JS. Current: v44. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v43. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v44. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,30 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v44 — the bottom tab bar stops looking like it floats up.** Owner: *"when
+  I click merch the bottom menu buttons rise up."* Measured first: the bar is
+  `position: fixed; bottom: 0` and its rect is **identical** on Cards and Merch
+  (top 737 / bottom 844 at 390x844) — it never moves. Two real faults produced
+  the impression, both fixed:
+  - **The bar was invisible.** Its background was
+    `color-mix(in srgb, var(--bg) 90%, transparent)` — 90% of the PAGE colour.
+    On a long tab, content scrolling behind it reads as a bar; on **Merch (2
+    items) there is nothing behind it**, so the buttons appeared to hover in
+    empty space. Now `color-mix(in srgb, var(--surface) 96%, transparent)` +
+    `box-shadow: 0 -6px 18px rgba(0,0,0,.10)`, so it reads as a bar pinned to
+    the bottom edge on ANY tab. (Verified in both themes.)
+  - **The reserved space was a guess.** `body { padding-bottom: 76px + safe }`
+    while the real bar is **107px** (7 tabs in a 4-wide grid = two rows, plus
+    the home-indicator inset), so the last ~30px of any scrollable tab sat
+    UNDER the bar. `measureNav()` now publishes the real height as **`--navh`**
+    on `:root` (re-measured on resize + orientationchange) and body reserves
+    `calc(var(--navh, 110px) + 10px)`. WARNING: `offsetHeight` already includes
+    the safe-area padding — do NOT add `env(safe-area-inset-bottom)` on top of
+    `--navh` (the v40 update bar did, floating a home-indicator too high; fixed
+    here too).
+  Verified 390x844 both themes: `--navh` 107px, body padding 117px, bar flush
+  to the viewport bottom on Cards AND Merch, and scrolled to the end of the
+  Cards tab the last row's bottom (703) clears the bar's top (737).
 - **v43 — nothing says "you sold this" about a comp any more.** Owner added 4
   comps to CARD-0029 and asked *"it says real sold yours in there — does it
   think I sold it for that price?"* It didn't (the card was never marked sold,
@@ -725,7 +749,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Kyren jersey + MERCH-0002 Mayfield helmet still LIVE on eBay at $250 / $300
   (valued $220 / $250 after the 2026-09-09 markdown); MERCH-0003 Jefferson
   jersey **SOLD $255**.
-  All validate clean + drafted. App: **v43**
+  All validate clean + drafted. App: **v44**
   (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
   numbers, and an honest saved state — see the App v33 entry above;
   v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
