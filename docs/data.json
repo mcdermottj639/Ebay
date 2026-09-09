@@ -32,11 +32,11 @@
     },
     {
       "d": "2026-09-09",
-      "v": 3839.85,
-      "n": 35
+      "v": 3140.85,
+      "n": 34
     }
   ],
-  "generated": "Sep 09, 2026 \u00b7 16:09 UTC",
+  "generated": "Sep 09, 2026 \u00b7 16:12 UTC",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1729,17 +1729,17 @@
     "rookies": 28,
     "autos": 10,
     "graded": 15,
-    "priced": 35,
-    "total_cost": 70.0,
-    "total_value": 3839.85,
+    "priced": 34,
+    "total_cost": 120.0,
+    "total_value": 3140.85,
     "profit": 279.0,
     "cost_count": 1,
-    "listed": 3,
-    "sold": 0,
-    "revenue": 0,
-    "realized_profit": 0,
+    "listed": 2,
+    "sold": 1,
+    "revenue": 255.0,
+    "realized_profit": 205.0,
     "by_sport": {
-      "Football": 29,
+      "Football": 28,
       "Basketball": 3,
       "Hockey": 1,
       "Soccer": 1,
@@ -1748,8 +1748,8 @@
     "sport_stats": [
       {
         "name": "Football",
-        "count": 29,
-        "value": 3049.2
+        "count": 28,
+        "value": 2350.2
       },
       {
         "name": "Basketball",
@@ -4640,20 +4640,26 @@
       "serial_run": "",
       "condition": "Excellent",
       "authentication": "Beckett",
-      "cost": "",
+      "cost": "50.00",
       "asking_price": "699.00",
-      "notes": "Custom/pro-style framed autographed Vikings jersey (owner CONFIRMED pro-style, not Nike authentic); Beckett; eBay 336728700531 LIVE at $500 - REVISE to $699 + Best Offer, floor ~$575. Comps 2026-08-10: n=46 framed jersey asking, median $742, 25th $591, 75th $900",
+      "notes": "Custom/pro-style framed autographed Vikings jersey (owner CONFIRMED pro-style, not Nike authentic); Beckett; eBay 336728700531. SOLD 2026-09-09 for $255 (listed at $500; bought for $50 = +$205). FIRST REAL SALE - it went for 49% under the $500 asking and 64% under our $699 asking-comp valuation, so treat framed-jersey asking medians as well above true sold. Comps 2026-08-10 were n=46 asking, median $742",
       "price_basis": "asking",
       "image": "",
       "line": "Minnesota Vikings \u00b7 Framed Jersey",
       "title": "Justin Jefferson Autographed Framed Jersey Minnesota Vikings Beckett COA",
       "status": "priced",
-      "listed": true,
-      "sold": false,
-      "sold_price": "",
-      "sold_date": "",
+      "listed": false,
+      "sold": true,
+      "sold_price": 255.0,
+      "sold_date": "2026-09-09",
       "cert": "",
-      "my_sales": [],
+      "my_sales": [
+        {
+          "d": "2026-09-09",
+          "p": 255.0,
+          "n": ""
+        }
+      ],
       "prev_price": "",
       "price_series": [
         {
