@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v32";
+  var APP_VERSION = "v33";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -29,10 +29,14 @@
   function loadMyData() {
     try {
       var d = JSON.parse(localStorage.getItem(MYDATA_KEY) || "{}");
-      return { costs: d.costs || {}, sales: d.sales || {} };
-    } catch (e) { return { costs: {}, sales: {} }; }
+      return { costs: d.costs || {}, sales: d.sales || {},
+               touched: d.touched || 0, synced: d.synced || 0 };
+    } catch (e) { return { costs: {}, sales: {}, touched: 0, synced: 0 }; }
   }
   function saveMyData() { try { localStorage.setItem(MYDATA_KEY, JSON.stringify(myData)); } catch (e) {} }
+  // A real edit by the owner: marks this phone's copy newer than the sheet's,
+  // which is what tells the box whether there is anything left to save.
+  function touchMyData() { myData.touched = Date.now(); saveMyData(); }
   var myData = loadMyData();
 
   // Merge device entries into the loaded data. Idempotent: raw sheet values
@@ -110,13 +114,14 @@
   function ghSaveMyNumbers(done) {
     fetch(GH_API + "?ref=main", { headers: ghHeaders() })
       .then(function (r) {
-        if (r.status === 404) return { sha: null, json: { costs: {}, sales: {} } };
+        if (r.status === 404) return { sha: null, json: { costs: {}, sales: {} }, text: null };
         if (!r.ok) throw new Error("GitHub said " + r.status);
         return r.json().then(function (f) {
           var json = {};
           try { json = JSON.parse(decodeURIComponent(escape(atob(String(f.content || "").replace(/\n/g, ""))))); }
           catch (e) {}
-          return { sha: f.sha, json: { costs: json.costs || {}, sales: json.sales || {} } };
+          var was = { costs: json.costs || {}, sales: json.sales || {} };
+          return { sha: f.sha, json: was, text: JSON.stringify(was, null, 2) + "\n" };
         });
       })
       .then(function (cur) {
@@ -131,13 +136,18 @@
             if (!dup) have.push({ d: s.d || "", p: s.p });
           });
         });
+        var text = JSON.stringify(out, null, 2) + "\n";
+        // already identical in the sheet — a PUT here just makes an empty commit
+        if (text === cur.text) return null;
         var body = { message: "Card Vault app: save my numbers",
-                     content: b64utf8(JSON.stringify(out, null, 2) + "\n"), branch: "main" };
+                     content: b64utf8(text), branch: "main" };
         if (cur.sha) body.sha = cur.sha;
         return fetch(GH_API, { method: "PUT", headers: ghHeaders(), body: JSON.stringify(body) });
       })
       .then(function (r) {
-        if (!r.ok) throw new Error("GitHub said " + r.status);
+        if (r && !r.ok) throw new Error("GitHub said " + r.status);
+        myData.synced = Date.now();
+        saveMyData();
         done(null);
       })
       .catch(function (e) { done(e); });
@@ -1494,8 +1504,14 @@
   function syncSection(pend) {
     var n = pend === 1 ? "1 entry" : pend + " entries";
     if (ghToken()) {
-      return (pend ? '<div class="mdsync"><button class="mbtn prime" id="myGhSave">💾 Save ' + n +
-                     " to my sheet</button></div>" : "") +
+      // everything on this phone is already in the sheet (it just hasn't been
+      // baked into data.json yet, which takes the site a couple of minutes)
+      var saved = pend > 0 && myData.synced && myData.synced >= (myData.touched || 0);
+      return (saved
+        ? '<div class="mdsync mdsaved">✓ Saved to your sheet · every device picks it up in ~2 min' +
+          ' · <a href="#" id="myGhAgain">save again</a></div>'
+        : (pend ? '<div class="mdsync"><button class="mbtn prime" id="myGhSave">💾 Save ' + n +
+                  " to my sheet</button></div>" : "")) +
         '<div class="mdsetup"><a href="#" id="ghTokenDrop">⚙️ One-tap save is on · turn off</a></div>';
     }
     return (pend ? '<div class="mdsync"><button class="mbtn" id="mySync">📤 Send ' + n +
@@ -1509,6 +1525,34 @@
   }
 
   function wireMyNumbers(m, c) {
+    // A number typed into a box but never "Save"d/"Add"ed is invisible to the
+    // sync — fold anything sitting in the boxes in first, so tapping save
+    // means what the owner thinks it means.
+    function flushTyped() {
+      var costEl = m.querySelector("#myCost");
+      if (costEl && !costEl.disabled) {
+        var cv = num(costEl.value);
+        if (cv > 0 && cv !== num(myData.costs[c.sku])) {
+          myData.costs[c.sku] = Math.round(cv * 100) / 100;
+          touchMyData();
+        }
+      }
+      var priceEl = m.querySelector("#mySalePrice");
+      var pv = priceEl ? num(priceEl.value) : 0;
+      if (pv > 0) {
+        var dateEl = m.querySelector("#mySaleDate");
+        var d = (dateEl && dateEl.value) || "";
+        var p = Math.round(pv * 100) / 100;
+        var have = (myData.sales[c.sku] = myData.sales[c.sku] || []);
+        var dup = have.some(function (x) { return (x.d || "") === d && num(x.p) === p; });
+        if (!dup) { have.push({ d: d, p: p }); touchMyData(); }
+        priceEl.value = "";
+      }
+      recalcMyData();
+    }
+    // leaving the cost box also banks it — no lost typing if Save is missed
+    var costBox = m.querySelector("#myCost");
+    if (costBox && !costBox.disabled) costBox.onchange = flushTyped;
     // the money headline's "＋ add" jumps down to the cost field and focuses it
     var mhAdd = m.querySelector("#mhAddCost");
     if (mhAdd) mhAdd.onclick = function () {
@@ -1522,7 +1566,7 @@
       var v = num(m.querySelector("#myCost").value);
       if (v > 0) myData.costs[c.sku] = Math.round(v * 100) / 100;
       else delete myData.costs[c.sku];
-      saveMyData();
+      touchMyData();
       refreshAfterMyData(c);
     };
     var add = m.querySelector("#mySaleAdd");
@@ -1531,7 +1575,7 @@
       if (p <= 0) { flashBtn(add, "Price?"); return; }
       (myData.sales[c.sku] = myData.sales[c.sku] || []).push({
         d: m.querySelector("#mySaleDate").value || "", p: Math.round(p * 100) / 100 });
-      saveMyData();
+      touchMyData();
       refreshAfterMyData(c);
     };
     m.querySelectorAll(".mydel").forEach(function (b) {
@@ -1542,12 +1586,13 @@
           return !((x.d || "") === (s.d || "") && x.p === s.p);
         });
         if (arr.length) myData.sales[c.sku] = arr; else delete myData.sales[c.sku];
-        saveMyData();
+        touchMyData();
         refreshAfterMyData(c);
       };
     });
     var sync = m.querySelector("#mySync");
     if (sync) sync.onclick = function () {
+      flushTyped();
       var q = syncMessage();
       copyText(q);
       window.open("https://claude.ai/new?q=" + encodeURIComponent(q), "_blank", "noopener");
@@ -1556,13 +1601,23 @@
     // one-tap GitHub save + its setup form
     var ghBtn = m.querySelector("#myGhSave");
     if (ghBtn) ghBtn.onclick = function () {
+      var label = ghBtn.innerHTML;   // grab the REAL label before overwriting it
+      flushTyped();
       ghBtn.disabled = true;
       ghBtn.textContent = "Saving…";
       ghSaveMyNumbers(function (err) {
         ghBtn.disabled = false;
+        ghBtn.innerHTML = label;     // never leave it stuck reading "Saving…"
         if (err) flashBtn(ghBtn, "⚠ Couldn’t save — check the key, or ask Claude");
-        else flashBtn(ghBtn, "✓ Saved — on every device in ~2 min");
+        else refreshAfterMyData(c);  // repaints the box as "✓ Saved to your sheet"
       });
+    };
+    var ghAgain = m.querySelector("#myGhAgain");
+    if (ghAgain) ghAgain.onclick = function (e) {
+      e.preventDefault();
+      flushTyped();
+      touchMyData();
+      refreshAfterMyData(c);
     };
     var setup = m.querySelector("#mdSetup");
     if (setup) setup.onclick = function (e) {

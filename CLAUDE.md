@@ -230,11 +230,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v32. The live
+  this makes the service worker serve stale CSS/JS. Current: v33. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v32. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v33. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -276,6 +276,34 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   (`#mhAddCost`). Replaced `costProfitBox` in the modal (still defined but
   unused there — the hero carries its numbers + the gross-before-fees note);
   dropped the now-duplicated "Card Vault value"/"Price basis" kv rows.
+- App v33: **the save button no longer lies (stuck on "Saving…") + typed
+  numbers can't be lost.** Owner set up one-tap save 2026-09-09, tapped 💾, and
+  the button read "Saving…" forever — so they tapped it twice more. The save had
+  actually WORKED every time (CARD-0022 cost $70 committed at 11:58; the two
+  later taps produced empty commits). Three real bugs, all fixed:
+  - **Stuck label (the visible one).** `flashBtn(btn,msg)` snapshots
+    `btn.innerHTML` at call time and restores it after 1.9s — but the click
+    handler had already overwritten the label with "Saving…", so the ✓ flashed
+    briefly and the button reverted to "Saving…" permanently. The handler now
+    grabs the real label BEFORE overwriting and restores it in the callback.
+    ⚠️ Same trap applies to any future `flashBtn` call on a button whose text was
+    changed first — capture the label first.
+  - **Typed-but-never-saved entries were invisible to the sync.** Numbers sitting
+    in the cost / sold-price boxes only reach `myData` when Save/Add is tapped, so
+    a screenful of typed numbers synced nothing. `wireMyNumbers.flushTyped()` now
+    folds whatever is in the boxes into the device copy before any save (💾 AND
+    📤 Send-to-Claude), and the cost box also banks itself on `change` (blur).
+  - **"Did it save?" had no honest answer.** `myData` now carries `touched`
+    (any owner edit, via `touchMyData()`) and `synced` (last successful GitHub
+    push). When `synced >= touched`, `syncSection` replaces the Save button with
+    **"✓ Saved to your sheet · every device picks it up in ~2 min · save again"**
+    — the pending count can't drop until the Pages build bakes the entries, so
+    without this a finished save still looked like unfinished work.
+    `ghSaveMyNumbers` also skips the PUT when the merged content already matches
+    the file (no more empty commits from re-taps).
+  Verified in headless Chromium at 390px across all three paths: typed-then-save
+  (both values land in the PUT), re-save with nothing new (0 PUTs, still reports
+  saved), bad key (honest error, button returns to normal — never stuck).
 - App v31: **💾 one-tap save — the app writes the sheet itself (no Claude
   step).** The My-numbers box has a "⚙️ Set up one-tap save" link → paste a
   GitHub fine-grained PAT (repo: mcdermottj639/Ebay only, permission:
@@ -474,8 +502,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   15 graded (PSA), 9 autos (incl. merch), 1 patch, several numbered.
   **All 35 priced** from live eBay comps / real listed prices. Merch (all three
   LIVE on eBay): jersey $250, helmet $300, Jefferson jersey $500.
-  All validate clean + drafted. App: **v28**
-  (v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
+  All validate clean + drafted. App: **v33**
+  (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
+  numbers, and an honest saved state — see the App v33 entry above;
+  v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
   ~$1,548 · 4 comps · graded pool" + thin-data chip) had been placed in the
   narrow right-hand price column (`.dr`, `flex:none`), so the long text shoved
   the price + discount off the right edge of the phone. Moved that detail into a
