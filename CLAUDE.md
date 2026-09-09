@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v38. The live
+  this makes the service worker serve stale CSS/JS. Current: v39. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v38. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v39. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,26 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v39 — a sold item actually LEAVES the collection.** v38 made the sale
+  count (revenue, realized profit, SOLD badge) but the item still sat in the
+  Collection tab, so the owner reasonably asked "why's the Jefferson jersey
+  still in my collection then?" It was half-done. Now:
+  - `viewCollection` filters `!c.sold`, so the Cards/Merch counts, tier
+    sections, search and every list exclude sold items (Merch 3 → 2).
+  - The app-bar count is the HELD count (`35 cards` → **34 cards**), and the
+    Value tab's Cards tile is `total_cards - sold`.
+  - `build_web`'s descriptive tiles (merch/physical/rookies/autos/graded) count
+    `unsold`, not `cards` — otherwise "Autographs 10" couldn't be reconciled
+    with the 9 you can actually find (`total_cards` stays all-time; the Priced
+    denominator already subtracted sold).
+  - The Status filter's dead **Sold** facet is gone (nothing sold is in the
+    list to filter for).
+  - Sold items get a home under the Value tab's Business row: a **"Sold · out
+    of the collection"** list, newest first, so the sales history is visible
+    where the money is. Deep links (`#sku=…`) to a sold card still open it.
+  RULE going forward: the Collection tab is what you OWN. Anything sold belongs
+  to revenue and shows only under Business. Keep new views on the same side of
+  that line — check `!c.sold` when adding any collection-wide list or count.
 - **v38 — "I sold it" vs "someone else sold one" are now different things.**
   The owner: *"Make sure it's clear when I'm adding a price that I sold it for
   vs prices I'm seeing others sold for. Once something is sold it should be
@@ -628,7 +648,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Kyren jersey + MERCH-0002 Mayfield helmet still LIVE on eBay at $250 / $300
   (valued $220 / $250 after the 2026-09-09 markdown); MERCH-0003 Jefferson
   jersey **SOLD $255**.
-  All validate clean + drafted. App: **v38**
+  All validate clean + drafted. App: **v39**
   (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
   numbers, and an honest saved state — see the App v33 entry above;
   v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
