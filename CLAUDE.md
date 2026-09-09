@@ -230,11 +230,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v35. The live
+  this makes the service worker serve stale CSS/JS. Current: v36. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v35. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v36. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -276,6 +276,43 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   (`#mhAddCost`). Replaced `costProfitBox` in the modal (still defined but
   unused there — the hero carries its numbers + the gross-before-fees note);
   dropped the now-duplicated "Card Vault value"/"Price basis" kv rows.
+- **THE COMP-QUERY LADDER (2026-09-09) — the root cause of "tough to trust ur
+  numbers."** Owner said the collection looked overpriced and they couldn't
+  trust the valuations. Auditing it found the real fault was not the haircut but
+  **the search query**: `comps.query_for` = the full eBay title, which carries
+  the CARD NUMBER (`#TC-BRO`, `#TH-13`). Sellers almost never type those, so the
+  exact search returned 0 and we fell straight to `broad_query_for` — which
+  **drops the insert/parallel name**, the single most searchable thing about an
+  insert card. Net effect: a PSA 10 Bijan Robinson *Turn of the Century* auto was
+  priced against every other Bijan card, and an Anthony Richardson *Thrillers*
+  /75 (real asking ~$100) was priced against $1–3 base Thrillers.
+  **Fix — `comps.focused_query_for` + a 4-tier ladder in `get_comps`:**
+  `exact` (full title) → `focused` (everything identifying MINUS the card
+  number) → `focused_raw` (also minus the grade, so RAW comps for a slab) →
+  `broad` (player only). It stops at the first tier with ≥`MIN_GOOD_COMPS` (3)
+  relevant comps, else keeps the most specific non-empty tier. `CompResult`
+  gained **`match_level`**, and `reprice.py` now auto-applies **only `exact` and
+  `focused`** (it used to test the string `"(broad match)" in r.query`).
+  Result across 34 held items: **13 exact + 7 focused + 4 focused_raw, broad down
+  to 9** (was ~everything niche). Re-priced the whole catalog off it: 6 auto
+  updates, 3 flagged-but-hand-applied where the pool was deep (CARD-0003
+  Skattebo $5.27→$3.07 / 28 comps, CARD-0009 Bech $4.38→$11.85 / 36, CARD-0012
+  Wiseman $48.39→$22.66 / 24). Held CARD-0021 Pollard and CARD-0026
+  LeBron-Wembanyama — both still only 4 comps, and a +153% / +68% move on 4
+  listings is a guess, not a market. A second run applied 0, confirming it
+  converged. ⚠️ The audit also disproved the "everything is overpriced" read:
+  among cards we can actually identify, MORE are under their asking median than
+  over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
+  being made up.
+- App v36: **per-card confidence line.** Every price used to look equally
+  authoritative whether it came from 30 listings of the exact card or a broad
+  sweep. The What-it's-going-for box now ends with a plain-English trust note
+  (`MATCH_TRUST`/`trustNote` in app.js, fed by `comps.level` → snapshot →
+  `build_web`): green "✓ Matched this exact card", or gold "⚠ Matched ungraded
+  copies…", "⚠ No listing of this exact card found — … treat it as a ballpark",
+  "⚠ No eBay listings captured — the price is hand-set, not measured." Thin
+  pools append "only N listings to go on". Keep this honest on any pricing
+  change — it is the owner's main defence against a confident-looking guess.
 - App v35: the `est_sold` basis label no longer hardcodes **"− 12%"**. That was
   true only for `reprice.py`'s card haircut; the merch rows repriced 2026-09-09
   use a 45% haircut off the asking median, so the modal now says "typical
@@ -536,7 +573,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Kyren jersey + MERCH-0002 Mayfield helmet still LIVE on eBay at $250 / $300
   (valued $220 / $250 after the 2026-09-09 markdown); MERCH-0003 Jefferson
   jersey **SOLD $255**.
-  All validate clean + drafted. App: **v35**
+  All validate clean + drafted. App: **v36**
   (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
   numbers, and an honest saved state — see the App v33 entry above;
   v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs

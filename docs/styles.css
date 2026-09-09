@@ -699,6 +699,12 @@ a.comp:hover .ct { color: var(--gold); }
 .mdsync .mbtn { width: 100%; justify-content: center; text-align: center; }
 /* "nothing left to save" state — replaces the Save button once this phone's
    entries are in the sheet, so a finished save never looks unfinished */
+/* per-card confidence line — says how the price was arrived at */
+.trust { font-size: 11.5px; font-weight: 700; line-height: 1.45; margin-top: 8px;
+  padding-top: 8px; border-top: 1px solid var(--line); }
+.trust.good { color: var(--good); }
+.trust.weak { color: var(--gold); }
+
 .mdsaved { font-size: 12px; font-weight: 700; color: var(--good); text-align: center;
   line-height: 1.5; }
 .mdsaved a { color: var(--muted); font-weight: 700; text-decoration: underline; }

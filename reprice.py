@@ -10,7 +10,8 @@ What it does, per card:
   1. Pulls fresh comps via ebaytools.comps (real SOLD comps when eBay has
      granted Marketplace Insights; active/asking otherwise).
   2. Applies the new median as asking_price ONLY when it's safe:
-       - exact-title match (broad "(broad match)" results are never applied)
+       - exact or focused match only (raw-comp and broad results are shown
+         in the app but never auto-applied — see comps.get_comps' ladder)
        - at least MIN_COMPS listings behind the number
        - move is under MAX_SWING (big jumps are flagged for a human, not applied)
   3. Records every observation in data/price_history.csv — that file feeds
@@ -121,10 +122,13 @@ def main() -> int:
             print(f"  {c.sku}: error — {e}")
             continue
 
-        broad = "(broad match)" in r.query
+        # Only the two tiers that actually identify THIS card may auto-apply:
+        # "focused_raw" drops the grade (raw comps understate a slab) and
+        # "broad" is the player's other cards. Both are shown, never applied.
+        broad = r.match_level not in ("exact", "focused")
         if r.sample_items:
             snapshot["cards"][c.sku] = {
-                "source": r.source, "broad": broad,
+                "source": r.source, "broad": broad, "level": r.match_level,
                 "items": r.sample_items[:5],
             }
         rec = {"date": today, "sku": c.sku, "price": f"{current:.2f}",
