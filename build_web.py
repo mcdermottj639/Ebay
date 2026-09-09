@@ -426,11 +426,14 @@ def build_data(cards) -> dict:
         "radar": _radar_snapshot(),
         "summary": {
             "total_cards": len(cards),
-            "merch": sum(1 for c in cards if c.is_merch()),
-            "physical": sum(int(c.quantity) for c in cards if c.quantity.isdigit()),
-            "rookies": sum(1 for c in cards if c.is_rookie()),
-            "autos": sum(1 for c in cards if c.is_auto()),
-            "graded": sum(1 for c in cards if c.is_graded()),
+            # Everything descriptive counts what's STILL HELD — a sold item is
+            # revenue, not part of the collection, and the app's Collection tab
+            # now hides it, so these must agree with what's on screen.
+            "merch": sum(1 for c in unsold if c.is_merch()),
+            "physical": sum(int(c.quantity) for c in unsold if c.quantity.isdigit()),
+            "rookies": sum(1 for c in unsold if c.is_rookie()),
+            "autos": sum(1 for c in unsold if c.is_auto()),
+            "graded": sum(1 for c in unsold if c.is_graded()),
             "priced": sum(1 for c in unsold if c.asking_price.strip()),
             "total_cost": round(total_cost, 2),
             "total_value": round(total_value, 2),

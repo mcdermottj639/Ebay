@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v38";
+  var APP_VERSION = "v39";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -410,7 +410,7 @@
 
   function viewCollection() {
     var wrap = el('<div class="view"></div>');
-    var cards = state.data.cards;
+    var cards = state.data.cards.filter(function (c) { return !c.sold; });
     var nCards = cards.filter(function (c) { return !c.is_merch; }).length;
     var nMerch = cards.filter(function (c) { return c.is_merch; }).length;
 
@@ -510,7 +510,7 @@
     var groups = [
       ["Sport", sports.slice().sort()],
       ["Type", ["Graded", "Raw", "Autos", "Non-Autos", "Rookie", "Numbered"]],
-      ["Status", ["Listed", "Sold"]]
+      ["Status", ["Listed"]]
     ];
     var html = '<div class="fgroup"><div class="fchips">' +
       '<button class="fchip' + (state.filter === "All" ? " on" : "") + '" data-f="All">All cards</button></div></div>';
@@ -542,7 +542,6 @@
       case "Rookie": return c.rookie;
       case "Numbered": return !!c.serial_run;
       case "Listed": return c.listed;
-      case "Sold": return c.sold;
       default: return c.sport === state.filter;
     }
   }
@@ -603,7 +602,7 @@
     var profitCls = hasCost ? (s.profit >= 0 ? "pos" : "neg") : "";
     [["Total cost", hasCost ? money(s.total_cost) : "—", ""],
      ["Est. profit", hasCost ? money(s.profit) : "—", profitCls],
-     ["Cards", s.total_cards, ""],
+     ["Cards", s.total_cards - (s.sold || 0), ""],
      ["Priced", s.priced + " / " + (s.total_cards - (s.sold || 0)), ""],
      ["Graded", s.graded, ""],
      ["Autographs", s.autos, ""]].forEach(function (t) {
@@ -628,6 +627,17 @@
         biz.appendChild(el('<div class="tile"><div class="k">' + t[0] + '</div><div class="v tnum ' + t[2] + '">' + t[1] + "</div></div>"));
       });
       wrap.appendChild(biz);
+
+      // The sold items themselves — they left the Collection tab, so this is
+      // where the owner sees what they've actually sold and for how much.
+      var soldCards = state.data.cards.filter(function (c) { return c.sold; })
+        .sort(function (a, b) { return String(b.sold_date).localeCompare(String(a.sold_date)); });
+      if (soldCards.length) {
+        wrap.appendChild(el('<div class="eyebrow">Sold · out of the collection</div>'));
+        var slist = el('<div class="list"></div>');
+        soldCards.forEach(function (c) { slist.appendChild(crowEl(c)); });
+        wrap.appendChild(slist);
+      }
     }
 
     // $-weighted bar panel used for By-sport and By-grade
@@ -1877,7 +1887,8 @@
     state.data = data;
     recalcMyData();               // merge this device's costs + sold entries
     shell();
-    document.getElementById("gen").textContent = data.summary.total_cards + " cards · " + money0(data.summary.total_value);
+    var held = data.cards.filter(function (c) { return !c.sold; }).length;
+    document.getElementById("gen").textContent = held + " cards · " + money0(data.summary.total_value);
     setTab("collection");
     openFromHash();               // shared link straight to a card
     window.addEventListener("hashchange", openFromHash);
