@@ -258,6 +258,16 @@ def _comps_snapshot():
         return {}, ""
 
 
+def _app_version() -> str:
+    """Read APP_VERSION out of docs/app.js (single source of truth: the app)."""
+    try:
+        txt = (DOCS / "app.js").read_text(encoding="utf-8")
+    except OSError:
+        return ""
+    m = re.search(r'APP_VERSION\s*=\s*"([^"]+)"', txt)
+    return m.group(1) if m else ""
+
+
 def _radar_snapshot():
     """Buy Radar deals saved by radar.py (data/radar_snapshot.json).
     Returns {as_of, watch_count, deals:[...]} — the app's 🔎 Buy Radar tab.
@@ -422,6 +432,11 @@ def build_data(cards) -> dict:
     return {
         "history": _history(total_value, len(unsold)),
         "generated": datetime.now(timezone.utc).strftime("%b %d, %Y · %H:%M UTC"),
+        # The version of app.js this build shipped. data.json is fetched
+        # network-first, so a phone still running an older cached app.js will
+        # see this mismatch and can offer the owner a one-tap update — the
+        # recurring "I shipped it but they still see the old build" papercut.
+        "app_version": _app_version(),
         "targets": _targets(),
         "radar": _radar_snapshot(),
         "summary": {
