@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v44";
+  var APP_VERSION = "v45";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1933,7 +1933,7 @@
       var nav = document.querySelector(".nav");
       // offsetHeight already includes the nav's safe-area padding — adding
       // env() again would float the bar a home-indicator's height too high.
-      var h = nav && getComputedStyle(nav).position === "fixed" ? nav.offsetHeight : 0;
+      var h = nav && getComputedStyle(nav).position === "sticky" ? nav.offsetHeight : 0;
       bar.style.bottom = (h + 12) + "px";
     }
     place();
@@ -1953,8 +1953,9 @@
   function measureNav() {
     var nav = document.querySelector(".nav");
     if (!nav) return;
-    var fixed = getComputedStyle(nav).position === "fixed";
-    document.documentElement.style.setProperty("--navh", (fixed ? nav.offsetHeight : 0) + "px");
+    var pos = getComputedStyle(nav).position;
+    var overlaysBottom = pos === "sticky";   // fixed = the desktop side rail
+    document.documentElement.style.setProperty("--navh", (overlaysBottom ? nav.offsetHeight : 0) + "px");
   }
 
   function boot(data) {

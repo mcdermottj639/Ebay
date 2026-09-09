@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v44. The live
+  this makes the service worker serve stale CSS/JS. Current: v45. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v44. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v45. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,31 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v45 — the tab bar is IN the page flow now (the real fix for v44).** v44
+  treated the owner's "bottom menu rises up" as a perception problem, because
+  headless Chromium measured the bar identically on both tabs. Their next two
+  screenshots disproved that: on **Merch** the bar rendered ~170px higher AND
+  stopped short of the screen bottom (page-coloured strip beneath it), while on
+  **Cards** it sat flush. A real iOS mis-render of `position: fixed` +
+  `backdrop-filter` on a page that isn't scrollable — not reproducible in
+  desktop Chromium, so measuring there proved nothing.
+  Fix removes the possibility instead of chasing it: `body` is a
+  **flex column** with `min-height: 100dvh` (with a `100vh` fallback line
+  first), `main { flex: 1 0 auto }`, and `.nav` is **`position: sticky;
+  bottom: 0`**. The bar lands at the bottom *by construction* on a short tab and
+  sticks there while a long tab scrolls — no fixed-position quirk left to hit.
+  `backdrop-filter` is gone from the bar (opaque `var(--surface)`; content
+  scrolls behind it), which removes the other half of the iOS combination.
+  `body`'s `--navh` padding is no longer needed (the bar occupies real flow
+  space) and is 0. The **desktop rail keeps `position: fixed`** — re-declared
+  inside the `@media (min-width:1000px)` block, since the base rule no longer
+  sets it. `measureNav()` and the update bar now test for `sticky` (phone bar)
+  rather than `fixed` (desktop rail) — ⚠️ if the bar's positioning ever changes
+  again, update BOTH of those checks or the update banner will sit on top of it.
+  Verified 390x844 both themes: nav box byte-identical on Cards and Merch
+  (top 737 / bottom 844 / h 107), flush to the viewport bottom on both, last
+  row clears it when scrolled to the very end, and the 1280px desktop rail is
+  still a full-height fixed sidebar.
 - **v44 — the bottom tab bar stops looking like it floats up.** Owner: *"when
   I click merch the bottom menu buttons rise up."* Measured first: the bar is
   `position: fixed; bottom: 0` and its rect is **identical** on Cards and Merch
@@ -749,7 +774,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Kyren jersey + MERCH-0002 Mayfield helmet still LIVE on eBay at $250 / $300
   (valued $220 / $250 after the 2026-09-09 markdown); MERCH-0003 Jefferson
   jersey **SOLD $255**.
-  All validate clean + drafted. App: **v44**
+  All validate clean + drafted. App: **v45**
   (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
   numbers, and an honest saved state — see the App v33 entry above;
   v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs

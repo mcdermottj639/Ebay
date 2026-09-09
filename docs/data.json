@@ -36,8 +36,8 @@
       "n": 34
     }
   ],
-  "generated": "Sep 09, 2026 \u00b7 17:16 UTC",
-  "app_version": "v44",
+  "generated": "Sep 09, 2026 \u00b7 17:21 UTC",
+  "app_version": "v45",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1731,10 +1731,10 @@
     "autos": 9,
     "graded": 15,
     "priced": 34,
-    "total_cost": 120.0,
+    "total_cost": 170.0,
     "total_value": 2742.88,
-    "profit": 279.0,
-    "cost_count": 1,
+    "profit": 461.0,
+    "cost_count": 2,
     "listed": 2,
     "sold": 1,
     "revenue": 255.0,
@@ -4281,7 +4281,7 @@
       "serial_run": "",
       "condition": "",
       "authentication": "",
-      "cost": "",
+      "cost": "50.0",
       "asking_price": "232.00",
       "notes": "PSA app value; Pink Ice",
       "est_price": "249.00",
