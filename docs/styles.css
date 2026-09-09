@@ -699,6 +699,16 @@ a.comp:hover .ct { color: var(--gold); }
 .mdsync .mbtn { width: 100%; justify-content: center; text-align: center; }
 /* "nothing left to save" state — replaces the Save button once this phone's
    entries are in the sheet, so a finished save never looks unfinished */
+/* My-numbers: the two entry paths must never be confusable — a comp prices
+   the card, your own sale retires it */
+.mysec { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line);
+  font-size: 12.5px; font-weight: 800; color: var(--ink); }
+.mysec.mine { color: var(--gold); }
+.mysec.sold { color: var(--good); }
+.mysec .myhint { display: block; font-size: 11px; font-weight: 600; color: var(--muted);
+  margin-top: 3px; line-height: 1.45; }
+.mbtn.sm.warn { border-color: var(--gold); color: var(--gold); font-weight: 800; }
+
 /* per-card confidence line — says how the price was arrived at */
 .trust { font-size: 11.5px; font-weight: 700; line-height: 1.45; margin-top: 8px;
   padding-top: 8px; border-top: 1px solid var(--line); }

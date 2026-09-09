@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v37";
+  var APP_VERSION = "v38";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -29,9 +29,9 @@
   function loadMyData() {
     try {
       var d = JSON.parse(localStorage.getItem(MYDATA_KEY) || "{}");
-      return { costs: d.costs || {}, sales: d.sales || {},
+      return { costs: d.costs || {}, sales: d.sales || {}, sold: d.sold || {},
                touched: d.touched || 0, synced: d.synced || 0 };
-    } catch (e) { return { costs: {}, sales: {}, touched: 0, synced: 0 }; }
+    } catch (e) { return { costs: {}, sales: {}, sold: {}, touched: 0, synced: 0 }; }
   }
   function saveMyData() { try { localStorage.setItem(MYDATA_KEY, JSON.stringify(myData)); } catch (e) {} }
   // A real edit by the owner: marks this phone's copy newer than the sheet's,
@@ -52,6 +52,7 @@
       if (!c._bakedSales) c._bakedSales = (c.my_sales || []).slice();
       // cost: the sheet wins; a device-entered cost fills a blank sheet cost
       if (num(c._csvCost) > 0 && myData.costs[c.sku]) { delete myData.costs[c.sku]; dirty = true; }
+      if (c.sold && myData.sold[c.sku]) { delete myData.sold[c.sku]; dirty = true; }
       var localCost = num(myData.costs[c.sku]);
       c.cost = num(c._csvCost) > 0 ? c._csvCost : (localCost > 0 ? String(localCost) : c._csvCost);
       c.cost_local = num(c._csvCost) <= 0 && localCost > 0;
@@ -94,6 +95,7 @@
     var n = 0;
     Object.keys(myData.costs).forEach(function (k) { if (num(myData.costs[k]) > 0) n++; });
     Object.keys(myData.sales).forEach(function (k) { n += (myData.sales[k] || []).length; });
+    Object.keys(myData.sold).forEach(function (k) { if (num((myData.sold[k] || {}).p) > 0) n++; });
     return n;
   }
 
@@ -114,13 +116,13 @@
   function ghSaveMyNumbers(done) {
     fetch(GH_API + "?ref=main", { headers: ghHeaders() })
       .then(function (r) {
-        if (r.status === 404) return { sha: null, json: { costs: {}, sales: {} }, text: null };
+        if (r.status === 404) return { sha: null, json: { costs: {}, sales: {}, sold: {} }, text: null };
         if (!r.ok) throw new Error("GitHub said " + r.status);
         return r.json().then(function (f) {
           var json = {};
           try { json = JSON.parse(decodeURIComponent(escape(atob(String(f.content || "").replace(/\n/g, ""))))); }
           catch (e) {}
-          var was = { costs: json.costs || {}, sales: json.sales || {} };
+          var was = { costs: json.costs || {}, sales: json.sales || {}, sold: json.sold || {} };
           return { sha: f.sha, json: was, text: JSON.stringify(was, null, 2) + "\n" };
         });
       })
@@ -128,6 +130,9 @@
         var out = cur.json;
         Object.keys(myData.costs).forEach(function (sku) {
           if (num(myData.costs[sku]) > 0) out.costs[sku] = num(myData.costs[sku]);
+        });
+        Object.keys(myData.sold).forEach(function (sku) {
+          if (num(myData.sold[sku].p) > 0) out.sold[sku] = myData.sold[sku];
         });
         Object.keys(myData.sales).forEach(function (sku) {
           var have = (out.sales[sku] = out.sales[sku] || []);
@@ -159,14 +164,22 @@
     Object.keys(myData.costs).sort().forEach(function (sku) {
       if (num(myData.costs[sku]) > 0) lines.push(sku + " — cost $" + myData.costs[sku]);
     });
+    Object.keys(myData.sold).sort().forEach(function (sku) {
+      var s = myData.sold[sku];
+      if (num(s.p) > 0) lines.push(sku + " — I SOLD IT for $" + s.p + (s.d ? " on " + s.d : ""));
+    });
     Object.keys(myData.sales).sort().forEach(function (sku) {
       (myData.sales[sku] || []).forEach(function (s) {
-        lines.push(sku + " — sold for $" + s.p + (s.d ? " on " + s.d : "") + (s.n ? " (" + s.n + ")" : ""));
+        lines.push(sku + " — comp: someone else sold one for $" + s.p +
+                   (s.d ? " on " + s.d : "") + (s.n ? " (" + s.n + ")" : ""));
       });
     });
-    return "Save these numbers into my Card Vault sheet (costs go in the cost column of " +
-      "data/inventory.csv, sold prices are real sold comps for data/manual_sales.csv), " +
-      "then rebuild and ship the app:\n\n" + lines.join("\n");
+    return "Save these numbers into my Card Vault sheet, then rebuild and ship the app.\n" +
+      "· “cost” → the cost column of data/inventory.csv\n" +
+      "· “I SOLD IT” → MY OWN sale: set sold_price + sold_date and clear listed in " +
+      "data/inventory.csv, so it leaves the collection and lands in revenue\n" +
+      "· “comp” → someone else's sale, for data/manual_sales.csv — it prices the card, " +
+      "I still own it\n\n" + lines.join("\n");
   }
 
   // ---------- shell ----------
@@ -1516,6 +1529,7 @@
         "</div>";
     }).join("");
     var pend = pendingCount();
+    var mineSold = myData.sold[c.sku];
     return '<div class="compsbox mydata"><div class="lab">✍️ My numbers</div>' +
       '<div class="mdlookup">' +
         '<a class="mbtn sm" href="' + terapeakUrl(c.title) + '" target="_blank" rel="noopener">📊 Terapeak sold data</a>' +
@@ -1526,12 +1540,32 @@
         (num(c.cost) > 0 ? esc(num(c.cost)) : "") + '"' + (sheetCost ? " disabled" : "") + "></label>" +
         (sheetCost ? '<span class="myok">✓ in sheet</span>' : '<button class="mbtn sm" id="myCostSave">Save</button>') +
       "</div>" +
-      '<div class="mdform"><label>It sold for ($)' +
+      // 1) what OTHERS got — a comp. Sets this card's value; you keep the card.
+      '<div class="mysec">📈 Prices you saw <b>other people</b> get' +
+        '<span class="myhint">Sets what this card is worth. You still own it.</span></div>' +
+      '<div class="mdform"><label>Someone else sold one for ($)' +
         '<input type="number" inputmode="decimal" min="0" step="0.01" id="mySalePrice" placeholder="e.g. 120"></label>' +
         '<label>When<input type="date" id="mySaleDate" value="' + today + '"></label>' +
-        '<button class="mbtn sm" id="mySaleAdd">Add</button>' +
+        '<button class="mbtn sm" id="mySaleAdd">Add comp</button>' +
       "</div>" +
       (rows ? '<div class="mylist">' + rows + "</div>" : "") +
+      // 2) YOUR sale — retires the card into revenue.
+      (c.sold
+        ? '<div class="mysec sold">✅ You sold this on ' + esc(c.sold_date || "") +
+          " for " + money(num(c.sold_price)) +
+          '<span class="myhint">It\u2019s out of your collection and counted in revenue.</span></div>'
+        : (mineSold
+            ? '<div class="mysec sold">✅ Marked sold for ' + money(num(mineSold.p)) +
+              (mineSold.d ? " on " + esc(mineSold.d) : "") +
+              '<span class="myhint">Save below and it moves into revenue (~2 min). ' +
+              '<a href="#" id="myUnsell">undo</a></span></div>'
+            : '<div class="mysec mine">💰 Did <b>you</b> sell this card?' +
+              '<span class="myhint">Moves it out of your collection and into revenue.</span></div>' +
+              '<div class="mdform"><label>I sold it for ($)' +
+                '<input type="number" inputmode="decimal" min="0" step="0.01" id="myMinePrice" placeholder="what you got"></label>' +
+                '<label>When<input type="date" id="myMineDate" value="' + today + '"></label>' +
+                '<button class="mbtn sm warn" id="myMineAdd">Mark sold</button>' +
+              "</div>")) +
       syncSection(pend) +
       '<div class="cfoot">Tap a lookup button above — Terapeak (in your eBay Seller Hub, free) shows real ' +
       "sold prices — then type what you see. Everything saves on this phone instantly" +
@@ -1579,6 +1613,13 @@
           touchMyData();
         }
       }
+      var mineEl = m.querySelector("#myMinePrice");
+      var mv = mineEl ? num(mineEl.value) : 0;
+      if (mv > 0) {
+        var mdEl = m.querySelector("#myMineDate");
+        myData.sold[c.sku] = { d: (mdEl && mdEl.value) || "", p: Math.round(mv * 100) / 100 };
+        touchMyData();
+      }
       var priceEl = m.querySelector("#mySalePrice");
       var pv = priceEl ? num(priceEl.value) : 0;
       if (pv > 0) {
@@ -1608,6 +1649,26 @@
       var v = num(m.querySelector("#myCost").value);
       if (v > 0) myData.costs[c.sku] = Math.round(v * 100) / 100;
       else delete myData.costs[c.sku];
+      touchMyData();
+      refreshAfterMyData(c);
+    };
+    // "I sold it" — retires the card. Confirm, because it changes what the
+    // collection is, not just what a number says.
+    var mineAdd = m.querySelector("#myMineAdd");
+    if (mineAdd) mineAdd.onclick = function () {
+      var p = num(m.querySelector("#myMinePrice").value);
+      if (p <= 0) { flashBtn(mineAdd, "How much?"); return; }
+      if (!window.confirm("Mark this as SOLD for " + money(p) +
+          "?\n\nIt leaves your collection value and moves into revenue.")) return;
+      myData.sold[c.sku] = { d: m.querySelector("#myMineDate").value || "",
+                             p: Math.round(p * 100) / 100 };
+      touchMyData();
+      refreshAfterMyData(c);
+    };
+    var unsell = m.querySelector("#myUnsell");
+    if (unsell) unsell.onclick = function (e) {
+      e.preventDefault();
+      delete myData.sold[c.sku];
       touchMyData();
       refreshAfterMyData(c);
     };

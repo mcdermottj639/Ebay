@@ -64,8 +64,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   sorts football-first). Owner preference: premium **$100–$1000** cards,
   **football preferred**, baseball OK — so rows target graded/parallel/auto
   versions that naturally list in that band (raw base RCs are too cheap).
-- `data/manual_sales.csv` — owner-entered REAL sold prices (sku, date, price,
-  note), the workaround for eBay denying the sold-comps API. Fed two ways: the
+- `data/manual_sales.csv` — REAL sold prices the owner SAW OTHERS GET (sku,
+  date, price, note) — comps, not the owner's own sales (those go in
+  inventory.csv's `sold_price`/`sold_date`). The workaround for eBay denying
+  the sold-comps API. Fed two ways: the
   owner types them into the app's card popup (**✍️ My numbers**, v29) and taps
   "Send to Claude" (a pre-filled claude.ai message — parse lines like
   `CARD-0019 — cost $55` into inventory.csv's `cost` column and
@@ -230,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v37. The live
+  this makes the service worker serve stale CSS/JS. Current: v38. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v37. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v38. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -304,6 +306,36 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v38 — "I sold it" vs "someone else sold one" are now different things.**
+  The owner: *"Make sure it's clear when I'm adding a price that I sold it for
+  vs prices I'm seeing others sold for. Once something is sold it should be
+  removed from my collection and into the revenue tracking."* Dead right — the
+  single "It sold for ($)" box did double duty, which is exactly how the
+  Jefferson jersey got recorded as a comp and then had to be moved to sold by
+  hand. Now:
+  - **`data/my_numbers.json` gained a `sold` map**: `{"sold": {sku: {d, p}}}`
+    alongside `sales` (comps). `sales` = what OTHERS got → prices the card, the
+    owner keeps it. `sold` = the owner's OWN sale → retires it.
+  - **`build_web`** `_my_numbers` returns `(costs, sales, sold)`; an entry in
+    `sold` sets `sold_price`/`sold_date` and clears `listed` on the Card BEFORE
+    the held/sold split, so the item leaves collection value and lands in
+    revenue + realized profit. The sheet wins if it already records a sale.
+  - **App**: the My-numbers box is two labelled sections — 📈 *"Prices you saw
+    other people get / Sets what this card is worth. You still own it."*
+    (button **Add comp**) and 💰 *"Did you sell this card? / Moves it out of
+    your collection and into revenue."* (button **Mark sold**, gold `.warn`,
+    behind a `confirm()` since it changes what the collection IS). After
+    marking: a green "✅ Marked sold for $X … undo" state; on a card the sheet
+    already has as sold, a green "✅ You sold this on DATE for $X" and NO
+    re-sell form. `recalcMyData` prunes the device entry once the sheet has it.
+  - **The Claude fallback message** now spells the two apart: `SKU — I SOLD IT
+    for $X on DATE` (→ inventory.csv sold_price/sold_date, clear listed) vs
+    `SKU — comp: someone else sold one for $X on DATE` (→ manual_sales.csv).
+    Parse it that way; the old ambiguous `SKU — sold for $X` format is gone.
+  Verified end to end: marking CARD-0029 sold at $210 moved collection
+  $2,759.88 → $2,510.88 with revenue $255 → $465, realized $205 → $415, sold
+  count 1 → 2; the one-tap save wrote `{"sold":{"CARD-0029":{...}}}`; undo and
+  revert restored every number.
 - **v37 — a sold price the owner records now BECOMES the card's value.** Owner
   asked "can I add sold prices I see … to better update the pricing?" — they
   could already type them (v29/v31), but the entries were only DISPLAYED
@@ -596,7 +628,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Kyren jersey + MERCH-0002 Mayfield helmet still LIVE on eBay at $250 / $300
   (valued $220 / $250 after the 2026-09-09 markdown); MERCH-0003 Jefferson
   jersey **SOLD $255**.
-  All validate clean + drafted. App: **v37**
+  All validate clean + drafted. App: **v38**
   (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
   numbers, and an honest saved state — see the App v33 entry above;
   v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs
