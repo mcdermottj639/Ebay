@@ -697,6 +697,12 @@ a.comp:hover .ct { color: var(--gold); }
   flex: 0 0 auto; padding-bottom: 8px; }
 .compsbox.mydata .mylist + .mdsync, .compsbox.mydata .mdsync { margin-top: 10px; }
 .mdsync .mbtn { width: 100%; justify-content: center; text-align: center; }
+/* "nothing left to save" state — replaces the Save button once this phone's
+   entries are in the sheet, so a finished save never looks unfinished */
+.mdsaved { font-size: 12px; font-weight: 700; color: var(--good); text-align: center;
+  line-height: 1.5; }
+.mdsaved a { color: var(--muted); font-weight: 700; text-decoration: underline; }
+.mdsaved a:hover { color: var(--gold); }
 
 /* Terapeak / eBay sold lookup row inside My numbers (v30) */
 .mdlookup { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }

@@ -36,7 +36,7 @@
       "n": 35
     }
   ],
-  "generated": "Sep 09, 2026 \u00b7 14:42 UTC",
+  "generated": "Sep 09, 2026 \u00b7 16:09 UTC",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1730,10 +1730,10 @@
     "autos": 10,
     "graded": 15,
     "priced": 35,
-    "total_cost": 0.0,
+    "total_cost": 70.0,
     "total_value": 3839.85,
-    "profit": 0,
-    "cost_count": 0,
+    "profit": 279.0,
+    "cost_count": 1,
     "listed": 3,
     "sold": 0,
     "revenue": 0,
@@ -3572,7 +3572,7 @@
       "serial_run": "249",
       "condition": "",
       "authentication": "",
-      "cost": "",
+      "cost": "70.0",
       "asking_price": "349.00",
       "notes": "PSA app value; Turn of the Century auto; PSA cert 83143720",
       "price_basis": "asking",
