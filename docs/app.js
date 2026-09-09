@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v43";
+  var APP_VERSION = "v44";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1931,8 +1931,10 @@
     // narrow phones and becomes a side rail on desktop) — measure, don't guess.
     function place() {
       var nav = document.querySelector(".nav");
+      // offsetHeight already includes the nav's safe-area padding — adding
+      // env() again would float the bar a home-indicator's height too high.
       var h = nav && getComputedStyle(nav).position === "fixed" ? nav.offsetHeight : 0;
-      bar.style.bottom = "calc(" + (h + 12) + "px + env(safe-area-inset-bottom, 0px))";
+      bar.style.bottom = (h + 12) + "px";
     }
     place();
     window.addEventListener("resize", place);
@@ -1944,6 +1946,17 @@
     }
   }
 
+  // The tab bar's height isn't knowable from CSS: 7 tabs in a 4-wide grid wrap
+  // to two rows on a phone, one row on a wide screen, and it carries the home
+  // indicator inset. Publish the real height so the page can reserve exactly
+  // that much room underneath.
+  function measureNav() {
+    var nav = document.querySelector(".nav");
+    if (!nav) return;
+    var fixed = getComputedStyle(nav).position === "fixed";
+    document.documentElement.style.setProperty("--navh", (fixed ? nav.offsetHeight : 0) + "px");
+  }
+
   function boot(data) {
     state.data = data;
     recalcMyData();               // merge this device's costs + sold entries
@@ -1951,6 +1964,9 @@
     var held = data.cards.filter(function (c) { return !c.sold; }).length;
     document.getElementById("gen").textContent = held + " cards · " + money0(data.summary.total_value);
     setTab("collection");
+    measureNav();
+    window.addEventListener("resize", measureNav);
+    window.addEventListener("orientationchange", measureNav);
     openFromHash();               // shared link straight to a card
     window.addEventListener("hashchange", openFromHash);
     checkVersion(data.app_version);
