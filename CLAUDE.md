@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v42. The live
+  this makes the service worker serve stale CSS/JS. Current: v43. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v42. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v43. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,29 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v43 — nothing says "you sold this" about a comp any more.** Owner added 4
+  comps to CARD-0029 and asked *"it says real sold yours in there — does it
+  think I sold it for that price?"* It didn't (the card was never marked sold,
+  never left the collection), but three bits of wording made it look like it
+  might have, all left over from before the v38 comp/own-sale split:
+  - **The green `SOLD` price-basis pill** was the worst offender — it sat
+    inches from the RED `SOLD` status badge (`.b-soldtag`) and appeared on
+    cards the owner still owns. Renamed to **`REAL`** ("priced from real sold
+    prices you recorded"); all three pills gained `title` tooltips. The word
+    "sold" now belongs to the status badge alone. Keep it that way.
+  - "Real sold — **yours**" → "Real sold — **comps you added**"; the money
+    hero's "N you tracked" → "N comps you added"; the Sales Map row's
+    "(yours)" → "(your comps)"; the no-comps footer now says "what other
+    copies actually sold for, not what you got."
+  - New **⏳ pending state** in `trustNote`: comps still only on this phone
+    (`my_sales_all` entries flagged `local`) now say "N comps added on this
+    phone — save below and they set this card's value in ~2 min", so the gap
+    between typing and the price moving is explained rather than mysterious.
+  Confirmed live on the owner's own data: they had already saved 4 comps
+  ($239/$225/$250/$210) → CARD-0029 **$249 → $232** (median), basis `sold`,
+  `est_price` $249 preserved, `sold: False`, still in the Collection, and the
+  collection total $2,759.88 → **$2,742.88**. The pipeline works; only the
+  labels lied.
 - **v42 — iOS zoom bug fixed (two causes, not one).** Owner: *"when I'm
   clicking stuff it keeps zooming in like I'm double tapping."* Both causes
   were real and needed different fixes:
@@ -702,7 +725,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   Kyren jersey + MERCH-0002 Mayfield helmet still LIVE on eBay at $250 / $300
   (valued $220 / $250 after the 2026-09-09 markdown); MERCH-0003 Jefferson
   jersey **SOLD $255**.
-  All validate clean + drafted. App: **v42**
+  All validate clean + drafted. App: **v43**
   (v33 = one-tap-save fixes: stuck "Saving…" button, typed-but-unsaved
   numbers, and an honest saved state — see the App v33 entry above;
   v28 = **Buy Radar row layout fix** — the v27 honest-reference line ("vs

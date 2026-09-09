@@ -32,12 +32,12 @@
     },
     {
       "d": "2026-09-09",
-      "v": 2759.88,
+      "v": 2742.88,
       "n": 34
     }
   ],
-  "generated": "Sep 09, 2026 \u00b7 17:07 UTC",
-  "app_version": "v42",
+  "generated": "Sep 09, 2026 \u00b7 17:10 UTC",
+  "app_version": "v43",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1732,7 +1732,7 @@
     "graded": 15,
     "priced": 34,
     "total_cost": 120.0,
-    "total_value": 2759.88,
+    "total_value": 2742.88,
     "profit": 279.0,
     "cost_count": 1,
     "listed": 2,
@@ -1755,7 +1755,7 @@
       {
         "name": "Basketball",
         "count": 3,
-        "value": 454.26
+        "value": 437.26
       },
       {
         "name": "Baseball",
@@ -1777,7 +1777,7 @@
       {
         "name": "PSA 10",
         "count": 10,
-        "value": 1531.51
+        "value": 1514.51
       },
       {
         "name": "PSA 9",
@@ -4282,10 +4282,10 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "249.00",
+      "asking_price": "232.00",
       "notes": "PSA app value; Pink Ice",
-      "est_price": "",
-      "price_basis": "asking",
+      "est_price": "249.00",
+      "price_basis": "sold",
       "image": "",
       "line": "2021 Panini Prizm #282 Pink Ice",
       "title": "2021 Panini Prizm Cade Cunningham #282 PSA 10 RC Pink Ice Pistons",
@@ -4295,7 +4295,28 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "my_sales": [],
+      "my_sales": [
+        {
+          "d": "2026-09-09",
+          "p": 239.0,
+          "n": ""
+        },
+        {
+          "d": "2026-09-09",
+          "p": 225.0,
+          "n": ""
+        },
+        {
+          "d": "2026-09-09",
+          "p": 250.0,
+          "n": ""
+        },
+        {
+          "d": "2026-09-09",
+          "p": 210.0,
+          "n": ""
+        }
+      ],
       "prev_price": "",
       "price_series": [
         {
