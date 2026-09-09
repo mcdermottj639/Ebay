@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v36";
+  var APP_VERSION = "v37";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1318,6 +1318,14 @@
     broad:       ["weak",  "No listing of this exact card found — estimated from other cards of this player, so treat it as a ballpark"]
   };
   function trustNote(c) {
+    // A real sold price the owner recorded beats any asking comp — and since
+    // build_web now prices the card off it, say so first.
+    var mine = (c.my_sales || []).length;
+    if (c.price_basis === "sold" && mine) {
+      return '<div class="trust good">✓ Priced off ' + mine + " real sold price" +
+        (mine === 1 ? "" : "s") + " you recorded — the best data we have" +
+        (mine === 1 ? " (add a couple more and it steadies out)" : "") + "</div>";
+    }
     var lv = (c.comps && c.comps.level) || "";
     var t = MATCH_TRUST[lv];
     var n = (c.market && c.market.count) || 0;
@@ -1395,15 +1403,24 @@
         (m.count ? ' <small>· ' + m.count + " listed</small>" : "") + "</b></div>" +
       (range ? '<div class="mkrow"><span>Live range now</span><b class="tnum">' + range + "</b></div>" : "") +
       '<div class="mkrow"><span>' + (c.sold ? "Was valued at" : "Card Vault value") +
-        '</span><b class="tnum">' + money0(cur) + "</b></div>";
+        '</span><b class="tnum">' + money0(cur) + "</b></div>" +
+      (num(c.est_price) > 0 && num(c.est_price) !== cur
+        ? '<div class="mkrow"><span>Our comp estimate was</span><b class="tnum">' +
+          money0(num(c.est_price)) + "</b></div>" : "");
     if (!c.sold && marketSolid(c, m)) {
       var pct = Math.round((m.median - cur) / cur * 100);
       rows += '<div class="mkrow up"><span>Room up to typical</span><b class="tnum">+' +
         money0(m.median - cur) + " · " + pct + "%</b></div>";
     }
     return '<div class="compsbox market"><div class="lab">What it’s going for</div>' + rows + trustNote(c) +
-      '<div class="cfoot">Typical = eBay <b>asking</b> median (' + basisTxt + "). " +
-      "Real sold prices need eBay approval — tap “Sold on eBay” below for actuals.</div></div>";
+      '<div class="cfoot">Typical = eBay <b>asking</b> median. ' +
+      ((c.price_basis === "sold" && (c.my_sales || []).length)
+        // priced off the owner's own recorded sales — don't nag about eBay
+        // approval here, they already have better data than eBay would give us
+        ? "This card’s value is your recorded sold prices, not our estimate."
+        : "This card’s value: " + basisTxt +
+          ". Real sold prices need eBay approval — tap “Sold on eBay” below for actuals.") +
+      "</div></div>";
   }
 
   // ---- The money headline: first thing in the card popup ------------------
@@ -1519,6 +1536,7 @@
       '<div class="cfoot">Tap a lookup button above — Terapeak (in your eBay Seller Hub, free) shows real ' +
       "sold prices — then type what you see. Everything saves on this phone instantly" +
       (ghToken() ? "; “Save to my sheet” backs it up to every device." : "; sending backs it up to every device.") +
+      " A sold price you record becomes this card’s value on the next rebuild (~2 min after saving)." +
       "</div></div>";
   }
 

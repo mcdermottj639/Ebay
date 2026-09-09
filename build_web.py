@@ -188,6 +188,20 @@ def _manual_sales():
     return per_sku
 
 
+def _merged_sales(app_sales):
+    """All tracked sold prices per SKU: the hand-kept CSV plus anything the app
+    saved, deduped on date+price, oldest first. One helper so the value overlay
+    and the card payload can never disagree about what the owner recorded."""
+    per_sku = _manual_sales()
+    for sku, arr in (app_sales or {}).items():
+        have = {(s["d"], s["p"]) for s in per_sku.get(sku, [])}
+        per_sku.setdefault(sku, []).extend(
+            s for s in arr if (s["d"], s["p"]) not in have)
+    for sku in per_sku:
+        per_sku[sku].sort(key=lambda s: s["d"])
+    return per_sku
+
+
 def _my_numbers():
     """App-written data/my_numbers.json — costs + real sold prices the owner
     saves from the Card Vault app itself (the one-tap GitHub save, app v31).
@@ -306,6 +320,22 @@ def _history(total_value: float, n_cards: int) -> list:
     return history[-730:]  # keep ~2 years of dailies
 
 
+def _owner_sold_value(sales) -> float | None:
+    """Median of the owner's most recent 5 tracked sold prices for a card.
+
+    These are REAL sales the owner looked up (eBay sold search / Terapeak /
+    130point) and typed in. eBay denies us the sold-comps API, so this is the
+    only true sold data in the system — better evidence than any asking median,
+    even at n=1. Median of the last 5 so one outlier can't swing the value.
+    """
+    vals = sorted(_num(s.get("p")) for s in (sales or [])[-5:] if _num(s.get("p")) > 0)
+    if not vals:
+        return None
+    mid = len(vals) // 2
+    med = vals[mid] if len(vals) % 2 else (vals[mid - 1] + vals[mid]) / 2
+    return round(med, 2)
+
+
 def build_data(cards) -> dict:
     # App-saved costs fill blank sheet costs BEFORE any money math, so the
     # profit tiles and per-card cost all agree with what the owner entered.
@@ -313,6 +343,21 @@ def build_data(cards) -> dict:
     for c in cards:
         if _num(c.cost) <= 0 and c.sku.upper() in app_costs:
             c.cost = str(app_costs[c.sku.upper()])
+
+    # Real sold prices the owner recorded OUTRANK our asking-comp estimate —
+    # they are the only actual sold data we have. Applied before any money math
+    # so the card, the tiles and the collection total all agree. The sheet's own
+    # price stays on the card as `est_price` so the modal can show both.
+    owner_sold = _merged_sales(app_sales)
+    for c in cards:
+        if c.is_sold():
+            continue
+        med = _owner_sold_value(owner_sold.get(c.sku.upper()))
+        if med is None or med <= 0:
+            continue
+        c.est_price = c.asking_price          # keep the estimate for reference
+        c.asking_price = f"{med:.2f}"
+        c.price_basis = "sold"                # green SOLD pill, honestly earned
 
     unsold = [c for c in cards if not c.is_sold()]
     sold = [c for c in cards if c.is_sold()]
@@ -351,12 +396,7 @@ def build_data(cards) -> dict:
     series_by_sku = _price_series()
     market_by_sku = _market()
     comps_by_sku, comps_as_of = _comps_snapshot()
-    manual_by_sku = _manual_sales()
-    for sku, arr in app_sales.items():          # merge app-saved sales in
-        have = {(s["d"], s["p"]) for s in manual_by_sku.get(sku, [])}
-        manual_by_sku.setdefault(sku, []).extend(
-            s for s in arr if (s["d"], s["p"]) not in have)
-        manual_by_sku[sku].sort(key=lambda s: s["d"])
+    manual_by_sku = _merged_sales(app_sales)
 
     return {
         "history": _history(total_value, len(unsold)),
@@ -395,6 +435,9 @@ def build_data(cards) -> dict:
                 "serial_run": c.serial_run, "condition": c.condition,
                 "authentication": c.grader if c.is_merch() else "",
                 "cost": c.cost, "asking_price": c.asking_price, "notes": c.notes,
+                # our asking-comp estimate, kept when a tracked real sale
+                # replaced it as the card's value
+                "est_price": getattr(c, "est_price", ""),
                 "price_basis": _price_basis(c), "image": _image_for(c.sku),
                 "line": _line(c), "title": titles.build_title(c), "status": _status(c),
                 "listed": c.is_listed(), "sold": c.is_sold(),
