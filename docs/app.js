@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v40";
+  var APP_VERSION = "v41";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1924,6 +1924,12 @@
     window.addEventListener("resize", place);
   }
 
+  function checkVersion(shipped) {
+    if (shipped && shipped !== APP_VERSION && !document.querySelector(".updbar")) {
+      updateBanner(shipped);
+    }
+  }
+
   function boot(data) {
     state.data = data;
     recalcMyData();               // merge this device's costs + sold entries
@@ -1933,7 +1939,17 @@
     setTab("collection");
     openFromHash();               // shared link straight to a card
     window.addEventListener("hashchange", openFromHash);
-    if (data.app_version && data.app_version !== APP_VERSION) updateBanner(data.app_version);
+    checkVersion(data.app_version);
+    // A phone app is resumed far more often than cold-started, and a ship that
+    // lands while it sits in the background would otherwise go unnoticed until
+    // the next full launch. Re-check whenever it comes back to the foreground.
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden || document.querySelector(".updbar")) return;
+      fetch("./data.json?v=" + Date.now())
+        .then(function (r) { return r.json(); })
+        .then(function (d) { checkVersion(d && d.app_version); })
+        .catch(function () {});
+    });
   }
 
   try { var t = localStorage.getItem("cv-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
