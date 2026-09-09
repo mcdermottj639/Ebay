@@ -205,16 +205,20 @@ def _merged_sales(app_sales):
 def _my_numbers():
     """App-written data/my_numbers.json — costs + real sold prices the owner
     saves from the Card Vault app itself (the one-tap GitHub save, app v31).
-    Shape: {"costs": {sku: price}, "sales": {sku: [{d, p, n}]}}. Returns
-    (costs, sales) with the same per-sale shape as _manual_sales; either file
-    works, the app writes this one. Absent until the first in-app save."""
+    Shape: {"costs": {sku: price},
+            "sales": {sku: [{d, p, n}]},     # comps — what OTHERS sold for
+            "sold":  {sku: {d, p}}}          # the owner's OWN sale of the item
+    Returns (costs, sales, sold); `sales` has the same per-sale shape as
+    _manual_sales. The sales/sold split matters: a comp informs the value and
+    the item stays in the collection, while an own-sale retires it into
+    revenue. Absent until the first in-app save."""
     path = DATA / "my_numbers.json"
     if not path.exists():
-        return {}, {}
+        return {}, {}, {}
     try:
         raw = json.loads(path.read_text(encoding="utf-8"))
     except ValueError:
-        return {}, {}
+        return {}, {}, {}
     costs = {}
     for sku, p in (raw.get("costs") or {}).items():
         v = _num(str(p))
@@ -231,7 +235,14 @@ def _my_numbers():
                 "p": round(price, 2),
                 "n": str(s.get("n") or "").strip(),
             })
-    return costs, sales
+    sold: dict[str, dict] = {}
+    for sku, rec in (raw.get("sold") or {}).items():
+        price = _num(str((rec or {}).get("p", "")))
+        if price <= 0:
+            continue
+        sold[sku.strip().upper()] = {"d": str(rec.get("d") or "").strip(),
+                                     "p": round(price, 2)}
+    return costs, sales, sold
 
 
 def _comps_snapshot():
@@ -339,10 +350,20 @@ def _owner_sold_value(sales) -> float | None:
 def build_data(cards) -> dict:
     # App-saved costs fill blank sheet costs BEFORE any money math, so the
     # profit tiles and per-card cost all agree with what the owner entered.
-    app_costs, app_sales = _my_numbers()
+    app_costs, app_sales, app_sold = _my_numbers()
     for c in cards:
         if _num(c.cost) <= 0 and c.sku.upper() in app_costs:
             c.cost = str(app_costs[c.sku.upper()])
+
+    # "I sold this one" from the app retires the item: out of collection value,
+    # into revenue. The sheet still wins if it already records a sale.
+    for c in cards:
+        rec = app_sold.get(c.sku.upper())
+        if not rec or c.is_sold():
+            continue
+        c.sold_price = f"{rec['p']:.2f}"
+        c.sold_date = rec.get("d", "")
+        c.listed = ""
 
     # Real sold prices the owner recorded OUTRANK our asking-comp estimate —
     # they are the only actual sold data we have. Applied before any money math
