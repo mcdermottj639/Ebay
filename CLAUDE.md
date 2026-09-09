@@ -454,6 +454,18 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **Weekly reprice + radar run 2026-09-09 (scheduled Routine, on time and clean).**
+  `reprice.py` applied **8** updates — biggest up: CARD-0028 Kylian Mbappe
+  $99.00 → $132.00 (+33.3%, 9 comps); biggest down: CARD-0008 Jalon Walker
+  $1.75 → $1.31 (-25.1%, 6 comps). Flagged **4** for hand review (too big to
+  auto-apply): CARD-0009 Jack Bech (+181%), CARD-0026 LeBron
+  James/Wembanyama (+92%), CARD-0017 CJ Stroud (+36%), CARD-0003 Cam
+  Skattebo (+42%, a rare flagged DECREASE). Held 11 at hand-set prices. Still
+  on ASKING comps (haircut-estimated sold) — reprice.py did not print "REAL
+  SOLD prices," so Marketplace Insights remains denied. `radar.py` found
+  **30** Buy Radar deals (Jayden Daniels Kabooms/Downtowns still leading).
+  Catalog re-validated clean (35 items). New total collection value:
+  **$3,839.85**. Shipped as PR "Weekly reprice 2026-09-09," merged to main.
 - Catalog: **35 items** — 32 cards + **3 merch** (`MERCH-0001` Kyren Williams
   signed Rams jersey, Beckett COA; `MERCH-0002` Baker Mayfield signed Bucs
   helmet, Beckett Witness cert 1W622369; `MERCH-0003` Justin Jefferson framed
