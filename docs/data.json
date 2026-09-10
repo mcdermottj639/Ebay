@@ -41,8 +41,8 @@
       "n": 34
     }
   ],
-  "generated": "Sep 10, 2026 \u00b7 10:15 UTC",
-  "app_version": "v49",
+  "generated": "Sep 10, 2026 \u00b7 10:20 UTC",
+  "app_version": "v50",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1736,7 +1736,7 @@
     "autos": 9,
     "graded": 15,
     "priced": 34,
-    "total_cost": 220.0,
+    "total_cost": 120.0,
     "total_value": 2449.98,
     "profit": 264.49,
     "cost_count": 2,

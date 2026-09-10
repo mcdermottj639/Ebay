@@ -807,3 +807,15 @@ a.comp:hover .ct { color: var(--gold); }
 .cardspecs > summary::before { content: "▸ "; color: var(--gold); }
 .cardspecs[open] > summary::before { content: "▾ "; }
 .cardspecs > summary:hover { color: var(--gold); }
+
+/* Per-year revenue breakdown under the Business row (v50). Sales from
+   different years must not read as one number. */
+.yearrows { margin: 8px 0 2px; border: 1px solid var(--line); border-radius: 12px;
+            overflow: hidden; background: var(--surface); }
+.yearrow { display: grid; grid-template-columns: auto 1fr auto auto; gap: 10px;
+           align-items: baseline; padding: 9px 12px; font-size: 13.5px; }
+.yearrow + .yearrow { border-top: 1px solid var(--line); }
+.yearrow .yy { font-weight: 800; letter-spacing: .02em; }
+.yearrow .yn { color: var(--muted); font-size: 12.5px; }
+.yearrow b { font-weight: 800; }
+.yearrow .pos { color: var(--good); } .yearrow .neg { color: var(--bad); }

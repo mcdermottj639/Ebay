@@ -416,7 +416,10 @@ def build_data(cards) -> dict:
         g["value"] = round(g["value"] + _num(c.asking_price), 2)
     grade_stats = sorted(grades.values(), key=lambda g: -g["value"])
 
-    total_cost = _money(cards, "cost")
+    # Cost of what you still HOLD. It sits beside Est. profit, which is computed
+    # over unsold cards only, so counting a sold card's cost here made the two
+    # tiles disagree (a sold item's cost belongs to realized profit instead).
+    total_cost = _money(unsold, "cost")
     total_value = _money(unsold, "asking_price")   # estimated value of what you still HOLD
     revenue = _money(sold, "sold_price")
     realized = revenue - _money(sold, "cost")

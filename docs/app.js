@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v49";
+  var APP_VERSION = "v50";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -117,7 +117,9 @@
 
     var costed = data.cards.filter(function (c) { return !c.sold && num(c.asking_price) > 0 && num(c.cost) > 0; });
     data.summary.cost_count = costed.length;
-    data.summary.total_cost = Math.round(data.cards.reduce(function (a, c) { return a + num(c.cost); }, 0) * 100) / 100;
+    // Held cards only — must match build_web and the Est. profit tile beside it.
+    data.summary.total_cost = Math.round(data.cards.reduce(
+      function (a, c) { return c.sold ? a : a + num(c.cost); }, 0) * 100) / 100;
     data.summary.profit = Math.round(costed.reduce(function (a, c) { return a + num(c.asking_price) - num(c.cost); }, 0) * 100) / 100;
   }
 
@@ -669,7 +671,7 @@
 
     // the business row — only once something is listed or sold
     if (s.listed || s.sold) {
-      wrap.appendChild(el('<div class="eyebrow">Business</div>'));
+      wrap.appendChild(el('<div class="eyebrow">Business · all time</div>'));
       var biz = el('<div class="tiles biz"></div>');
       var rCls = s.realized_profit >= 0 ? "pos" : "neg";
       [["Revenue", money(s.revenue), "pos"],
@@ -679,6 +681,34 @@
         biz.appendChild(el('<div class="tile"><div class="k">' + t[0] + '</div><div class="v tnum ' + t[2] + '">' + t[1] + "</div></div>"));
       });
       wrap.appendChild(biz);
+
+      // Sales don't all belong to the same year — the Jalen Hurts card sold in
+      // Sept 2025 and the Jefferson jersey in Sept 2026, and a single "Revenue
+      // $655" tile silently merged them. Break it out whenever more than one
+      // year is represented, so the all-time tiles above stay honest and this
+      // year is still readable at a glance. Computed off c.sold_date rather
+      // than the baked summary, so a sale marked on this device (v48) lands
+      // here immediately too.
+      var byYear = {};
+      state.data.cards.forEach(function (c) {
+        if (!c.sold) return;
+        var y = String(c.sold_date || "").slice(0, 4) || "—";
+        var b = byYear[y] || (byYear[y] = { rev: 0, cost: 0, n: 0 });
+        b.rev += num(c.sold_price); b.cost += num(c.cost); b.n += 1;
+      });
+      var years = Object.keys(byYear).sort().reverse();
+      if (years.length > 1) {
+        var yl = el('<div class="yearrows"></div>');
+        years.forEach(function (y) {
+          var b = byYear[y], profit = b.rev - b.cost;
+          yl.appendChild(el('<div class="yearrow"><span class="yy">' + esc(y) + "</span>" +
+            '<span class="yn">' + b.n + " sold</span>" +
+            '<b class="tnum">' + money0(b.rev) + "</b>" +
+            '<span class="tnum ' + (profit >= 0 ? "pos" : "neg") + '">' +
+              (profit >= 0 ? "+" : "−") + money0(Math.abs(profit)) + "</span></div>"));
+        });
+        wrap.appendChild(yl);
+      }
 
       // The sold items themselves — they left the Collection tab, so this is
       // where the owner sees what they've actually sold and for how much.
