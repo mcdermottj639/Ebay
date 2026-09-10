@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v46";
+  var APP_VERSION = "v47";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1370,13 +1370,21 @@
         (mine === 1 ? "" : "s") + " you recorded for this card — the best data we have" +
         (mine === 1 ? " (add a couple more and it steadies out)" : "") + "</div>";
     }
-    // PSA prices off their own sold data for this exact card AND grade — better
-    // than anything our asking-comp ladder can reach, so it outranks the level.
+    // A card-specific note beats every generic line: it is written for the one
+    // case the basis alone cannot describe honestly (CARD-0032, where PSA's
+    // only recorded sale is a LOWER grade than the card we own). Gold, not
+    // green — the price is anchored to real data but carries a caveat.
+    if (c.basis_note) {
+      return '<div class="trust weak">⚠ ' + esc(c.basis_note) + "</div>";
+    }
+    // PSA prices off their own recorded sales for this exact card AND grade —
+    // better than anything our asking-comp ladder can reach, so it outranks
+    // the match level.
     if (c.price_basis === "psa") {
       var slab = c.graded && c.grader && c.grade
         ? " in a " + esc((c.grader + " " + c.grade).toUpperCase()) + " holder" : "";
-      return '<div class="trust good">✓ PSA’s own market estimate for this card' + slab +
-        " — from their sold data, not our eBay guess</div>";
+      return '<div class="trust good">✓ PSA’s own price for this card' + slab +
+        " — from their recorded sales, not our eBay guess</div>";
     }
     var lv = (c.comps && c.comps.level) || "";
     var t = MATCH_TRUST[lv];
