@@ -819,3 +819,7 @@ a.comp:hover .ct { color: var(--gold); }
 .yearrow .yn { color: var(--muted); font-size: 12.5px; }
 .yearrow b { font-weight: 800; }
 .yearrow .pos { color: var(--good); } .yearrow .neg { color: var(--bad); }
+
+/* Explains a value-chart step caused by re-pricing rather than the market (v51). */
+.trendnote { margin: 8px 2px 0; font-size: 12.5px; line-height: 1.45; color: var(--muted);
+             border-left: 3px solid var(--gold); padding-left: 9px; }
