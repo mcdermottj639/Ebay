@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v47. The live
+  this makes the service worker serve stale CSS/JS. Current: v48. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v47. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v48. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,43 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v48 — "marked sold but still sittin in collection" was a REAL bug, not a
+  stale cache.** Owner's report, and the instinct to blame the service worker
+  was wrong: the live site was correct (Pages run 68 green, `data.json` on main
+  had CARD-0033 `sold: true`), yet the complaint was still valid, because the
+  gap is on the DEVICE between tapping **Mark sold** and the rebuild landing.
+  - **Root cause.** `recalcMyData` applies device-entered **costs** onto
+    `c.cost` and device-entered **comps** onto `c.my_sales_all` — but for
+    `myData.sold[sku]` it did exactly one thing: *prune* it once the sheet
+    caught up. It never applied it. So `c.sold` stayed false, and every
+    `!c.sold` filter in the app (Collection list, tier sections, search,
+    app-bar count, Value tiles) kept showing a card the owner had just sold,
+    for the ~2 minutes until the rebuild — longer on a stale shell. Same
+    half-done shape as the bug v39 fixed for the baked path: v38 added the
+    device `sold` map and wired it to the sync but never to the view.
+  - **Fix.** `recalcMyData` now snapshots the baked values once
+    (`_csvSold`/`_csvSoldPrice`/`_csvSoldDate`/`_csvListed`) and, for a device
+    entry on a card the sheet doesn't yet have sold, sets `c.sold`,
+    `sold_price`, `sold_date`, clears `listed`, and flags **`sold_local`**.
+    Everything downstream then does the right thing with no other change.
+  - ⚠️ **The prune MUST test `c._csvSold`, not `c.sold`.** After this change
+    `c.sold` can be true *because of* the very device entry that still needs
+    syncing — pruning on the live flag would delete the owner's sale before it
+    ever reached GitHub. Verified explicitly: the pending entry survives.
+  - **Money moves with the card.** A card leaving the Collection without
+    appearing in revenue would just be a different lie, so `recalcMyData` also
+    recomputes `total_value` / `revenue` / `realized_profit` / `sold` /
+    `listed` from a one-time `data._baseSummary` snapshot — idempotent, so
+    repeat calls and undo land exactly back on the baked numbers.
+  - The popup's sold section now branches on `c.sold && !c.sold_local`, so a
+    device-marked sale keeps its **undo** link and says "Already out of your
+    collection on this phone. Save below so every device sees it (~2 min)"
+    instead of falsely claiming it's already counted in revenue.
+  Verified at 390px against the real data: (A) baked only → 34 cards, $2,611,
+  Revenue $655 / Sold 2. (B) device sale $150 on CARD-0019 (value $101) → 33
+  cards, **$2,510** (−$101 exactly), Revenue **$805**, Realized **$705**, Sold
+  **3**, and the local entry still pending. (C) a device entry for a card the
+  sheet already has sold → pruned, numbers unchanged, no double-count.
 - **v47 — `basis_note`, and the one card that went UP.** Owner sent the PSA
   detail screen for CARD-0032 Brock Purdy: *"Only thing they have is PSA 8
   sale."* Three things came out of it.
