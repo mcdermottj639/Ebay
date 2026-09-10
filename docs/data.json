@@ -37,11 +37,11 @@
     },
     {
       "d": "2026-09-10",
-      "v": 2949.03,
-      "n": 35
+      "v": 2611.03,
+      "n": 34
     }
   ],
-  "generated": "Sep 10, 2026 \u00b7 09:57 UTC",
+  "generated": "Sep 10, 2026 \u00b7 09:59 UTC",
   "app_version": "v47",
   "targets": [
     {
@@ -1731,21 +1731,21 @@
   "summary": {
     "total_cards": 36,
     "merch": 2,
-    "physical": 35,
-    "rookies": 29,
-    "autos": 10,
-    "graded": 16,
-    "priced": 35,
-    "total_cost": 170.0,
-    "total_value": 2949.03,
+    "physical": 34,
+    "rookies": 28,
+    "autos": 9,
+    "graded": 15,
+    "priced": 34,
+    "total_cost": 220.0,
+    "total_value": 2611.03,
     "profit": 275.0,
     "cost_count": 2,
     "listed": 2,
-    "sold": 1,
-    "revenue": 255.0,
-    "realized_profit": 205.0,
+    "sold": 2,
+    "revenue": 655.0,
+    "realized_profit": 555.0,
     "by_sport": {
-      "Football": 29,
+      "Football": 28,
       "Basketball": 3,
       "Hockey": 1,
       "Soccer": 1,
@@ -1754,8 +1754,8 @@
     "sport_stats": [
       {
         "name": "Football",
-        "count": 29,
-        "value": 2357.03
+        "count": 28,
+        "value": 2019.03
       },
       {
         "name": "Basketball",
@@ -1781,8 +1781,8 @@
     "grade_stats": [
       {
         "name": "PSA 10",
-        "count": 11,
-        "value": 1391.0
+        "count": 10,
+        "value": 1053.0
       },
       {
         "name": "PSA 9",
@@ -4955,7 +4955,7 @@
       "serial_run": "",
       "condition": "",
       "authentication": "",
-      "cost": "",
+      "cost": "50.0",
       "asking_price": "338.00",
       "notes": "PSA app estimate 2026-09-10: $338.00; found in the PSA app 2026-09-10, was missing from the catalog; on-card auto",
       "est_price": "",
@@ -4967,9 +4967,9 @@
       "title": "2020 Panini Donruss Jalen Hurts #TR-JAH PSA 10 AUTO RC The Rookies Autograph",
       "status": "priced",
       "listed": false,
-      "sold": false,
-      "sold_price": "",
-      "sold_date": "",
+      "sold": true,
+      "sold_price": 400.0,
+      "sold_date": "2025-09-10",
       "cert": "",
       "my_sales": [],
       "prev_price": "",

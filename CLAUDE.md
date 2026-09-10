@@ -817,6 +817,19 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **SECOND REAL SALE 2026-09-10 — CARD-0033 Jalen Hurts sold for $400.** The
+  owner marked it sold in the app (one-tap save, `my_numbers.json` `sold` map)
+  minutes after Claude added the card, having also recorded a **$50 cost** →
+  **+$350 realized**. Business row now: **Revenue $655 · Realized profit $555 ·
+  Sold 2 · Listed 2**; held collection value $2,949.03 → **$2,611.03**.
+  ⚠️ **Check the date with the owner: they entered `2025-09-10`, a year before
+  today.** Two readings and they matter — either it's a year typo for today, or
+  the card genuinely sold in Sept **2025**, which would neatly explain why it
+  was missing from the catalog (they no longer owned it) and it should not
+  count as this year's revenue. Left exactly as entered; never silently rewrite
+  an owner-entered figure. Note this is the **v38 `sold` path working end to
+  end for the first time** — marked in-app, synced to GitHub, and the rebuild
+  moved it out of the Collection and into revenue with no Claude edit.
 - **PSA app re-anchor 2026-09-10 — the graded half of the collection was 51%
   overvalued.** Owner sent a screen recording of the PSA app's estimates for
   their 16 graded items ("this is their current market value"). Re-priced 14
