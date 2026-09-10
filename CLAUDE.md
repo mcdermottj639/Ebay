@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v49. The live
+  this makes the service worker serve stale CSS/JS. Current: v50. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v49. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v50. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,27 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v50 — revenue is split by YEAR, because the two sales aren't from the same
+  one.** Owner confirmed the Jalen Hurts card sold **Sept 2025**, a year before
+  the Jefferson jersey (Sept 2026) — which also explains why it was missing
+  from the catalog: they'd already sold it. So the date stands as entered;
+  nothing to correct. But a single "Revenue $655" tile silently merged two tax
+  years, which is wrong for a business.
+  - The Business eyebrow now reads **"Business · all time"**, and whenever more
+    than one year is represented a compact `.yearrows` panel breaks it out —
+    `2026 · 1 sold · $255 · +$205` / `2025 · 1 sold · $400 · +$350`. One year
+    only → no panel, so nothing changes until it's needed.
+  - Computed client-side off `c.sold_date`, not the baked summary, so a sale
+    marked on the device (v48) appears in its year immediately.
+  - ⚠️ **Fixed alongside: `total_cost` counted SOLD cards.** It sits right next
+    to Est. profit, which is computed over unsold cards only, so the two tiles
+    disagreed — Total cost $220 (incl. the Jefferson and Hurts costs) beside a
+    profit figure built on $120 of held cost. A sold card's cost belongs to
+    realized profit, not to what you hold. Now `_money(unsold, "cost")` in
+    `build_web` **and** the matching `!c.sold` guard in `recalcMyData` — change
+    both together or the app and the build drift apart.
+  Verified at 390px both themes and 1280px: Total cost **$120.00** beside Est.
+  profit **$264.49** (same two cards), both year rows correct, no overflow.
 - **v49 — REAL SOLD DATA, at last: the owner started sending Terapeak screens.**
   Four screen recordings, no words, each one eBay's **sold** research page opened
   from the app's 📊 Terapeak button (the v30 deep-link). This is the workaround
@@ -903,17 +924,17 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   **Keep sending these — it is the best pricing input we have.** Next ones
   worth pulling: CARD-0030 Matt McLain, CARD-0024 Sam LaPorta, CARD-0032 Brock
   Purdy (a PSA 9 sale would replace the PSA 8 floor), and the two merch rows.
-- **SECOND REAL SALE 2026-09-10 — CARD-0033 Jalen Hurts sold for $400.** The
+- **SECOND REAL SALE (recorded 2026-09-10, SOLD Sept 2025) — CARD-0033 Jalen
+  Hurts, $400.** The
   owner marked it sold in the app (one-tap save, `my_numbers.json` `sold` map)
   minutes after Claude added the card, having also recorded a **$50 cost** →
   **+$350 realized**. Business row now: **Revenue $655 · Realized profit $555 ·
   Sold 2 · Listed 2**; held collection value $2,949.03 → **$2,611.03**.
-  ⚠️ **Check the date with the owner: they entered `2025-09-10`, a year before
-  today.** Two readings and they matter — either it's a year typo for today, or
-  the card genuinely sold in Sept **2025**, which would neatly explain why it
-  was missing from the catalog (they no longer owned it) and it should not
-  count as this year's revenue. Left exactly as entered; never silently rewrite
-  an owner-entered figure. Note this is the **v38 `sold` path working end to
+  ✅ **Date confirmed by the owner: it really did sell in Sept 2025** — a year
+  before the Jefferson jersey — which is exactly why it was missing from the
+  catalog (they no longer owned it). Left as entered; the fix was to stop
+  merging two years into one revenue number (see **v50**). The instinct to ask
+  rather than "correct" the odd-looking date was the right one. Note this is the **v38 `sold` path working end to
   end for the first time** — marked in-app, synced to GitHub, and the rebuild
   moved it out of the Collection and into revenue with no Claude edit.
 - **PSA app re-anchor 2026-09-10 — the graded half of the collection was 51%
