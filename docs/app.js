@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v48";
+  var APP_VERSION = "v49";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1406,6 +1406,15 @@
       return '<div class="trust weak">⏳ ' + local + " comp" + (local === 1 ? "" : "s") +
         " added on this phone — save below and they set this card’s value in ~2 min</div>";
     }
+    // A card-specific note outranks every generic line — including the green
+    // "priced off real sold prices" one. It exists for the cases the basis
+    // alone cannot describe honestly: PSA's only sale being a LOWER grade than
+    // the card we own (CARD-0032), a single 20-month-old comp (CARD-0021), or
+    // comps that are near-misses on the parallel (CARD-0018). Gold, not green:
+    // the price is anchored to real data but the read is thin.
+    if (c.basis_note) {
+      return '<div class="trust weak">⚠ ' + esc(c.basis_note) + "</div>";
+    }
     // A real sold price the owner recorded beats any asking comp — and since
     // build_web now prices the card off it, say so first.
     var mine = (c.my_sales || []).length;
@@ -1413,13 +1422,6 @@
       return '<div class="trust good">✓ Priced off ' + mine + " real sold price" +
         (mine === 1 ? "" : "s") + " you recorded for this card — the best data we have" +
         (mine === 1 ? " (add a couple more and it steadies out)" : "") + "</div>";
-    }
-    // A card-specific note beats every generic line: it is written for the one
-    // case the basis alone cannot describe honestly (CARD-0032, where PSA's
-    // only recorded sale is a LOWER grade than the card we own). Gold, not
-    // green — the price is anchored to real data but carries a caveat.
-    if (c.basis_note) {
-      return '<div class="trust weak">⚠ ' + esc(c.basis_note) + "</div>";
     }
     // PSA prices off their own recorded sales for this exact card AND grade —
     // better than anything our asking-comp ladder can reach, so it outranks
