@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v45. The live
+  this makes the service worker serve stale CSS/JS. Current: v46. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v45. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v46. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,54 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v46 — PSA's own estimates are now a first-class price basis (`psa`).** The
+  owner sent a screen recording of the PSA app's Collection tab: 16 graded items
+  with PSA's market estimate on each, saying "this is their current market
+  value." Two things came out of it.
+  - **We were 51% over PSA across the board.** The 14 graded cards we could
+    match totalled **$1,734.82** on our numbers vs **$1,150** on PSA's. Worst
+    offenders: CARD-0027 Deshaun Watson $44 → **$12** (-73%), CARD-0012 Wiseman
+    $22.66 → **$9** (-60%), CARD-0022 Bijan TOTC auto $349 → **$163** (-53%),
+    CARD-0024 LaPorta $105.59 → **$53** (-50%), CARD-0028 Mbappe $132 → **$67**
+    (-49%). Root cause is structural, not a bug: **every one of those rows had
+    "PSA app value" in its notes** — they were originally PSA-anchored, and
+    `reprice.py` then walked them upward off ACTIVE/asking comps week after
+    week. Asking medians run above sold; PSA reads real sales. Same lesson as
+    the MERCH-0003 jersey ($699 valued → $255 sold), now with 14 more datapoints.
+  - **`price_basis = "psa"`** is the fix that makes it stick. `catalog.py`
+    documents it, `build_web._price_basis` accepts it, and **`reprice.py` will
+    never auto-apply over a `psa` row** (`psa_anchored` check next to
+    `SKIP_SKUS` — self-maintaining, so no SKU list to remember). App side: a
+    violet **PSA** basis pill (`.b-psaval` — deliberately NOT PSA's brand red,
+    which would sit next to the red SOLD status badge, the exact confusion v43
+    removed; note `.b-psa` was already taken by the gold grade badge), a green
+    trust note "✓ PSA's own market estimate for this card in a PSA 10 holder —
+    from their sold data, not our eBay guess", `sellScore` price confidence 9
+    (between `sold` 10 and `est_sold` 6), and basis-aware wording in
+    `moneyHero` + `marketBox`.
+  - ⚠️ **`marketSolid` now returns false for `psa` AND `sold` bases.** The
+    "Room up to typical +84%" row was firing on PSA-priced cards — telling the
+    owner there was upside to the eBay ASKING median, which is precisely the
+    inflation we just corrected for. On those cards the modal now says
+    **"Sellers ask above this +84%"** instead: the same two numbers, read the
+    right way round. Never re-enable headroom against an asking median on a
+    price that came from sold data.
+  - Precedence, unchanged and deliberate: `sold_price` > owner-recorded sold
+    comps (`_owner_sold_value`) > PSA > est_sold > asking. CARD-0029 Cade
+    Cunningham keeps the owner's own 4 recorded comps ($232) and shows
+    **"PSA's estimate was $215"** underneath — the new `est_basis` field on the
+    card payload is what lets that row name its source instead of always saying
+    "Our comp estimate was".
+  - **CARD-0033 Jalen Hurts** (2020 Donruss The Rookies Autograph TR-JAH, PSA
+    10, **$338** — the collection's most valuable card) was in the PSA app and
+    **missing from the catalog entirely**, same as MERCH-0003 was. Added.
+  - ⏳ **Open:** CARD-0032 Brock Purdy (2022 Certified Rookie Signatures Mirror
+    Teal Etch, PSA 9) is the 16th item but the recording scrolled past before
+    its price rendered — still at its hand-set **$199** on `asking` basis.
+    Ask the owner for that one number and flip it to `psa`.
+  Collection value $2,742.88 → **$2,530.06** (graded down $550.82, Hurts up
+  $338). Verified at 390px both themes + 1280px desktop: 14 PSA pills, no
+  horizontal overflow, both modal paths correct.
 - **v45 — the tab bar is IN the page flow now (the real fix for v44).** v44
   treated the owner's "bottom menu rises up" as a perception problem, because
   headless Chromium measured the bar identically on both tabs. Their next two
@@ -736,6 +784,15 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **PSA app re-anchor 2026-09-10 — the graded half of the collection was 51%
+  overvalued.** Owner sent a screen recording of the PSA app's estimates for
+  their 16 graded items ("this is their current market value"). Re-priced 14
+  cards to PSA's numbers on the new **`psa`** basis, added the missing
+  **CARD-0033 Jalen Hurts** PSA 10 auto ($338), and stopped `reprice.py` from
+  ever walking a PSA-anchored price back up off asking comps. Collection value
+  $2,742.88 → **$2,530.06**. Full detail in the **v46** architecture entry
+  above. ⏳ **Owner still owes one number: CARD-0032 Brock Purdy** — it's the
+  16th card in the app but its price scrolled off-screen before it rendered.
 - **Weekly reprice + radar run 2026-09-09 (scheduled Routine, on time and clean).**
   `reprice.py` applied **8** updates — biggest up: CARD-0028 Kylian Mbappe
   $99.00 → $132.00 (+33.3%, 9 comps); biggest down: CARD-0008 Jalon Walker
@@ -764,7 +821,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   MERCH-0002 Mayfield replica helmet $449), ask the owner whether $255 was a
   quick-sale Best Offer or a fair read, then reprice accordingly — a comparable
   haircut would put Kyren nearer ~$200 and the helmet nearer ~$230.
-- Catalog: **35 items** (34 held + **1 sold**) — 32 cards + **3 merch** (`MERCH-0001` Kyren Williams
+- Catalog: **36 items** (35 held + **1 sold**) — 33 cards + **3 merch** (`MERCH-0001` Kyren Williams
   signed Rams jersey, Beckett COA; `MERCH-0002` Baker Mayfield signed Bucs
   helmet, Beckett Witness cert 1W622369; `MERCH-0003` Justin Jefferson framed
   signed Vikings jersey, Beckett — added 2026-08-10, see the live-listings note
