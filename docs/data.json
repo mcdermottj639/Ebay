@@ -37,12 +37,12 @@
     },
     {
       "d": "2026-09-10",
-      "v": 2611.03,
+      "v": 2449.98,
       "n": 34
     }
   ],
-  "generated": "Sep 10, 2026 \u00b7 10:06 UTC",
-  "app_version": "v48",
+  "generated": "Sep 10, 2026 \u00b7 10:15 UTC",
+  "app_version": "v49",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1737,8 +1737,8 @@
     "graded": 15,
     "priced": 34,
     "total_cost": 220.0,
-    "total_value": 2611.03,
-    "profit": 275.0,
+    "total_value": 2449.98,
+    "profit": 264.49,
     "cost_count": 2,
     "listed": 2,
     "sold": 2,
@@ -1755,12 +1755,12 @@
       {
         "name": "Football",
         "count": 28,
-        "value": 2019.03
+        "value": 1840.48
       },
       {
         "name": "Basketball",
         "count": 3,
-        "value": 401.0
+        "value": 418.5
       },
       {
         "name": "Baseball",
@@ -1782,7 +1782,7 @@
       {
         "name": "PSA 10",
         "count": 10,
-        "value": 1053.0
+        "value": 946.99
       },
       {
         "name": "PSA 9",
@@ -1792,7 +1792,7 @@
       {
         "name": "Raw",
         "count": 17,
-        "value": 356.06
+        "value": 301.02
       }
     ]
   },
@@ -3370,12 +3370,12 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "74.99",
-      "notes": "Thrillers insert /75",
-      "est_price": "",
-      "est_basis": "",
-      "basis_note": "",
-      "price_basis": "asking",
+      "asking_price": "19.95",
+      "notes": "Repriced 2026-09-10 off real eBay SOLD data (Terapeak, owner-supplied): was $74.99 asking, above every Thrillers sale in two years; Thrillers insert /75",
+      "est_price": "74.99",
+      "est_basis": "asking",
+      "basis_note": "No sale of this exact parallel found. Priced off the wider Thrillers run, which sold $3-$45 over two years (eBay 2yr average $21.85) - and ours is raw, not graded.",
+      "price_basis": "sold",
       "image": "",
       "line": "2023 Panini Rookies & Stars #TH-13",
       "title": "2023 Panini Rookies & Stars Anthony Richardson #TH-13 /75 RC Thrillers Colts",
@@ -3385,7 +3385,43 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "my_sales": [],
+      "my_sales": [
+        {
+          "d": "2024-10-16",
+          "p": 22.5,
+          "n": "eBay sold (Terapeak 2yr): Rookies & Stars Thrillers PINK #TH13 Anthony Richardson"
+        },
+        {
+          "d": "2024-11-19",
+          "p": 35.0,
+          "n": "eBay sold (Terapeak 2yr): Rookies & Stars #TH-13 Thrillers Pandora Anthony Richardson"
+        },
+        {
+          "d": "2025-01-25",
+          "p": 21.5,
+          "n": "eBay sold (Terapeak 2yr): Rookies & Stars Anthony Richardson Thrillers Black Pandora"
+        },
+        {
+          "d": "2025-05-01",
+          "p": 45.0,
+          "n": "eBay sold (Terapeak 2yr): Rookies & Stars Anthony Richardson Thrillers Black Pandora"
+        },
+        {
+          "d": "2025-07-13",
+          "p": 19.95,
+          "n": "eBay sold (Terapeak 2yr): Rookies & Stars Anthony Richardson Pandora Thrillers /75"
+        },
+        {
+          "d": "2025-08-05",
+          "p": 17.5,
+          "n": "eBay sold (Terapeak 2yr): Rookies & Stars Thrillers Pandora Anthony Richardson"
+        },
+        {
+          "d": "2025-11-28",
+          "p": 3.0,
+          "n": "eBay sold (Terapeak 2yr): Rookies & Stars Thrillers Anthony Richardson"
+        }
+      ],
       "prev_price": 74.99,
       "price_series": [
         {
@@ -3649,12 +3685,12 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "168.00",
+      "asking_price": "55.00",
       "notes": "PSA app estimate 2026-09-10: $168.00 (was $189.00); on-card auto",
-      "est_price": "",
-      "est_basis": "",
-      "basis_note": "",
-      "price_basis": "psa",
+      "est_price": "168.00",
+      "est_basis": "psa",
+      "basis_note": "Only ONE sale of this exact card in two years ($55, Jan 2025) - a thin read. Across all 2019 Prizm Pollard autos eBay's 2yr average is $82.63 and falling 34%; the $216 sales are the rarer Gold Prizm.",
+      "price_basis": "sold",
       "image": "",
       "line": "2019 Panini Prizm #339",
       "title": "2019 Panini Prizm Tony Pollard #339 PSA 10 AUTO RC Autograph Cowboys",
@@ -3664,7 +3700,13 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
-      "my_sales": [],
+      "my_sales": [
+        {
+          "d": "2025-01-12",
+          "p": 55.0,
+          "n": "eBay sold (Terapeak 2yr): 2019 Prizm Tony Pollard Rookie Auto RC #339 PSA 10 - only sale of this exact card"
+        }
+      ],
       "prev_price": 189.0,
       "price_series": [
         {
@@ -3737,12 +3779,12 @@
       "condition": "",
       "authentication": "",
       "cost": "70.0",
-      "asking_price": "163.00",
+      "asking_price": "152.49",
       "notes": "PSA app estimate 2026-09-10: $163.00 (was $349.00); Turn of the Century auto; PSA cert 83143720",
-      "est_price": "",
-      "est_basis": "",
+      "est_price": "163.00",
+      "est_basis": "psa",
       "basis_note": "",
-      "price_basis": "psa",
+      "price_basis": "sold",
       "image": "./img/CARD-0022.jpg",
       "line": "2023 Panini Donruss Elite #TC-BRO",
       "title": "2023 Panini Donruss Elite Bijan Robinson #TC-BRO PSA 10 AUTO /249 RC",
@@ -3752,7 +3794,33 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "83143720",
-      "my_sales": [],
+      "my_sales": [
+        {
+          "d": "2024-09-14",
+          "p": 152.49,
+          "n": "eBay sold (Terapeak 2yr): Donruss Elite Turn of the Century Auto Bijan Robinson /249"
+        },
+        {
+          "d": "2024-09-28",
+          "p": 124.5,
+          "n": "eBay sold (Terapeak 2yr): Donruss Elite Turn of the Century Auto Bijan Robinson /249"
+        },
+        {
+          "d": "2024-11-23",
+          "p": 255.0,
+          "n": "eBay sold (Terapeak 2yr): Donruss Elite Turn of the Century Auto Bijan Robinson /249"
+        },
+        {
+          "d": "2025-04-14",
+          "p": 255.0,
+          "n": "eBay sold (Terapeak 2yr): Donruss Elite Bijan Robinson Turn of the Century Auto"
+        },
+        {
+          "d": "2025-07-24",
+          "p": 150.0,
+          "n": "eBay sold (Terapeak 2yr): Donruss Elite Turn of the Century Auto Bijan Robinson /249"
+        }
+      ],
       "prev_price": 349.0,
       "price_series": [
         {
@@ -4079,12 +4147,12 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "160.00",
+      "asking_price": "177.50",
       "notes": "PSA app estimate 2026-09-10: $160.00 (was $182.60); dual-player card; PSA cert 90720092",
-      "est_price": "",
-      "est_basis": "",
+      "est_price": "160.00",
+      "est_basis": "psa",
       "basis_note": "",
-      "price_basis": "psa",
+      "price_basis": "sold",
       "image": "./img/CARD-0026.jpg",
       "line": "2023 Panini Instant #371",
       "title": "2023 Panini Instant LeBron James / Victor Wembanyama #371 PSA 10",
@@ -4094,7 +4162,48 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "90720092",
-      "my_sales": [],
+      "my_sales": [
+        {
+          "d": "2026-06-13",
+          "p": 60.0,
+          "n": "eBay sold (Terapeak 90d): Panini Instant LeBron/Wembanyama #371 PSA - low outlier, likely a lesser grade"
+        },
+        {
+          "d": "2026-06-14",
+          "p": 149.0,
+          "n": "eBay sold (Terapeak 90d): 2023 Panini Instant #371 LeBron James/Victor Wembanyama"
+        },
+        {
+          "d": "2026-06-19",
+          "p": 185.0,
+          "n": "eBay sold (Terapeak 90d): 2023-24 Panini Instant LeBron James, Victor Wembanyama #371"
+        },
+        {
+          "d": "2026-07-18",
+          "p": 200.0,
+          "n": "eBay sold (Terapeak 90d): 2023 Panini #371 LeBron James vs Wembanyama rookie card"
+        },
+        {
+          "d": "2026-07-24",
+          "p": 177.5,
+          "n": "eBay sold (Terapeak 90d): 2023-24 Panini Instant LeBron James, Victor Wembanyama #371"
+        },
+        {
+          "d": "2026-07-31",
+          "p": 175.0,
+          "n": "eBay sold (Terapeak 90d): 2023-24 Panini Instant LeBron James / Victor Wembanyama"
+        },
+        {
+          "d": "2026-08-11",
+          "p": 190.0,
+          "n": "eBay sold (Terapeak 90d): 2023-24 Victor Wembanyama Rookie LeBron James #371 PSA"
+        },
+        {
+          "d": "2026-09-03",
+          "p": 165.0,
+          "n": "eBay sold (Terapeak 90d): 2023-24 Panini Instant LeBron James, Victor Wembanyama #371"
+        }
+      ],
       "prev_price": 182.6,
       "price_series": [
         {

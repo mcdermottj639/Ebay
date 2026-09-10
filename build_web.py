@@ -521,7 +521,18 @@ def main() -> int:
         # A <title> makes the file publishable as an Artifact (a hosted page the
         # owner can actually open — raw HTML files preview without running JS).
         preview = (
+            # charset FIRST and within the first 1024 bytes: without it the
+            # browser sniffs windows-1252 and every emoji, curly quote and
+            # em-dash in the app renders as mojibake (the tab icons, the ✓/⚠
+            # trust notes, "What it's going for"). index.html carries both tags.
+            '<meta charset="utf-8">\n'
             "<title>Card Vault — Preview</title>\n"
+            # Without this the preview lays out at desktop width (~980px) in a
+            # phone-sized window, so any width check run against it is
+            # meaningless — it reported a 7px overflow that the real
+            # docs/index.html does not have. index.html carries the same tag.
+            '<meta name="viewport" content="width=device-width, initial-scale=1, '
+            'viewport-fit=cover">\n'
             "<style>\n" + css + "\n</style>\n<div id=\"root\"></div>\n"
             "<script>window.__CARD_DATA__=" + json.dumps(data) + ";\n" + appjs + "\n</script>"
         )

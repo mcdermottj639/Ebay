@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v48. The live
+  this makes the service worker serve stale CSS/JS. Current: v49. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v48. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v49. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,47 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v49 — REAL SOLD DATA, at last: the owner started sending Terapeak screens.**
+  Four screen recordings, no words, each one eBay's **sold** research page opened
+  from the app's 📊 Terapeak button (the v30 deep-link). This is the workaround
+  the whole architecture has been waiting on since eBay denied Marketplace
+  Insights — actual sale prices with dates, transcribed into
+  `data/manual_sales.csv` exactly as the file's docstring intends. **21 rows
+  added**, and `_owner_sold_value` then repriced four cards with no code change.
+  - **PSA vs real eBay sold — the cross-check, and it cuts both ways:**
+
+    | Card | PSA app | eBay sold (Terapeak) | Verdict |
+    |---|---|---|---|
+    | CARD-0022 Bijan TOTC auto | $163 | **2yr avg $163.05** | dead on |
+    | CARD-0026 LeBron/Wemby #371 | $160 | **90d avg $165.85** | close |
+    | CARD-0021 Tony Pollard PSA 10 | $168 | **$55** (only exact sale in 2 yrs) | **PSA badly off** |
+
+    So **PSA is trustworthy where a card trades often and unreliable where it
+    doesn't** — exactly the n=1 risk flagged in v47 when the detail screen turned
+    out to say "Last Sold". The tell was on screen the whole time: Pollard's
+    Collection row showed **+205.5%**, i.e. one spiky sale, not a market. ⚠️
+    **Treat a big ± % chip on a PSA row as a warning, not a valuation** — go get
+    the Terapeak read before trusting it.
+  - **Repriced off real sales** (all four now basis `sold`, keeping the old
+    number as `est_price` so the modal shows "PSA's estimate was $168"):
+    CARD-0021 Pollard **$168 → $55** (1 comp), CARD-0022 Bijan **$163 →
+    $152.49** (5), CARD-0026 LeBron/Wemby **$160 → $177.50** (8, and the only
+    card to go UP), CARD-0018 Anthony Richardson Thrillers /75 **$74.99 →
+    $19.95** (7) — that last one was hand-set above *every* Thrillers sale in
+    two years ($3–$45, avg $21.85) and is raw, not graded.
+    Held collection value $2,611.03 → **$2,449.98**.
+  - **`basis_note` moved ABOVE the green "priced off real sold prices" line** in
+    `trustNote`. It is an explicit per-card override and has to outrank every
+    generic note, or a thin read hides behind a confident green tick. Pollard
+    (n=1, 20 months old) and Richardson (no exact-parallel match) both carry one.
+  - ⚠️ **`output/preview.html` was missing `<meta charset>` AND
+    `<meta name="viewport">`** — both now emitted by `build_web` ahead of the
+    `<title>`. Two real traps: without charset the browser sniffs windows-1252
+    and every emoji, ✓/⚠ and curly quote renders as mojibake; without viewport
+    it lays out at ~980px, so **a width check run against the preview is
+    meaningless** — it reported a 7px overflow that `docs/index.html` (verified
+    clean at 390/360/1280) does not have. Measure layout against `docs/`, not
+    the preview, and keep both tags.
 - **v48 — "marked sold but still sittin in collection" was a REAL bug, not a
   stale cache.** Owner's report, and the instinct to blame the service worker
   was wrong: the live site was correct (Pages run 68 green, `data.json` on main
@@ -854,6 +895,14 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **REAL SOLD DATA ARRIVED 2026-09-10 (v49).** Owner started sending Terapeak
+  sold screens from the app's deep-link — 21 real sales transcribed into
+  `manual_sales.csv`, repricing 4 cards. Confirmed PSA is right on cards that
+  trade often (Bijan $163 vs eBay $163.05) and badly wrong on ones that don't
+  (Pollard $168 vs a single real sale at $55). Held value **$2,449.98**.
+  **Keep sending these — it is the best pricing input we have.** Next ones
+  worth pulling: CARD-0030 Matt McLain, CARD-0024 Sam LaPorta, CARD-0032 Brock
+  Purdy (a PSA 9 sale would replace the PSA 8 floor), and the two merch rows.
 - **SECOND REAL SALE 2026-09-10 — CARD-0033 Jalen Hurts sold for $400.** The
   owner marked it sold in the app (one-tap save, `my_numbers.json` `sold` map)
   minutes after Claude added the card, having also recorded a **$50 cost** →
