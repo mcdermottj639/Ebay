@@ -22,7 +22,7 @@ COLUMNS = [
     "sku", "item_type", "sport", "year", "brand", "set", "player", "card_number",
     "parallel", "insert", "team", "league", "rookie", "autograph",
     "serial_run", "graded", "grader", "grade", "condition",
-    "quantity", "cost", "asking_price", "notes", "price_basis",
+    "quantity", "cost", "asking_price", "notes", "price_basis", "basis_note",
     "listed", "sold_price", "sold_date",
 ]
 
@@ -59,11 +59,19 @@ class Card:
     cost: str = ""
     asking_price: str = ""
     notes: str = ""
-    # "sold" (real sold comps the owner recorded), "psa" (the PSA app's own
-    # market estimate for this card+grade — their sold data, hand-entered from
-    # the app; never auto-repriced), "est_sold" (asking comps
+    # Where this row's price came from:
+    #   "sold"     real sold prices the owner recorded
+    #   "psa"      PSA's own number for this card at this grade (their recorded
+    #              sales, hand-entered from the PSA app; never auto-repriced)
+    #   "est_sold" eBay asking comps, minus a haircut to estimate market
+    #   "asking"   raw active eBay listings
     price_basis: str = ""
-                            # minus a haircut to estimate market), or "asking"
+    # One plain-English sentence naming what this price is actually built on,
+    # shown in the app in place of the generic trust line. For the cases the
+    # basis alone can't tell honestly — e.g. CARD-0032, where PSA's only
+    # recorded sale is a lower grade than the card we own. Blank = use the
+    # generic line.
+    basis_note: str = ""
     listed: str = ""        # yes = live on eBay right now
     sold_price: str = ""    # actual sale price — filling this marks the item SOLD
     sold_date: str = ""     # when it sold (YYYY-MM-DD)

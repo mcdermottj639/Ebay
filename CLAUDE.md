@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v46. The live
+  this makes the service worker serve stale CSS/JS. Current: v47. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v46. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v47. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,39 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v47 — `basis_note`, and the one card that went UP.** Owner sent the PSA
+  detail screen for CARD-0032 Brock Purdy: *"Only thing they have is PSA 8
+  sale."* Three things came out of it.
+  - **Catalog bug: the card is serialled `/15` and `serial_run` was blank.**
+    So it was titling and scoring as un-numbered — it missed the Numbered
+    filter and the `sellScore` numbered-liquidity points. Fixed; the eBay title
+    now reads `... PSA 9 AUTO /15 RC Mirror Teal Etch`. Worth spot-checking
+    `serial_run` on other parallels when a PSA screen shows one.
+  - **$199 → $617.97, the only price today that rose.** PSA's sole recorded
+    sale of this card is a **PSA 8 at $617.97 (Sep 19 2024)** and ours is a
+    **PSA 9**. Live eBay backs up that our hand-set $199 was far too low: the
+    *less rare* /50 Mirror Teal PSA 9 auto asks $574–$1,499, the Mirror Red
+    Etch /25 PSA 9 asks $1,000, and a raw Teal Etch 1/15 asks $2,800. Priced to
+    the one real SOLD number as a **conservative floor** rather than to any of
+    those asks — pricing off asking medians is the exact mistake v46 undid.
+    Revisit when a PSA 9 of this card actually sells.
+  - **New optional column `basis_note`** (catalog.py `COLUMNS`, carried through
+    `build_web` to the card payload). One plain sentence naming what a price is
+    really built on, for the cases `price_basis` alone can't describe honestly.
+    `trustNote` renders it **first, in gold**, ahead of every generic line —
+    here: "⚠ PSA has only one recorded sale of this card and it is a PSA 8
+    ($617.97, Sep 19 2024) — ours is a PSA 9, so this is a floor, not a
+    ceiling." Blank on every other row, so nothing else changed. Use it instead
+    of hardcoding a caveat in the UI (same lesson as v35's haircut).
+  - ⚠️ **Wording softened: "market estimate" → "price … from their recorded
+    sales."** This detail screen labels PSA's number **Last Sold**, which
+    suggests the Collection-list figures are recorded sale prices rather than a
+    modelled estimate (the ± % chips then read as change vs the prior sale).
+    Not confirmed — but the softer phrasing is true either way. **If it IS
+    last-sold, those are n=1 reads**, which matters for thin cards; worth
+    checking a couple of detail screens against the list before leaning harder
+    on them.
+  Collection value $2,530.06 → **$2,949.03**.
 - **v46 — PSA's own estimates are now a first-class price basis (`psa`).** The
   owner sent a screen recording of the PSA app's Collection tab: 16 graded items
   with PSA's market estimate on each, saying "this is their current market
@@ -784,6 +817,19 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **SECOND REAL SALE 2026-09-10 — CARD-0033 Jalen Hurts sold for $400.** The
+  owner marked it sold in the app (one-tap save, `my_numbers.json` `sold` map)
+  minutes after Claude added the card, having also recorded a **$50 cost** →
+  **+$350 realized**. Business row now: **Revenue $655 · Realized profit $555 ·
+  Sold 2 · Listed 2**; held collection value $2,949.03 → **$2,611.03**.
+  ⚠️ **Check the date with the owner: they entered `2025-09-10`, a year before
+  today.** Two readings and they matter — either it's a year typo for today, or
+  the card genuinely sold in Sept **2025**, which would neatly explain why it
+  was missing from the catalog (they no longer owned it) and it should not
+  count as this year's revenue. Left exactly as entered; never silently rewrite
+  an owner-entered figure. Note this is the **v38 `sold` path working end to
+  end for the first time** — marked in-app, synced to GitHub, and the rebuild
+  moved it out of the Collection and into revenue with no Claude edit.
 - **PSA app re-anchor 2026-09-10 — the graded half of the collection was 51%
   overvalued.** Owner sent a screen recording of the PSA app's estimates for
   their 16 graded items ("this is their current market value"). Re-priced 14
@@ -791,8 +837,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   **CARD-0033 Jalen Hurts** PSA 10 auto ($338), and stopped `reprice.py` from
   ever walking a PSA-anchored price back up off asking comps. Collection value
   $2,742.88 → **$2,530.06**. Full detail in the **v46** architecture entry
-  above. ⏳ **Owner still owes one number: CARD-0032 Brock Purdy** — it's the
-  16th card in the app but its price scrolled off-screen before it rendered.
+  above. **CARD-0032 Brock Purdy closed out 2026-09-10 (v47)** — PSA's only
+  record is a **PSA 8 sale at $617.97**, so the hand-set $199 was far too low;
+  re-priced to that as a floor (ours is a PSA 9) and fixed a blank `serial_run`
+  on what is actually a **/15**. Collection value **$2,949.03**.
 - **Weekly reprice + radar run 2026-09-09 (scheduled Routine, on time and clean).**
   `reprice.py` applied **8** updates — biggest up: CARD-0028 Kylian Mbappe
   $99.00 → $132.00 (+33.3%, 9 comps); biggest down: CARD-0008 Jalon Walker

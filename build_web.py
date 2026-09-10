@@ -480,6 +480,7 @@ def build_data(cards) -> dict:
                 # replaced it as the card's value
                 "est_price": getattr(c, "est_price", ""),
                 "est_basis": getattr(c, "est_basis", ""),
+                "basis_note": c.basis_note,
                 "price_basis": _price_basis(c), "image": _image_for(c.sku),
                 "line": _line(c), "title": titles.build_title(c), "status": _status(c),
                 "listed": c.is_listed(), "sold": c.is_sold(),
