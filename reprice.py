@@ -33,7 +33,13 @@ from ebaytools import catalog, comps, config  # noqa: E402
 ROOT = Path(__file__).parent
 SNAPSHOT = ROOT / "data" / "comps_snapshot.json"
 HISTORY = ROOT / "data" / "price_history.csv"
-HISTORY_COLS = ["date", "sku", "price", "basis", "median", "count", "source", "applied"]
+# `kind` separates a real market observation from a CORRECTION — a day we
+# re-based a price on better data (e.g. 2026-09-10, when 16 cards moved to PSA
+# and real eBay sold figures). Without it the app reads our own re-pricing as
+# the market crashing: CJ Stroud "▼38%" when nothing about the card changed.
+# reprice.py only ever writes "market"; corrections are appended by hand.
+HISTORY_COLS = ["date", "sku", "price", "basis", "median", "count", "source",
+                "applied", "kind"]
 
 MIN_COMPS = 3        # need at least this many listings to trust a median
 MAX_SWING = 0.35     # >35% move → flag for review instead of auto-applying
@@ -138,7 +144,7 @@ def main() -> int:
                 "source": r.source, "broad": broad, "level": r.match_level,
                 "items": r.sample_items[:5],
             }
-        rec = {"date": today, "sku": c.sku, "price": f"{current:.2f}",
+        rec = {"date": today, "sku": c.sku, "price": f"{current:.2f}", "kind": "market",
                "basis": c.price_basis or "asking",
                "median": f"{r.median:.2f}" if r.median else "",
                "count": r.count, "source": r.source, "applied": "no"}

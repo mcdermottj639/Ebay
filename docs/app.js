@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v50";
+  var APP_VERSION = "v51";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -641,6 +641,19 @@
         '<polyline points="' + pts.join(" ") + '" fill="none" stroke="var(--gold)" stroke-width="2.5" ' +
           'stroke-linejoin="round" stroke-linecap="round"/>' + dots +
       "</svg>"));
+
+    // A day flagged `c` is one where we RE-PRICED cards on better data. The
+    // step in the line is our own correction, not the collection gaining or
+    // losing value, and reading it as performance is exactly backwards — so
+    // the chart says which it was instead of leaving the drop to speak.
+    var last = h[h.length - 1], prevPt = h[h.length - 2];
+    if (last && last.c && prevPt) {
+      var delta = last.v - prevPt.v, up = delta >= 0;
+      panel.appendChild(el('<p class="trendnote">↺ The ' + (up ? "rise" : "drop") + " of " +
+        money0(Math.abs(delta)) + " on " + esc(mdy(last.d)) +
+        " is a <b>re-pricing onto better data</b>, not a market move — cards were " +
+        "re-valued from PSA and real eBay sold prices.</p>"));
+    }
     return panel;
   }
 
@@ -1894,12 +1907,22 @@
     var first = pts[0].p, last = pts[pts.length - 1].p;
     var pct = first ? (last - first) / first * 100 : 0;
     var up = last >= first;
-    var chg = (Math.abs(pct) < 0.5) ? '<span class="muted">flat</span>'
+    // A ▼71% here would be a lie on any card we re-based: the line moved
+    // because we corrected the price, not because the card lost value. Where
+    // the series spans a correction, show the range without a change chip.
+    var corr = null;
+    pts.forEach(function (p, i) { if (p.c && i > 0) corr = p; });
+    var chg = corr ? '<span class="muted">re-priced</span>'
+      : (Math.abs(pct) < 0.5) ? '<span class="muted">flat</span>'
       : '<span class="chg ' + (up ? "up" : "down") + '">' + (up ? "▲" : "▼") + Math.abs(pct).toFixed(pct >= 10 ? 0 : 1) + "%</span>";
+    var foot = corr
+      ? esc(pts[0].d) + " → " + esc(pts[pts.length - 1].d) + " · the step on " + esc(corr.d) +
+        " is a <b>re-pricing onto better data</b>, not a market move"
+      : esc(pts[0].d) + " → " + esc(pts[pts.length - 1].d) + " · from weekly eBay re-price";
     return '<div class="compsbox phist"><div class="lab">Price history · ' + pts.length + " snapshots</div>" +
       '<div class="phrow">' + sparkline(pts, 200, 44) +
       '<div class="phmeta"><span class="tnum">' + money0(first) + " → " + money0(last) + "</span>" + chg + "</div></div>" +
-      '<div class="cfoot">' + esc(pts[0].d) + " → " + esc(pts[pts.length - 1].d) + " · from weekly eBay re-price</div></div>";
+      '<div class="cfoot">' + foot + "</div></div>";
   }
 
   function openModal(c) {

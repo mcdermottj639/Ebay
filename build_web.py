@@ -92,6 +92,7 @@ def _price_changes():
         return {}
     today = datetime.now(timezone.utc).date()
     per_sku: dict[str, list] = {}
+    corrected: dict[str, tuple] = {}    # sku → (age, price) of its latest correction
     with path.open(newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             try:
@@ -100,12 +101,37 @@ def _price_changes():
                 continue
             age = (today - d).days
             price = _num(row.get("price", ""))
-            if price > 0 and 0 < age <= 8:
-                per_sku.setdefault(row.get("sku", ""), []).append((age, price))
+            sku = row.get("sku", "")
+            if price <= 0 or not 0 <= age <= 8:
+                continue
+            if (row.get("kind") or "market").strip().lower() == "correction":
+                # keep the most recent correction, and the price it re-based to
+                if age <= corrected.get(sku, (99, 0))[0]:
+                    corrected[sku] = (age, price)
+            elif age > 0:
+                per_sku.setdefault(sku, []).append((age, price))
     changes = {}
-    for sku, obs in per_sku.items():
-        obs.sort(reverse=True)          # oldest (largest age) first
-        changes[sku] = {"prev": obs[0][1], "since": f"{obs[0][0]}d"}
+    for sku in set(per_sku) | set(corrected):
+        # A change chip answers "did the MARKET move?". Once we have re-based a
+        # card's price on better data, any comparison reaching back past that
+        # point measures our own correction instead — CJ Stroud "▼38%" when
+        # nothing about the card changed. So a correction REPLACES the baseline
+        # with the price it re-based to. A correction made today (age 0) leaves
+        # no baseline at all and the card shows no chip until the next real
+        # observation, which is the honest answer rather than a made-up one.
+        # NB day-granular ages can't order two rows from the same day, which is
+        # exactly why the correction supplies the baseline instead of merely
+        # capping it.
+        corr = corrected.get(sku)
+        if corr:
+            age, price = corr
+            if age == 0:
+                continue
+            changes[sku] = {"prev": price, "since": f"{age}d"}
+            continue
+        obs = sorted(per_sku.get(sku, []), reverse=True)   # oldest first
+        if obs:
+            changes[sku] = {"prev": obs[0][1], "since": f"{obs[0][0]}d"}
     return changes
 
 
@@ -126,10 +152,20 @@ def _price_series():
             price = _num(row.get("price", ""))
             if not sku or not date or price <= 0:
                 continue
-            per_sku.setdefault(sku, {})[date] = price  # last write per day wins
+            # `c` marks a point where we re-based the price on better data, so
+            # the card view can say the step is a correction rather than
+            # reporting it as the market moving.
+            corr = (row.get("kind") or "").strip().lower() == "correction"
+            per_sku.setdefault(sku, {})[date] = (round(price, 2), corr)
     series = {}
     for sku, by_date in per_sku.items():
-        pts = [{"d": d, "p": round(by_date[d], 2)} for d in sorted(by_date)]
+        pts = []
+        for d in sorted(by_date):
+            price, corr = by_date[d]
+            pt = {"d": d, "p": price}
+            if corr:
+                pt["c"] = 1
+            pts.append(pt)
         series[sku] = pts[-60:]
     return series
 
@@ -322,6 +358,19 @@ def _grade_bucket(card):
     return "Raw"
 
 
+def _corrected_today() -> bool:
+    """Did we re-base any price today? The value chart's step is then a data
+    correction, not the collection gaining or losing value, and says so."""
+    path = DATA / "price_history.csv"
+    if not path.exists():
+        return False
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    with path.open(newline="", encoding="utf-8") as f:
+        return any((r.get("kind") or "").strip().lower() == "correction"
+                   and (r.get("date") or "").strip() == today
+                   for r in csv.DictReader(f))
+
+
 def _history(total_value: float, n_cards: int) -> list:
     """Daily value snapshots, carried forward from the previous data.json.
 
@@ -335,6 +384,8 @@ def _history(total_value: float, n_cards: int) -> list:
         history = []
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     entry = {"d": today, "v": round(total_value, 2), "n": n_cards}
+    if _corrected_today():
+        entry["c"] = 1          # re-priced on better data, not a market move
     if history and history[-1].get("d") == today:
         history[-1] = entry
     else:

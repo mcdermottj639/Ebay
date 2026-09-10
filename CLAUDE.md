@@ -232,11 +232,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
   `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
   `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v50. The live
+  this makes the service worker serve stale CSS/JS. Current: v51. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v50. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v51. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
@@ -306,6 +306,47 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   among cards we can actually identify, MORE are under their asking median than
   over. The overvaluation risk is the asking-vs-sold gap (below), not the prices
   being made up.
+- **v51 — the app was reporting OUR OWN corrections as market performance.**
+  Owner asked the sharpest question of the session: *"are the performance loss
+  or gains numbers based on ur prior incorrect numbers"*. **Yes, they were.**
+  `prev_price` comes from `price_history.csv` rows aged 1–8 days, so the day
+  after re-anchoring 16 prices the app cheerfully showed CJ Stroud **▼38%**,
+  Wiseman **▼81%**, Pollard **▼71%** — none of which is the market. It was us
+  fixing our own numbers, presented as the cards crashing. It poisoned four
+  places at once: the row/hero change chips, **Movers · this week**, the Sales
+  Map **momentum** score (20 pts of Sell Score), and the value chart.
+  - **`price_history.csv` gained a `kind` column** — `market` (what
+    `reprice.py` writes) vs **`correction`**: a day we re-based a price on
+    better data rather than observing the market. Old rows backfilled as
+    `market`.
+  - **`_price_changes`: a correction REPLACES the baseline** with the price it
+    re-based to, rather than merely capping it. ⚠️ That distinction matters —
+    ages are day-granular, so two rows from the same day can't be ordered, and
+    a mere cap left MERCH-0001's pre-markdown $399 still eligible. A correction
+    made *today* (age 0) leaves no baseline at all → **no chip**, which is the
+    honest answer, and the chip returns next Monday measured against the
+    corrected price.
+  - **Marked as corrections:** today's 16 (PSA + Terapeak re-pricing), plus two
+    from 2026-09-09 that were the same class and had been lying since:
+    **MERCH-0001/0002** (the 45% merch haircut — a change of METHOD, showing as
+    "▼45% this week") and **CARD-0029** (value moved to the owner's own
+    recorded comps, showing ▼6.8%). Comp-driven hand-applied updates
+    (CARD-0003/0017 etc.) stay `market` — the number came from comps, so the
+    move is real.
+  - **The rule going forward:** a change chip answers *"did the market move?"*.
+    If a price changed because we changed **where the number comes from**, it's
+    a `correction`; if comps moved, it's `market`. Any future re-anchor must
+    append correction rows or the app will lie again.
+  - The **value chart** flags a correction day (`history` entry gains `c:1` via
+    `_corrected_today()`) and prints a `.trendnote` under it: "↺ The drop of
+    $293 on 09/10 is a re-pricing onto better data, not a market move."
+  - The card modal's **Price history** box had the same lie in a second place
+    ($189 → $55 as "▼71% · from weekly eBay re-price"). `_price_series` points
+    now carry `c:1`, and a series spanning a correction shows a muted
+    **"re-priced"** instead of a change chip, with the footer naming the date.
+  Verified: 0 of the 16 corrected cards show a chip; CARD-0017 (a genuine
+  comp-driven −27.2%) keeps its chip and its "from weekly eBay re-price"
+  footer; Movers drops from 6 rows to the 3 real ones.
 - **v50 — revenue is split by YEAR, because the two sales aren't from the same
   one.** Owner confirmed the Jalen Hurts card sold **Sept 2025**, a year before
   the Jefferson jersey (Sept 2026) — which also explains why it was missing
@@ -916,6 +957,10 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- ⚠️ **AFTER ANY RE-ANCHOR, WRITE `correction` ROWS TO `price_history.csv`**
+  (v51). Otherwise the next rebuild reports the re-pricing as market movement —
+  change chips, Movers, Sales-Map momentum and the value chart all read
+  `price_history`, and all four lied on 2026-09-10 until this was fixed.
 - **REAL SOLD DATA ARRIVED 2026-09-10 (v49).** Owner started sending Terapeak
   sold screens from the app's deep-link — 21 real sales transcribed into
   `manual_sales.csv`, repricing 4 cards. Confirmed PSA is right on cards that

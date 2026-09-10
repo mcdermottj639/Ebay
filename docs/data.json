@@ -38,11 +38,12 @@
     {
       "d": "2026-09-10",
       "v": 2449.98,
-      "n": 34
+      "n": 34,
+      "c": 1
     }
   ],
-  "generated": "Sep 10, 2026 \u00b7 10:20 UTC",
-  "app_version": "v50",
+  "generated": "Sep 10, 2026 \u00b7 10:28 UTC",
+  "app_version": "v51",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -2860,7 +2861,7 @@
       "sold_date": "",
       "cert": "67423370",
       "my_sales": [],
-      "prev_price": 48.39,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2873,6 +2874,11 @@
         {
           "d": "2026-09-09",
           "p": 22.66
+        },
+        {
+          "d": "2026-09-10",
+          "p": 9.0,
+          "c": 1
         }
       ],
       "market": {
@@ -3422,7 +3428,7 @@
           "n": "eBay sold (Terapeak 2yr): Rookies & Stars Thrillers Anthony Richardson"
         }
       ],
-      "prev_price": 74.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3435,6 +3441,11 @@
         {
           "d": "2026-09-09",
           "p": 74.99
+        },
+        {
+          "d": "2026-09-10",
+          "p": 19.95,
+          "c": 1
         }
       ],
       "market": {
@@ -3515,7 +3526,7 @@
       "sold_date": "",
       "cert": "89222827",
       "my_sales": [],
-      "prev_price": 163.67,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3528,6 +3539,11 @@
         {
           "d": "2026-09-09",
           "p": 163.67
+        },
+        {
+          "d": "2026-09-10",
+          "p": 101.0,
+          "c": 1
         }
       ],
       "market": {
@@ -3608,7 +3624,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 57.19,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3621,6 +3637,11 @@
         {
           "d": "2026-09-09",
           "p": 57.19
+        },
+        {
+          "d": "2026-09-10",
+          "p": 34.0,
+          "c": 1
         }
       ],
       "market": {
@@ -3707,7 +3728,7 @@
           "n": "eBay sold (Terapeak 2yr): 2019 Prizm Tony Pollard Rookie Auto RC #339 PSA 10 - only sale of this exact card"
         }
       ],
-      "prev_price": 189.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3720,6 +3741,11 @@
         {
           "d": "2026-09-09",
           "p": 189.0
+        },
+        {
+          "d": "2026-09-10",
+          "p": 55.0,
+          "c": 1
         }
       ],
       "market": {
@@ -3821,7 +3847,7 @@
           "n": "eBay sold (Terapeak 2yr): Donruss Elite Turn of the Century Auto Bijan Robinson /249"
         }
       ],
-      "prev_price": 349.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3834,6 +3860,11 @@
         {
           "d": "2026-09-09",
           "p": 349.0
+        },
+        {
+          "d": "2026-09-10",
+          "p": 152.49,
+          "c": 1
         }
       ],
       "market": {
@@ -3899,7 +3930,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 24.99,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3912,6 +3943,11 @@
         {
           "d": "2026-09-09",
           "p": 24.99
+        },
+        {
+          "d": "2026-09-10",
+          "p": 21.0,
+          "c": 1
         }
       ],
       "market": {
@@ -3992,7 +4028,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 105.59,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4005,6 +4041,11 @@
         {
           "d": "2026-09-09",
           "p": 105.59
+        },
+        {
+          "d": "2026-09-10",
+          "p": 53.0,
+          "c": 1
         }
       ],
       "market": {
@@ -4075,7 +4116,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 29.66,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4088,6 +4129,11 @@
         {
           "d": "2026-09-09",
           "p": 28.73
+        },
+        {
+          "d": "2026-09-10",
+          "p": 28.0,
+          "c": 1
         }
       ],
       "market": {
@@ -4204,7 +4250,7 @@
           "n": "eBay sold (Terapeak 90d): 2023-24 Panini Instant LeBron James, Victor Wembanyama #371"
         }
       ],
-      "prev_price": 182.6,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4217,6 +4263,11 @@
         {
           "d": "2026-09-09",
           "p": 182.6
+        },
+        {
+          "d": "2026-09-10",
+          "p": 177.5,
+          "c": 1
         }
       ],
       "market": {
@@ -4292,7 +4343,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 44.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4305,6 +4356,11 @@
         {
           "d": "2026-09-09",
           "p": 44.0
+        },
+        {
+          "d": "2026-09-10",
+          "p": 12.0,
+          "c": 1
         }
       ],
       "market": {
@@ -4375,7 +4431,7 @@
       "sold_date": "",
       "cert": "67269227",
       "my_sales": [],
-      "prev_price": 132.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4388,6 +4444,11 @@
         {
           "d": "2026-09-09",
           "p": 132.0
+        },
+        {
+          "d": "2026-09-10",
+          "p": 67.0,
+          "c": 1
         }
       ],
       "market": {
@@ -4489,7 +4550,7 @@
           "n": ""
         }
       ],
-      "prev_price": 249.0,
+      "prev_price": 232.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4501,7 +4562,8 @@
         },
         {
           "d": "2026-09-09",
-          "p": 249.0
+          "p": 232.0,
+          "c": 1
         }
       ],
       "market": {
@@ -4582,7 +4644,7 @@
       "sold_date": "",
       "cert": "85776346",
       "my_sales": [],
-      "prev_price": 149.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4595,6 +4657,11 @@
         {
           "d": "2026-09-09",
           "p": 149.0
+        },
+        {
+          "d": "2026-09-10",
+          "p": 96.0,
+          "c": 1
         }
       ],
       "market": {
@@ -4670,7 +4737,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 39.59,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4683,6 +4750,11 @@
         {
           "d": "2026-09-09",
           "p": 37.39
+        },
+        {
+          "d": "2026-09-10",
+          "p": 23.0,
+          "c": 1
         }
       ],
       "market": {
@@ -4763,7 +4835,7 @@
       "sold_date": "",
       "cert": "75510176",
       "my_sales": [],
-      "prev_price": 199.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4776,6 +4848,11 @@
         {
           "d": "2026-09-09",
           "p": 199.0
+        },
+        {
+          "d": "2026-09-10",
+          "p": 617.97,
+          "c": 1
         }
       ],
       "market": {
@@ -4856,7 +4933,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": 399.0,
+      "prev_price": 220.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4868,7 +4945,8 @@
         },
         {
           "d": "2026-09-09",
-          "p": 220.0
+          "p": 220.0,
+          "c": 1
         }
       ],
       "market": {
@@ -4944,7 +5022,7 @@
       "sold_date": "",
       "cert": "1W622369",
       "my_sales": [],
-      "prev_price": 449.0,
+      "prev_price": 250.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4956,7 +5034,8 @@
         },
         {
           "d": "2026-09-09",
-          "p": 250.0
+          "p": 250.0,
+          "c": 1
         }
       ],
       "market": {
@@ -5082,7 +5161,13 @@
       "cert": "",
       "my_sales": [],
       "prev_price": "",
-      "price_series": [],
+      "price_series": [
+        {
+          "d": "2026-09-10",
+          "p": 338.0,
+          "c": 1
+        }
+      ],
       "market": null,
       "comps": null
     }
