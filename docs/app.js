@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v47";
+  var APP_VERSION = "v48";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -52,7 +52,28 @@
       if (!c._bakedSales) c._bakedSales = (c.my_sales || []).slice();
       // cost: the sheet wins; a device-entered cost fills a blank sheet cost
       if (num(c._csvCost) > 0 && myData.costs[c.sku]) { delete myData.costs[c.sku]; dirty = true; }
-      if (c.sold && myData.sold[c.sku]) { delete myData.sold[c.sku]; dirty = true; }
+      // A sale the owner marked on THIS device has to retire the card right
+      // away. v38 stored it but only ever PRUNED it here, so `c.sold` stayed
+      // false until the sheet caught up — and every `!c.sold` filter kept the
+      // card in the Collection for those ~2 minutes. That is precisely the
+      // "marked sold but still sitting in my collection" report. Remember the
+      // baked values first so this stays idempotent and undo can restore them.
+      if (c._csvSold === undefined) {
+        c._csvSold = !!c.sold; c._csvSoldPrice = c.sold_price;
+        c._csvSoldDate = c.sold_date; c._csvListed = c.listed;
+      }
+      // NB: test the BAKED flag, never the live one — after the block below
+      // `c.sold` may be true because of the device entry we are about to sync,
+      // and pruning on that would delete it before it ever reached the sheet.
+      if (c._csvSold && myData.sold[c.sku]) { delete myData.sold[c.sku]; dirty = true; }
+      var mineSale = myData.sold[c.sku];
+      if (!c._csvSold && mineSale && num(mineSale.p) > 0) {
+        c.sold = true; c.sold_price = String(num(mineSale.p));
+        c.sold_date = mineSale.d || ""; c.listed = ""; c.sold_local = true;
+      } else {
+        c.sold = c._csvSold; c.sold_price = c._csvSoldPrice;
+        c.sold_date = c._csvSoldDate; c.listed = c._csvListed; c.sold_local = false;
+      }
       var localCost = num(myData.costs[c.sku]);
       c.cost = num(c._csvCost) > 0 ? c._csvCost : (localCost > 0 ? String(localCost) : c._csvCost);
       c.cost_local = num(c._csvCost) <= 0 && localCost > 0;
@@ -71,6 +92,29 @@
     if (dirty) saveMyData();
     // profit tiles react to device-entered costs too (same rule as the build:
     // only cards with a known cost count toward profit).
+    // The money has to move with the card, or it disappears from the
+    // Collection without turning up in revenue. Recomputed from a one-time
+    // snapshot of the baked summary, so repeat calls (and undo) are exact.
+    var sm = data.summary;
+    if (!data._baseSummary) {
+      data._baseSummary = { total_value: num(sm.total_value), revenue: num(sm.revenue),
+        realized_profit: num(sm.realized_profit), sold: sm.sold | 0, listed: sm.listed | 0 };
+    }
+    var bs = data._baseSummary, dVal = 0, dRev = 0, dReal = 0, dSold = 0, dList = 0;
+    data.cards.forEach(function (c) {
+      if (!c.sold_local) return;
+      dVal -= num(c.asking_price);
+      dRev += num(c.sold_price);
+      dReal += num(c.sold_price) - num(c.cost);
+      dSold += 1;
+      if (String(c._csvListed || "").toLowerCase() === "yes") dList -= 1;
+    });
+    sm.total_value = Math.round((bs.total_value + dVal) * 100) / 100;
+    sm.revenue = Math.round((bs.revenue + dRev) * 100) / 100;
+    sm.realized_profit = Math.round((bs.realized_profit + dReal) * 100) / 100;
+    sm.sold = bs.sold + dSold;
+    sm.listed = Math.max(0, bs.listed + dList);
+
     var costed = data.cards.filter(function (c) { return !c.sold && num(c.asking_price) > 0 && num(c.cost) > 0; });
     data.summary.cost_count = costed.length;
     data.summary.total_cost = Math.round(data.cards.reduce(function (a, c) { return a + num(c.cost); }, 0) * 100) / 100;
@@ -1607,14 +1651,15 @@
       "</div>" +
       (rows ? '<div class="mylist">' + rows + "</div>" : "") +
       // 2) YOUR sale — retires the card into revenue.
-      (c.sold
+      ((c.sold && !c.sold_local)
         ? '<div class="mysec sold">✅ You sold this on ' + esc(c.sold_date || "") +
           " for " + money(num(c.sold_price)) +
           '<span class="myhint">It\u2019s out of your collection and counted in revenue.</span></div>'
         : (mineSold
             ? '<div class="mysec sold">✅ Marked sold for ' + money(num(mineSold.p)) +
               (mineSold.d ? " on " + esc(mineSold.d) : "") +
-              '<span class="myhint">Save below and it moves into revenue (~2 min). ' +
+              '<span class="myhint">Already out of your collection on this phone. ' +
+              'Save below so every device sees it (~2 min). ' +
               '<a href="#" id="myUnsell">undo</a></span></div>'
             : '<div class="mysec mine">💰 Did <b>you</b> sell this card?' +
               '<span class="myhint">Moves it out of your collection and into revenue.</span></div>' +
