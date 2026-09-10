@@ -57,10 +57,11 @@ def _image_for(sku):
 
 
 def _price_basis(card):
-    """'sold' (real sold comps), 'est_sold' (asking comps, haircut to estimate
-    market), 'asking' (active listings), or '' if unpriced."""
+    """'sold' (real sold comps the owner recorded), 'psa' (the PSA app's own
+    market estimate), 'est_sold' (asking comps, haircut to estimate market),
+    'asking' (active listings), or '' if unpriced."""
     basis = card.price_basis.strip().lower()
-    if basis in ("sold", "est_sold", "asking"):
+    if basis in ("sold", "psa", "est_sold", "asking"):
         return basis
     return "asking" if card.asking_price.strip() else ""
 
@@ -387,6 +388,7 @@ def build_data(cards) -> dict:
         if med is None or med <= 0:
             continue
         c.est_price = c.asking_price          # keep the estimate for reference
+        c.est_basis = _price_basis(c)         # ...and where it came from
         c.asking_price = f"{med:.2f}"
         c.price_basis = "sold"                # green SOLD pill, honestly earned
 
@@ -477,6 +479,7 @@ def build_data(cards) -> dict:
                 # our asking-comp estimate, kept when a tracked real sale
                 # replaced it as the card's value
                 "est_price": getattr(c, "est_price", ""),
+                "est_basis": getattr(c, "est_basis", ""),
                 "price_basis": _price_basis(c), "image": _image_for(c.sku),
                 "line": _line(c), "title": titles.build_title(c), "status": _status(c),
                 "listed": c.is_listed(), "sold": c.is_sold(),

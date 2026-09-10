@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v45";
+  var APP_VERSION = "v46";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -313,7 +313,8 @@
       '<span class="ini">' + esc(initials(c.player)) + "</span></div>";
   }
 
-  // price-basis pill: green SOLD (real sold comps), blue EST (asking comps
+  // price-basis pill: green REAL (sold prices the owner recorded), violet PSA
+  // (PSA's own market estimate for this card+grade), blue EST (asking comps
   // haircut to estimate market — eBay denied us the sold-comp API), gold ASKING
   // (raw active listings).
   function basisPill(c) {
@@ -324,6 +325,7 @@
     // owner still owns — which is exactly the "does it think I sold it?"
     // confusion. The status badge owns the word "sold".
     var map = { sold: ["b-sold", "REAL", "Priced from real sold prices you recorded"],
+                psa: ["b-psaval", "PSA", "PSA’s own market estimate for this card at this grade"],
                 est_sold: ["b-est", "EST", "Estimated: eBay asking prices, discounted toward sold"],
                 asking: ["b-ask", "ASKING", "From what sellers are asking on eBay right now"] };
     var p = map[c.price_basis] || map.asking;
@@ -741,7 +743,8 @@
     // 3) Price confidence — how much we trust the number we'd list at. The
     // owner's own tracked REAL sold prices are the strongest signal we have.
     if (mySold(c)) { score += 10; reasons.push("real sold ✓"); }
-    else score += c.price_basis === "sold" ? 10 : c.price_basis === "est_sold" ? 6 : c.price_basis === "asking" ? 3 : 0;
+    else score += c.price_basis === "sold" ? 10 : c.price_basis === "psa" ? 9
+      : c.price_basis === "est_sold" ? 6 : c.price_basis === "asking" ? 3 : 0;
 
     // 4) Momentum — rising price = sell into strength (neutral when unknown).
     var pct = sellMomentum(c);
@@ -774,6 +777,11 @@
   // comps that reprice.py flags — e.g. a $189 card whose 3 comps median $885).
   function marketSolid(c, m) {
     var cur = num(c.asking_price);
+    // Never suggest headroom against the asking median on a card priced from
+    // real sold data (PSA's estimate, or sold prices the owner recorded). The
+    // gap between the two is asking-price inflation, not money left on the
+    // table — reading it as upside is how the collection got 51% overvalued.
+    if (c.price_basis === "psa" || c.price_basis === "sold") return false;
     return m && m.count >= 5 && cur > 0 && cur < m.median && cur >= m.median * 0.5;
   }
 
@@ -1362,6 +1370,14 @@
         (mine === 1 ? "" : "s") + " you recorded for this card — the best data we have" +
         (mine === 1 ? " (add a couple more and it steadies out)" : "") + "</div>";
     }
+    // PSA prices off their own sold data for this exact card AND grade — better
+    // than anything our asking-comp ladder can reach, so it outranks the level.
+    if (c.price_basis === "psa") {
+      var slab = c.graded && c.grader && c.grade
+        ? " in a " + esc((c.grader + " " + c.grade).toUpperCase()) + " holder" : "";
+      return '<div class="trust good">✓ PSA’s own market estimate for this card' + slab +
+        " — from their sold data, not our eBay guess</div>";
+    }
     var lv = (c.comps && c.comps.level) || "";
     var t = MATCH_TRUST[lv];
     var n = (c.market && c.market.count) || 0;
@@ -1432,6 +1448,7 @@
     var range = prices.length >= 2
       ? money0(Math.min.apply(null, prices)) + "–" + money0(Math.max.apply(null, prices)) : "";
     var basisTxt = c.price_basis === "sold" ? "real eBay sold comps"
+      : c.price_basis === "psa" ? "PSA’s own market estimate for this card at this grade"
       : c.price_basis === "est_sold" ? "estimated — typical asking, discounted toward real sold"
       : "active eBay listings";
     var rows =
@@ -1442,12 +1459,16 @@
       '<div class="mkrow"><span>' + (c.sold ? "Was valued at" : "Card Vault value") +
         '</span><b class="tnum">' + money0(cur) + "</b></div>" +
       (num(c.est_price) > 0 && num(c.est_price) !== cur
-        ? '<div class="mkrow"><span>Our comp estimate was</span><b class="tnum">' +
-          money0(num(c.est_price)) + "</b></div>" : "");
+        ? '<div class="mkrow"><span>' +
+          (c.est_basis === "psa" ? "PSA’s estimate was" : "Our comp estimate was") +
+          '</span><b class="tnum">' + money0(num(c.est_price)) + "</b></div>" : "");
     if (!c.sold && marketSolid(c, m)) {
       var pct = Math.round((m.median - cur) / cur * 100);
       rows += '<div class="mkrow up"><span>Room up to typical</span><b class="tnum">+' +
         money0(m.median - cur) + " · " + pct + "%</b></div>";
+    } else if (!c.sold && c.price_basis === "psa" && m.median > cur) {
+      rows += '<div class="mkrow"><span>Sellers ask above this</span><b class="tnum">+' +
+        Math.round((m.median - cur) / cur * 100) + "%</b></div>";
     }
     return '<div class="compsbox market"><div class="lab">What it’s going for</div>' + rows + trustNote(c) +
       '<div class="cfoot">Typical = eBay <b>asking</b> median. ' +
@@ -1455,6 +1476,9 @@
         // priced off the owner's own recorded sales — don't nag about eBay
         // approval here, they already have better data than eBay would give us
         ? "This card’s value is your recorded sold prices, not our estimate."
+        : c.price_basis === "psa"
+        ? "This card’s value comes from the PSA app, not from these asking listings — " +
+          "PSA reads real sales, so where the two disagree, trust PSA."
         : "This card’s value: " + basisTxt +
           ". Real sold prices need eBay approval — tap “Sold on eBay” below for actuals.") +
       "</div></div>";
@@ -1480,6 +1504,7 @@
       sub = num(c.asking_price) > 0
         ? (ms ? "real sold ~" + money0(ms.median) + " · " + ms.count + " comps you added"
               : c.price_basis === "sold" ? "from real eBay sold comps"
+              : c.price_basis === "psa" ? "PSA app estimate · their sold data for this card + grade"
               : c.price_basis === "est_sold" ? "estimated market · typical asking, discounted toward real sold"
               : "from active eBay listings (asking)")
         : "no price yet — the weekly eBay re-price sets this";

@@ -113,9 +113,16 @@ def main() -> int:
         if c.is_sold() or current <= 0:
             skipped.append(c.sku)
             continue
-        # merch + hand-priced SKUs still get queried (their comps feed the
-        # app's card view) — their price is just never auto-changed.
-        can_apply = not (c.is_merch() or c.sku in SKIP_SKUS)
+        # merch, hand-priced SKUs, and anything anchored to a PSA app estimate
+        # still get queried (their comps feed the app's card view) — their price
+        # is just never auto-changed. The PSA guard matters: PSA prices off real
+        # SOLD data, our comps are ACTIVE asking listings, so auto-repricing a
+        # PSA-anchored row replaces the better number with the worse one. That
+        # is exactly what happened to the 14 graded cards re-anchored on
+        # 2026-09-10 — every one had "PSA app value" in its notes and had since
+        # drifted up to an asking-comp price averaging ~51% over PSA's.
+        psa_anchored = c.price_basis.strip().lower() == "psa"
+        can_apply = not (c.is_merch() or c.sku in SKIP_SKUS or psa_anchored)
         try:
             r = comps.get_comps(c)
         except Exception as e:

@@ -34,10 +34,15 @@
       "d": "2026-09-09",
       "v": 2742.88,
       "n": 34
+    },
+    {
+      "d": "2026-09-10",
+      "v": 2530.06,
+      "n": 35
     }
   ],
-  "generated": "Sep 09, 2026 \u00b7 17:21 UTC",
-  "app_version": "v45",
+  "generated": "Sep 10, 2026 \u00b7 09:47 UTC",
+  "app_version": "v46",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -1724,23 +1729,23 @@
     ]
   },
   "summary": {
-    "total_cards": 35,
+    "total_cards": 36,
     "merch": 2,
-    "physical": 34,
-    "rookies": 28,
-    "autos": 9,
-    "graded": 15,
-    "priced": 34,
+    "physical": 35,
+    "rookies": 29,
+    "autos": 10,
+    "graded": 16,
+    "priced": 35,
     "total_cost": 170.0,
-    "total_value": 2742.88,
-    "profit": 461.0,
+    "total_value": 2530.06,
+    "profit": 275.0,
     "cost_count": 2,
     "listed": 2,
     "sold": 1,
     "revenue": 255.0,
     "realized_profit": 205.0,
     "by_sport": {
-      "Football": 28,
+      "Football": 29,
       "Basketball": 3,
       "Hockey": 1,
       "Soccer": 1,
@@ -1749,45 +1754,45 @@
     "sport_stats": [
       {
         "name": "Football",
-        "count": 28,
-        "value": 1995.89
+        "count": 29,
+        "value": 1938.06
       },
       {
         "name": "Basketball",
         "count": 3,
-        "value": 437.26
+        "value": 401.0
       },
       {
         "name": "Baseball",
         "count": 1,
-        "value": 149.0
+        "value": 96.0
       },
       {
         "name": "Soccer",
         "count": 1,
-        "value": 132.0
+        "value": 67.0
       },
       {
         "name": "Hockey",
         "count": 1,
-        "value": 28.73
+        "value": 28.0
       }
     ],
     "grade_stats": [
       {
         "name": "PSA 10",
-        "count": 10,
-        "value": 1514.51
-      },
-      {
-        "name": "PSA 9",
-        "count": 5,
-        "value": 402.31
+        "count": 11,
+        "value": 1391.0
       },
       {
         "name": "Raw",
         "count": 17,
         "value": 356.06
+      },
+      {
+        "name": "PSA 9",
+        "count": 5,
+        "value": 313.0
       }
     ]
   },
@@ -1819,6 +1824,7 @@
       "asking_price": "6.99",
       "notes": "Confirm exact parallel color (green cracked ice) for value",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "asking",
       "image": "",
       "line": "2025 Panini Prizm #14 Green Cracked Ice",
@@ -1830,7 +1836,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 6.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -1910,6 +1916,7 @@
       "asking_price": "1.98",
       "notes": "Optic Green parallel - confirm if serial numbered",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2025 Panini Donruss Optic #216 Green",
@@ -1921,7 +1928,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 2.2,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2001,6 +2008,7 @@
       "asking_price": "3.07",
       "notes": "Repriced 2026-09-09 $5.27 -> $3.07 off the fixed comp-query ladder (exact match, 28 comps); was flagged for review, applied by hand.",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2025 Panini Donruss Optic #228",
@@ -2012,7 +2020,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 5.27,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2092,6 +2100,7 @@
       "asking_price": "1.36",
       "notes": "",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2025 Panini Donruss Optic #227",
@@ -2103,7 +2112,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 1.36,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2183,6 +2192,7 @@
       "asking_price": "1.75",
       "notes": "Club Level die-cut - confirm if colored/numbered",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2024 Panini Select #279 Club Level Die-Cut",
@@ -2194,7 +2204,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 1.75,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2274,6 +2284,7 @@
       "asking_price": "1.98",
       "notes": "Concourse level - confirm Gold parallel is serial numbered",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2024 Panini Select #20 Gold",
@@ -2285,7 +2296,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 1.98,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2365,6 +2376,7 @@
       "asking_price": "1.49",
       "notes": "",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2024 Panini Select #22",
@@ -2376,7 +2388,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 1.49,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2456,6 +2468,7 @@
       "asking_price": "1.31",
       "notes": "Optic Green parallel - confirm if serial numbered",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2025 Panini Donruss Optic #290 Green",
@@ -2467,7 +2480,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 1.31,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2547,6 +2560,7 @@
       "asking_price": "11.85",
       "notes": "Repriced 2026-09-09 $4.38 -> $11.85 off the fixed comp-query ladder (exact match, 36 comps); was flagged for review, applied by hand.",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2025 Panini Prizm #346",
@@ -2558,7 +2572,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 11.85,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2638,6 +2652,7 @@
       "asking_price": "2.31",
       "notes": "",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2025 Panini Prizm #308",
@@ -2649,7 +2664,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 2.31,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2729,6 +2744,7 @@
       "asking_price": "12.99",
       "notes": "On-card auto /99 - confirm if it also has a patch (RPA)",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "asking",
       "image": "",
       "line": "2023 Panini National Treasures #102",
@@ -2740,7 +2756,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 12.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2817,10 +2833,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "22.66",
-      "notes": "PSA app value; cert 67423370; basketball RC | Repriced 2026-09-09 $48.39 -> $22.66 off the fixed comp-query ladder (focused match, 24 comps); was flagged for review, applied by hand.",
+      "asking_price": "9.00",
+      "notes": "PSA app estimate 2026-09-10: $9.00 (was $22.66); cert 67423370; basketball RC | Repriced 2026-09-09 $48.39 -> $22.66 off the fixed comp-query ladder (focused match, 24 comps); was flagged for review, applied by hand.",
       "est_price": "",
-      "price_basis": "est_sold",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "",
       "line": "2020 Panini Prizm Draft Picks #42 Pink Ice",
       "title": "2020 Panini Prizm Draft Picks James Wiseman #42 PSA 10 RC Pink Ice Warriors",
@@ -2831,7 +2848,7 @@
       "sold_date": "",
       "cert": "67423370",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 48.39,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2911,6 +2928,7 @@
       "asking_price": "59.99",
       "notes": "Jersey patch/relic /99; collegiate card",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "asking",
       "image": "",
       "line": "2024 Panini National Treasures Collegiate #S-WAJ",
@@ -2922,7 +2940,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 59.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -2970,6 +2988,7 @@
       "asking_price": "49.99",
       "notes": "Certified Potential auto /15; confirm exact parallel color",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "asking",
       "image": "",
       "line": "2021 Panini Certified #CP-KM Teal",
@@ -2981,7 +3000,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 49.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3061,6 +3080,7 @@
       "asking_price": "61.59",
       "notes": "Numbered /299 - confirm parallel color",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2024 Panini Luminance #102 Gold",
@@ -3072,7 +3092,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 61.59,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3152,6 +3172,7 @@
       "asking_price": "39.99",
       "notes": "Thrillers Prizm insert /149",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "asking",
       "image": "",
       "line": "2023 Panini Rookies & Stars #TH-11 Prizm",
@@ -3163,7 +3184,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 39.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3243,6 +3264,7 @@
       "asking_price": "22.43",
       "notes": "Rated Rookie Pink parallel - confirm if numbered",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "2023 Panini Donruss Optic #244 Pink",
@@ -3254,7 +3276,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 34.14,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3334,6 +3356,7 @@
       "asking_price": "74.99",
       "notes": "Thrillers insert /75",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "asking",
       "image": "",
       "line": "2023 Panini Rookies & Stars #TH-13",
@@ -3345,7 +3368,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 74.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3422,10 +3445,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "163.67",
-      "notes": "PSA app value; Disco Prizm; refine with comps; PSA cert 89222827",
+      "asking_price": "101.00",
+      "notes": "PSA app estimate 2026-09-10: $101.00 (was $163.67); Disco Prizm; refine with comps; PSA cert 89222827",
       "est_price": "",
-      "price_basis": "est_sold",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "./img/CARD-0019.jpg",
       "line": "2023 Panini Prizm #339 Disco",
       "title": "2023 Panini Prizm CJ Stroud #339 PSA 10 RC Disco Texans",
@@ -3436,7 +3460,7 @@
       "sold_date": "",
       "cert": "89222827",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 163.67,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3513,10 +3537,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "57.19",
-      "notes": "PSA app value; 1994 Pacific insert",
+      "asking_price": "34.00",
+      "notes": "PSA app estimate 2026-09-10: $34.00 (was $57.19); 1994 Pacific insert",
       "est_price": "",
-      "price_basis": "est_sold",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "",
       "line": "2023 Panini Zenith #5 Blue",
       "title": "2023 Panini Zenith CJ Stroud #5 PSA 10 RC Blue 1994 Pacific Texans",
@@ -3527,7 +3552,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 57.19,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3604,10 +3629,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "189.00",
-      "notes": "PSA app value; on-card auto",
+      "asking_price": "168.00",
+      "notes": "PSA app estimate 2026-09-10: $168.00 (was $189.00); on-card auto",
       "est_price": "",
-      "price_basis": "asking",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "",
       "line": "2019 Panini Prizm #339",
       "title": "2019 Panini Prizm Tony Pollard #339 PSA 10 AUTO RC Autograph Cowboys",
@@ -3618,7 +3644,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 189.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3690,10 +3716,11 @@
       "condition": "",
       "authentication": "",
       "cost": "70.0",
-      "asking_price": "349.00",
-      "notes": "PSA app value; Turn of the Century auto; PSA cert 83143720",
+      "asking_price": "163.00",
+      "notes": "PSA app estimate 2026-09-10: $163.00 (was $349.00); Turn of the Century auto; PSA cert 83143720",
       "est_price": "",
-      "price_basis": "asking",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "./img/CARD-0022.jpg",
       "line": "2023 Panini Donruss Elite #TC-BRO",
       "title": "2023 Panini Donruss Elite Bijan Robinson #TC-BRO PSA 10 AUTO /249 RC",
@@ -3704,7 +3731,7 @@
       "sold_date": "",
       "cert": "83143720",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 349.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3766,10 +3793,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "24.99",
-      "notes": "PSA app value",
+      "asking_price": "21.00",
+      "notes": "PSA app estimate 2026-09-10: $21.00 (was $24.99)",
       "est_price": "",
-      "price_basis": "asking",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "",
       "line": "2023 Panini Certified #CS11 Mirror Bronze",
       "title": "2023 Panini Certified CJ Stroud #CS11 PSA 9 RC Mirror Bronze Certified Stars",
@@ -3780,7 +3808,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 24.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3857,10 +3885,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "105.59",
-      "notes": "PSA app value; on-card auto",
+      "asking_price": "53.00",
+      "notes": "PSA app estimate 2026-09-10: $53.00 (was $105.59); on-card auto",
       "est_price": "",
-      "price_basis": "est_sold",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "",
       "line": "2023 Panini Mosaic #RS-SL",
       "title": "2023 Panini Mosaic Sam LaPorta #RS-SL PSA 9 AUTO RC Rookie Scripts Auto Lions",
@@ -3871,7 +3900,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 105.59,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -3938,10 +3967,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "28.73",
-      "notes": "PSA app value",
+      "asking_price": "28.00",
+      "notes": "PSA app estimate 2026-09-10: $28.00 (was $28.73)",
       "est_price": "",
-      "price_basis": "est_sold",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "",
       "line": "2005 Upper Deck Rookie Class #3",
       "title": "2005 Upper Deck Rookie Class Henrik Lundqvist #3 PSA 9 RC Rangers",
@@ -3952,7 +3982,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 29.66,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4024,10 +4054,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "182.60",
-      "notes": "PSA app value; dual-player card; PSA cert 90720092",
+      "asking_price": "160.00",
+      "notes": "PSA app estimate 2026-09-10: $160.00 (was $182.60); dual-player card; PSA cert 90720092",
       "est_price": "",
-      "price_basis": "est_sold",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "./img/CARD-0026.jpg",
       "line": "2023 Panini Instant #371",
       "title": "2023 Panini Instant LeBron James / Victor Wembanyama #371 PSA 10",
@@ -4038,7 +4069,7 @@
       "sold_date": "",
       "cert": "90720092",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 182.6,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4110,10 +4141,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "44.00",
-      "notes": "PSA app value",
+      "asking_price": "12.00",
+      "notes": "PSA app estimate 2026-09-10: $12.00 (was $44.00)",
       "est_price": "",
-      "price_basis": "est_sold",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "",
       "line": "2017 Panini Select #164",
       "title": "2017 Panini Select Deshaun Watson #164 PSA 9 RC Texans",
@@ -4124,7 +4156,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 44.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4191,10 +4223,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "132.00",
-      "notes": "PSA app value; PSA cert 67269227",
+      "asking_price": "67.00",
+      "notes": "PSA app estimate 2026-09-10: $67.00 (was $132.00); PSA cert 67269227",
       "est_price": "",
-      "price_basis": "est_sold",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "./img/CARD-0028.jpg",
       "line": "2018 Panini Donruss #53",
       "title": "2018 Panini Donruss Kylian Mbappe #53 PSA 10 PSG",
@@ -4205,7 +4238,7 @@
       "sold_date": "",
       "cert": "67269227",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 132.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4283,8 +4316,9 @@
       "authentication": "",
       "cost": "50.0",
       "asking_price": "232.00",
-      "notes": "PSA app value; Pink Ice",
-      "est_price": "249.00",
+      "notes": "PSA app estimate 2026-09-10: $215.00 (was $249.00); Pink Ice",
+      "est_price": "215.00",
+      "est_basis": "psa",
       "price_basis": "sold",
       "image": "",
       "line": "2021 Panini Prizm #282 Pink Ice",
@@ -4317,7 +4351,7 @@
           "n": ""
         }
       ],
-      "prev_price": "",
+      "prev_price": 249.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4394,10 +4428,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "149.00",
-      "notes": "PSA app value; Auto 10; PSA cert 85776346",
+      "asking_price": "96.00",
+      "notes": "PSA app estimate 2026-09-10: $96.00 (was $149.00); Auto 10; PSA cert 85776346",
       "est_price": "",
-      "price_basis": "asking",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "./img/CARD-0030.jpg",
       "line": "2023 Topps Chrome Update #ACMMC Purple Refractor",
       "title": "2023 Topps Chrome Update Matt McLain #ACMMC PSA 10 AUTO RC Purple Refractor",
@@ -4408,7 +4443,7 @@
       "sold_date": "",
       "cert": "85776346",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 149.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4480,10 +4515,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "37.39",
-      "notes": "PSA app value",
+      "asking_price": "23.00",
+      "notes": "PSA app estimate 2026-09-10: $23.00 (was $37.39)",
       "est_price": "",
-      "price_basis": "est_sold",
+      "est_basis": "",
+      "price_basis": "psa",
       "image": "",
       "line": "2023 Panini Donruss #339",
       "title": "2023 Panini Donruss CJ Stroud #339 PSA 10 RC Texans",
@@ -4494,7 +4530,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 39.59,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4574,6 +4610,7 @@
       "asking_price": "199.00",
       "notes": "PSA value not shown - add later; on-card auto; PSA cert 75510176",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "asking",
       "image": "./img/CARD-0032.jpg",
       "line": "2022 Panini Certified #RS-BP Mirror Teal Etch",
@@ -4585,7 +4622,7 @@
       "sold_date": "",
       "cert": "75510176",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 199.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4665,6 +4702,7 @@
       "asking_price": "220.00",
       "notes": "Framed black shadow box (owner CONFIRMED framed); #23 white Rams jersey; Beckett BAS COA hologram; eBay 336728703040 LIVE at $250 + Best Offer. REPRICED 2026-09-09 from $399 to $220 est_sold: the MERCH-0003 sale (sold $255 vs a $742 asking median = 34%) is our only real merch sold datapoint, and the owner read it as fair-but-maybe-a-low-offer, so we apply a 45% haircut to the asking median ($399 x 0.55) rather than the observed 66%. Floor ~$185 - do NOT accept below. DO NOT revise the live listing UP (the old $399 advice is cancelled); $250 + Best Offer is about right. Comps 2026-08-10: n=21 framed asking, median $399, 25th $234, 75th $445",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "Los Angeles Rams \u00b7 Framed Jersey",
@@ -4676,7 +4714,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 399.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4751,6 +4789,7 @@
       "asking_price": "250.00",
       "notes": "Bucs FLASH (orange chrome) alternate, RED VISOR, #6 - owner CONFIRMED Flash not creamsicle, and REPLICA not authentic; Beckett Witness cert 1W622369; eBay 336728712522 LIVE at $300 + Best Offer. REPRICED 2026-09-09 from $449 to $250 est_sold: same 45% haircut on the replica-tier asking median ($450 x 0.55), per the MERCH-0003 sold datapoint. Floor ~$215 - do NOT accept below. DO NOT revise the live listing UP (the old $449 advice is cancelled); $300 + Best Offer leaves room to land near $250. Comps 2026-08-10: replica tier n=15, median $450, range $300-550 (authentic tier medians $674 - do not use)",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "est_sold",
       "image": "",
       "line": "Tampa Bay Buccaneers \u00b7 Full Size Replica Helmet",
@@ -4762,7 +4801,7 @@
       "sold_date": "",
       "cert": "1W622369",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 449.0,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4827,6 +4866,7 @@
       "asking_price": "699.00",
       "notes": "Custom/pro-style framed autographed Vikings jersey (owner CONFIRMED pro-style, not Nike authentic); Beckett; eBay 336728700531. SOLD 2026-09-09 for $255 (listed at $500; bought for $50 = +$205). FIRST REAL SALE - it went for 49% under the $500 asking and 64% under our $699 asking-comp valuation, so treat framed-jersey asking medians as well above true sold. Comps 2026-08-10 were n=46 asking, median $742",
       "est_price": "",
+      "est_basis": "",
       "price_basis": "asking",
       "image": "",
       "line": "Minnesota Vikings \u00b7 Framed Jersey",
@@ -4844,7 +4884,7 @@
           "n": ""
         }
       ],
-      "prev_price": "",
+      "prev_price": 699.0,
       "price_series": [
         {
           "d": "2026-09-09",
@@ -4855,6 +4895,50 @@
         "median": 999.99,
         "count": 1
       },
+      "comps": null
+    },
+    {
+      "sku": "CARD-0033",
+      "item_type": "Card",
+      "is_merch": false,
+      "sport": "Football",
+      "year": "2020",
+      "brand": "Panini",
+      "set": "Donruss",
+      "player": "Jalen Hurts",
+      "card_number": "TR-JAH",
+      "parallel": "",
+      "insert": "The Rookies Autograph",
+      "team": "Eagles",
+      "league": "NFL",
+      "rookie": true,
+      "auto": true,
+      "graded": true,
+      "relic": false,
+      "grader": "PSA",
+      "grade": "10",
+      "serial_run": "",
+      "condition": "",
+      "authentication": "",
+      "cost": "",
+      "asking_price": "338.00",
+      "notes": "PSA app estimate 2026-09-10: $338.00; found in the PSA app 2026-09-10, was missing from the catalog; on-card auto",
+      "est_price": "",
+      "est_basis": "",
+      "price_basis": "psa",
+      "image": "",
+      "line": "2020 Panini Donruss #TR-JAH",
+      "title": "2020 Panini Donruss Jalen Hurts #TR-JAH PSA 10 AUTO RC The Rookies Autograph",
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "my_sales": [],
+      "prev_price": "",
+      "price_series": [],
+      "market": null,
       "comps": null
     }
   ]

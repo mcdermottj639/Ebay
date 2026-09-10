@@ -59,7 +59,10 @@ class Card:
     cost: str = ""
     asking_price: str = ""
     notes: str = ""
-    price_basis: str = ""   # "sold" (real sold comps), "est_sold" (asking comps
+    # "sold" (real sold comps the owner recorded), "psa" (the PSA app's own
+    # market estimate for this card+grade — their sold data, hand-entered from
+    # the app; never auto-repriced), "est_sold" (asking comps
+    price_basis: str = ""
                             # minus a haircut to estimate market), or "asking"
     listed: str = ""        # yes = live on eBay right now
     sold_price: str = ""    # actual sale price — filling this marks the item SOLD
