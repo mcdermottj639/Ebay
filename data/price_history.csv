@@ -187,3 +187,38 @@ date,sku,price,basis,median,count,source,applied,kind
 2026-09-10,CARD-0032,617.97,psa,,,re-anchored to the PSA app's own number,yes,correction
 2026-09-10,CARD-0033,338.00,psa,,,re-anchored to the PSA app's own number,yes,correction
 2026-09-09,CARD-0029,232.00,sold,,,re-priced onto the owner's own recorded sold comps,yes,correction
+2026-09-14,CARD-0001,6.99,asking,9.00,50,active,no,market
+2026-09-14,CARD-0002,2.06,est_sold,2.34,18,active,yes,market
+2026-09-14,CARD-0003,2.64,est_sold,3.00,28,active,yes,market
+2026-09-14,CARD-0004,1.36,est_sold,1.54,14,active,no,market
+2026-09-14,CARD-0005,1.75,est_sold,6.00,50,active,no,market
+2026-09-14,CARD-0006,1.98,est_sold,2.25,50,active,no,market
+2026-09-14,CARD-0007,1.49,est_sold,1.69,31,active,no,market
+2026-09-14,CARD-0008,1.31,est_sold,1.49,7,active,no,market
+2026-09-14,CARD-0009,9.31,est_sold,10.59,36,active,yes,market
+2026-09-14,CARD-0010,1.75,est_sold,1.99,33,active,yes,market
+2026-09-14,CARD-0011,12.99,asking,9.47,38,active,no,market
+2026-09-14,CARD-0012,9.00,psa,22.49,25,active,no,market
+2026-09-14,CARD-0013,59.99,asking,,0,active,no,market
+2026-09-14,CARD-0014,49.99,asking,175.00,8,active,no,market
+2026-09-14,CARD-0015,57.19,est_sold,64.99,10,active,yes,market
+2026-09-14,CARD-0016,39.99,asking,139.97,50,active,no,market
+2026-09-14,CARD-0017,21.99,est_sold,24.99,11,active,yes,market
+2026-09-14,CARD-0018,74.99,asking,19.99,50,active,no,market
+2026-09-14,CARD-0019,101.00,psa,185.99,13,active,no,market
+2026-09-14,CARD-0020,34.00,psa,42.50,8,active,no,market
+2026-09-14,CARD-0021,168.00,psa,542.50,4,active,no,market
+2026-09-14,CARD-0022,163.00,psa,162.50,2,active,no,market
+2026-09-14,CARD-0023,21.00,psa,47.50,50,active,no,market
+2026-09-14,CARD-0024,53.00,psa,119.99,3,active,no,market
+2026-09-14,CARD-0025,28.00,psa,32.44,3,active,no,market
+2026-09-14,CARD-0026,160.00,psa,349.50,4,active,no,market
+2026-09-14,CARD-0027,12.00,psa,50.00,3,active,no,market
+2026-09-14,CARD-0028,67.00,psa,200.46,10,active,no,market
+2026-09-14,CARD-0029,215.00,psa,105.55,10,active,no,market
+2026-09-14,CARD-0030,96.00,psa,72.50,4,active,no,market
+2026-09-14,CARD-0031,23.00,psa,37.50,22,active,no,market
+2026-09-14,CARD-0032,617.97,psa,,0,active,no,market
+2026-09-14,MERCH-0001,220.00,est_sold,525.00,4,active,no,market
+2026-09-14,MERCH-0002,250.00,est_sold,450.00,2,active,no,market
+2026-09-14,CARD-0033,338.00,psa,299.99,3,active,no,market
