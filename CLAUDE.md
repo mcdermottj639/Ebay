@@ -957,6 +957,16 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **Weekly reprice + radar run 2026-09-14 (scheduled Routine, on time and clean).**
+  `reprice.py` applied **6** updates, all small moves (no flags for hand
+  review this time) — biggest up: CARD-0002 Kenneth Grant $1.98 → $2.06
+  (+4.0%, 18 comps); biggest down: CARD-0010 Brashard Smith $2.31 → $1.75
+  (-24.2%, 33 comps). Still on ASKING comps (haircut-estimated sold) —
+  reprice.py did not print "REAL SOLD prices," so Marketplace Insights
+  remains denied. `radar.py` found **30** Buy Radar deals (Jayden
+  Daniels/Mahomes Kabooms & Downtowns still leading). Catalog re-validated
+  clean (36 items). New total collection value: **$2,441.69**. Shipped as PR
+  "Weekly reprice 2026-09-14" (#67), merged to main.
 - ⚠️ **AFTER ANY RE-ANCHOR, WRITE `correction` ROWS TO `price_history.csv`**
   (v51). Otherwise the next rebuild reports the re-pricing as market movement —
   change chips, Movers, Sales-Map momentum and the value chart all read
