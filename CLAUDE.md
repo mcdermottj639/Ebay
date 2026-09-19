@@ -957,6 +957,17 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **Weekly reprice + radar run 2026-09-19 (scheduled Routine, on time and clean).**
+  `reprice.py` applied **3** updates: CARD-0002 Kenneth Grant $2.06 → $1.84
+  (-10.7%, 18 comps), CARD-0007 Ray Davis $1.49 → $1.47 (-1.3%, 32 comps),
+  CARD-0017 CJ Stroud $21.99 → $22.87 (+4.0%, 13 comps). **Flagged 1** for hand
+  review: CARD-0009 Jack Bech $9.31 → $2.63 (+72%, too big to auto-apply). Held
+  23 at hand-set prices. Still on ASKING comps (haircut-estimated sold) —
+  reprice.py did not print "REAL SOLD prices," so Marketplace Insights remains
+  denied. `radar.py` found **30** Buy Radar deals (Jayden Daniels/Mahomes
+  Kabooms & Downtowns still leading). Catalog re-validated clean (36 items).
+  New total collection value: **$2,442.33**. Shipped as PR "Weekly reprice
+  2026-09-19" (#69), merged to main.
 - **Weekly reprice + radar run 2026-09-14 (scheduled Routine, on time and clean).**
   `reprice.py` applied **6** updates, all small moves (no flags for hand
   review this time) — biggest up: CARD-0002 Kenneth Grant $1.98 → $2.06
