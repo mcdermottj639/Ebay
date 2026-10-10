@@ -957,6 +957,15 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **Weekly reprice + radar run 2026-10-10 (scheduled Routine, clean).**
+  `reprice.py` applied **5** updates: biggest up CARD-0015 Jayden Daniels $52.79
+  → $61.59 (+16.7%) and CARD-0017 CJ Stroud $19.79 → $23.98 (+21.2%); biggest
+  down CARD-0018 Richardson $74.99 → $70.39 (-6.1%, 3 comps; its displayed value
+  is still the owner-sold-comp overlay). Flagged 1: CARD-0009 Jack Bech $9.31 →
+  $2.63 (+72%). Held 23. Still ASKING comps. `radar.py` found **30** deals.
+  Collection value: **$2,448.33**. Gotcha: in this cloud container use
+  `/usr/bin/python3` (has `requests`); `python3` resolves to /usr/local/bin
+  without it. reprice+radar take ~10 min total.
 - **Weekly reprice + radar run 2026-10-03 (scheduled Routine, clean).**
   `reprice.py` applied **5** updates: biggest down CARD-0017 CJ Stroud $22.87 →
   $19.79 (-13.5%), CARD-0015 Jayden Daniels $57.19 → $52.79 (-7.7%); biggest up
