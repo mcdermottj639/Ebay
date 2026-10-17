@@ -957,6 +957,12 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **Weekly reprice + radar run 2026-10-17 (scheduled Routine, clean).**
+  `reprice.py` applied **5** updates: biggest up CARD-0015 Jayden Daniels $61.59
+  → $68.20 (+10.7%), CARD-0010 Brashard Smith +6.9%; biggest down CARD-0017 CJ
+  Stroud $23.98 → $22.43 (-6.5%). Flagged 1: CARD-0009 Jack Bech $9.31 → $3.95
+  (+58%). Held 23. Still ASKING comps. `radar.py` found **30** deals. Collection
+  value: **$2,453.39**.
 - **Weekly reprice + radar run 2026-10-10 (scheduled Routine, clean).**
   `reprice.py` applied **5** updates: biggest up CARD-0015 Jayden Daniels $52.79
   → $61.59 (+16.7%) and CARD-0017 CJ Stroud $19.79 → $23.98 (+21.2%); biggest
