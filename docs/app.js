@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v51";
+  var APP_VERSION = "v52";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -374,7 +374,9 @@
                 psa: ["b-psaval", "PSA", "PSA’s own market estimate for this card at this grade"],
                 est_sold: ["b-est", "EST", "Estimated: eBay asking prices, discounted toward sold"],
                 asking: ["b-ask", "ASKING", "From what sellers are asking on eBay right now"] };
-    var p = map[c.price_basis] || map.asking;
+    var p = c.reviewed_price
+      ? ["b-sold", "REVIEWED", "Reviewed median of source-reported sold prices"]
+      : map[c.price_basis] || map.asking;
     return '<span class="basis ' + p[0] + '" title="' + p[2] + '">' + p[1] + "</span>";
   }
 
@@ -1569,7 +1571,9 @@
     }
     return '<div class="compsbox market"><div class="lab">What it’s going for</div>' + rows + trustNote(c) +
       '<div class="cfoot">Typical = eBay <b>asking</b> median. ' +
-      ((c.price_basis === "sold" && (c.my_sales || []).length)
+      (c.reviewed_price
+        ? "Value uses the reviewed reported-sale median; older recorded comps remain as history."
+        : (c.price_basis === "sold" && (c.my_sales || []).length)
         // priced off the owner's own recorded sales — don't nag about eBay
         // approval here, they already have better data than eBay would give us
         ? "This card’s value is your recorded sold prices, not our estimate."
@@ -1599,7 +1603,8 @@
       lab = "Could sell for now";
       big = num(c.asking_price) > 0 ? money(c.asking_price) : "—";
       sub = num(c.asking_price) > 0
-        ? (ms ? "real sold ~" + money0(ms.median) + " · " + ms.count + " comps you added"
+        ? (c.reviewed_price ? "reviewed reported-sale median · medium confidence"
+              : ms ? "real sold ~" + money0(ms.median) + " · " + ms.count + " comps you added"
               : c.price_basis === "sold" ? "from real eBay sold comps"
               : c.price_basis === "psa" ? "PSA app estimate · their sold data for this card + grade"
               : c.price_basis === "est_sold" ? "estimated market · typical asking, discounted toward real sold"
@@ -2130,3 +2135,4 @@
     window.addEventListener("load", function () { navigator.serviceWorker.register("./sw.js").catch(function () {}); });
   }
 })();
+

@@ -433,7 +433,9 @@ def build_data(cards) -> dict:
     # price stays on the card as `est_price` so the modal can show both.
     owner_sold = _merged_sales(app_sales)
     for c in cards:
-        if c.is_sold():
+        # An explicit sold anchor in the catalog is a reviewed price. Preserve
+        # older owner observations as history rather than silently overriding it.
+        if c.is_sold() or c.price_basis.strip().lower() == "sold":
             continue
         med = _owner_sold_value(owner_sold.get(c.sku.upper()))
         if med is None or med <= 0:
@@ -535,6 +537,7 @@ def build_data(cards) -> dict:
                 "est_price": getattr(c, "est_price", ""),
                 "est_basis": getattr(c, "est_basis", ""),
                 "basis_note": c.basis_note,
+                "reviewed_price": c.price_basis.strip().lower() == "sold" and not hasattr(c, "est_price"),
                 "price_basis": _price_basis(c), "image": _image_for(c.sku),
                 "line": _line(c), "title": titles.build_title(c), "status": _status(c),
                 "listed": c.is_listed(), "sold": c.is_sold(),
@@ -598,3 +601,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

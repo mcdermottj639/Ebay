@@ -362,3 +362,8 @@ date,sku,price,basis,median,count,source,applied,kind
 2026-10-17,MERCH-0001,220.00,est_sold,550.00,5,active,no,market
 2026-10-17,MERCH-0002,250.00,est_sold,450.00,2,active,no,market
 2026-10-17,CARD-0033,338.00,psa,799.50,50,active,no,market
+
+2026-10-23,CARD-0025,23.95,sold,23.95,3,reviewed PSA/Fanatics reported sales; owner-approved,yes,correction
+2026-10-23,CARD-0026,196.76,sold,196.76,4,reviewed PSA/Fanatics reported sales; owner-approved,yes,correction
+2026-10-23,CARD-0028,69.00,sold,69.00,5,reviewed PSA/Fanatics reported sales; owner-approved,yes,correction
+2026-10-23,CARD-0031,25.00,sold,25.00,5,reviewed PSA/Fanatics reported sales; owner-approved,yes,correction

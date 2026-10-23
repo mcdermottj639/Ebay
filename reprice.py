@@ -56,7 +56,9 @@ SOLD_DISCOUNT = 0.12
 
 # Prices set by hand from noisy broad-match comps — never auto-reprice these.
 SKIP_SKUS = {"CARD-0001", "CARD-0011", "CARD-0013", "CARD-0014",
-             "CARD-0016", "CARD-0023", "CARD-0030", "CARD-0032"}
+             "CARD-0016", "CARD-0023", "CARD-0030", "CARD-0032",
+             # Owner-approved reported-sale anchors (2026-10-23).
+             "CARD-0025", "CARD-0026", "CARD-0028", "CARD-0031"}
 
 
 def _num(v: str) -> float:
@@ -196,3 +198,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
