@@ -957,6 +957,17 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-10-23 v52 — owner-approved one-time reviewed sale medians.**
+  CARD-0025 $28 → $23.95 (3 sales); CARD-0026 catalog $160 / displayed $177.50
+  → $196.76 (4); CARD-0028 $67 → $69 (5); CARD-0031 $23 → $25 (5).
+  Exact grade/set sales from canonical comparison feed, medium confidence; source
+  URLs retained in notes, range/age/fees caveats in basis_note. All four use sold
+  basis and named repricer holds. Explicit catalog sold anchors now outrank older
+  manual-sales overlays (history retained); generated reviewed_price makes the UI
+  explain that source, rather than crediting older owner comps. Future reviewed
+  anchors require explicit review; this does not automate feed ingestion.
+  Four correction rows prevent false market momentum. Thin/mismatched cards,
+  actual listings, and scheduled comparison-only cadence remain unchanged.
 - **Weekly reprice + radar run 2026-10-17 (scheduled Routine, clean).**
   `reprice.py` applied **5** updates: biggest up CARD-0015 Jayden Daniels $61.59
   → $68.20 (+10.7%), CARD-0010 Brashard Smith +6.9%; biggest down CARD-0017 CJ
@@ -1427,3 +1438,4 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   rows rate against a fixed reference, not a per-run median. (c) Auction/snipe
   alerts are underused — everything surfacing is FIXED_PRICE; consider weighting
   or a dedicated ending-soon view. (d) Photograph cards for listing (above).
+

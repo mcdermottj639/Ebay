@@ -5,8 +5,8 @@
    cache-first — they're immutable per version, so a fresh build busts them via
    the bumped ?v and the always-fresh index.html that references them. */
 
-var CACHE = "card-vault-v51";
-var SHELL = ["./", "./index.html", "./styles.css?v=51", "./app.js?v=51",
+var CACHE = "card-vault-v52";
+var SHELL = ["./", "./index.html", "./styles.css?v=52", "./app.js?v=52",
              "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", function (e) {
@@ -49,3 +49,4 @@ self.addEventListener("fetch", function (e) {
   // Versioned assets + icons: cache-first (fast, offline).
   e.respondWith(caches.match(req).then(function (hit) { return hit || fetch(req); }));
 });
+
