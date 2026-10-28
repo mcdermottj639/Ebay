@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v58";
+  var APP_VERSION = "v59";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1461,17 +1461,15 @@
   }
 
   function viewTargets() {
-    var wrap = el('<div class="view profit-radar"><div class="eyebrow">Targets · broader search, same standards</div><h2>Search for profit. Buy on evidence.</h2><p class="muted">Research targets across five categories. $100–$400 is the core search range; $500 is the normal all-in buy ceiling. Search limits below are not recommended buy prices.</p></div>');
-    var targets = state.data.targets || [];
-    Object.keys(BUY_CATEGORIES).forEach(function(category) {
-      var group = targets.filter(function(t){return t.category === category;});
-      var section = el('<details class="pr-policy" open><summary>' + BUY_CATEGORIES[category] + ' · ' + group.length + '</summary><div class="pr-targets"></div></details>');
-      group.forEach(function(t) {
-        section.querySelector('.pr-targets').appendChild(el('<div class="pr-target"><b>' + esc(t.label) + '</b><span class="muted">' + esc(t.sport) + ' · discovery up to ' + money0(t.price_max) + '</span><span class="muted">Buy ceiling calculated only from exact sold evidence.</span><a target="_blank" rel="noopener" href="' + dealSearchUrl(t,false) + '">Explore listings ↗</a></div>'));
-      });
-      wrap.appendChild(section);
-    });
-    return wrap;
+    var targets=state.data.targets||[],wrap=el('<div class="view profit-radar target-view"></div>');
+    var cats={rookies:['◆','Rookies'],autos:['✎','Autographs'],inserts:['✦','Chase inserts'],established:['★','Stars & legends'],downtown_kaboom:['◈','Downtown / Kaboom']};
+    wrap.appendChild(el('<div class="pr-overview"><div class="pr-overviewtop"><div><span class="pr-kicker">TARGETS · PSA 10 ONLY</span><h2>Find the next flip</h2></div><span class="tg-total">'+targets.length+'<small>targets</small></span></div><div class="tg-budget"><div><span>Core search</span><b>$100–$400</b></div><div><span>Total buy budget</span><b>$500</b></div></div></div>'));
+    var chips=el('<div class="tg-categories" aria-label="Target categories"><button class="active" data-cat="all" aria-pressed="true"><span>◎</span><b>All cards</b><small>'+targets.length+'</small></button>'+Object.keys(cats).map(function(k){return '<button data-cat="'+k+'" aria-pressed="false"><span>'+cats[k][0]+'</span><b>'+cats[k][1]+'</b><small>'+targets.filter(function(t){return t.category===k;}).length+'</small></button>';}).join('')+'</div>');wrap.appendChild(chips);
+    var controls=el('<div class="tg-controls"><input type="search" aria-label="Find a target" placeholder="Find a player or set…"><select aria-label="Target sport"><option value="all">All sports</option><option value="football">Football</option><option value="basketball">Basketball</option><option value="baseball">Baseball</option></select></div>');wrap.appendChild(controls);
+    var count=el('<p class="pr-viewlabel"></p>');wrap.appendChild(count);var grid=el('<div class="tg-grid"></div>');wrap.appendChild(grid);var selected='all';
+    function update(){var q=controls.querySelector('input').value.toLowerCase().trim(),sport=controls.querySelector('select').value;var rows=targets.filter(function(t){return(selected==='all'||t.category===selected)&&(sport==='all'||t.sport===sport)&&((t.label+' '+t.query).toLowerCase().indexOf(q)>=0);});count.textContent=rows.length+' SEARCH TARGETS · NOT BUY RECOMMENDATIONS';
+      grid.innerHTML=rows.length?rows.map(function(t){var cat=cats[t.category]||['◆','Card'],label=t.label.replace(/ PSA 10/g,'');return '<article class="tg-card tg-'+esc(t.category)+'"><div class="tg-top"><span class="tg-symbol" aria-hidden="true">'+cat[0]+'</span><span class="tg-grade">PSA 10</span></div><h3>'+esc(label)+'</h3><div class="tg-meta"><span>'+esc(t.sport)+'</span><span>'+cat[1]+'</span></div><a class="pr-listing" target="_blank" rel="noopener" href="'+dealSearchUrl(t,false)+'">Find listings <span>↗</span></a><details><summary>Search details</summary><p>'+esc(t.query)+'</p><p>Search ceiling '+money0(t.price_max)+'. This is a search filter, not a buy price. Buy price requires exact sold comparisons and your profit minimums.</p><a target="_blank" rel="noopener" href="'+dealSearchUrl(t,true)+'">Check sold prices ↗</a></details></article>';}).join(''):'<div class="pr-empty"><h3>No matching targets</h3><p>Try another player, sport or category.</p></div>';}
+    chips.querySelectorAll('button').forEach(function(btn){btn.onclick=function(){selected=btn.getAttribute('data-cat');chips.querySelectorAll('button').forEach(function(x){var active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});update();};});controls.querySelector('input').oninput=update;controls.querySelector('select').onchange=update;update();return wrap;
   }
 
   function viewDrafts() {
