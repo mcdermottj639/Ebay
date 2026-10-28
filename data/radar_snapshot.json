@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "as_of": "2026-10-28T01:43:23.711228+00:00",
+  "as_of": "2026-10-28T02:06:27.424556+00:00",
   "watch_count": 36,
   "scanned": 13,
   "shown": 0,
@@ -64,11 +64,14 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "research",
+      "grade_scope": "outside_focus",
       "reasons": [
+        "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
         "Card Ladder shows a $288.50 latest sale (October 26), but individual sale provenance is unavailable; aggregate averages are not accepted as comps.",
         "Card/slab condition needs photo review",
         "Seller track record is missing or below screening minimum",
-        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Other grades require a reviewed hold of 30 days or less"
       ],
       "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
@@ -127,10 +130,13 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "research",
+      "grade_scope": "outside_focus",
       "reasons": [
+        "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
         "No recent exact PSA 9 sold sample established in this first scan. NFL Debut #270 is not #209.",
         "Card/slab condition needs photo review",
-        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Other grades require a reviewed hold of 30 days or less"
       ],
       "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
@@ -189,10 +195,13 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "research",
+      "grade_scope": "outside_focus",
       "reasons": [
+        "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
         "Above normal/exception limits. Not the same parallel as your /15. No recent exact sold valuation established. Seller away through October 30.",
         "Card/slab condition needs photo review",
         "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Other grades require a reviewed hold of 30 days or less",
         "Above $500 normal all-in limit; individual exception review",
         "Premium watchlist only"
       ],
@@ -253,6 +262,7 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "research",
+      "grade_scope": "psa10",
       "reasons": [
         "Observed $950 is a bid, not an executable buy-now price; no bargain inference.",
         "Auction bid is not a buy-now acquisition price",
@@ -315,9 +325,12 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "research",
+      "grade_scope": "outside_focus",
       "reasons": [
+        "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
         "Card/slab condition needs photo review",
-        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Other grades require a reviewed hold of 30 days or less"
       ],
       "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
@@ -434,13 +447,16 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "research",
+      "grade_scope": "outside_focus",
       "reasons": [
+        "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
         "Public listing snapshot was crawled two weeks earlier; current availability is unverified.",
         "Asking price exceeds this target discovery band; retained as context, not a buy.",
         "Listing is sold/ended or current availability is unverified",
         "Card/slab condition needs photo review",
         "Seller track record is missing or below screening minimum",
         "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Other grades require a reviewed hold of 30 days or less",
         "Above $500 normal all-in limit; individual exception review",
         "Premium watchlist only"
       ],
@@ -679,6 +695,7 @@
       "opening_offer": 0,
       "stress_profit": -128.27,
       "status": "pass",
+      "grade_scope": "psa10",
       "reasons": [
         "Fails net-profit and/or return hurdle at this asking price",
         "Primary sold pages inaccessible or redirected; these three sale reports are provisional.",
@@ -859,20 +876,23 @@
         "cash_margin": -212.57,
         "adjusted_profit": -260.39,
         "roi": -0.6,
-        "minimum_profit": 100,
-        "minimum_roi": 0.3,
+        "minimum_profit": 300,
+        "minimum_roi": 0.5,
         "passes": false
       },
-      "max_all_in": 83.3,
-      "max_offer": 71.86,
-      "opening_offer": 61,
+      "max_all_in": 0.0,
+      "max_offer": 0.0,
+      "opening_offer": 0,
       "stress_profit": -303.62,
       "status": "pass",
+      "grade_scope": "outside_focus",
       "reasons": [
+        "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
         "Fails net-profit and/or return hurdle at this asking price",
         "Only two older secondary-reported sales; Best Offer amount is reported by Clector, not independently confirmed.",
         "Card/slab condition needs photo review",
-        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Other grades require a reviewed hold of 30 days or less"
       ],
       "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
@@ -931,6 +951,7 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "excluded",
+      "grade_scope": "psa10",
       "reasons": [
         "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review.",
         "Listing is sold/ended or current availability is unverified",
@@ -1156,6 +1177,7 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "excluded",
+      "grade_scope": "psa10",
       "reasons": [
         "Fanatics page is SOLD; $165 history is September 23, 2025 and is excluded as stale. No available purchase at $165.",
         "Three secondary-reported accepted offers; oldest/latest sale evidence is not fresh. Primary eBay display for August 10 is $214.99 asking, not confirmed $190 settlement.",
@@ -1222,12 +1244,15 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "excluded",
+      "grade_scope": "outside_focus",
       "reasons": [
+        "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
         "PSA 10 search led to a product-page offer for PSA 9. Not an exact target match; product offers can rotate.",
         "Listing is sold/ended or current availability is unverified",
         "Card/slab condition needs photo review",
         "Seller track record is missing or below screening minimum",
-        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Other grades require a reviewed hold of 30 days or less"
       ],
       "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
@@ -1286,7 +1311,9 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "excluded",
+      "grade_scope": "outside_focus",
       "reasons": [
+        "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
         "Search result redirected to a sold-out product page; no available PSA 10 offer verified.",
         "Listing is sold/ended or current availability is unverified",
         "Auction bid is not a buy-now acquisition price",
@@ -1294,6 +1321,7 @@
         "Card/slab condition needs photo review",
         "Seller track record is missing or below screening minimum",
         "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Other grades require a reviewed hold of 30 days or less",
         "USD acquisition price is missing",
         "Incoming shipping is unknown"
       ],
@@ -1354,11 +1382,14 @@
       "max_offer": null,
       "opening_offer": null,
       "status": "excluded",
+      "grade_scope": "outside_focus",
       "reasons": [
+        "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
         "PSA 10 search redirected to a product page displaying a PSA 9 offer. That offer is not a PSA 10 comparable.",
         "Listing is sold/ended or current availability is unverified",
         "Card/slab condition needs photo review",
-        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Other grades require a reviewed hold of 30 days or less"
       ],
       "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     }
@@ -1434,7 +1465,7 @@
     ]
   },
   "policy": {
-    "version": 2,
+    "version": 3,
     "purpose": "Profit-only side business; no collection premium or automatic purchases",
     "fee_rate": 0.1325,
     "fee_threshold": 7500,
@@ -1478,9 +1509,22 @@
     ],
     "assumptions": "Non-Store US sports-card fee schedule; actual seller plan unconfirmed. Purchase tax 7% and resale-buyer tax 8% are planning allowances, not tax advice. A 2% promotion reserve is budgeted, not an enabled campaign. Free shipping on resale. $25 owner-time allowance and 12% annual capital hurdle are decision costs, not cash expenses. Profit thresholds apply AFTER these allowances and before income tax. Both the dollar floor and return percentage must pass. Unknown or unsupported short hold time uses a 90-day planning scenario; it is not a sale-time forecast. A shorter hold requires a reviewed rationale and source links. Shipping/insurance and checkout tax must be verified before buying.",
     "fee_source": "https://www.ebay.com/help/selling/fees/fees-sellers?id=4822",
-    "fee_checked_on": "2026-10-27"
+    "fee_checked_on": "2026-10-27",
+    "grade_focus": {
+      "grader": "PSA",
+      "grade": 10
+    },
+    "other_grade_exception": {
+      "profit": 300,
+      "roi": 0.5,
+      "max_hold_days": 30,
+      "requires_reviewed_hold": true
+    }
   },
   "diagnostics": {
+    "psa10_observations": 4,
+    "qualified_grade_exceptions": 0,
+    "outside_grade_focus": 9,
     "sales_supported": 0,
     "missing_sales_evidence": 13,
     "condition_review_needed": 13,
