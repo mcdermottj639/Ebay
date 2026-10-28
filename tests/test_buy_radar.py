@@ -15,7 +15,7 @@ class ProfitRadarTests(unittest.TestCase):
         self.now = datetime(2026, 10, 28, 1, tzinfo=timezone.utc)
         ident = dict(year=2020, set='Prizm', player='Test player', number='1',
                      parallel='Silver', print_run='none', autograph=False,
-                     relic=False, grader='PSA', grade=9)
+                     relic=False, grader='PSA', grade=10)
         self.c = dict(label='test', listing_id='1', url='https://www.ebay.com/itm/1',
                       identity=ident, identity_reviewed=True, condition_reviewed=True,
                       price=100, shipping=5, currency='USD', seller_score=500,
@@ -112,7 +112,7 @@ class ProfitRadarTests(unittest.TestCase):
         self.assertIsNone(r['economics']);self.assertIsNone(r['max_all_in'])
 
     def test_wrong_grade_and_parallel_rejected(self):
-        self.c['sales'][0]['identity']['grade']=10
+        self.c['sales'][0]['identity']['grade']=9
         self.c['sales'][1]['identity']['parallel']='Blue'
         r=evaluate(self.c,self.p,self.now)
         self.assertEqual(r['evidence']['count'],1);self.assertIsNone(r['max_all_in'])
@@ -180,5 +180,54 @@ class ProfitRadarTests(unittest.TestCase):
         r=evaluate(self.c,self.p,self.now)
         self.assertEqual(r['evidence']['conservative_resale'],468)
         self.assertEqual(r['evidence']['valuation_basis'],'primary only')
+
+    def other_grade(self, grade=9, grader='PSA'):
+        self.c['identity'].update(grade=grade,grader=grader)
+        for sale in self.c['sales']:
+            sale['identity'].update(grade=grade,grader=grader)
+        self.c.update(hold_days=30,hold_reviewed=True,
+                      hold_basis='Reviewed listing-to-sale observations',
+                      hold_sources=['https://www.ebay.com/itm/10'])
+
+    def test_psa10_is_normal_focus(self):
+        result=evaluate(self.c,self.p,self.now)
+        self.assertEqual(result['grade_scope'],'psa10')
+        self.assertEqual(result['status'],'qualified')
+
+    def test_other_grade_normal_profit_does_not_qualify(self):
+        self.other_grade()
+        result=evaluate(self.c,self.p,self.now)
+        self.assertGreater(result['economics']['adjusted_profit'],100)
+        self.assertEqual(result['economics']['minimum_profit'],300)
+        self.assertEqual(result['economics']['minimum_roi'],.5)
+        self.assertEqual(result['grade_scope'],'outside_focus')
+        self.assertNotEqual(result['status'],'qualified')
+
+    def test_other_grade_can_qualify_only_as_large_profit_exception(self):
+        self.other_grade()
+        for sale in self.c['sales']:sale['price']=800
+        result=evaluate(self.c,self.p,self.now)
+        self.assertGreaterEqual(result['economics']['adjusted_profit'],300)
+        self.assertGreaterEqual(result['economics']['roi'],.5)
+        self.assertEqual(result['grade_scope'],'exception')
+        self.assertEqual(result['status'],'qualified')
+
+    def test_other_grader_10_and_unknown_hold_are_not_psa10(self):
+        self.other_grade(10,'SGC')
+        for sale in self.c['sales']:sale['price']=800
+        self.c['hold_reviewed']=False
+        result=evaluate(self.c,self.p,self.now)
+        self.assertEqual(result['hold_days'],90)
+        self.assertEqual(result['grade_scope'],'outside_focus')
+        self.assertEqual(result['max_all_in'],0)
+
+    def test_other_grade_exception_still_requires_primary_sales(self):
+        self.other_grade()
+        for sale in self.c['sales']:
+            sale.update(price=800,source_type='secondary')
+        result=evaluate(self.c,self.p,self.now)
+        self.assertTrue(result['economics']['passes'])
+        self.assertEqual(result['grade_scope'],'outside_focus')
+        self.assertNotEqual(result['status'],'qualified')
 
 if __name__=='__main__':unittest.main()

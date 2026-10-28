@@ -35,6 +35,22 @@ def requirements(cost, days, policy):
     return tier["profit"], tier["roi"]
 
 
+def preferred_grade(identity, policy):
+    focus = policy.get("grade_focus", {"grader": "PSA", "grade": 10})
+    identity = identity or {}
+    return (str(identity.get("grader", "")).strip().upper() == focus["grader"]
+            and str(identity.get("grade", "")).strip() == str(focus["grade"]))
+
+
+def candidate_policy(candidate, policy):
+    if preferred_grade(candidate.get("identity"), policy):
+        return policy
+    exception = policy["other_grade_exception"]
+    return dict(policy, max_qualified_hold_days=exception["max_hold_days"],
+                hold_tiers=[dict(through_days=exception["max_hold_days"],
+                                profit=exception["profit"], roi=exception["roi"])])
+
+
 def economics(resale, all_in, days, policy):
     """All-in already includes purchase tax/shipping. No duplicate acquisition fee."""
     fee_base = resale * (1 + policy["resale_buyer_tax_rate"])
@@ -57,7 +73,7 @@ def economics(resale, all_in, days, policy):
         "cash_margin": cash, "adjusted_profit": adjusted,
         "roi": adjusted / all_in if all_in else 0,
         "minimum_profit": minimum, "minimum_roi": roi,
-        "passes": days <= 120 and adjusted >= minimum and adjusted >= all_in * roi,
+        "passes": days <= policy.get("max_qualified_hold_days", 120) and adjusted >= minimum and adjusted >= all_in * roi,
     }
 
 
@@ -121,6 +137,8 @@ def sale_evidence(candidate, now, policy):
 def evaluate(candidate, policy, now=None):
     now = now or datetime.now(timezone.utc)
     c = dict(candidate)
+    preferred = preferred_grade(c.get("identity"), policy)
+    pricing_policy = candidate_policy(c, policy)
     evidence = sale_evidence(c, now, policy)
     c["evidence"] = evidence
     reasons = list(c.get("warnings", []))
@@ -152,6 +170,8 @@ def evaluate(candidate, policy, now=None):
         reasons.append("Need 3 exact primary sold prices within 90 days, including one within 30 days")
     if days > 120:
         reasons.append("Planned hold exceeds 120 days")
+    if not preferred and (not hold_supported or days > policy["other_grade_exception"]["max_hold_days"]):
+        reasons.append("Other grades require a reviewed hold of 30 days or less")
     shipping = c.get("shipping")
     price = c.get("price")
     if not finite(price) or price <= 0 or c.get("currency") != "USD":
@@ -166,16 +186,16 @@ def evaluate(candidate, policy, now=None):
     c["opening_offer"] = None
     if evidence["conservative_resale"] is not None:
         resale = evidence["conservative_resale"]
-        ceiling = max_buy(resale, days, policy)
+        ceiling = max_buy(resale, days, pricing_policy)
         c["max_all_in"] = ceiling
         if finite(shipping) and shipping >= 0:
             offer = max(0, (ceiling - c.get("grading_cost", 0)) / (1 + policy["purchase_tax_rate"]) - shipping)
             c["max_offer"] = math.floor(offer * 100) / 100
             c["opening_offer"] = math.floor(offer * .85)
         if all_in is not None:
-            result = economics(resale, all_in, days, policy)
+            result = economics(resale, all_in, days, pricing_policy)
             c["economics"] = {k: round(v, 2) if isinstance(v, float) else v for k, v in result.items()}
-            stress = economics(resale * .85, all_in, min(180, days + 60), policy)
+            stress = economics(resale * .85, all_in, min(180, days + 60), pricing_policy)
             c["stress_profit"] = round(stress["adjusted_profit"], 2)
     if all_in and all_in > policy["default_max_all_in"]:
         reasons.append("Above $500 normal all-in limit; individual exception review")
@@ -190,6 +210,9 @@ def evaluate(candidate, policy, now=None):
         reasons.insert(0, "Fails net-profit and/or return hurdle at this asking price")
     else:
         c["status"] = "research"
+    c["grade_scope"] = "psa10" if preferred else "exception" if c["status"] == "qualified" else "outside_focus"
+    if c["grade_scope"] == "outside_focus":
+        reasons.insert(0, "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less")
     c["reasons"] = list(dict.fromkeys(reasons))
     c["ceiling_label"] = "Evidence-backed ceiling" if evidence["confidence"] == "medium" else "Provisional scenario only — not a buy recommendation"
     return c
@@ -208,6 +231,9 @@ def snapshot(candidates, policy, watch_count, coverage, now=None):
     rows.sort(key=lambda r: (order[r["status"]], -((r.get("economics") or {}).get("adjusted_profit", -99999) / r["hold_days"])))
     qualified = [r for r in rows if r["status"] == "qualified"]
     diagnostics = {
+        "psa10_observations": sum(r["grade_scope"] == "psa10" for r in rows),
+        "qualified_grade_exceptions": sum(r["grade_scope"] == "exception" for r in rows),
+        "outside_grade_focus": sum(r["grade_scope"] == "outside_focus" for r in rows),
         "sales_supported": sum(r["evidence"]["confidence"] == "medium" for r in rows),
         "missing_sales_evidence": sum(r["evidence"]["confidence"] != "medium" for r in rows),
         "condition_review_needed": sum(not r.get("condition_reviewed") for r in rows),

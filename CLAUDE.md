@@ -8,6 +8,30 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Buy Radar visual pricing and PSA 10 focus — v57, October 27, 2026
+Jack asked: "Whats the card listed for. What do we think we can sell for. Less words more visuals."
+- Radar cards lead with **Listed for → Expected resale**, then a separate estimated
+  after-cost profit/loss strip. Purchase tax/shipping total sits under listing price.
+  The sell estimate comes only from the existing evaluator; absent estimates stay
+  a dash with "Need sold comps". Low-confidence scenarios stay labeled. Never turn
+  a single reported guide sale into an expected resale or profit number.
+- Show concise player/spec/grade, WAIT / PASS / BUY CANDIDATE / EXCLUDED, a short
+  decision line and hold scenario. Detailed sources, explanations, max buy/offer
+  limits, exact cents and all cost assumptions are collapsed underneath.
+- Compact scan counts and filters replace the explanatory wall of text. Coverage,
+  original observation times and policy remain available under scan details.
+- Jack then narrowed discovery to PSA 10s, except unusually large, easy-profit
+  opportunities. All 36 discovery queries now specify PSA 10. Other grades stay
+  hidden unless fully qualified with $300 adjusted profit AND 50% return, a reviewed
+  hold <=30d, exact primary sold evidence and all usual condition/seller/budget
+  gates. This operational default makes his exception concrete; it is no guarantee
+  of liquidity. An SGC/BGS 10 is not a PSA 10. No buys/offers are automated.
+- `grade_scope` is psa10, exception or outside_focus. Preserve original identities
+  and checked_at in research; never relabel a PSA 9 observation as PSA 10. The
+  snapshot keeps excluded history; the normal app view shows only PSA 10s and
+  qualifying exceptions. Collection values and owner listing/sale records unchanged.
+- Keep service-worker shell query versions in sync with app/index/cache version.
+
 ## Owner listing/email reconciliation — v55, October 27, 2026
 Jack explicitly authorized updating the app from his eBay listing/sale emails and
 adding this logic to the EXISTING `Card pricing for Jarvis` task
@@ -53,7 +77,7 @@ never automatically reprice cards or edit live eBay listings.
   verify served data/version. Use handoff skill for meaningful changes. Never
   buy, send offers/messages or create/revise live listings from this workflow.
 
-## Current sourcing rules — v56, October 27, 2026
+## Current sourcing rules — v57, October 27, 2026
 Jack approved a profit-only side business radar, expanded targets, and first runs.
 He then approved replacing the overstrict purchase-price tiers with hold-based hurdles.
 These rules supersede the historical asking-median radar/Great Value notes below.
