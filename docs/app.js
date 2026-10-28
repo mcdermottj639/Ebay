@@ -4,9 +4,9 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v59";
-  var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
-                collapsed: {}, q: "", sort: "tier",
+  var APP_VERSION = "v60";
+  var state = { tab: "today", filter: "All", data: null, bucket: "Cards",
+                collapsed: {}, q: "", sort: "val-desc", sellMode: "plan", buyMode: "radar", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryLayout: "list",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
 
   // ---------- helpers ----------
@@ -228,78 +228,159 @@
       "I still own it\n\n" + lines.join("\n");
   }
 
+  // ---------- Sell-first workspace ----------
+  var Selling = window.CardVaultSelling;
+  function readWorkspace() {
+    try { var d=JSON.parse(localStorage.getItem('cv-selling-v1')||'{}'); return {limit:[5,10,25,50].indexOf(d.limit)>=0?d.limit:25,includeSpecial:d.includeSpecial===true,plans:d.plans||{},lots:Array.isArray(d.lots)?d.lots:[]}; }
+    catch(e) { return {limit:25,includeSpecial:false,plans:{},lots:[]}; }
+  }
+  var workspace=readWorkspace(), selectedLot={}, modalFocus=null;
+  function saveWorkspace() {
+    try { localStorage.setItem('cv-selling-v1',JSON.stringify(workspace)); return true; }
+    catch(e) { toast('Could not save on this device. Your browser storage may be full.'); return false; }
+  }
+  function icon(name) {
+    var paths={today:'<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><path d="M14 17h7m-3.5-3.5v7"/>',sell:'<path d="M20 13l-7 7a2 2 0 0 1-3 0l-7-7V3h10l7 7a2 2 0 0 1 0 3Z"/><circle cx="7.5" cy="7.5" r="1"/>',collection:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/>',radar:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12l7-7"/>',value:'<path d="M4 20V10m8 10V4m8 16v-7"/>',arrow:'<path d="M5 12h14m-5-5l5 5-5 5"/>',check:'<path d="m5 12 4 4L19 6"/>',settings:'<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="2" fill="var(--bg)"/><circle cx="16" cy="12" r="2" fill="var(--bg)"/><circle cx="9" cy="18" r="2" fill="var(--bg)"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1 1m12 12 1 1M5 19l1-1M18 6l1-1"/>',search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',stack:'<rect x="6" y="3" width="12" height="16" rx="2"/><path d="M3 7v13a2 2 0 0 0 2 2h10"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',list:'<path d="M8 5h13M8 12h13M8 19h13M3 5h1M3 12h1M3 19h1"/>'};
+    return '<svg class="cv-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(paths[name]||paths.arrow)+'</svg>';
+  }
+  function toast(message) { var t=document.getElementById('cvToast'); if(t){t.textContent=message;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(function(){t.classList.remove('show');},3500);} }
+  function copyAndReport(text,button,label) {
+    if(!navigator.clipboard){toast('Copy is unavailable here. Select the draft text to copy it.');return;}
+    navigator.clipboard.writeText(text).then(function(){if(button)flashBtn(button,label||'Copied');else toast('Copied');},function(){toast('Could not copy. Select the draft text instead.');});
+  }
+  function displayPrice(n) { return n==null?'—':n<100?money(n):money0(n); }
+  function pageHead(kicker,title,sub) { return el('<header class="page-head"><div><div class="cv-kicker">'+esc(kicker)+'</div><h1>'+esc(title)+'</h1>'+(sub?'<p>'+esc(sub)+'</p>':'')+'</div></header>'); }
+  function sectionHead(title,sub,button,fn) { var h=el('<div class="cv-section-head"><div><h2>'+esc(title)+'</h2>'+(sub?'<p>'+esc(sub)+'</p>':'')+'</div>'+(button?'<button class="text-button">'+esc(button)+icon('arrow')+'</button>':'')+'</div>'); if(fn)h.querySelector('button').onclick=fn; return h; }
+  function segment(options,selected,fn) { var s=el('<div class="cv-segments" aria-label="Choose view"></div>');options.forEach(function(o){var b=el('<button class="'+(selected===o[0]?'on':'')+'" aria-pressed="'+(selected===o[0])+'">'+esc(o[1])+'</button>');b.onclick=function(){fn(o[0]);};s.appendChild(b);});return s; }
+  function goSell(mode) {state.sellMode=mode||'plan';setTab('sell');}
+  function eligibleCards() {var reserved={};workspace.lots.forEach(function(l){(l.skus||[]).forEach(function(sku){reserved[sku]=true;});});return state.data.cards.filter(function(c){return !reserved[c.sku]&&Selling.batchEligible(c,workspace.limit,workspace.includeSpecial,workspace.plans[c.sku]);});}
+  function validSelection() {return eligibleCards().filter(function(c){return selectedLot[c.sku];});}
+  function qualifiedBuys() {return ((state.data.radar||{}).candidates||[]).filter(function(c){var age=Date.now()-Date.parse(c.checked_at||'');return c.status==='qualified'&&age>=0&&age<=48*3600000&&(c.grade_scope==='exception'||(String((c.identity||{}).grader).toUpperCase()==='PSA'&&String((c.identity||{}).grade)==='10'));});}
+  function savedDate(d) {return Selling.formatDate(d);}
+  function referenceLabel(c) {return c.reviewed_price?'Reviewed reference':c.price_basis==='asking'?'Asking-price reference':c.price_basis==='psa'?'PSA reference':'Saved reference';}
+  function premiumRow(item) {
+    var c=item.card,p=item.plan,o=c.owner_listing||{},row=el('<article class="review-card">'+thumb(c,'review-photo')+'<div class="review-body"><div class="review-top"><span class="signal '+p.tone+'">'+esc(p.label)+'</span></div><h3>'+esc(c.player)+'</h3><p class="card-spec">'+esc(c.line)+'</p><div class="review-money"><b>'+displayPrice(Selling.reference(c))+'</b><span>'+esc(referenceLabel(c))+'</span>'+(Selling.listed(c)&&o.asking_price?'<em>Your listing '+money0(o.asking_price)+'</em>':'')+'</div><p class="review-reason">'+esc(p.reason)+'</p><div class="review-buttons"><button class="button small">Review plan '+icon('arrow')+'</button><button class="text-button" data-details>Card details</button></div></div></article>');
+    row.querySelector('.button').onclick=function(){openSellPlan(c);};row.querySelector('[data-details]').onclick=function(){openModal(c);};return row;
+  }
+  function viewToday() {
+    var cards=state.data.cards,stats=Selling.results(cards),batch=eligibleCards(),premium=Selling.premium(cards,workspace.plans,workspace.limit,null,workspace.includeSpecial),buys=qualifiedBuys(),wrap=el('<div class="view today-view"></div>');
+    wrap.appendChild(pageHead(new Date().toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric',timeZone:'America/New_York'}),'Today','Your collection, put to work.'));
+    var hero=el('<section class="today-hero"><div class="hero-copy"><span class="cv-kicker">YOUR RESALE DESK</span><h2>Sell with a plan.<br>Make room for what’s next.</h2><p>Move the small cards together.<br>Give your best cards the right attention.</p><button class="button hero-button">Open your selling plan '+icon('arrow')+'</button></div><div class="hero-art" aria-hidden="true">'+cards.filter(function(c){return !c.sold&&c.image;}).slice(-3).map(function(c){return thumb(c,'hero-slab');}).join('')+'</div><div class="hero-stats"><div><strong>'+stats.held+'</strong><span>Items held</span></div><div><strong>'+stats.listed+'</strong><span>Listed</span></div><div><strong>'+money0(state.data.summary.total_value)+'</strong><span>Saved reference value</span></div></div></section>');hero.querySelector('button').onclick=function(){goSell('plan');};wrap.appendChild(hero);
+    var columns=el('<div class="today-columns"><div class="today-main"></div><aside class="today-side"></aside></div>'),main=columns.querySelector('.today-main'),aside=columns.querySelector('.today-side');
+    main.appendChild(sectionHead('Your next moves','Selling comes first.'));
+    if(batch.length>=2){var groupValue=batch.reduce(function(n,c){return n+Selling.reference(c);},0);var lot=el('<article class="batch-feature"><div class="feature-icon">'+icon('stack')+'</div><div><span class="cv-kicker">01 · CLEAR THE SMALL STUFF</span><h3>One lot. Fewer listings.</h3><p>'+batch.length+' lower-value cards can be grouped into sensible lots.</p><div class="feature-meta"><span>'+money(groupValue)+' combined reference</span><span>Under '+money0(workspace.limit)+' each</span></div><button class="button">Build a lot '+icon('arrow')+'</button></div></article>');lot.querySelector('button').onclick=function(){goSell('lots');};main.appendChild(lot);}
+    main.appendChild(sectionHead('Give these a closer look','Individual plans for your better cards.','See all',function(){goSell('plan');}));
+    var spotlight=el('<div class="review-list"></div>');premium.slice(0,2).forEach(function(x){spotlight.appendChild(premiumRow(x));});main.appendChild(spotlight);
+    var due=premium.filter(function(x){return x.plan.key==='due';}).length;
+    var pulse=el('<section class="cv-panel business-pulse"><span class="cv-kicker">AT A GLANCE</span><h2>Keep things moving</h2><button data-action="listings"><span>'+icon('sell')+' Active listings</span><b>'+stats.listed+' →</b></button><button data-action="plan"><span>'+icon('clock')+' Planned reviews due</span><b>'+due+' →</b></button><button data-action="cost"><span>'+icon('value')+' Costs recorded</span><b>'+stats.heldCostCount+'/'+stats.held+' →</b></button><p>Reference values are saved estimates. Actual listing prices and sale proceeds stay separate.</p></section>');pulse.querySelectorAll('button').forEach(function(b){b.onclick=function(){var a=b.dataset.action;if(a==='cost')setTab('value');else goSell(a);};});aside.appendChild(pulse);
+    var buy=el('<section class="cv-panel buy-quiet"><span class="cv-kicker">BUY SECOND · BUY WELL</span><div class="buy-number">'+buys.length+'<span>qualified opportunities</span></div><p>'+(buys.length?'These pass your saved profit and evidence rules.':'Nothing clears your buying rules right now. Your money can wait.')+'</p><button class="text-button">'+(buys.length?'Review opportunities':'Explore targets')+icon('arrow')+'</button></section>');buy.querySelector('button').onclick=function(){state.buyMode=buys.length?'radar':'targets';setTab('radar');};aside.appendChild(buy);
+    if(workspace.lots.length){var drafts=el('<section class="cv-panel"><span class="cv-kicker">READY WHEN YOU ARE</span><h2>'+workspace.lots.length+' saved lot draft'+(workspace.lots.length===1?'':'s')+'</h2><p>Your titles, selected cards and price scenarios, saved on this device.</p><button class="text-button">Continue a draft '+icon('arrow')+'</button></section>');drafts.querySelector('button').onclick=function(){goSell('drafts');};aside.appendChild(drafts);}
+    var sold=cards.filter(function(c){return c.sold;}).sort(function(a,b){return String(b.sold_date).localeCompare(String(a.sold_date));});
+    if(sold.length){aside.appendChild(sectionHead('Recent sales','','All results',function(){setTab('value');}));var activity=el('<div class="cv-panel activity-list"></div>');sold.slice(0,3).forEach(function(c){var row=el('<button class="activity-row">'+thumb(c)+'<span><b>'+esc(c.player)+'</b><small>'+esc(savedDate(c.sold_date))+'</small></span><strong>'+money0(c.sold_price)+'</strong></button>');row.onclick=function(){openModal(c);};activity.appendChild(row);});aside.appendChild(activity);}
+    wrap.appendChild(columns);return wrap;
+  }
+  function viewSell() {
+    var wrap=el('<div class="view sell-view"></div>'),mode=state.sellMode||'plan';
+    wrap.appendChild(pageHead('SELL FIRST','Your selling desk','Move lower-value cards in lots. Manage better cards individually.'));
+    wrap.appendChild(segment([['plan','Individual plans'],['lots','Build a lot'],['listings','Listings'],['drafts','Drafts']],mode,function(x){state.sellMode=x;render();}));
+    if(mode==='lots'){wrap.appendChild(lotBuilder());return wrap;}
+    if(mode==='drafts'){wrap.appendChild(savedLotDrafts());return wrap;}
+    if(mode==='listings'){
+      var listed=state.data.cards.filter(Selling.listed).sort(function(a,b){return (Selling.listingAge(b)||0)-(Selling.listingAge(a)||0)||(Selling.reference(b)||0)-(Selling.reference(a)||0);});
+      wrap.appendChild(el('<p class="section-note">'+listed.length+' recorded listings · check eBay for current availability, offers and watchers.</p>'));
+      var list=el('<div class="listing-grid"></div>');listed.forEach(function(c){var o=c.owner_listing||{},age=Selling.listingAge(c),p=el('<article class="listing-card">'+thumb(c)+'<div><span class="signal green">Listed</span><h3>'+esc(c.player)+'</h3><p class="card-spec">'+esc(c.line)+'</p></div><div class="listing-prices"><div><span>Your listing</span><b>'+displayPrice(Selling.amount(o.asking_price))+'</b></div><div><span>Saved reference</span><b>'+displayPrice(Selling.reference(c))+'</b></div></div><p class="section-note">'+(age===null?'Listing date not recorded':age+' days since listing')+' · '+(o.confirmed_at?'Last confirmed '+savedDate(o.confirmed_at):'Status from catalog')+'</p><div class="button-row"><button class="button small">Review price plan</button>'+(o.url?'<a class="button secondary small" href="'+safeBuyLink(o.url)+'" target="_blank" rel="noopener">Open listing ↗</a>':'')+'</div></article>');p.querySelector('button').onclick=function(){openSellPlan(c);};list.appendChild(p);});wrap.appendChild(list);if(!listed.length)wrap.appendChild(emptyPanel('No recorded listings','Your confirmed listings will appear here.'));return wrap;
+    }
+    var items=Selling.premium(state.data.cards,workspace.plans,workspace.limit,null,workspace.includeSpecial),batch=eligibleCards();
+    var intro=el('<div class="plan-summary"><div><b>'+items.length+'</b><span>Individual reviews</span></div><div><b>'+batch.length+'</b><span>Lot candidates</span></div><p>Set a target and review date. A reminder to check the market is never a prediction of the best selling time.</p></div>');wrap.appendChild(intro);
+    var controls=el('<div class="plan-controls"><label class="search">'+icon('search')+'<input type="search" placeholder="Find a card to plan…" aria-label="Search selling plans"></label><select aria-label="Plan filter"><option value="all">All individual cards</option><option value="due">Reviews due</option><option value="hold">Holding</option><option value="unlisted">Not listed</option></select></div>'),list=el('<div class="review-list plan-grid"></div>');
+    function update(){var q=controls.querySelector('input').value.toLowerCase().trim(),f=controls.querySelector('select').value;list.innerHTML='';var shown=items.filter(function(x){return(!q||(x.card.player+' '+x.card.line).toLowerCase().includes(q))&&(f==='all'||f==='unlisted'&&!Selling.listed(x.card)||x.plan.key===f);});shown.forEach(function(x){list.appendChild(premiumRow(x));});if(!shown.length)list.appendChild(emptyPanel('Nothing in this view','Try another filter or search.'));}
+    controls.querySelector('input').oninput=update;controls.querySelector('select').onchange=update;wrap.appendChild(controls);wrap.appendChild(list);update();return wrap;
+  }
+  function emptyPanel(title,body){return el('<div class="empty-panel"><span class="empty-symbol">'+icon('check')+'</span><h3>'+esc(title)+'</h3><p>'+esc(body)+'</p></div>');}
+  function lotBuilder() {
+    var wrap=el('<div class="lot-builder"></div>'),rows=eligibleCards(),groups=Selling.groups(eligibleCards(),workspace.limit,workspace.includeSpecial,workspace.plans);
+    var intro=el('<div class="cv-panel lot-intro"><div><span class="cv-kicker">SMALL CARDS, ONE SHIPMENT</span><h2>Build a better bundle</h2><p>Pick related cards, prepare one draft, and check the proceeds before you list.</p></div><label>Per-card reference limit<select aria-label="Lot value limit">'+[5,10,25,50].map(function(n){return '<option value="'+n+'"'+(workspace.limit===n?' selected':'')+'>'+money0(n)+'</option>';}).join('')+'</select></label></div>');intro.querySelector('select').onchange=function(){workspace.limit=Number(this.value);saveWorkspace();render();};wrap.appendChild(intro);
+    var special=el('<label class="special-toggle"><input type="checkbox"'+(workspace.includeSpecial?' checked':'')+'><span>Include graded, autographed & numbered cards below this cutoff<small>Listed items, memorabilia, individual plans and higher-cost cards remain excluded.</small></span></label>');special.querySelector('input').onchange=function(){workspace.includeSpecial=this.checked;saveWorkspace();render();};wrap.appendChild(special);
+    wrap.appendChild(el('<p class="section-note">'+rows.length+' eligible cards · cutoff uses both saved reference value and known purchase cost. Cards in saved lots are reserved. Missing prices need an individual review.</p>'));
+    var list=el('<div class="lot-groups"></div>'),summary=el('<div class="selection-bar"><div><b></b><span></span></div><button class="button">Prepare lot '+icon('arrow')+'</button></div>');
+    function sync(){var chosen=validSelection();summary.querySelector('b').textContent=chosen.length+' cards selected';summary.querySelector('span').textContent=chosen.length?money(chosen.reduce(function(n,c){return n+Selling.reference(c);},0))+' combined reference · not a lot price':'Select at least two cards';summary.querySelector('button').disabled=chosen.length<2;list.querySelectorAll('input[type="checkbox"]').forEach(function(c){c.checked=!!selectedLot[c.value];});}
+    groups.forEach(function(g){var section=el('<section class="cv-panel lot-group"><div class="lot-group-head"><div><h3>'+esc(g.label)+'</h3><span>'+g.cards.length+' card'+(g.cards.length===1?'':'s')+' · '+money(g.value)+' reference total</span></div><button class="text-button">Select group</button></div><div class="lot-options"></div></section>');section.querySelector('button').onclick=function(){var all=g.cards.every(function(c){return selectedLot[c.sku];});g.cards.forEach(function(c){selectedLot[c.sku]=!all;});sync();};g.cards.forEach(function(c){var row=el('<label class="lot-option"><input type="checkbox" value="'+esc(c.sku)+'" aria-label="Add '+esc(c.player)+' '+esc(c.sku)+' to lot">'+thumb(c)+'<span><b>'+esc(c.player)+'</b><small>'+esc(c.line)+(c.graded?' · '+esc(c.grader+' '+c.grade):'')+(c.auto?' · AUTO':'')+(c.serial_run?' · /'+esc(c.serial_run):'')+'</small></span><strong>'+displayPrice(Selling.reference(c))+'</strong></label>');row.querySelector('input').onchange=function(){selectedLot[c.sku]=this.checked;sync();};section.querySelector('.lot-options').appendChild(row);});list.appendChild(section);});
+    wrap.appendChild(list);if(!groups.length)wrap.appendChild(emptyPanel('No cards fit this cutoff','Raise the reference limit, or use an individual selling plan.'));wrap.appendChild(summary);summary.querySelector('button').onclick=function(){openLotDraft(validSelection());};sync();return wrap;
+  }
+  function showWorkspaceModal(html) {
+    modalFocus=document.activeElement;var m=document.getElementById('modal');m.className='modal workspace-modal';m.innerHTML='<button class="close" id="mClose" aria-label="Close dialog">×</button>'+html;m.setAttribute('aria-labelledby','workspaceTitle');m.querySelector('#mClose').onclick=closeModal;document.getElementById('modalWrap').classList.add('open');document.body.classList.add('sheet-open');m.querySelector('#mClose').focus();return m;
+  }
+  function openSellPlan(c) {
+    var p=workspace.plans[c.sku]||{},signal=Selling.planFor(c,p),o=c.owner_listing||{},e=Selling.soldEvidence(c),m=showWorkspaceModal('<div class="modal-heading">'+thumb(c)+'<div><span class="cv-kicker">INDIVIDUAL SELLING PLAN</span><h2 id="workspaceTitle">'+esc(c.player)+'</h2><p>'+esc(c.line)+'</p></div></div><div class="plan-price"><div><span>'+esc(referenceLabel(c))+'</span><b>'+displayPrice(Selling.reference(c))+'</b></div><div><span>'+(Selling.listed(c)?'Your listing':'Recorded cost')+'</span><b>'+displayPrice(Selling.listed(c)?Selling.amount(o.asking_price):Selling.cost(c))+'</b></div></div><div class="evidence-note"><span class="signal '+signal.tone+'">'+esc(signal.label)+'</span><p>'+esc(signal.reason)+'</p><small>'+e.count+' recorded sales in the last 90 days'+(e.newest?' · newest '+esc(e.newest):'')+'. Confirm exact card, parallel and grade. Saved references are not live market quotes.</small></div><div class="form-grid"><label>Your plan<select id="planAction"><option value="review">Review before deciding</option><option value="hold">Hold for my price</option><option value="list">Prepare to list</option></select></label><label>Target sale price ($)<input id="planTarget" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Your target" value="'+esc(p.target||'')+'"></label><label>Review on<input id="planDate" type="date" value="'+esc(p.reviewDate||'')+'"></label><label class="full">Your notes<textarea id="planNote" rows="3" maxlength="800" placeholder="What would make you sell?">'+esc(p.note||'')+'</textarea></label></div><div class="button-row"><button class="button" id="planSave">Save selling plan</button><a class="button secondary" href="'+ebaySearchUrl(c,true)+'" target="_blank" rel="noopener">Check sold comps ↗</a></div><p class="section-note">Saved on this device. Review dates appear on Today when you open the app. This plan does not change your eBay listing.</p>');
+    m.querySelector('#planAction').value=p.action||'review';m.querySelector('#planSave').onclick=function(){var target=m.querySelector('#planTarget');if(!target.reportValidity())return;workspace.plans[c.sku]={action:m.querySelector('#planAction').value,target:target.value,reviewDate:m.querySelector('#planDate').value,note:m.querySelector('#planNote').value.trim()};if(saveWorkspace()){closeModal();render();toast('Selling plan saved on this device');}};
+  }
+  function openLotDraft(cards,existing) {
+    if(cards.length<2){toast('Select at least two eligible cards to build a lot.');return;}
+    var d=existing||{},policy=(state.data.radar||{}).policy||{},title=d.title||Selling.lotTitle(cards),description=d.description||Selling.lotDescription(cards);
+    var form=Object.assign({price:'',shipping:policy.outbound_shipping==null?8:policy.outbound_shipping,supplies:policy.supplies==null?2:policy.supplies,feeRate:(policy.fee_rate==null?.1325:policy.fee_rate)*100,orderFee:policy.per_order_fee==null?.4:policy.per_order_fee,promotion:(policy.promotion_reserve_rate==null?.02:policy.promotion_reserve_rate)*100,buyerTax:(policy.resale_buyer_tax_rate==null?.08:policy.resale_buyer_tax_rate)*100,feeThreshold:policy.fee_threshold||7500,feeRateAbove:(policy.fee_rate_above==null?.0235:policy.fee_rate_above)*100},d.form||{});
+    var m=showWorkspaceModal('<div class="cv-kicker">LOT DRAFT · '+cards.length+' CARDS</div><h2 id="workspaceTitle">One listing, ready to prepare.</h2><p class="section-note">'+money(cards.reduce(function(n,c){return n+Selling.reference(c);},0))+' combined saved references. Choose your lot price; this total is not a recommended asking price.</p><label class="field">Listing title <span id="titleLength"></span><input id="lotTitle" maxlength="80" value="'+esc(title)+'"></label><div class="lot-selected">'+cards.map(function(c){return '<span>'+esc(c.player)+'</span>';}).join('')+'</div><div class="form-grid"><label>Lot asking price ($)<input id="lotPrice" data-quote="price" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Set your price" value="'+esc(form.price)+'"></label><label>Shipping you pay ($)<input data-quote="shipping" type="number" min="0" step="0.01" inputmode="decimal" value="'+esc(form.shipping)+'"></label></div><div id="lotQuote" class="quote-panel" aria-live="polite"></div><details class="cost-assumptions"><summary>Adjust selling cost assumptions</summary><div class="form-grid">'+[['supplies','Packaging ($)'],['feeRate','Base selling fee (%)'],['orderFee','Per-order fee ($)'],['promotion','Promotion reserve (%)'],['buyerTax','Buyer tax allowance (%)'],['feeThreshold','Fee tier threshold ($)'],['feeRateAbove','Fee above threshold (%)']].map(function(f){return '<label>'+f[1]+'<input type="number" data-quote="'+f[0]+'" min="0" '+(/Rate|promotion|buyerTax/.test(f[0])?'max="99.99" ':'')+'step="0.01" inputmode="decimal" value="'+esc(form[f[0]])+'"></label>';}).join('')+'</div><p class="section-note">Planning assumptions from your saved buying policy. Free shipping to the buyer; fees include the buyer-tax allowance. Verify your seller plan, final package and actual costs. No promotion is enabled. Before income tax.</p></details><details class="draft-description"><summary>Listing description & preparation checklist</summary><textarea id="lotDescription" rows="11">'+esc(description)+'</textarea><button class="text-button" id="copyDescription">Copy description</button></details><div class="button-row"><button class="button" id="saveLot">Save lot draft</button><button class="button secondary" id="copyTitle">Copy title</button></div><a class="ebay-draft-link" href="https://www.ebay.com/sl/sell" target="_blank" rel="noopener">Open eBay’s listing form ↗</a><p class="section-note">Draft only, saved on this device. Photograph every card and remove the seller checklist before publishing. Inventory stays unchanged until you record a sale.</p>');
+    function update(){m.querySelectorAll('[data-quote]').forEach(function(i){form[i.dataset.quote]=i.value;});var q=Selling.lotQuote(cards,form);m.querySelector('#titleLength').textContent=m.querySelector('#lotTitle').value.length+'/80';m.querySelector('#lotQuote').innerHTML='<div><span>Est. net proceeds</span><strong class="'+(q.proceeds<0?'neg':'')+'">'+(q.proceeds===null?'—':money(q.proceeds))+'</strong><small>After modeled selling costs</small></div><div><span>Est. profit</span><strong class="'+(q.profit<0?'neg':'')+'">'+(q.profit===null?'—':money(q.profit))+'</strong><small>'+q.costCount+'/'+q.count+' acquisition costs recorded</small></div>'+(q.costCount<q.count?'<p>Profit needs the missing purchase costs. Proceeds are not profit.</p>':'');}
+    m.querySelectorAll('input').forEach(function(i){i.addEventListener('input',update);});m.querySelector('#copyDescription').onclick=function(){copyAndReport(m.querySelector('#lotDescription').value,this);};m.querySelector('#copyTitle').onclick=function(){copyAndReport(m.querySelector('#lotTitle').value,this);};
+    m.querySelector('#saveLot').onclick=function(){if(!m.querySelector('#lotTitle').value.trim()){m.querySelector('#lotTitle').focus();return;}var invalid=Array.from(m.querySelectorAll('input')).find(function(i){return !i.checkValidity();});if(invalid){invalid.reportValidity();return;}if(cards.some(function(c){return !Selling.batchEligible(c,workspace.limit,workspace.includeSpecial,workspace.plans[c.sku]);})){toast('Inventory changed. Recheck your selected cards.');return;}var row={id:d.id||'lot-'+Date.now(),title:m.querySelector('#lotTitle').value.trim(),description:m.querySelector('#lotDescription').value,skus:cards.map(function(c){return c.sku;}),form:form,updated:new Date().toISOString()};var ix=workspace.lots.findIndex(function(x){return x.id===row.id;});if(ix<0)workspace.lots.unshift(row);else workspace.lots[ix]=row;if(saveWorkspace()){selectedLot={};closeModal();state.sellMode='drafts';render();toast('Lot draft saved on this device');}};update();
+  }
+  function savedLotDrafts() {
+    var wrap=el('<div class="saved-lots"></div>');wrap.appendChild(sectionHead('Your lot drafts','Saved on this device. Nothing has been listed automatically.','Build another',function(){goSell('lots');}));
+    workspace.lots.forEach(function(d){var cards=state.data.cards.filter(function(c){return d.skus.indexOf(c.sku)>=0&&Selling.batchEligible(c,workspace.limit,workspace.includeSpecial,workspace.plans[c.sku]);}),changed=cards.length!==d.skus.length,row=el('<article class="cv-panel saved-lot"><span class="signal '+(changed?'amber':'green')+'">'+(changed?'Recheck selection':'Draft')+'</span><h3>'+esc(d.title)+'</h3><p>'+d.skus.length+' selected cards · updated '+esc(savedDate(d.updated))+'</p>'+(changed?'<p class="warning-text">Some cards are sold, listed, or outside the current lot rules. Rebuild this draft before using it.</p>':'')+'<div class="button-row"><button class="button small" data-open'+(changed?' disabled':'')+'>Continue draft '+icon('arrow')+'</button><button class="text-button" data-remove>Remove draft</button></div></article>');row.querySelector('[data-open]').onclick=function(){openLotDraft(cards,d);};row.querySelector('[data-remove]').onclick=function(){var old=workspace.lots.slice();workspace.lots=workspace.lots.filter(function(x){return x.id!==d.id;});if(saveWorkspace()){render();toast('Draft removed; your cards are unchanged');}else workspace.lots=old;};wrap.appendChild(row);});
+    if(!workspace.lots.length)wrap.appendChild(emptyPanel('Your next lot starts here','Choose a related group of lower-value cards, then save its title, checklist and selling-cost scenario.'));
+    var single=el('<details class="single-drafts"><summary>Individual card listing drafts</summary></details>');single.appendChild(viewDrafts());wrap.appendChild(single);return wrap;
+  }
+  function viewBuy() {var w=el('<div class="view buy-view"></div>');w.appendChild(pageHead('BUY WITH DISCIPLINE','Find your next opportunity','Profitable buys, backed by evidence.'));w.appendChild(segment([['radar','Buy opportunities'],['targets','Explore targets']],state.buyMode||'radar',function(x){state.buyMode=x;render();}));w.appendChild(state.buyMode==='targets'?viewTargets():viewRadar());return w;}
+  function viewResults() {
+    var cards=state.data.cards,s=Selling.results(cards),w=el('<div class="view results-view"></div>');w.appendChild(pageHead('KNOW YOUR NUMBERS','Results','Sale proceeds, costs and profit — kept separate.'));
+    w.appendChild(el('<div class="result-tiles"><div class="result-tile accent"><span>Recorded sales</span><strong>'+money0(s.revenue)+'</strong><small>'+s.sold+' items sold · before selling costs</small></div><div class="result-tile"><span>Gross profit</span><strong>'+(s.gross===null?'—':money0(s.gross))+'</strong><small>Before fees and shipping · '+s.knownSoldCosts+'/'+s.sold+' costs known</small></div><div class="result-tile"><span>Confirmed net profit</span><strong>'+(s.net===null?'—':money0(s.net))+'</strong><small>'+(s.net===null?'Actual selling costs are incomplete':'After recorded selling costs')+'</small></div></div>'));
+    var ledger=el('<section class="cv-panel sales-ledger"><div class="cv-section-head"><div><h2>Your sales</h2><p>Actual sale prices. Estimated values are excluded.</p></div></div></section>');cards.filter(function(c){return c.sold;}).sort(function(a,b){return String(b.sold_date).localeCompare(String(a.sold_date));}).forEach(function(c){var cost=Selling.cost(c),row=el('<button class="ledger-row">'+thumb(c)+'<span><b>'+esc(c.player)+'</b><small>'+esc(savedDate(c.sold_date))+'</small></span><span><b>'+money(c.sold_price)+'</b><small>'+(cost===null?'Cost unknown':money(cost)+' cost')+'</small></span><span class="ledger-profit"><b>'+(cost===null?'—':money(num(c.sold_price)-cost))+'</b><small>Gross profit</small></span></button>');row.onclick=function(){openModal(c);};ledger.appendChild(row);});w.appendChild(ledger);
+    w.appendChild(sectionHead('Your inventory picture','Saved references describe the collection; they are not sale proceeds.'));
+    w.appendChild(el('<div class="result-tiles"><div class="result-tile"><span>Saved reference value</span><strong>'+money0(state.data.summary.total_value)+'</strong><small>'+s.held+' held items</small></div><div class="result-tile"><span>Recorded purchase costs</span><strong>'+money0(s.knownCapital)+'</strong><small>Known costs only · '+s.heldCostCount+'/'+s.held+' items</small></div><div class="result-tile"><span>Missing purchase costs</span><strong>'+(s.held-s.heldCostCount)+'</strong><small>Add costs to unlock complete profit tracking</small></div></div>'));
+    var missing=cards.filter(function(c){return Selling.held(c)&&Selling.cost(c)===null;}).sort(function(a,b){return (Selling.reference(b)||0)-(Selling.reference(a)||0);});if(missing.length){var gaps=el('<details class="cv-panel data-gaps"><summary>Add your missing costs ('+missing.length+')</summary><p class="section-note">Start with higher-value cards. Enter what you paid in the card details.</p><div class="compact-card-list"></div></details>');missing.forEach(function(c){var b=el('<button><span>'+esc(c.player)+'</span><b>Add cost +</b></button>');b.onclick=function(){openModal(c);var input=document.getElementById('myCost');if(input){input.scrollIntoView({block:'center'});input.focus();}};gaps.querySelector('.compact-card-list').appendChild(b);});w.appendChild(gaps);}
+    var history=el('<section class="cv-panel reference-history"><h2>Reference value over time</h2><p class="section-note">Includes inventory changes and valuation corrections; this is not investment performance.</p>'+trendChart(state.data.history||[])+'</section>');w.appendChild(history);return w;
+  }
+
+
   // ---------- shell ----------
   function shell() {
-    document.body.innerHTML = "";
-    document.body.appendChild(el(
-      '<div class="appbar">' +
-        '<div class="logo">🃏</div>' +
-        '<div class="brand"><b>Card Vault</b><small id="gen">your collection</small></div>' +
-        '<div class="spacer"></div>' +
-        '<span class="ver" id="verpill" title="App version — check this to confirm the latest build loaded">' + APP_VERSION + '</span>' +
-        '<span class="pill" id="livepill">Local</span>' +
-        '<button class="iconbtn" id="themebtn" title="Light / dark">🌙</button>' +
-      "</div>"
-    ));
+    document.body.innerHTML='';
+    document.body.appendChild(el('<div class="appbar"><a href="#tab=today" class="brand-home" aria-label="Card Vault Today"><span class="logo">'+icon('stack')+'</span><span class="brand"><b>Card Vault</b><small id="gen">Your resale desk</small></span></a><div class="spacer"></div><span class="ver" id="verpill">'+APP_VERSION+'</span><span class="pill" id="livepill">Saved data</span><button class="iconbtn" id="themebtn" aria-label="Toggle light or dark theme" title="Light / dark">'+icon('sun')+'</button><button class="iconbtn" id="settingsbtn" aria-label="App information" title="App information">'+icon('settings')+'</button></div>'));
     document.body.appendChild(el('<main id="view"></main>'));
-    document.body.appendChild(el(
-      '<div class="modal-wrap" id="modalWrap"><div class="modal" id="modal"></div></div>'
-    ));
-    document.body.appendChild(el(
-      '<div class="modal-wrap" id="filterWrap"><div class="modal"></div></div>'
-    ));
-    var nav = el('<nav class="nav"></nav>');
-    // rail-only brand (desktop sidebar); hidden on phones via CSS
-    nav.appendChild(el('<div class="navbrand"><span class="logo">🃏</span>Card Vault</div>'));
-    [["collection", "🗃️", "Collection"],
-     ["value", "💰", "Value"],
-     ["salesmap", "🗺️", "Sales Map"],
-     ["radar", "🔎", "Buy Radar"],
-     ["targets", "🎯", "Targets"],
-     ["drafts", "🏷️", "Drafts"],
-     ["about", "ℹ️", "About"]].forEach(function (t) {
-      var b = el('<button data-tab="' + t[0] + '"><span class="i">' + t[1] + '</span>' + t[2] + "</button>");
-      b.onclick = function () { setTab(t[0]); };
-      nav.appendChild(b);
+    document.body.appendChild(el('<div class="modal-wrap" id="modalWrap"><div class="modal" id="modal" role="dialog" aria-modal="true" tabindex="-1"></div></div>'));
+    document.body.appendChild(el('<div class="modal-wrap" id="filterWrap"><div class="modal" role="dialog" aria-modal="true" aria-label="Filter cards"></div></div>'));
+    var nav=el('<nav class="nav" aria-label="Main navigation"><div class="navbrand"><span class="logo">'+icon('stack')+'</span><span>Card Vault<small>YOUR RESALE DESK</small></span></div><div class="nav-section">WORKSPACE</div></nav>');
+    [['today','Today'],['sell','Sell'],['collection','Inventory'],['radar','Buy'],['value','Results']].forEach(function(t){var b=el('<button data-tab="'+t[0]+'"><span class="i">'+icon(t[0])+'</span><span>'+t[1]+'</span></button>');b.onclick=function(){setTab(t[0]);};nav.appendChild(b);});
+    nav.appendChild(el('<div class="navfoot"><small>SELL FIRST. BUY WELL.</small><p>A plan for every card.</p><span>'+APP_VERSION+' · Personal workspace</span></div>'));document.body.appendChild(nav);
+    document.body.appendChild(el('<div class="cv-toast" id="cvToast" role="status" aria-live="polite"></div>'));
+    document.getElementById('themebtn').onclick=toggleTheme;document.getElementById('settingsbtn').onclick=function(){setTab('about');};
+    document.querySelector('.brand-home').onclick=function(e){e.preventDefault();setTab('today');};
+    document.getElementById('modalWrap').onclick=function(e){if(e.target.id==='modalWrap')closeModal();};
+    document.getElementById('filterWrap').onclick=function(e){if(e.target.id==='filterWrap')closeFilter();};
+    document.addEventListener('keydown',function(e){
+      var typing=/INPUT|SELECT|TEXTAREA/.test((document.activeElement||{}).tagName||'');
+      if(e.key==='/'&&!typing){var search=document.querySelector('.search input');if(search){e.preventDefault();search.focus();}}
+      if(e.key==='Escape'){closeModal();closeFilter();}
+      if(e.key==='Tab'){var dialog=document.querySelector('.modal-wrap.open .modal');if(dialog){var focus=Array.from(dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select,textarea,summary')).filter(function(x){return x.getClientRects().length;});var first=focus[0],last=focus[focus.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}}
     });
-    nav.appendChild(el('<div class="navfoot"><small>Collection value</small><b class="tnum">' +
-      money0(state.data.summary.total_value) + "</b></div>"));
-    document.body.appendChild(nav);
-
-    document.getElementById("themebtn").onclick = toggleTheme;
-    document.getElementById("modalWrap").onclick = function (e) {
-      if (e.target.id === "modalWrap") closeModal();
-    };
-    document.getElementById("filterWrap").onclick = function (e) {
-      if (e.target.id === "filterWrap") closeFilter();
-    };
-    // PC keyboard: "/" jumps to search, Esc closes any sheet
-    document.addEventListener("keydown", function (e) {
-      var typing = /INPUT|SELECT|TEXTAREA/.test((document.activeElement || {}).tagName || "");
-      if (e.key === "/" && !typing) {
-        var s = document.querySelector(".search input");
-        if (s) { e.preventDefault(); s.focus(); }
-      } else if (e.key === "Escape") { closeModal(); closeFilter(); }
-    });
+    document.addEventListener('error',function(e){if(e.target.tagName==='IMG'&&e.target.closest('.thumb')){e.target.style.display='none';e.target.closest('.thumb').classList.add('photo-missing');}},true);
     syncThemeIcon();
   }
 
   function setTab(tab) {
-    state.tab = tab;
-    document.querySelectorAll(".nav button").forEach(function (b) {
-      b.classList.toggle("on", b.getAttribute("data-tab") === tab);
-    });
+    if(tab==='targets'){state.buyMode='targets';tab='radar';}
+    if(tab==='drafts'){state.sellMode='drafts';tab='sell';}
+    if(tab==='salesmap'){state.sellMode='plan';tab='sell';}
+    state.tab=tab;
+    document.querySelectorAll('.nav button').forEach(function(b){var on=b.dataset.tab===tab;b.classList.toggle('on',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+    if(history.replaceState)history.replaceState(null,'','#tab='+tab);
     render();
   }
-
-  // ---------- views ----------
   function render() {
-    var v = document.getElementById("view");
-    v.innerHTML = "";
-    v.appendChild({ collection: viewCollection, value: viewValue, salesmap: viewSalesMap,
-                    radar: viewRadar, targets: viewTargets, drafts: viewDrafts,
-                    about: viewAbout }[state.tab]());
-    v.scrollTop = 0; window.scrollTo(0, 0);
+    var v=document.getElementById('view');v.innerHTML='';
+    v.appendChild(({today:viewToday,sell:viewSell,collection:viewCollection,value:viewResults,radar:viewBuy,about:viewAbout}[state.tab]||viewToday)());
+    document.getElementById('gen').textContent=state.data.cards.filter(Selling.held).length+' items · Your resale desk';
+    document.getElementById('livepill').textContent='Updated '+savedDate(state.data.generated);
+    v.scrollTop=0;window.scrollTo(0,0);
   }
 
   function badges(c) {
@@ -352,11 +433,8 @@
   // photo thumbnail — or a smart team-colored placeholder with the player's
   // initials when there's no photo yet.
   function thumb(c, cls) {
-    if (c.image) return '<div class="thumb ' + (cls || "") + '"><img src="' + esc(c.image) + '" alt="" loading="lazy"></div>';
-    var col = teamColors(c.team);
-    var style = "background:linear-gradient(140deg," + col[0] + "," + col[1] + ")";
-    return '<div class="thumb ph ' + (cls || "") + '" style="' + style + '">' +
-      '<span class="ini">' + esc(initials(c.player)) + "</span></div>";
+    var col=teamColors(c.team),style='background:linear-gradient(145deg,'+col[0]+','+col[1]+')';
+    return '<div class="thumb '+(c.image?'has-photo':'ph')+' '+(cls||'')+'" style="'+style+'"><span class="photo-fallback" aria-hidden="true"><span class="ini">'+esc(initials(c.player))+'</span><small>'+(c.image?'PHOTO UNAVAILABLE':'PHOTO NEEDED')+'</small></span>'+(c.image?'<img src="'+esc(c.image)+'" alt="'+esc(c.player)+' card" loading="lazy">':'')+'</div>';
   }
 
   // price-basis pill: green REAL (sold prices the owner recorded), violet PSA
@@ -448,102 +526,46 @@
   function matchQuery(c) {
     if (!state.q) return true;
     var hay = [c.player, c.team, c.set, c.brand, c.year, c.sku, c.parallel,
-               c.insert, c.sport, c.item_type, c.grader, c.grade]
+               c.insert, c.sport, c.item_type, c.grader, c.grade, c.card_number, c.line]
               .join(" ").toLowerCase();
     return state.q.toLowerCase().split(/\s+/).every(function (w) { return hay.indexOf(w) >= 0; });
   }
 
-  var SORTS = [["tier", "Price tiers"], ["val-desc", "Value: high → low"],
-               ["val-asc", "Value: low → high"], ["az", "Player A–Z"], ["new", "Newest added"]];
-  function sortCards(arr, mode) {
-    var a = arr.slice();
-    if (mode === "val-asc") a.sort(function (x, y) { return num(x.asking_price) - num(y.asking_price); });
-    else if (mode === "az") a.sort(function (x, y) { return String(x.player).localeCompare(String(y.player)); });
-    else if (mode === "new") a.sort(function (x, y) { return String(y.sku).localeCompare(String(x.sku), undefined, { numeric: true }); });
-    else a.sort(function (x, y) { return num(y.asking_price) - num(x.asking_price); });
-    return a;
+  var SORTS = [["val-desc","Reference: high to low"],["val-asc","Reference: low to high"],["az","Player A–Z"],["cost-desc","Cost: high to low"],["listed","Listed first"],["new","Recently added"],["tier","Price tiers"]];
+  function sortCards(arr,mode) {
+    return arr.slice().sort(function(a,b){
+      var result=0,av,bv;
+      if(mode==='az')result=String(a.player).localeCompare(String(b.player));
+      else if(mode==='new')result=String(b.sku).localeCompare(String(a.sku),undefined,{numeric:true});
+      else if(mode==='cost-desc'){av=Selling.cost(a);bv=Selling.cost(b);result=av===null?(bv===null?0:1):bv===null?-1:bv-av;}
+      else if(mode==='listed')result=Number(Selling.listed(b))-Number(Selling.listed(a))||(Selling.reference(b)||0)-(Selling.reference(a)||0);
+      else{av=Selling.reference(a);bv=Selling.reference(b);result=av===null?(bv===null?0:1):bv===null?-1:mode==='val-asc'?av-bv:bv-av;}
+      return result||String(a.sku).localeCompare(String(b.sku));
+    });
   }
 
   function viewCollection() {
-    var wrap = el('<div class="view"></div>');
-    var cards = state.data.cards.filter(function (c) { return !c.sold; });
-    var nCards = cards.filter(function (c) { return !c.is_merch; }).length;
-    var nMerch = cards.filter(function (c) { return c.is_merch; }).length;
-
-    // primary split: Cards | Merch
-    var seg = el('<div class="seg"></div>');
-    [["Cards", nCards], ["Merch", nMerch]].forEach(function (b) {
-      var btn = el('<button class="' + (state.bucket === b[0] ? "on" : "") + '">' + b[0] + ' <em>' + b[1] + "</em></button>");
-      btn.onclick = function () { if (state.bucket !== b[0]) { state.bucket = b[0]; state.filter = "All"; render(); } };
-      seg.appendChild(btn);
-    });
-    wrap.appendChild(seg);
-
-    // search + sort toolbar (typing re-renders only the results below,
-    // so the input keeps focus)
-    var bar = el('<div class="toolbar">' +
-      '<label class="search"><span class="si">🔎</span>' +
-      '<input type="search" placeholder="Search players, teams, sets…" value="' + esc(state.q) + '">' +
-      "<kbd>/</kbd></label>" +
-      '<select class="sortsel" title="Sort">' +
-        SORTS.map(function (s) {
-          return '<option value="' + s[0] + '"' + (state.sort === s[0] ? " selected" : "") + ">" + s[1] + "</option>";
-        }).join("") +
-      "</select></div>");
-    var results = el("<div></div>");
-    bar.querySelector("input").oninput = function () { state.q = this.value.trim(); renderResults(); };
-    bar.querySelector("select").onchange = function () { state.sort = this.value; renderResults(); };
-    wrap.appendChild(bar);
-    wrap.appendChild(results);
-
-    function renderResults() {
-      results.innerHTML = "";
-      var inBucket = cards.filter(function (c) { return state.bucket === "Merch" ? c.is_merch : !c.is_merch; });
-
-      if (state.bucket === "Cards") {
-        var sports = [];
-        inBucket.forEach(function (c) { if (c.sport && sports.indexOf(c.sport) < 0) sports.push(c.sport); });
-        results.appendChild(filterBar(sports));
-
-        var shown = inBucket.filter(matchFilter).filter(matchQuery);
-        if (state.q || state.sort !== "tier") {
-          // searching or custom sort → one flat, sorted grid
-          results.appendChild(el('<div class="rescount">' + shown.length +
-            (shown.length === 1 ? " card" : " cards") + (state.q ? " matching “" + esc(state.q) + "”" : "") + "</div>"));
-          var list = el('<div class="list"></div>');
-          sortCards(shown, state.sort).forEach(function (c) { list.appendChild(crowEl(c)); });
-          results.appendChild(list);
-        } else {
-          var groups = {};
-          shown.forEach(function (c) {
-            var t = tierOf(c);
-            (groups[t.label] = groups[t.label] || { items: [], t: t }).items.push(c);
-          });
-          var ordered = Object.keys(groups).map(function (k) { return groups[k]; })
-            .sort(function (a, b) { return a.t.order - b.t.order; });
-          ordered.forEach(function (g) {
-            g.items.sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); });
-            results.appendChild(sectionEl(g.t.label, g.items, g.t.collapse));
-          });
-        }
-        if (!shown.length) results.appendChild(el('<p class="muted">No cards match.</p>'));
-      } else {
-        // Merch grouped by item type (Jersey, Helmet, Ball, …)
-        var inMerch = inBucket.filter(matchQuery);
-        var byType = {};
-        inMerch.forEach(function (c) { var k = c.item_type || "Merch"; (byType[k] = byType[k] || []).push(c); });
-        var keys = Object.keys(byType).sort();
-        keys.forEach(function (k) {
-          byType[k].sort(function (a, b) { return num(b.asking_price) - num(a.asking_price); });
-          results.appendChild(sectionEl(k, byType[k], false));
-        });
-        if (!keys.length) results.appendChild(el('<p class="muted">' +
-          (state.q ? "No merch matches." : "No merch yet — add jerseys, helmets, balls, photos…") + "</p>"));
-      }
+    var wrap=el('<div class="view inventory-view"></div>'),held=state.data.cards.filter(Selling.held);
+    wrap.appendChild(pageHead('YOUR COLLECTION','Inventory',held.length+' held items. Find the right card, then make your move.'));
+    wrap.appendChild(segment([['Cards','Cards · '+held.filter(function(c){return !c.is_merch;}).length],['Merch','Merch · '+held.filter(function(c){return c.is_merch;}).length]],state.bucket,function(x){state.bucket=x;render();}));
+    var toolbar=el('<div class="inventory-toolbar"><label class="search">'+icon('search')+'<input type="search" aria-label="Search inventory" placeholder="Player, set, team or card number…" value="'+esc(state.q)+'"></label><div class="inventory-tools"><select class="sortsel" aria-label="Sort inventory">'+SORTS.map(function(s){return '<option value="'+s[0]+'"'+(state.sort===s[0]?' selected':'')+'>'+s[1]+'</option>';}).join('')+'</select><div class="layout-toggle"><button aria-label="List layout" class="'+(state.inventoryLayout==='list'?'on':'')+'">'+icon('list')+'</button><button aria-label="Grid layout" class="'+(state.inventoryLayout==='grid'?'on':'')+'">'+icon('grid')+'</button></div></div></div>');wrap.appendChild(toolbar);
+    var sports=Array.from(new Set(held.map(function(c){return c.sport;}).filter(Boolean))).sort();
+    var filters=el('<div class="inventory-filters"><label><span>Status</span><select aria-label="Inventory status"><option value="all">All held items</option><option value="unlisted">Not listed</option><option value="listed">Listed</option><option value="lot">Lot eligible</option><option value="missing">Missing cost</option></select></label><label><span>Sport</span><select aria-label="Inventory sport"><option value="all">All sports</option>'+sports.map(function(s){return '<option>'+esc(s)+'</option>';}).join('')+'</select></label><label><span>Card type</span><select aria-label="Inventory type"><option value="all">All types</option><option value="graded">Graded</option><option value="raw">Raw</option><option value="auto">Autographs</option><option value="numbered">Numbered</option><option value="rookie">Rookies</option></select></label></div>');
+    var fs=filters.querySelectorAll('select');fs[0].value=state.inventoryStatus;fs[1].value=state.inventorySport;fs[2].value=state.inventoryType;wrap.appendChild(filters);
+    var count=el('<div class="inventory-count"></div>'),results=el('<div></div>');wrap.appendChild(count);wrap.appendChild(results);
+    function update(){var shown=held.filter(function(c){return(state.bucket==='Merch'?c.is_merch:!c.is_merch)&&matchQuery(c)&&(state.inventorySport==='all'||c.sport===state.inventorySport)&&(state.inventoryStatus==='all'||state.inventoryStatus==='listed'&&Selling.listed(c)||state.inventoryStatus==='unlisted'&&!Selling.listed(c)||state.inventoryStatus==='lot'&&Selling.batchEligible(c,workspace.limit,workspace.includeSpecial,workspace.plans[c.sku])||state.inventoryStatus==='missing'&&Selling.cost(c)===null)&&(state.inventoryType==='all'||state.inventoryType==='graded'&&c.graded||state.inventoryType==='raw'&&!c.graded||state.inventoryType==='auto'&&c.auto||state.inventoryType==='numbered'&&c.serial_run||state.inventoryType==='rookie'&&c.rookie);});
+      results.innerHTML='';results.className='inventory-results '+state.inventoryLayout;count.textContent=shown.length+' '+(shown.length===1?'item':'items')+(state.q?' matching “'+state.q+'”':'')+' · '+money(shown.reduce(function(n,c){return n+(Selling.reference(c)||0);},0))+' saved references';
+      if(!shown.length){var empty=emptyPanel('No matching cards','Clear the filters or try another player, team or set.');var clear=el('<button class="button secondary">Clear filters</button>');clear.onclick=function(){state.q='';state.inventoryStatus='all';state.inventorySport='all';state.inventoryType='all';render();};empty.appendChild(clear);results.appendChild(empty);return;}
+      if(state.sort==='tier'){var by={};shown.forEach(function(c){var t=tierOf(c);(by[t.label]=by[t.label]||{tier:t,cards:[]}).cards.push(c);});Object.keys(by).sort(function(a,b){return by[a].tier.order-by[b].tier.order;}).forEach(function(k){var g=el('<section class="inventory-tier"><h2>'+esc(k)+' <span>'+by[k].cards.length+'</span></h2><div class="inventory-tier-cards"></div></section>');sortCards(by[k].cards,'val-desc').forEach(function(c){g.querySelector('div').appendChild(inventoryCard(c));});results.appendChild(g);});}
+      else sortCards(shown,state.sort).forEach(function(c){results.appendChild(inventoryCard(c));});
     }
-    renderResults();
-    return wrap;
+    toolbar.querySelector('input').oninput=function(){state.q=this.value;update();};toolbar.querySelector('select').onchange=function(){state.sort=this.value;saveViewPrefs();update();};toolbar.querySelectorAll('.layout-toggle button').forEach(function(b,i){b.onclick=function(){state.inventoryLayout=i?'grid':'list';toolbar.querySelectorAll('.layout-toggle button').forEach(function(x){x.classList.toggle('on',x===b);});saveViewPrefs();update();};});
+    fs.forEach(function(s,i){s.onchange=function(){state[['inventoryStatus','inventorySport','inventoryType'][i]]=this.value;saveViewPrefs();update();};});update();return wrap;
   }
+  function inventoryCard(c) {
+    var o=c.owner_listing||{},row=el('<button class="inventory-card">'+thumb(c)+'<div class="inventory-card-body"><div class="inventory-card-top"><span class="inventory-status '+(Selling.listed(c)?'listed':'')+'">'+(Selling.listed(c)?'Listed':'Not listed')+'</span><span class="inventory-sku">'+esc(c.sku)+'</span></div><h3>'+esc(c.player)+'</h3><p>'+esc(c.line)+'</p>'+badges(c)+'<div class="inventory-card-money"><div><strong>'+displayPrice(Selling.reference(c))+'</strong><span>'+esc(referenceLabel(c))+'</span></div>'+(Selling.listed(c)&&o.asking_price?'<div><b>'+money0(o.asking_price)+'</b><span>Your listing</span></div>':'<span class="inventory-arrow">'+icon('arrow')+'</span>')+'</div></div></button>');row.onclick=function(){openModal(c);};return row;
+  }
+  function saveViewPrefs() {try{localStorage.setItem('cv-view-v60',JSON.stringify({sort:state.sort,inventoryLayout:state.inventoryLayout,inventoryStatus:state.inventoryStatus,inventorySport:state.inventorySport,inventoryType:state.inventoryType}));}catch(e){}}
 
   // Filter bar: a single button showing the active filter, opens a popup sheet.
   function filterBar(sports) {
@@ -2033,7 +2055,9 @@
   }
 
   function openModal(c) {
+    modalFocus=document.activeElement;
     var m = document.getElementById("modal");
+    m.className="modal card-detail-modal";m.removeAttribute("aria-labelledby");m.setAttribute("aria-label",c.player+" card details");
     var rows = [
       ["Item type", c.is_merch ? c.item_type : ""],
       ["Player", c.player], ["Year", c.year], ["Brand", c.brand], ["Set", c.set],
@@ -2055,6 +2079,7 @@
           // MONEY FIRST — what it's worth, what you paid, profit, history.
           moneyHero(c) +
           ownerListingBox(c) +
+          (!c.sold ? '<button class="button full-width" id="cardSellPlan">Open selling plan →</button>' : "") +
           marketBox(c) +
           priceHistoryBox(c) +
           myNumbersBox(c) +
@@ -2083,6 +2108,7 @@
       "</div>";
     m.querySelector("#mClose").onclick = closeModal;
     wireMyNumbers(m, c);
+    var sellPlanButton=m.querySelector("#cardSellPlan");if(sellPlanButton)sellPlanButton.onclick=function(){openSellPlan(c);};
     // quick-list widget: eBay sell page (title on clipboard) or draft in Claude
     var listEbay = m.querySelector("#mListEbay");
     listEbay.onclick = function () {
@@ -2108,15 +2134,18 @@
     // deep-linkable: #sku=CARD-0022 reopens this exact card
     if (history.replaceState) history.replaceState(null, "", "#sku=" + encodeURIComponent(c.sku));
     document.getElementById("modalWrap").classList.add("open");
+    document.body.classList.add("sheet-open");m.querySelector("#mClose").focus();
   }
   function closeModal() {
     document.getElementById("modalWrap").classList.remove("open");
-    if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+    document.body.classList.remove("sheet-open");
+    if(modalFocus && document.contains(modalFocus))modalFocus.focus();
+    if (history.replaceState) history.replaceState(null, "", "#tab="+state.tab);
   }
   function openFromHash() {
     var m = location.hash.match(/^#sku=(.+)$/);
     if (!m || !state.data) return;
-    var sku = decodeURIComponent(m[1]);
+    var sku;try{sku=decodeURIComponent(m[1]);}catch(e){return;}
     var card = state.data.cards.filter(function (c) { return c.sku === sku; })[0];
     if (card) openModal(card);
   }
@@ -2128,7 +2157,7 @@
   }
   function syncThemeIcon() {
     var b = document.getElementById("themebtn");
-    if (b) b.textContent = currentTheme() === "dark" ? "🌙" : "☀️";
+    if (b) b.innerHTML = icon("sun");
   }
   function toggleTheme() {
     var next = currentTheme() === "dark" ? "light" : "dark";
@@ -2174,7 +2203,7 @@
       var nav = document.querySelector(".nav");
       // offsetHeight already includes the nav's safe-area padding — adding
       // env() again would float the bar a home-indicator's height too high.
-      var h = nav && getComputedStyle(nav).position === "sticky" ? nav.offsetHeight : 0;
+      var h = nav && window.innerWidth < 1000 ? nav.offsetHeight : 0;
       bar.style.bottom = (h + 12) + "px";
     }
     place();
@@ -2195,7 +2224,7 @@
     var nav = document.querySelector(".nav");
     if (!nav) return;
     var pos = getComputedStyle(nav).position;
-    var overlaysBottom = pos === "sticky";   // fixed = the desktop side rail
+    var overlaysBottom = pos === "sticky" || (pos === "fixed" && window.innerWidth < 1000);   // fixed = the desktop side rail
     document.documentElement.style.setProperty("--navh", (overlaysBottom ? nav.offsetHeight : 0) + "px");
   }
 
@@ -2205,12 +2234,16 @@
     shell();
     var held = data.cards.filter(function (c) { return !c.sold; }).length;
     document.getElementById("gen").textContent = held + " cards · " + money0(data.summary.total_value);
-    setTab("collection");
+    var initialHash=location.hash;
+    try{var prefs=JSON.parse(localStorage.getItem("cv-view-v60")||"{}");["sort","inventoryLayout","inventoryStatus","inventorySport","inventoryType"].forEach(function(k){if(typeof prefs[k]==="string")state[k]=prefs[k];});}catch(e){}
+    var wanted=initialHash.match(/^#tab=(today|sell|collection|radar|value|about)$/);
+    setTab(wanted?wanted[1]:"today");
+    if(initialHash.indexOf("#sku=")===0&&history.replaceState)history.replaceState(null,"",initialHash);
     measureNav();
     window.addEventListener("resize", measureNav);
     window.addEventListener("orientationchange", measureNav);
     openFromHash();               // shared link straight to a card
-    window.addEventListener("hashchange", openFromHash);
+    window.addEventListener("hashchange", function(){var t=location.hash.match(/^#tab=(today|sell|collection|radar|value|about)$/);if(t)setTab(t[1]);else openFromHash();});
     checkVersion(data.app_version);
     // A phone app is resumed far more often than cold-started, and a ship that
     // lands while it sits in the background would otherwise go unnoticed until
