@@ -610,7 +610,9 @@ def main() -> int:
 
     # Self-contained preview: inline the same CSS + JS + data into one file.
     css = (DOCS / "styles.css").read_text(encoding="utf-8") if (DOCS / "styles.css").exists() else ""
-    appjs = (DOCS / "app.js").read_text(encoding="utf-8") if (DOCS / "app.js").exists() else ""
+    css += "\n" + (DOCS / "workspace.css").read_text(encoding="utf-8")
+    sellingjs = (DOCS / "selling.js").read_text(encoding="utf-8")
+    appjs = sellingjs + "\n" + (DOCS / "app.js").read_text(encoding="utf-8") if (DOCS / "app.js").exists() else ""
     if css and appjs:
         # A <title> makes the file publishable as an Artifact (a hosted page the
         # owner can actually open — raw HTML files preview without running JS).

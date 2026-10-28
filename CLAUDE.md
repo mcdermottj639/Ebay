@@ -8,6 +8,57 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Sell-first product and UI overhaul — v60, October 27, 2026
+Jack explicitly chose Today as the home screen, selling owned inventory as priority
+one and profitable buying as priority two. Lower-value cards should be unloaded in
+lots; higher-value cards need balanced profit/speed and individual timing decisions.
+The design is an iPhone-first premium dashboard with a full desktop layout.
+
+- Five primary destinations: Today / Sell / Inventory / Buy / Results. Old Targets,
+  Drafts and Sales Map routing resolves into the corresponding new workspace.
+- `docs/selling.js` owns pure, offline selling calculations. `docs/workspace.css`
+  supplies the v60 design system after the retained legacy component stylesheet.
+  Load selling.js before app.js; both new assets belong in the service-worker shell
+  and the build_web.py inline preview. Maintain all release version references.
+- Today prioritizes lot building and individual reviews, then qualified buys. Review
+  urgency sorts categorically before reference value. A user-set review date is a
+  review prompt, never a market-timing forecast or a background notification.
+- Lots default to raw, unlisted cards with positive saved reference <= $25 and no
+  known cost above that limit. $5/$10/$25/$50 cutoffs are owner-adjustable. Graded,
+  auto and numbered items require explicit opt-in below the same cutoff. Sold,
+  listed, merch, unknown-price and higher-cost items stay excluded; individual
+  hold/list/target/date plans also protect a card. Saved lots reserve their SKUs
+  from other new lot suggestions. No inventory is marked sold by saving a draft.
+- Group by sport/brand/set; user selects exact cards and chooses their price.
+  Drafts contain an <=80-character title with complete athlete names, itemized
+  description, photo/condition checklist and an editable cost scenario. Never
+  mistake combined card references for a recommended or guaranteed lot price.
+- Lot net proceeds use the saved policy's fee tiers, per-order fee, buyer-tax
+  allowance, promotion allowance, shipping and packaging. Assumptions are editable
+  and labeled. Profit stays unknown until every acquisition cost is known; explicit
+  zero cost is distinct from an empty cost. No campaign or actual eBay action runs.
+- Individual plans store hold/review/list preference, target, review date and notes.
+  Recorded comps exclude future, invalid, duplicate, >90-day and pre-card dates;
+  they still require exact identity/grade verification, never become automatic
+  sell signals. Actual listing asks stay separate from saved price references.
+- New plans/lots are stored in `cv-selling-v1` on the current device. New inventory
+  filters/layout preferences use `cv-view-v60`; existing `cv-mydata`, costs/sales,
+  one-tap save credentials, owner listings, buying gates and schedules are unchanged.
+  Do not claim these new local plans sync across devices or trigger notifications.
+- Inventory combines search (including card numbers), sport/type/status filters,
+  deterministic numeric sorts and grid/list layouts. Unknown costs sort last.
+- Results separates sale revenue, known-cost gross profit and actual confirmed net.
+  Missing fees/shipping never become zero. Date-only sale records preserve their
+  New York calendar date; historical years remain visible.
+- Validation: 35 existing Python tests; 12 new Node selling tests with
+  `node --test tests/test_selling.cjs`; JS syntax, catalog validation and rebuild.
+  Browser acceptance at 320/390 CSS-pixel frames and desktop: five-screen routing,
+  combined filters and numeric sorting, lot pricing/save/reopen, review-date priority,
+  buy-only default. Canonical cards, summary, targets, radar and all source data
+  preserved; generated data changes are version/timestamp only. No new market scan.
+- Shared Claudex write was blocked by automatic approval review during this work;
+  do not assert handoff sync until an authorized connector write/readback succeeds.
+
 ## Visual Targets — v59
 Jack wants both Targets and Buy Radar very visual and scannable. Targets now uses category tiles with counts, player/set search, sport filter and compact PSA 10 cards with one-tap listing links. Search ceilings and long explanations stay in details; they are never labeled buy recommendations. Preserve the buy-opportunities-only default and all existing grade/profit rules.
 
