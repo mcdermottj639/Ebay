@@ -8,6 +8,51 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Owner listing/email reconciliation — v55, October 27, 2026
+Jack explicitly authorized updating the app from his eBay listing/sale emails and
+adding this logic to the EXISTING `Card pricing for Jarvis` task
+`6ad6bb03dd488191ac456b3d21e1501e`. Keep its Tuesday/Friday evening cadence.
+This narrowly supersedes that task's old repository/inventory read-only rule:
+owner listing/sale bookkeeping may be published; comparison research must still
+never automatically reprice cards or edit live eBay listings.
+
+- Read full genuine eBay confirmation emails (sender `ebay@ebay.com` observed).
+  Search listing, revision, sale/payment, ended/cancelled/refunded notices; ignore
+  saved-search alerts, recommendations and purchase emails about other sellers.
+- Match eBay item ID, exact identity, grade/parallel/serial and known SKU. Follow
+  the item link or known owner photos if a title is truncated. Do not guess new
+  cards, quantities, a sale, or a zero price. Ambiguous matches remain pending.
+- `data/owner_listings.json` schema 1 keeps per-SKU item URL, owner asking price,
+  currency, last email-confirmed status/time and append-only events. Deduplicate
+  by item ID + event type + original event time. Keep old events on relisting.
+  Review event chronology; an older listing email cannot reopen a sold item.
+  Query with at least 7 days overlap from last processed events; paginate all
+  matches. Do not advance the baseline for unread/unprocessed pages. If no
+  changes, do not commit timestamp-only updates or add Claudex acknowledgements.
+- Keep owner asking prices separate from `inventory.csv.asking_price` (legacy
+  market-value field), price_basis, market comps and price history. Merely listing
+  an item is not market evidence. `build_web.py` exposes `owner_listing` for the
+  card popup; it never uses its asking price in valuation or profit calculations.
+- Set inventory `listed=yes` for confirmed listings. For actual owner sale/payment
+  confirmations, record `sold_price`/`sold_date`, clear listed, preserve quantity
+  and history. Dates use America/New_York. Buyer paid is not settled payout.
+  Owner sales never belong in `manual_sales.csv` or my_numbers.sales (comps).
+  Preserve owner costs and my_numbers overlays; only fill/update from explicit
+  owner evidence. Keep unknown fees/shipping/net profit null, never invent them.
+  Refund/cancellation needs evidence of final disposition before restoring stock;
+  retain event history and flag unresolved inventory state for review.
+- Preserve any newer owner edits, sold status, unrelated inventory and sourcing.
+  Existing listings with no new email are not automatically expired or sold.
+  Do not publish raw emails, Gmail IDs, buyer names/addresses, order IDs or tokens.
+- Validated initial records: CARD-0032 listing 336866450901 $2500;
+  CARD-0026 336866470596 $250; CARD-0029 336866522689 $300;
+  CARD-0021 336866460070 sold/paid $100 on 2026-10-27, owner cost $63.
+  Best Offer preference is owner-reported; email alone did not verify that switch.
+- Run unittest suite, catalog check, JS syntax and build_web.py; review preservation
+  of market values, comp history and unrelated inventory. Publish branch/PR/main,
+  verify served data/version. Use handoff skill for meaningful changes. Never
+  buy, send offers/messages or create/revise live listings from this workflow.
+
 ## Current sourcing rules — v54, October 27, 2026
 Jack approved a profit-only side business radar, expanded targets, and a first run.
 These rules supersede the historical asking-median radar/Great Value notes below.
