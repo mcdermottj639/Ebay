@@ -8,6 +8,49 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Collector exchange visual identity — v61, October 28, 2026
+Jack rejected v60 because its layout and feel repeated Golf Hub. This correction
+supersedes v60's green/sage dashboard identity; the sell-first features remain.
+
+- Use an ink/white/cobalt collector-exchange design with a coral lot ticket,
+  heavy editorial type, mono numeric labels, sharp edges and ruled lists.
+- One sticky masthead and horizontal numbered navigation on phone AND desktop.
+  Never restore the left navigation rail, green promotional hero or rounded
+  dashboard panel stack. Today is a collection spread with owned-card photography,
+  a batch-selling ticket, individual review queue and recorded-sale strip.
+- Keep all five destinations, existing selling engine/calculations, saved plans,
+  drafts, combined inventory filters/sorts, buying gates and historical data.
+  Device storage keys remain cv-selling-v1, cv-view-v60 and cv-mydata.
+- Present plan rows as compact rows and inventory as list/catalog layouts.
+  Light/dark themes share the new identity. Preserve visible keyboard focus,
+  dialog focus handling, 16px phone form inputs and reduced-motion support.
+- App/icon/manifest/cache/data marker all use the v61 release. The checked-in
+  data marker must match app.js: both Pages paths can deploy this repository.
+
+Validation: all 35 Python and 12 Node tests passed; app/service-worker syntax,
+catalog and build checks passed. Browser checks covered all five screens at
+320px, 390px inventory sorting, desktop and dark theme, lot preparation/proceeds,
+and Terapeak-first research controls in plans and targets. Source records and
+selling math are unchanged. Physical iPhone was not available for testing.
+
+### Standing sold-comparison research order — owner correction
+Always use Terapeak / eBay Product Research BEFORE eBay public sold/completed
+search when researching comparable prices, resale value or selling timing.
+Terapeak is the primary comp-check source; eBay sold is the fallback when Product
+Research is inaccessible or lacks useful exact matches. Explicitly record that
+limitation before using the fallback. Never imply Product Research was checked
+without direct authorized source evidence. Match year/set/player/card number/
+parallel/serial/grader/grade and check actual accepted Best Offer price.
+Existing recency/identity/qualification rules remain; no automated repricing.
+
+`compResearchLinks` renders the primary Product Research link and a collapsed
+fallback across card details, selling plans, target details and buy research.
+The links open the owner's seller session: the static app does not automatically
+fetch or verify Terapeak data. Do not relabel saved evidence as Terapeak evidence.
+Official source: https://www.ebay.com/help/selling/selling-tools/research?id=4853
+Both existing card research tasks were updated in place to follow this order;
+their schedules and other instructions were preserved.
+
 ## Sell-first product and UI overhaul — v60, October 27, 2026
 Jack explicitly chose Today as the home screen, selling owned inventory as priority
 one and profitable buying as priority two. Lower-value cards should be unloaded in

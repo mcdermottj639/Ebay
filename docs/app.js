@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v60";
+  var APP_VERSION = "v61";
   var state = { tab: "today", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "val-desc", sellMode: "plan", buyMode: "radar", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryLayout: "list",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -21,7 +21,7 @@
   // ---------- My numbers (owner-entered cost + real sold prices) ----------
   // eBay denied us the sold-comps API, so the truest data is what the owner
   // records themself: what a card actually cost, and real sold prices seen on
-  // eBay's sold search / Terapeak / 130point. Entries save instantly on this
+  // Terapeak / Product Research first, then eBay sold search as fallback. Entries save instantly on this
   // device (localStorage) and merge with entries already baked into the sheet
   // (card.my_sales from data.json). "Send to Claude" makes device entries
   // permanent in the spreadsheet — then they show on every device.
@@ -259,29 +259,43 @@
   function savedDate(d) {return Selling.formatDate(d);}
   function referenceLabel(c) {return c.reviewed_price?'Reviewed reference':c.price_basis==='asking'?'Asking-price reference':c.price_basis==='psa'?'PSA reference':'Saved reference';}
   function premiumRow(item) {
-    var c=item.card,p=item.plan,o=c.owner_listing||{},row=el('<article class="review-card">'+thumb(c,'review-photo')+'<div class="review-body"><div class="review-top"><span class="signal '+p.tone+'">'+esc(p.label)+'</span></div><h3>'+esc(c.player)+'</h3><p class="card-spec">'+esc(c.line)+'</p><div class="review-money"><b>'+displayPrice(Selling.reference(c))+'</b><span>'+esc(referenceLabel(c))+'</span>'+(Selling.listed(c)&&o.asking_price?'<em>Your listing '+money0(o.asking_price)+'</em>':'')+'</div><p class="review-reason">'+esc(p.reason)+'</p><div class="review-buttons"><button class="button small">Review plan '+icon('arrow')+'</button><button class="text-button" data-details>Card details</button></div></div></article>');
+    var c=item.card,p=item.plan,o=c.owner_listing||{};
+    var row=el('<article class="review-card">'+thumb(c,'review-photo')+'<div class="review-body"><span class="signal '+p.tone+'">'+esc(p.label)+'</span><h3>'+esc(c.player)+'</h3><p class="card-spec">'+esc(c.line)+'</p><p class="review-reason">'+esc(p.reason)+'</p></div><div class="review-money"><b>'+displayPrice(Selling.reference(c))+'</b><span>'+esc(referenceLabel(c))+'</span>'+(Selling.listed(c)&&o.asking_price?'<em>Your listing '+money0(o.asking_price)+'</em>':'')+'</div><div class="review-buttons"><button class="button small">Review plan '+icon('arrow')+'</button><button class="text-button" data-details>Card details</button></div></article>');
     row.querySelector('.button').onclick=function(){openSellPlan(c);};row.querySelector('[data-details]').onclick=function(){openModal(c);};return row;
   }
   function viewToday() {
     var cards=state.data.cards,stats=Selling.results(cards),batch=eligibleCards(),premium=Selling.premium(cards,workspace.plans,workspace.limit,null,workspace.includeSpecial),buys=qualifiedBuys(),wrap=el('<div class="view today-view"></div>');
-    wrap.appendChild(pageHead(new Date().toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric',timeZone:'America/New_York'}),'Today','Your collection, put to work.'));
-    var hero=el('<section class="today-hero"><div class="hero-copy"><span class="cv-kicker">YOUR RESALE DESK</span><h2>Sell with a plan.<br>Make room for what’s next.</h2><p>Move the small cards together.<br>Give your best cards the right attention.</p><button class="button hero-button">Open your selling plan '+icon('arrow')+'</button></div><div class="hero-art" aria-hidden="true">'+cards.filter(function(c){return !c.sold&&c.image;}).slice(-3).map(function(c){return thumb(c,'hero-slab');}).join('')+'</div><div class="hero-stats"><div><strong>'+stats.held+'</strong><span>Items held</span></div><div><strong>'+stats.listed+'</strong><span>Listed</span></div><div><strong>'+money0(state.data.summary.total_value)+'</strong><span>Saved reference value</span></div></div></section>');hero.querySelector('button').onclick=function(){goSell('plan');};wrap.appendChild(hero);
-    var columns=el('<div class="today-columns"><div class="today-main"></div><aside class="today-side"></aside></div>'),main=columns.querySelector('.today-main'),aside=columns.querySelector('.today-side');
-    main.appendChild(sectionHead('Your next moves','Selling comes first.'));
-    if(batch.length>=2){var groupValue=batch.reduce(function(n,c){return n+Selling.reference(c);},0);var lot=el('<article class="batch-feature"><div class="feature-icon">'+icon('stack')+'</div><div><span class="cv-kicker">01 · CLEAR THE SMALL STUFF</span><h3>One lot. Fewer listings.</h3><p>'+batch.length+' lower-value cards can be grouped into sensible lots.</p><div class="feature-meta"><span>'+money(groupValue)+' combined reference</span><span>Under '+money0(workspace.limit)+' each</span></div><button class="button">Build a lot '+icon('arrow')+'</button></div></article>');lot.querySelector('button').onclick=function(){goSell('lots');};main.appendChild(lot);}
-    main.appendChild(sectionHead('Give these a closer look','Individual plans for your better cards.','See all',function(){goSell('plan');}));
-    var spotlight=el('<div class="review-list"></div>');premium.slice(0,2).forEach(function(x){spotlight.appendChild(premiumRow(x));});main.appendChild(spotlight);
     var due=premium.filter(function(x){return x.plan.key==='due';}).length;
-    var pulse=el('<section class="cv-panel business-pulse"><span class="cv-kicker">AT A GLANCE</span><h2>Keep things moving</h2><button data-action="listings"><span>'+icon('sell')+' Active listings</span><b>'+stats.listed+' →</b></button><button data-action="plan"><span>'+icon('clock')+' Planned reviews due</span><b>'+due+' →</b></button><button data-action="cost"><span>'+icon('value')+' Costs recorded</span><b>'+stats.heldCostCount+'/'+stats.held+' →</b></button><p>Reference values are saved estimates. Actual listing prices and sale proceeds stay separate.</p></section>');pulse.querySelectorAll('button').forEach(function(b){b.onclick=function(){var a=b.dataset.action;if(a==='cost')setTab('value');else goSell(a);};});aside.appendChild(pulse);
-    var buy=el('<section class="cv-panel buy-quiet"><span class="cv-kicker">BUY SECOND · BUY WELL</span><div class="buy-number">'+buys.length+'<span>qualified opportunities</span></div><p>'+(buys.length?'These pass your saved profit and evidence rules.':'Nothing clears your buying rules right now. Your money can wait.')+'</p><button class="text-button">'+(buys.length?'Review opportunities':'Explore targets')+icon('arrow')+'</button></section>');buy.querySelector('button').onclick=function(){state.buyMode=buys.length?'radar':'targets';setTab('radar');};aside.appendChild(buy);
-    if(workspace.lots.length){var drafts=el('<section class="cv-panel"><span class="cv-kicker">READY WHEN YOU ARE</span><h2>'+workspace.lots.length+' saved lot draft'+(workspace.lots.length===1?'':'s')+'</h2><p>Your titles, selected cards and price scenarios, saved on this device.</p><button class="text-button">Continue a draft '+icon('arrow')+'</button></section>');drafts.querySelector('button').onclick=function(){goSell('drafts');};aside.appendChild(drafts);}
+    var date=new Date().toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric',timeZone:'America/New_York'});
+    wrap.appendChild(el('<header class="exchange-heading"><div><div class="edition">YOUR DAILY LINEUP <span>'+esc(date)+'</span></div><h1>Make your<br><em>next move.</em></h1></div><div class="edition-note"><span class="edition-mark" aria-hidden="true">↗</span><p>A collection worth managing.<br>A plan for every card.</p></div></header>'));
+    var strip=el('<div class="exchange-stats"><button data-stat="collection"><strong>'+stats.held+'</strong><span>In the vault</span></button><button data-stat="listings"><strong>'+stats.listed+'</strong><span>Listed on eBay</span></button><div><strong>'+money0(state.data.summary.total_value)+'</strong><span>Saved reference value</span></div><button data-stat="review"><strong>'+due+'</strong><span>Reviews due</span></button></div>');
+    strip.querySelectorAll('button').forEach(function(b){b.onclick=function(){if(b.dataset.stat==='collection')setTab('collection');else goSell(b.dataset.stat==='listings'?'listings':'plan');};});wrap.appendChild(strip);
+    var desk=el('<div class="exchange-desk"><aside class="action-column"></aside><section class="collection-display" aria-label="From your collection"></section></div>'),actions=desk.querySelector('.action-column'),display=desk.querySelector('.collection-display');
+    if(batch.length>=2){
+      var groupValue=batch.reduce(function(n,c){return n+Selling.reference(c);},0);
+      var ticket=el('<article class="lot-ticket"><div class="ticket-label"><span>YOUR NEXT SELL</span><span aria-hidden="true">01 /</span></div><div class="ticket-main"><div class="ticket-number">'+batch.length+'<span>CARDS</span></div><h2>Small cards.<br>One shipment.</h2></div><p>Bundle the lower-value cards.<br>Keep your best pieces separate.</p><div class="ticket-reference"><span>Combined reference</span><b>'+money(groupValue)+'</b></div><button class="button">Build a lot '+icon('arrow')+'</button><small>You choose the cards and the asking price.</small></article>');
+      ticket.querySelector('button').onclick=function(){goSell('lots');};actions.appendChild(ticket);
+    }else{var ticket=el('<article class="lot-ticket"><div class="ticket-label">YOUR NEXT SELL</div><h2>Every card.<br>A clear plan.</h2><p>Review your individual cards or continue a saved lot.</p><button class="button">Open selling plans '+icon('arrow')+'</button></article>');ticket.querySelector('button').onclick=function(){goSell('plan');};actions.appendChild(ticket);}
+    var drafts=el('<button class="draft-shortcut"><span>'+icon('list')+' Saved lot drafts</span><b>'+workspace.lots.length+' ↗</b></button>');drafts.onclick=function(){goSell('drafts');};actions.appendChild(drafts);
+    display.appendChild(sectionHead('From your collection','HIGHER-VALUE CARDS · YOUR OWN PHOTOS','View inventory',function(){setTab('collection');}));
+    var rail=el('<div class="collection-rail"></div>');
+    var features=cards.filter(function(c){return Selling.held(c)&&!c.is_merch&&c.image;}).sort(function(a,b){return (Selling.reference(b)||0)-(Selling.reference(a)||0)||String(a.sku).localeCompare(String(b.sku));}).slice(0,3);
+    if(!features.length)features=cards.filter(Selling.held).slice(0,3);
+    features.forEach(function(c,i){var item=el('<article class="display-card"><button class="display-photo" aria-label="View '+esc(c.player)+' details"><span class="display-index">0'+(i+1)+'</span>'+thumb(c)+'<span class="display-grade">'+esc(c.graded?[c.grader,c.grade].filter(Boolean).join(' '):c.sport||'COLLECTION')+'</span></button><div class="display-meta"><span>'+esc(c.year)+' · '+(Selling.listed(c)?'LISTED':'IN YOUR VAULT')+'</span><h3>'+esc(c.player)+'</h3><p>'+esc([c.set,c.parallel,c.serial_run?'/'+c.serial_run:''].filter(Boolean).join(' · '))+'</p></div><div class="display-price"><div><b>'+displayPrice(Selling.reference(c))+'</b><small>Saved reference</small></div><button class="display-plan" aria-label="Plan for '+esc(c.player)+'">'+icon('arrow')+'</button></div></article>');item.querySelector('.display-photo').onclick=function(){openModal(c);};item.querySelector('.display-plan').onclick=function(){openSellPlan(c);};rail.appendChild(item);});display.appendChild(rail);wrap.appendChild(desk);
+    var lower=el('<div class="exchange-lower"><section class="selling-queue"></section><aside class="market-note"></aside></div>');
+    var queue=lower.querySelector('.selling-queue');queue.appendChild(sectionHead('The selling queue','INDIVIDUAL DECISIONS','All plans',function(){goSell('plan');}));
+    var list=el('<div class="review-list"></div>');premium.slice(0,3).forEach(function(x){list.appendChild(premiumRow(x));});if(!premium.length)list.appendChild(emptyPanel('Your plans are clear','Build a lot or explore the collection.'));queue.appendChild(list);
+    var note=lower.querySelector('.market-note');note.appendChild(el('<div class="cv-kicker">BUY SECOND. BUY WELL.</div><div class="market-count">'+buys.length+'<span>qualified<br>opportunities</span></div><p>'+(buys.length?'Ready for a closer look under your buying rules.':'No cards clear your buying rules right now.')+'</p>'));
+    var buyButton=el('<button class="text-button">'+(buys.length?'Review opportunities':'Explore targets')+icon('arrow')+'</button>');buyButton.onclick=function(){state.buyMode=buys.length?'radar':'targets';setTab('radar');};note.appendChild(buyButton);
+    var costButton=el('<button class="cost-shortcut"><span>Purchase costs recorded</span><b>'+stats.heldCostCount+' / '+stats.held+' ↗</b></button>');costButton.onclick=function(){setTab('value');};note.appendChild(costButton);
+    note.appendChild(el('<div class="research-order"><span>YOUR RESEARCH ORDER</span><b>01 Terapeak / Product Research</b><small>02 eBay sold results · fallback</small></div>'));wrap.appendChild(lower);
     var sold=cards.filter(function(c){return c.sold;}).sort(function(a,b){return String(b.sold_date).localeCompare(String(a.sold_date));});
-    if(sold.length){aside.appendChild(sectionHead('Recent sales','','All results',function(){setTab('value');}));var activity=el('<div class="cv-panel activity-list"></div>');sold.slice(0,3).forEach(function(c){var row=el('<button class="activity-row">'+thumb(c)+'<span><b>'+esc(c.player)+'</b><small>'+esc(savedDate(c.sold_date))+'</small></span><strong>'+money0(c.sold_price)+'</strong></button>');row.onclick=function(){openModal(c);};activity.appendChild(row);});aside.appendChild(activity);}
-    wrap.appendChild(columns);return wrap;
+    if(sold.length){wrap.appendChild(sectionHead('Off the shelf','RECENT RECORDED SALES','All results',function(){setTab('value');}));var sales=el('<div class="sale-tape"></div>');sold.slice(0,3).forEach(function(c){var row=el('<button class="sale-tape-item">'+thumb(c)+'<span><small>'+esc(savedDate(c.sold_date))+'</small><b>'+esc(c.player)+'</b></span><strong>'+money0(c.sold_price)+'</strong></button>');row.onclick=function(){openModal(c);};sales.appendChild(row);});wrap.appendChild(sales);}
+    wrap.appendChild(el('<footer class="exchange-footer"><b>CARD VAULT /</b><span>Saved references are estimates. Listing prices and sale proceeds stay separate.</span></footer>'));return wrap;
   }
   function viewSell() {
     var wrap=el('<div class="view sell-view"></div>'),mode=state.sellMode||'plan';
-    wrap.appendChild(pageHead('SELL FIRST','Your selling desk','Move lower-value cards in lots. Manage better cards individually.'));
+    wrap.appendChild(pageHead('02 / SELL','The selling floor','Move lower-value cards in lots. Manage better cards individually.'));
     wrap.appendChild(segment([['plan','Individual plans'],['lots','Build a lot'],['listings','Listings'],['drafts','Drafts']],mode,function(x){state.sellMode=x;render();}));
     if(mode==='lots'){wrap.appendChild(lotBuilder());return wrap;}
     if(mode==='drafts'){wrap.appendChild(savedLotDrafts());return wrap;}
@@ -311,7 +325,7 @@
     modalFocus=document.activeElement;var m=document.getElementById('modal');m.className='modal workspace-modal';m.innerHTML='<button class="close" id="mClose" aria-label="Close dialog">×</button>'+html;m.setAttribute('aria-labelledby','workspaceTitle');m.querySelector('#mClose').onclick=closeModal;document.getElementById('modalWrap').classList.add('open');document.body.classList.add('sheet-open');m.querySelector('#mClose').focus();return m;
   }
   function openSellPlan(c) {
-    var p=workspace.plans[c.sku]||{},signal=Selling.planFor(c,p),o=c.owner_listing||{},e=Selling.soldEvidence(c),m=showWorkspaceModal('<div class="modal-heading">'+thumb(c)+'<div><span class="cv-kicker">INDIVIDUAL SELLING PLAN</span><h2 id="workspaceTitle">'+esc(c.player)+'</h2><p>'+esc(c.line)+'</p></div></div><div class="plan-price"><div><span>'+esc(referenceLabel(c))+'</span><b>'+displayPrice(Selling.reference(c))+'</b></div><div><span>'+(Selling.listed(c)?'Your listing':'Recorded cost')+'</span><b>'+displayPrice(Selling.listed(c)?Selling.amount(o.asking_price):Selling.cost(c))+'</b></div></div><div class="evidence-note"><span class="signal '+signal.tone+'">'+esc(signal.label)+'</span><p>'+esc(signal.reason)+'</p><small>'+e.count+' recorded sales in the last 90 days'+(e.newest?' · newest '+esc(e.newest):'')+'. Confirm exact card, parallel and grade. Saved references are not live market quotes.</small></div><div class="form-grid"><label>Your plan<select id="planAction"><option value="review">Review before deciding</option><option value="hold">Hold for my price</option><option value="list">Prepare to list</option></select></label><label>Target sale price ($)<input id="planTarget" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Your target" value="'+esc(p.target||'')+'"></label><label>Review on<input id="planDate" type="date" value="'+esc(p.reviewDate||'')+'"></label><label class="full">Your notes<textarea id="planNote" rows="3" maxlength="800" placeholder="What would make you sell?">'+esc(p.note||'')+'</textarea></label></div><div class="button-row"><button class="button" id="planSave">Save selling plan</button><a class="button secondary" href="'+ebaySearchUrl(c,true)+'" target="_blank" rel="noopener">Check sold comps ↗</a></div><p class="section-note">Saved on this device. Review dates appear on Today when you open the app. This plan does not change your eBay listing.</p>');
+    var p=workspace.plans[c.sku]||{},signal=Selling.planFor(c,p),o=c.owner_listing||{},e=Selling.soldEvidence(c),m=showWorkspaceModal('<div class="modal-heading">'+thumb(c)+'<div><span class="cv-kicker">INDIVIDUAL SELLING PLAN</span><h2 id="workspaceTitle">'+esc(c.player)+'</h2><p>'+esc(c.line)+'</p></div></div><div class="plan-price"><div><span>'+esc(referenceLabel(c))+'</span><b>'+displayPrice(Selling.reference(c))+'</b></div><div><span>'+(Selling.listed(c)?'Your listing':'Recorded cost')+'</span><b>'+displayPrice(Selling.listed(c)?Selling.amount(o.asking_price):Selling.cost(c))+'</b></div></div><div class="evidence-note"><span class="signal '+signal.tone+'">'+esc(signal.label)+'</span><p>'+esc(signal.reason)+'</p><small>'+e.count+' recorded sales in the last 90 days'+(e.newest?' · newest '+esc(e.newest):'')+'. Confirm exact card, parallel and grade. Saved references are not live market quotes.</small></div>'+compResearchLinks(c.title,ebaySearchUrl(c,true))+'<div class="form-grid"><label class="full">Your plan<select id="planAction"><option value="review">Review before deciding</option><option value="hold">Hold for my price</option><option value="list">Prepare to list</option></select></label><label>Target sale price ($)<input id="planTarget" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Your target" value="'+esc(p.target||'')+'"></label><label>Review on<input id="planDate" type="date" value="'+esc(p.reviewDate||'')+'"></label><label class="full">Your notes<textarea id="planNote" rows="3" maxlength="800" placeholder="What would make you sell?">'+esc(p.note||'')+'</textarea></label></div><div class="button-row"><button class="button" id="planSave">Save selling plan</button></div><p class="section-note">Saved on this device. Review dates appear on Today when you open the app. This plan does not change your eBay listing.</p>');
     m.querySelector('#planAction').value=p.action||'review';m.querySelector('#planSave').onclick=function(){var target=m.querySelector('#planTarget');if(!target.reportValidity())return;workspace.plans[c.sku]={action:m.querySelector('#planAction').value,target:target.value,reviewDate:m.querySelector('#planDate').value,note:m.querySelector('#planNote').value.trim()};if(saveWorkspace()){closeModal();render();toast('Selling plan saved on this device');}};
   }
   function openLotDraft(cards,existing) {
@@ -344,13 +358,13 @@
   // ---------- shell ----------
   function shell() {
     document.body.innerHTML='';
-    document.body.appendChild(el('<div class="appbar"><a href="#tab=today" class="brand-home" aria-label="Card Vault Today"><span class="logo">'+icon('stack')+'</span><span class="brand"><b>Card Vault</b><small id="gen">Your resale desk</small></span></a><div class="spacer"></div><span class="ver" id="verpill">'+APP_VERSION+'</span><span class="pill" id="livepill">Saved data</span><button class="iconbtn" id="themebtn" aria-label="Toggle light or dark theme" title="Light / dark">'+icon('sun')+'</button><button class="iconbtn" id="settingsbtn" aria-label="App information" title="App information">'+icon('settings')+'</button></div>'));
+    var masthead=el('<header class="exchange-shell"><div class="appbar"><a href="#tab=today" class="brand-home" aria-label="Card Vault Today"><span class="logo">CV<span>↗</span></span><span class="brand"><b>CARD VAULT</b><small id="gen">THE COLLECTOR’S WORKSPACE</small></span></a><span class="shell-caption">COLLECT WITH INTENT. SELL WITH A PLAN.</span><div class="spacer"></div><span class="ver" id="verpill">'+APP_VERSION+'</span><span class="pill" id="livepill">Saved data</span><button class="iconbtn" id="themebtn" aria-label="Toggle light or dark theme" title="Light / dark">'+icon('sun')+'</button><button class="iconbtn" id="settingsbtn" aria-label="App information" title="App information">'+icon('settings')+'</button></div></header>');document.body.appendChild(masthead);
     document.body.appendChild(el('<main id="view"></main>'));
     document.body.appendChild(el('<div class="modal-wrap" id="modalWrap"><div class="modal" id="modal" role="dialog" aria-modal="true" tabindex="-1"></div></div>'));
     document.body.appendChild(el('<div class="modal-wrap" id="filterWrap"><div class="modal" role="dialog" aria-modal="true" aria-label="Filter cards"></div></div>'));
-    var nav=el('<nav class="nav" aria-label="Main navigation"><div class="navbrand"><span class="logo">'+icon('stack')+'</span><span>Card Vault<small>YOUR RESALE DESK</small></span></div><div class="nav-section">WORKSPACE</div></nav>');
-    [['today','Today'],['sell','Sell'],['collection','Inventory'],['radar','Buy'],['value','Results']].forEach(function(t){var b=el('<button data-tab="'+t[0]+'"><span class="i">'+icon(t[0])+'</span><span>'+t[1]+'</span></button>');b.onclick=function(){setTab(t[0]);};nav.appendChild(b);});
-    nav.appendChild(el('<div class="navfoot"><small>SELL FIRST. BUY WELL.</small><p>A plan for every card.</p><span>'+APP_VERSION+' · Personal workspace</span></div>'));document.body.appendChild(nav);
+    var nav=el('<nav class="nav" aria-label="Main navigation"></nav>');
+    [['today','Today'],['sell','Sell'],['collection','Inventory'],['radar','Buy'],['value','Results']].forEach(function(t,i){var b=el('<button data-tab="'+t[0]+'"><span class="nav-number" aria-hidden="true">0'+(i+1)+'</span><span>'+t[1]+'</span><span class="nav-dot" aria-hidden="true"></span></button>');b.onclick=function(){setTab(t[0]);};nav.appendChild(b);});
+    masthead.appendChild(nav);
     document.body.appendChild(el('<div class="cv-toast" id="cvToast" role="status" aria-live="polite"></div>'));
     document.getElementById('themebtn').onclick=toggleTheme;document.getElementById('settingsbtn').onclick=function(){setTab('about');};
     document.querySelector('.brand-home').onclick=function(e){e.preventDefault();setTab('today');};
@@ -378,7 +392,8 @@
   function render() {
     var v=document.getElementById('view');v.innerHTML='';
     v.appendChild(({today:viewToday,sell:viewSell,collection:viewCollection,value:viewResults,radar:viewBuy,about:viewAbout}[state.tab]||viewToday)());
-    document.getElementById('gen').textContent=state.data.cards.filter(Selling.held).length+' items · Your resale desk';
+    document.getElementById('gen').textContent='THE COLLECTOR’S WORKSPACE';
+    document.body.dataset.page=state.tab;
     document.getElementById('livepill').textContent='Updated '+savedDate(state.data.generated);
     v.scrollTop=0;window.scrollTo(0,0);
   }
@@ -546,7 +561,7 @@
 
   function viewCollection() {
     var wrap=el('<div class="view inventory-view"></div>'),held=state.data.cards.filter(Selling.held);
-    wrap.appendChild(pageHead('YOUR COLLECTION','Inventory',held.length+' held items. Find the right card, then make your move.'));
+    wrap.appendChild(pageHead('03 / COLLECTION','The inventory',held.length+' held items. Find the right card, then make your move.'));
     wrap.appendChild(segment([['Cards','Cards · '+held.filter(function(c){return !c.is_merch;}).length],['Merch','Merch · '+held.filter(function(c){return c.is_merch;}).length]],state.bucket,function(x){state.bucket=x;render();}));
     var toolbar=el('<div class="inventory-toolbar"><label class="search">'+icon('search')+'<input type="search" aria-label="Search inventory" placeholder="Player, set, team or card number…" value="'+esc(state.q)+'"></label><div class="inventory-tools"><select class="sortsel" aria-label="Sort inventory">'+SORTS.map(function(s){return '<option value="'+s[0]+'"'+(state.sort===s[0]?' selected':'')+'>'+s[1]+'</option>';}).join('')+'</select><div class="layout-toggle"><button aria-label="List layout" class="'+(state.inventoryLayout==='list'?'on':'')+'">'+icon('list')+'</button><button aria-label="Grid layout" class="'+(state.inventoryLayout==='grid'?'on':'')+'">'+icon('grid')+'</button></div></div></div>');wrap.appendChild(toolbar);
     var sports=Array.from(new Set(held.map(function(c){return c.sport;}).filter(Boolean))).sort();
@@ -1191,7 +1206,7 @@
       (radarHasNumber(c.max_all_in) ? '<p>Maximum total buy cost at this resale: <b>' + (c.max_all_in > 0 ? money(c.max_all_in) : 'No viable price') + '</b>.' + (!supported ? ' Unverified scenario only.' : '') + '</p>' : '') +
       (c.max_offer > 0 ? '<p>Item-price ceiling: <b>' + money(c.max_offer) + '</b>. Opening-offer scenario: ' + money(c.opening_offer) + '. No offer sent.</p>' : '') +
       math + '<ul>' + (c.reasons || []).map(function(r){return '<li>' + esc(r) + '</li>';}).join('') + '</ul>' + soldRows +
-      '<p class="muted">Observed ' + esc(c.checked_at || 'unknown') + '. Recheck availability, checkout tax and shipping. Source-reported sales are not proof of settlement.</p><a class="pr-soldlink" target="_blank" rel="noopener" href="' + dealSearchUrl(c,true) + '">Check sold listings ↗</a></details>' +
+      '<p class="muted">Observed ' + esc(c.checked_at || 'unknown') + '. Recheck availability, checkout tax and shipping. Source-reported sales are not proof of settlement.</p>' + compResearchLinks(c.query||c.item_title||c.label,dealSearchUrl(c,true)) + '</details>' +
       '<a class="pr-listing" target="_blank" rel="noopener" href="' + safeBuyLink(c.url) + '">' + (unavailable || c.page_state === 'mismatch' ? 'View original source' : 'View listing') + ' <span aria-hidden="true">↗</span></a></article>';
   }
   function viewProfitRadar(radar) {
@@ -1473,8 +1488,7 @@
           '<div class="mbtns">' +
             '<a class="mbtn prime" href="' + esc(d.url) + '" target="_blank" rel="noopener">🛒 Open this listing on eBay</a>' +
             '<a class="mbtn" href="' + dealSearchUrl(d, false) + '" target="_blank" rel="noopener">🔎 All live listings</a>' +
-            '<a class="mbtn" href="' + dealSearchUrl(d, true) + '" target="_blank" rel="noopener">✅ Recent sold prices</a>' +
-            '<a class="mbtn" href="' + terapeakUrl(d.query || d.item_title || d.label) + '" target="_blank" rel="noopener">📊 Terapeak sold data</a>' +
+            compResearchLinks(d.query || d.item_title || d.label,dealSearchUrl(d,true)) +
           "</div>" +
         "</div>" +
       "</div>";
@@ -1490,7 +1504,7 @@
     var controls=el('<div class="tg-controls"><input type="search" aria-label="Find a target" placeholder="Find a player or set…"><select aria-label="Target sport"><option value="all">All sports</option><option value="football">Football</option><option value="basketball">Basketball</option><option value="baseball">Baseball</option></select></div>');wrap.appendChild(controls);
     var count=el('<p class="pr-viewlabel"></p>');wrap.appendChild(count);var grid=el('<div class="tg-grid"></div>');wrap.appendChild(grid);var selected='all';
     function update(){var q=controls.querySelector('input').value.toLowerCase().trim(),sport=controls.querySelector('select').value;var rows=targets.filter(function(t){return(selected==='all'||t.category===selected)&&(sport==='all'||t.sport===sport)&&((t.label+' '+t.query).toLowerCase().indexOf(q)>=0);});count.textContent=rows.length+' SEARCH TARGETS · NOT BUY RECOMMENDATIONS';
-      grid.innerHTML=rows.length?rows.map(function(t){var cat=cats[t.category]||['◆','Card'],label=t.label.replace(/ PSA 10/g,'');return '<article class="tg-card tg-'+esc(t.category)+'"><div class="tg-top"><span class="tg-symbol" aria-hidden="true">'+cat[0]+'</span><span class="tg-grade">PSA 10</span></div><h3>'+esc(label)+'</h3><div class="tg-meta"><span>'+esc(t.sport)+'</span><span>'+cat[1]+'</span></div><a class="pr-listing" target="_blank" rel="noopener" href="'+dealSearchUrl(t,false)+'">Find listings <span>↗</span></a><details><summary>Search details</summary><p>'+esc(t.query)+'</p><p>Search ceiling '+money0(t.price_max)+'. This is a search filter, not a buy price. Buy price requires exact sold comparisons and your profit minimums.</p><a target="_blank" rel="noopener" href="'+dealSearchUrl(t,true)+'">Check sold prices ↗</a></details></article>';}).join(''):'<div class="pr-empty"><h3>No matching targets</h3><p>Try another player, sport or category.</p></div>';}
+      grid.innerHTML=rows.length?rows.map(function(t){var cat=cats[t.category]||['◆','Card'],label=t.label.replace(/ PSA 10/g,'');return '<article class="tg-card tg-'+esc(t.category)+'"><div class="tg-top"><span class="tg-symbol" aria-hidden="true">'+cat[0]+'</span><span class="tg-grade">PSA 10</span></div><h3>'+esc(label)+'</h3><div class="tg-meta"><span>'+esc(t.sport)+'</span><span>'+cat[1]+'</span></div><a class="pr-listing" target="_blank" rel="noopener" href="'+dealSearchUrl(t,false)+'">Find listings <span>↗</span></a><details><summary>Search details</summary><p>'+esc(t.query)+'</p><p>Search ceiling '+money0(t.price_max)+'. This is a search filter, not a buy price. Buy price requires exact sold comparisons and your profit minimums.</p>'+compResearchLinks(t.query||t.label,dealSearchUrl(t,true))+'</details></article>';}).join(''):'<div class="pr-empty"><h3>No matching targets</h3><p>Try another player, sport or category.</p></div>';}
     chips.querySelectorAll('button').forEach(function(btn){btn.onclick=function(){selected=btn.getAttribute('data-cat');chips.querySelectorAll('button').forEach(function(x){var active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});update();};});controls.querySelector('input').oninput=update;controls.querySelector('select').onchange=update;update();return wrap;
   }
 
@@ -1602,12 +1616,16 @@
   }
 
   // Terapeak product research (eBay Seller Hub) pre-searched for this card —
-  // REAL sold data, free for sellers. No API exists, so this deep-link + the
-  // "My numbers" box IS the integration: look it up, type it in, done.
-  // 90-day window, sold tab. Needs the owner's eBay seller login (they have one).
+  // Manual source lookup, not an automated or verified data import.
+  // Start with a 90-day sold window; exact identity/date/accepted-price review
+  // happens in the owner's authorized Seller Hub session.
   function terapeakUrl(q) {
     return "https://www.ebay.com/sh/research?marketplace=EBAY-US&tabName=SOLD&dayRange=90&keywords=" +
       encodeURIComponent(q);
+  }
+
+  function compResearchLinks(query,soldUrl) {
+    return '<div class="comp-research"><span class="research-eyebrow">CHECK THE MARKET</span><a class="research-primary" href="'+esc(terapeakUrl(query||''))+'" target="_blank" rel="noopener"><span>01</span> Terapeak / Product Research '+icon('arrow')+'</a><details class="research-fallback"><summary>02 · eBay sold results — fallback</summary><p>Use if Product Research is unavailable or has no exact matches.</p><a href="'+esc(soldUrl)+'" target="_blank" rel="noopener">Open eBay sold results ↗</a></details><small>Match the year, set, parallel and grade. Product Research opens in your eBay seller account.</small></div>';
   }
 
   // A ready-to-paste prompt for drafting the eBay listing in Claude chat.
@@ -1647,7 +1665,7 @@
       return '<div class="compsbox nomarket"><div class="lab">What it’s going for</div>' +
         '<div class="addcostrow">No eBay comps captured for this exact card yet — the value here is hand-set.</div>' +
         '<div class="cfoot">Niche inserts/autos often return no match on the weekly auto-price run. ' +
-        "Tap “Live listings” / “Sold on eBay” below to check the market yourself — and record what it sold for in “My numbers” below.</div></div>";
+        "Start with “Terapeak / Product Research” below to check actual sold comparisons — and record what it sold for in “My numbers” below.</div></div>";
     }
     var cur = num(c.asking_price);
     var prices = ((c.comps && c.comps.items) || []).map(function (it) { return num(it.p); })
@@ -1689,7 +1707,7 @@
         ? "This card’s value comes from the PSA app, not from these asking listings — " +
           "PSA reads real sales, so where the two disagree, trust PSA."
         : "This card’s value: " + basisTxt +
-          ". Real sold prices need eBay approval — tap “Sold on eBay” below for actuals.") +
+          ". Start with Terapeak / Product Research below for actual sold comparisons; eBay sold search is the fallback.") +
       "</div></div>";
   }
 
@@ -1790,7 +1808,7 @@
 
   // "My numbers" — the owner's own data entry, right in the card popup: what
   // the card cost, and real prices it has sold for (look them up with the
-  // “Sold on eBay” button below, or Terapeak in eBay Seller Hub). Saves
+  // Terapeak / Product Research first, then eBay sold search as fallback). Saves
   // instantly on this device; "Send to Claude" writes it into the sheet.
   function myNumbersBox(c) {
     var today = new Date().toISOString().slice(0, 10);
@@ -1806,10 +1824,7 @@
     var pend = pendingCount();
     var mineSold = myData.sold[c.sku];
     return '<div class="compsbox mydata"><div class="lab">✍️ My numbers</div>' +
-      '<div class="mdlookup">' +
-        '<a class="mbtn sm" href="' + terapeakUrl(c.title) + '" target="_blank" rel="noopener">📊 Terapeak sold data</a>' +
-        '<a class="mbtn sm" href="' + ebaySearchUrl(c, true) + '" target="_blank" rel="noopener">✅ eBay sold search</a>' +
-      "</div>" +
+      compResearchLinks(c.title,ebaySearchUrl(c,true)) +
       '<div class="mdform"><label>What you paid ($)' +
         '<input type="number" inputmode="decimal" min="0" step="0.01" id="myCost" placeholder="e.g. 45" value="' +
         (num(c.cost) > 0 ? esc(num(c.cost)) : "") + '"' + (sheetCost ? " disabled" : "") + "></label>" +
@@ -2093,7 +2108,6 @@
           "</div>" +
           '<div class="mbtns">' +
             '<a class="mbtn" href="' + ebaySearchUrl(c, false) + '" target="_blank" rel="noopener">🛒 Live listings</a>' +
-            '<a class="mbtn" href="' + ebaySearchUrl(c, true) + '" target="_blank" rel="noopener">✅ Sold on eBay</a>' +
             '<button class="mbtn" id="mShare">🔗 Share card</button>' +
             (c.cert && /psa/i.test(c.grader || "") ?
               '<a class="mbtn" href="https://www.psacard.com/cert/' + esc(c.cert) +
