@@ -8,14 +8,14 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
-## Buy Radar visual pricing and PSA 10 focus — v57, October 27, 2026
+## Buy Radar visual pricing and PSA 10 focus — v58, October 27, 2026
 Jack asked: "Whats the card listed for. What do we think we can sell for. Less words more visuals."
 - Radar cards lead with **Listed for → Expected resale**, then a separate estimated
   after-cost profit/loss strip. Purchase tax/shipping total sits under listing price.
   The sell estimate comes only from the existing evaluator; absent estimates stay
   a dash with "Need sold comps". Low-confidence scenarios stay labeled. Never turn
   a single reported guide sale into an expected resale or profit number.
-- Show concise player/spec/grade, WAIT / PASS / BUY CANDIDATE / EXCLUDED, a short
+- Show concise player/spec/grade, RESEARCH ONLY / DO NOT BUY / BUY CANDIDATE / REJECTED, a short
   decision line and hold scenario. Detailed sources, explanations, max buy/offer
   limits, exact cents and all cost assumptions are collapsed underneath.
 - Compact scan counts and filters replace the explanatory wall of text. Coverage,
@@ -30,6 +30,14 @@ Jack asked: "Whats the card listed for. What do we think we can sell for. Less w
   and checked_at in research; never relabel a PSA 9 observation as PSA 10. The
   snapshot keeps excluded history; the normal app view shows only PSA 10s and
   qualifying exceptions. Collection values and owner listing/sale records unchanged.
+- Jack clarified that a losing candidate must not lead Buy Radar. The default
+  view is qualified buy opportunities only. Research and rejected cards require
+  an explicit view selection, with unmistakable non-recommendation headings.
+  "PASS" was ambiguous; losing rows say "DO NOT BUY". The cost-adjusted outcome
+  names time/risk and separately shows the estimated cash result.
+- v58 final visual review: missing profit distinguishes missing resale, unknown
+  purchase costs and unavailable listings. A sold card with a resale estimate must
+  not incorrectly say its resale estimate is missing.
 - Keep service-worker shell query versions in sync with app/index/cache version.
 
 ## Owner listing/email reconciliation — v55, October 27, 2026
@@ -77,7 +85,7 @@ never automatically reprice cards or edit live eBay listings.
   verify served data/version. Use handoff skill for meaningful changes. Never
   buy, send offers/messages or create/revise live listings from this workflow.
 
-## Current sourcing rules — v57, October 27, 2026
+## Current sourcing rules — v58, October 27, 2026
 Jack approved a profit-only side business radar, expanded targets, and first runs.
 He then approved replacing the overstrict purchase-price tiers with hold-based hurdles.
 These rules supersede the historical asking-median radar/Great Value notes below.
