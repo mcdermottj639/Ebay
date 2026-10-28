@@ -1,6 +1,6 @@
 {
-  "researched_at": "2026-10-28T00:50:51.114968+00:00",
-  "coverage_notes": "First public-page sample: 9 listing/product observations across 8 search families. API keys unavailable here; not a full 36-target API scan. Public pages may be cached. No purchase or offer sent.",
+  "researched_at": "2026-10-28T01:43:23.162595+00:00",
+  "coverage_notes": "Accumulated public research: 13 listing/product observations across 12 target families. Latest pass added four families; the original nine retain their original observation times. Public pages may be cached. This is partial discovery, not a full 36-target API scan. No purchase or offer sent.",
   "queries_run": [
     "Cade Pink Ice PSA 10",
     "Jalen Hurts Optic PSA 10",
@@ -9,11 +9,15 @@
     "Bijan Select auto PSA 10",
     "Anthony Edwards Silver PSA 9",
     "CJ Stroud Stained Glass PSA 9",
-    "Ohtani Chrome PSA 10"
+    "Ohtani Chrome PSA 10",
+    "Amon-Ra St Brown rookie autos PSA 9",
+    "DeVonta Smith rookie autos PSA 10",
+    "Aaron Judge Topps Chrome PSA 10",
+    "Michael Jordan Fleer PSA 9"
   ],
   "candidates": [
     {
-      "label": "Jalen Hurts \u00b7 Optic base PSA 10",
+      "label": "Jalen Hurts · Optic base PSA 10",
       "item_title": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10",
       "listing_id": "156974936364",
       "url": "https://www.ebay.com/itm/156974936364",
@@ -129,7 +133,7 @@
       "query": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10"
     },
     {
-      "label": "C.J. Stroud \u00b7 Stained Glass PSA 9",
+      "label": "C.J. Stroud · Stained Glass PSA 9",
       "item_title": "2023 PANINI MOSAIC STAINED GLASS #SG22 CJ STROUD ROOKIE RC PSA 9",
       "listing_id": "298443886169",
       "url": "https://www.ebay.com/itm/298443886169",
@@ -219,7 +223,7 @@
       "query": "2023 PANINI MOSAIC STAINED GLASS #SG22 CJ STROUD ROOKIE RC PSA 9"
     },
     {
-      "label": "Anthony Edwards \u00b7 Silver PSA 9",
+      "label": "Anthony Edwards · Silver PSA 9",
       "item_title": "2020 Anthony Edwards Prizm Silver RC PSA 9",
       "listing_id": "318891302316",
       "url": "https://www.ebay.com/itm/318891302316",
@@ -259,7 +263,7 @@
       ]
     },
     {
-      "label": "Justin Jefferson \u00b7 Genesis PSA 9",
+      "label": "Justin Jefferson · Genesis PSA 9",
       "item_title": "2020 Panini Mosaic Justin Jefferson #209 Genesis RC PSA 9",
       "listing_id": "198435397977",
       "url": "https://www.ebay.com/itm/198435397977",
@@ -296,7 +300,7 @@
       "query": "2020 Panini Mosaic Justin Jefferson #209 Genesis RC PSA 9"
     },
     {
-      "label": "Bijan Robinson \u00b7 rookie auto /199 PSA 10",
+      "label": "Bijan Robinson · rookie auto /199 PSA 10",
       "item_title": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10",
       "listing_id": "188957642860",
       "url": "https://www.ebay.com/itm/188957642860",
@@ -333,7 +337,7 @@
       "query": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10"
     },
     {
-      "label": "Brock Purdy \u00b7 Mirror Teal /50 PSA 9",
+      "label": "Brock Purdy · Mirror Teal /50 PSA 9",
       "item_title": "2022 Panini Certified Brock Purdy Rookie Autograph Mirror Teal 41 /50 PSA 9",
       "listing_id": "175896794065",
       "url": "https://www.ebay.com/itm/175896794065",
@@ -370,7 +374,7 @@
       "query": "2022 Panini Certified Brock Purdy Rookie Autograph Mirror Teal 41 /50 PSA 9"
     },
     {
-      "label": "Shohei Ohtani \u00b7 Chrome rookie PSA 10",
+      "label": "Shohei Ohtani · Chrome rookie PSA 10",
       "item_title": "2018 Topps Chrome Shohei Ohtani Rookie Card PSA 10 Gem Mint card #150",
       "listing_id": "257803071066",
       "url": "https://www.ebay.com/itm/257803071066",
@@ -407,7 +411,7 @@
       "query": "2018 Topps Chrome Shohei Ohtani Rookie Card PSA 10 Gem Mint card #150"
     },
     {
-      "label": "Cade Cunningham \u00b7 Pink Ice PSA 10",
+      "label": "Cade Cunningham · Pink Ice PSA 10",
       "item_title": "2021 Panini Prizm Pink Ice Cade Cunningham ROOKIE #282 PSA 10 GEM MINT",
       "listing_id": "fanatics:69c876a3-16e6-4e74-bafe-52159e662170",
       "url": "https://www.fanaticscollect.com/buy-now/69c876a3-16e6-4e74-bafe-52159e662170/2021-panini-prizm-pink-ice-cade-cunningham-rookie-282-psa-10-gem-mint",
@@ -524,7 +528,7 @@
       "query": "2021 Panini Prizm Pink Ice Cade Cunningham ROOKIE #282 PSA 10 GEM MINT"
     },
     {
-      "label": "Cade search \u00b7 wrong grade excluded",
+      "label": "Cade search · wrong grade excluded",
       "item_title": "2021 PANINI PRIZM PINK ICE #282 CADE CUNNINGHAM ROOKIE RC PSA 9",
       "listing_id": "epid:12056503365",
       "url": "https://www.ebay.com/p/12056503365",
@@ -559,6 +563,228 @@
         "PSA 10 search led to a product-page offer for PSA 9. Not an exact target match; product offers can rotate."
       ],
       "query": "2021 PANINI PRIZM PINK ICE #282 CADE CUNNINGHAM ROOKIE RC PSA 9"
+    },
+    {
+      "label": "Amon-Ra St. Brown · Prizm Silver Auto PSA 9",
+      "item_title": "2021 Panini Prizm Amon Ra St Brown Silver Auto PSA 9",
+      "listing_id": "820142772410",
+      "url": "https://www.ebay.com/itm/820142772410",
+      "price": 190,
+      "shipping": 0,
+      "currency": "USD",
+      "identity": {
+        "year": 2021,
+        "set": "Panini Prizm",
+        "player": "Amon-Ra St. Brown",
+        "number": "358",
+        "parallel": "Silver",
+        "print_run": "none",
+        "autograph": true,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 9
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "autos",
+      "sport": "football",
+      "page_state": "active",
+      "buying_option": "FIXED_PRICE",
+      "seller_score": 14964,
+      "seller_pct": 100,
+      "checked_at": "2026-10-28T01:43:23.162595+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [],
+      "warnings": [],
+      "query": "Amon-Ra St Brown rookie autos PSA 9"
+    },
+    {
+      "label": "DeVonta Smith · Select White rookie auto /35",
+      "item_title": "2021 Panini Select Rookie Signatures DeVonta Smith #RS-10 White Prizm /35",
+      "listing_id": "227495991287",
+      "url": "https://www.ebay.com/p/25056187880",
+      "price": null,
+      "shipping": null,
+      "currency": "USD",
+      "identity": {
+        "year": 2021,
+        "set": "Panini Select Rookie Signatures",
+        "player": "DeVonta Smith",
+        "number": "RS-10",
+        "parallel": "White Prizm",
+        "print_run": 35,
+        "autograph": true,
+        "relic": false,
+        "grader": null,
+        "grade": null
+      },
+      "identity_reviewed": false,
+      "condition_reviewed": false,
+      "category": "autos",
+      "sport": "football",
+      "page_state": "ended",
+      "buying_option": null,
+      "seller_score": null,
+      "seller_pct": null,
+      "checked_at": "2026-10-28T01:43:23.162595+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [],
+      "warnings": [
+        "Search result redirected to a sold-out product page; no available PSA 10 offer verified."
+      ],
+      "query": "DeVonta Smith rookie autos PSA 10"
+    },
+    {
+      "label": "Aaron Judge · Chrome grade mismatch",
+      "item_title": "2017 Topps Chrome Aaron Judge #169 PSA 9 product offer",
+      "listing_id": "840035056494",
+      "url": "https://www.ebay.com/p/19065174031",
+      "price": 189.99,
+      "shipping": 5.99,
+      "currency": "USD",
+      "identity": {
+        "year": 2017,
+        "set": "Topps Chrome",
+        "player": "Aaron Judge",
+        "number": "169",
+        "parallel": "base",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 9
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "established",
+      "sport": "baseball",
+      "page_state": "mismatch",
+      "buying_option": "FIXED_PRICE",
+      "seller_score": 859255,
+      "seller_pct": 99.9,
+      "checked_at": "2026-10-28T01:43:23.162595+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [],
+      "warnings": [
+        "PSA 10 search redirected to a product page displaying a PSA 9 offer. That offer is not a PSA 10 comparable."
+      ],
+      "query": "Aaron Judge Topps Chrome PSA 10"
+    },
+    {
+      "label": "Michael Jordan · Fleer #17 PSA 9",
+      "item_title": "1988 Fleer Michael Jordan #17 PSA 9 MINT Chicago Bulls Basketball",
+      "listing_id": "800658746039",
+      "url": "https://www.ebay.com/itm/800658746039",
+      "price": 1300,
+      "shipping": 6.07,
+      "currency": "USD",
+      "identity": {
+        "year": 1988,
+        "set": "Fleer",
+        "player": "Michael Jordan",
+        "number": "17",
+        "parallel": "base",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 9
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "established",
+      "sport": "basketball",
+      "page_state": "unverified",
+      "buying_option": "FIXED_PRICE",
+      "seller_score": 3,
+      "seller_pct": 100,
+      "checked_at": "2026-10-28T01:43:23.162595+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [
+        {
+          "identity": {
+            "year": 1988,
+            "set": "Fleer",
+            "player": "Michael Jordan",
+            "number": "17",
+            "parallel": "base",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 9
+          },
+          "date": "2026-10-19",
+          "price": 825,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:327406649905",
+          "url": "https://www.ebay.com/itm/327406649905",
+          "source_type": "primary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "separate",
+          "shipping": 11.99,
+          "note": "Primary page explicitly labels the listing sold Oct 19 at $825; no accepted-Best-Offer ambiguity shown. Source-reported sale, not proof of payment settlement."
+        }
+      ],
+      "warnings": [
+        "Public listing snapshot was crawled two weeks earlier; current availability is unverified.",
+        "Asking price exceeds this target discovery band; retained as context, not a buy."
+      ],
+      "query": "Michael Jordan Fleer PSA 9"
+    }
+  ],
+  "api_access": {
+    "checked_at": "2026-10-28T01:43:23.162595+00:00",
+    "production_configured": false,
+    "credentials_present": false,
+    "browse": "credentials_unavailable",
+    "sold_history": "not_tested",
+    "note": "No production eBay credentials available in this runner; this does not establish whether another authorized runtime has access."
+  },
+  "run_log": [
+    {
+      "researched_at": "2026-10-28T00:50:51.114968+00:00",
+      "mode": "public sources",
+      "queries_attempted": [
+        "Cade Pink Ice PSA 10",
+        "Jalen Hurts Optic PSA 10",
+        "Brock Purdy Certified auto PSA 9",
+        "Justin Jefferson Genesis PSA 9",
+        "Bijan Select auto PSA 10",
+        "Anthony Edwards Silver PSA 9",
+        "CJ Stroud Stained Glass PSA 9",
+        "Ohtani Chrome PSA 10"
+      ],
+      "observations_added": 9,
+      "note": "Initial sample; primary-sale coverage incomplete."
+    },
+    {
+      "researched_at": "2026-10-28T01:43:23.162595+00:00",
+      "mode": "public sources",
+      "queries_attempted": [
+        "Amon-Ra St Brown rookie autos PSA 9",
+        "DeVonta Smith rookie autos PSA 10",
+        "Aaron Judge Topps Chrome PSA 10",
+        "Michael Jordan Fleer PSA 9"
+      ],
+      "observations_added": 4,
+      "source_checks": [
+        "https://www.ebay.com/itm/820142772410",
+        "https://www.ebay.com/itm/227495991287",
+        "https://www.ebay.com/itm/840035056494",
+        "https://www.ebay.com/itm/800658746039",
+        "https://www.ebay.com/itm/327406649905"
+      ],
+      "failures": [
+        "Secondary Jordan candidate 147608336388 inaccessible; no price recorded."
+      ],
+      "note": "One directly inspected Jordan sold-price record; no candidate meets the three-sale evidence minimum. Redirected grades and sold-out results are excluded."
     }
   ]
 }

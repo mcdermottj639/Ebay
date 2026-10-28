@@ -53,8 +53,9 @@ never automatically reprice cards or edit live eBay listings.
   verify served data/version. Use handoff skill for meaningful changes. Never
   buy, send offers/messages or create/revise live listings from this workflow.
 
-## Current sourcing rules — v54, October 27, 2026
-Jack approved a profit-only side business radar, expanded targets, and a first run.
+## Current sourcing rules — v56, October 27, 2026
+Jack approved a profit-only side business radar, expanded targets, and first runs.
+He then approved replacing the overstrict purchase-price tiers with hold-based hurdles.
 These rules supersede the historical asking-median radar/Great Value notes below.
 - `data/buy_policy.json` is the authoritative cost/hurdle configuration. Both dollar
   profit and ROI must pass AFTER selling fees, purchase tax/shipping, promotion
@@ -80,7 +81,10 @@ These rules supersede the historical asking-median radar/Great Value notes below
   without overwriting the snapshot. Failed queries and incomplete coverage show.
 - Normal all-in cap $500; >$500 individual exception review, >$1000 premium
   watchlist only. Default 90-day holding scenario is NOT a sale-time prediction.
-  61–120d requires 1.5x dollar hurdle and +10pp return; >120d stays research.
+  Supported 1–30d: $75 AND 25%; 31–90d: $100 AND 30%; 91–120d: $150 AND 35%.
+  These apply after all allowances. >120d stays research. No price-tier cliffs.
+  Holds shorter than 90d require hold_reviewed=true, a rationale and HTTPS sources;
+  otherwise the evaluator uses 90d. Sales frequency alone is not time-to-sale.
 - v54 renders the scan hero/counts as a separate DOM element (the shared `el`
   helper returns one root); browser acceptance covers the counts and filters.
 - Sourcing refresh automation `Card Buy Radar` is enabled Tuesday/Friday evenings
@@ -90,9 +94,21 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - New schema-v2 Buy Radar shows zero qualified honestly, pass/research/excluded
   reasons, detailed math, source links and stress case. Qualified cards expire
   client-side after 48h too. Targets explain discovery bands without made-up prices.
-- First public sample: 9 observations / 8 search families; 0 qualified, 4 research,
-  2 price passes, 3 exclusions. API scan unavailable in this implementation session.
-  Sample includes sold Bijan/Cade listings and wrong-grade Cade product result.
+- Updated public sample: 13 observations / 12 search families; 0 qualified.
+  Added Amon-Ra rookie autos, DeVonta autos, Judge and Jordan. The original nine
+  observations retain their actual dates. One primary Jordan sale is documented,
+  but no candidate has the three primary sales required. See snapshot diagnostics
+  and run_log, not zero buys alone, to assess evidence and coverage gaps.
+- `python radar.py --check-connection` performs a redacted read-only readiness/probe
+  without writing the snapshot. No production keys were available in this runner;
+  do not infer access in other runtimes. Default discovery rejects sandbox data.
+  A Browse connection does not establish Marketplace Insights/sold-history access.
+- SportsCardsPro/PriceCharting remains a secondary public reference. No paid API
+  subscription or integration was added. API docs offer current estimated values,
+  not historical sold records; generic grade 9 is not a PSA-specific comparable.
+  API/CSV internal-use licensing requires review before any public-app embedding.
+  Sources: https://www.sportscardspro.com/api-documentation and
+  https://www.sportscardspro.com/sportscardspro-premium?f=menu .
 - Keep collection-price research and repricer separate. Never buy, bid, submit an
   offer, change listings or collection prices from this workflow.
 - Validate: `python -m unittest discover -s tests -v`, `node --check docs/app.js`,

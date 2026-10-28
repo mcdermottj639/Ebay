@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "purpose": "Profit-only side business; no collection premium or automatic purchases",
   "fee_rate": 0.1325,
   "fee_threshold": 7500,
@@ -24,14 +24,12 @@
   "sales_window_days": 90,
   "freshest_sale_days": 30,
   "listing_max_age_hours": 48,
-  "tiers": [
-    {"below": 100, "profit": 50, "roi": 0.40},
-    {"below": 250, "profit": 100, "roi": 0.35},
-    {"below": 500, "profit": 175, "roi": 0.35},
-    {"below": 1000, "profit": 300, "roi": 0.30},
-    {"below": null, "profit": 500, "roi": 0.30}
+  "hold_tiers": [
+    {"through_days": 30, "profit": 75, "roi": 0.25},
+    {"through_days": 90, "profit": 100, "roi": 0.30},
+    {"through_days": 120, "profit": 150, "roi": 0.35}
   ],
-  "assumptions": "Non-Store US sports-card fee schedule; actual seller plan unconfirmed. Purchase tax 7% and resale-buyer tax 8% are planning allowances, not tax advice. A 2% promotion reserve is budgeted, not an enabled campaign. Free shipping on resale. $25 owner-time allowance and 12% annual capital hurdle are decision costs, not cash expenses. Profit thresholds apply AFTER these allowances and before income tax. Unknown hold time uses a 90-day planning scenario; it is not a sale-time forecast. Shipping/insurance and checkout tax must be verified before buying.",
+  "assumptions": "Non-Store US sports-card fee schedule; actual seller plan unconfirmed. Purchase tax 7% and resale-buyer tax 8% are planning allowances, not tax advice. A 2% promotion reserve is budgeted, not an enabled campaign. Free shipping on resale. $25 owner-time allowance and 12% annual capital hurdle are decision costs, not cash expenses. Profit thresholds apply AFTER these allowances and before income tax. Both the dollar floor and return percentage must pass. Unknown or unsupported short hold time uses a 90-day planning scenario; it is not a sale-time forecast. A shorter hold requires a reviewed rationale and source links. Shipping/insurance and checkout tax must be verified before buying.",
   "fee_source": "https://www.ebay.com/help/selling/fees/fees-sellers?id=4822",
   "fee_checked_on": "2026-10-27"
 }

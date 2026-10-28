@@ -38,16 +38,47 @@ class ProfitRadarTests(unittest.TestCase):
         r=economics(400,200,60,self.p)
         self.assertAlmostEqual(r['adjusted_profit'], r['cash_margin']-r['contingency']-25-r['capital_allowance'])
 
-    def test_tiers_have_explicit_boundaries(self):
-        self.assertEqual(requirements(99.99,60,self.p),(50,.4))
-        self.assertEqual(requirements(100,60,self.p),(100,.35))
-        self.assertEqual(requirements(250,60,self.p),(175,.35))
-        self.assertEqual(requirements(500,60,self.p),(300,.3))
-        self.assertEqual(requirements(1000,60,self.p),(500,.3))
+    def test_hold_tiers_have_explicit_boundaries(self):
+        self.assertEqual(requirements(300,30,self.p),(75,.25))
+        self.assertEqual(requirements(300,31,self.p),(100,.30))
+        self.assertEqual(requirements(300,90,self.p),(100,.30))
+        self.assertEqual(requirements(300,91,self.p),(150,.35))
+        self.assertEqual(requirements(300,120,self.p),(150,.35))
+
+    def test_no_purchase_price_cliffs(self):
+        for cost in [99.99,100,249.99,250,499.99,500,1000]:
+            self.assertEqual(requirements(cost,90,self.p),(100,.3))
+
+    def test_approved_example_passes_without_ignoring_costs(self):
+        r=economics(450,200,90,self.p)
+        self.assertAlmostEqual(r['adjusted_profit'],121.07,places=2)
+        self.assertTrue(r['passes'])
+
+    def test_dollar_and_roi_floors_both_required(self):
+        cheap=economics(275,100,90,self.p)
+        larger=economics(850,500,90,self.p)
+        self.assertGreater(cheap['roi'],.3)
+        self.assertFalse(cheap['passes'])
+        self.assertGreater(larger['adjusted_profit'],100)
+        self.assertFalse(larger['passes'])
+
+    def test_short_hold_without_support_defaults_to_90(self):
+        self.c['hold_days']=30
+        r=evaluate(self.c,self.p,self.now)
+        self.assertEqual(r['hold_days'],90)
+        self.assertEqual(r['economics']['minimum_profit'],100)
+
+    def test_short_hold_with_reviewed_sources_uses_approved_floor(self):
+        self.c.update(hold_days=30,hold_reviewed=True,
+                      hold_basis='Reviewed listing-to-sale observations',
+                      hold_sources=['https://www.ebay.com/itm/10'])
+        r=evaluate(self.c,self.p,self.now)
+        self.assertEqual(r['hold_days'],30)
+        self.assertEqual(r['economics']['minimum_profit'],75)
 
     def test_slow_hold_hurdle_and_capital(self):
-        self.assertEqual(requirements(200,90,self.p)[0],150)
-        self.assertAlmostEqual(requirements(200,90,self.p)[1],.45)
+        self.assertEqual(requirements(200,90,self.p)[0],100)
+        self.assertAlmostEqual(requirements(200,90,self.p)[1],.30)
         self.assertLess(max_buy(400,90,self.p),max_buy(400,60,self.p))
 
     def test_maximum_is_conservative_at_every_tier(self):
@@ -118,6 +149,7 @@ class ProfitRadarTests(unittest.TestCase):
     def test_long_hold_stays_research(self):
         self.c['hold_days']=121
         self.assertNotEqual(evaluate(self.c,self.p,self.now)['status'],'qualified')
+        self.assertEqual(max_buy(1000,121,self.p),0)
 
     def test_all_in_limit_requires_exception(self):
         self.c['price']=510
