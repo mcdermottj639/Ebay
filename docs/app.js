@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v57";
+  var APP_VERSION = "v58";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1128,7 +1128,7 @@
     var resale = e ? e.resale : ev.conservative_resale;
     var priced = radarHasNumber(resale), hasProfit = e && radarHasNumber(e.adjusted_profit);
     var supported = ev.confidence === 'medium';
-    var status = {qualified:c.grade_scope === 'exception' ? '★ RARE EXCEPTION' : '✓ BUY CANDIDATE', research:'◷ WAIT', pass:'✕ PASS', excluded:'— EXCLUDED'}[c.status] || '◷ WAIT';
+    var status = {qualified:c.grade_scope === 'exception' ? '★ RARE EXCEPTION' : '✓ BUY CANDIDATE', research:'RESEARCH ONLY', pass:'✕ DO NOT BUY', excluded:'— REJECTED'}[c.status] || 'RESEARCH ONLY';
     var player = specs.player || c.label;
     var initials = player.split(/\s+/).filter(Boolean).slice(0,2).map(function(x){return x[0];}).join('');
     var specLine = [specs.year, specs.set, specs.number ? '#' + specs.number : '', specs.parallel && specs.parallel !== 'base' ? specs.parallel : '', specs.print_run && specs.print_run !== 'none' ? '/' + specs.print_run : ''].filter(Boolean).join(' · ');
@@ -1139,8 +1139,8 @@
     var resaleNote = priced ? (supported ? 'Based on sold comps' : 'Low-confidence estimate') : 'Need sold comps';
     var profitText = hasProfit ? (e.adjusted_profit >= 0 ? '+' : '−') + money0(Math.abs(e.adjusted_profit)) : '—';
     var profitTone = hasProfit ? (e.adjusted_profit < 0 ? 'loss' : c.status === 'qualified' ? 'gain' : 'pending') : 'pending';
-    var profitLabel = hasProfit && e.adjusted_profit < 0 ? 'Est. loss' : 'Est. profit';
-    var profitNote = hasProfit ? 'After fees, costs & time' : 'Resale estimate needed';
+    var profitLabel = hasProfit && e.adjusted_profit < 0 ? 'Loss incl. time & risk' : 'Profit after all costs';
+    var profitNote = hasProfit ? 'Cash result: ' + (e.cash_margin >= 0 ? '+' : '−') + money0(Math.abs(e.cash_margin)) : unavailable || c.page_state === 'mismatch' ? 'No eligible listing' : priced ? 'Purchase costs unknown' : 'Resale estimate needed';
     var shortReason = c.status === 'qualified' ? 'Clears your buying rules' : c.status === 'pass' ? 'Too expensive at this price' : c.page_state === 'mismatch' ? 'Wrong card or grade' : unavailable ? 'Unavailable' : c.buying_option === 'AUCTION' ? 'Auction · wait for final price' : c.all_in > 1000 ? 'Above your buying budget' : !priced ? 'Wait for sold comparisons' : 'Verify before buying';
     if (c.status === 'research' && c.page_state === 'unverified') shortReason = 'Availability needs a recheck';
     var soldRows = (ev.sales || []).map(function(s) {
@@ -1199,13 +1199,15 @@
     rules += '</details>'; wrap.appendChild(el(rules));
     var stale = rows.some(function(c){var age=Date.now()-Date.parse(c.checked_at||'');return !isFinite(age)||age<0||age>48*3600000;});
     if(stale) wrap.appendChild(el('<div class="pr-warning">Older prices — recheck listings before buying.</div>'));
-    var toolbar = el('<div class="pr-toolbar"><label>Show<select id="profitStatus"><option value="all">All '+rows.length+'</option><option value="qualified">Ready to buy '+counts.qualified+'</option><option value="research">Research '+counts.research+'</option><option value="pass">Pass '+counts.pass+'</option><option value="excluded">Excluded '+counts.excluded+'</option></select></label><label>Type<select id="profitCategory"><option value="all">All cards</option>'+Object.keys(BUY_CATEGORIES).map(function(k){return '<option value="'+k+'">'+BUY_CATEGORIES[k]+'</option>';}).join('')+'</select></label></div>');
+    var toolbar = el('<div class="pr-toolbar"><label>Show<select id="profitStatus"><option value="qualified">Buy opportunities '+counts.qualified+'</option><option value="research">Research only '+counts.research+'</option><option value="rejected">Rejected '+(counts.pass+counts.excluded)+'</option><option value="all">All checked '+rows.length+'</option></select></label><label>Type<select id="profitCategory"><option value="all">All cards</option>'+Object.keys(BUY_CATEGORIES).map(function(k){return '<option value="'+k+'">'+BUY_CATEGORIES[k]+'</option>';}).join('')+'</select></label></div>');
     wrap.appendChild(toolbar);
+    var viewLabel=el('<p class="pr-viewlabel"></p>');wrap.appendChild(viewLabel);
     var list=el('<div class="pr-grid"></div>');wrap.appendChild(list);
     function update(){
       var status=toolbar.querySelector('#profitStatus').value,category=toolbar.querySelector('#profitCategory').value;
-      var shown=rows.filter(function(c){return(status==='all'||c.status===status)&&(category==='all'||c.category===category);});
-      list.innerHTML=shown.length?shown.map(profitResearchRow).join(''):'<div class="card"><p>No cards in this view yet.</p></div>';
+      var shown=rows.filter(function(c){return(status==='all'||c.status===status||(status==='rejected'&&(c.status==='pass'||c.status==='excluded')))&&(category==='all'||c.category===category);});
+      viewLabel.textContent={qualified:'BUY OPPORTUNITIES',research:'RESEARCH ONLY · NOT READY TO BUY',rejected:'REJECTED · DO NOT BUY',all:'RESEARCH LOG · INCLUDES REJECTED CARDS'}[status] || '';
+      list.innerHTML=shown.length?shown.map(profitResearchRow).join(''):status==='qualified'?'<div class="pr-empty"><span aria-hidden="true">⌕</span><h3>No verified buys yet</h3><p>Only cards meeting your profit rules appear here.</p></div>':'<div class="card"><p>No cards in this view yet.</p></div>';
     }
     toolbar.querySelectorAll('select').forEach(function(s){s.onchange=update;});update();
     return wrap;
