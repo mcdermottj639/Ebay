@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v61";
+  var APP_VERSION = "v62";
   var state = { tab: "today", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "val-desc", sellMode: "plan", buyMode: "radar", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryLayout: "list",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
