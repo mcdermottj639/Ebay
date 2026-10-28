@@ -13,7 +13,10 @@ Jack rejected v60 because its layout and feel repeated Golf Hub. This correction
 supersedes v60's green/sage dashboard identity; the sell-first features remain.
 
 - Use an ink/white/cobalt collector-exchange design with a coral lot ticket,
-  heavy editorial type, mono numeric labels, sharp edges and ruled lists.
+  heavy editorial type, mono numeric labels, softened corners and restrained ruled lists.
+- v62 owner correction: compact iPhone masthead; opaque safe-area shell; rounded
+  controls and coral ticket; full-width snapping collection cards; legible filters.
+  This supersedes the prior sharp-edge requirement.
 - One sticky masthead and horizontal numbered navigation on phone AND desktop.
   Never restore the left navigation rail, green promotional hero or rounded
   dashboard panel stack. Today is a collection spread with owned-card photography,

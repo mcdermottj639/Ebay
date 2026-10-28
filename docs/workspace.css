@@ -56,3 +56,61 @@ main{display:block;min-width:0;width:100%;max-width:1440px;margin:0 auto;padding
 .appbar .brand{display:block}.appbar .logo{display:flex}.nav{flex-direction:row}.nav button{flex-direction:row;width:auto}
 @media(min-width:1000px){.exchange-heading h1{font-size:82px}.exchange-stats>div,.exchange-stats>button{padding-top:16px;padding-bottom:16px}.exchange-stats strong{font-size:30px}.ticket-main{margin:19px 0 16px;gap:14px}.ticket-number{font-size:77px}.ticket-main h2{font-size:31px}.lot-ticket>p{font-size:11px;margin:15px 0 18px}.ticket-reference{padding:13px 0}}
 .sortsel{max-width:none;font-weight:400}
+/* v62: softer surfaces and an iPhone-sized masthead. Safe-area padding lives
+   on the opaque shell so scrolling content cannot show behind the status bar. */
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.exchange-shell{padding-top:env(safe-area-inset-top,0px);border-bottom:1px solid var(--border)}
+.appbar{padding-top:10px}
+.logo,.appbar .logo{border-radius:10px}
+.button,.mbtn,.research-primary{border-radius:12px}
+input,select,textarea,.search,.sortsel,.layout-toggle{border-radius:12px}
+.lot-ticket{border-radius:24px}
+.display-photo{border-radius:20px}
+.display-plan{border-radius:50%;width:44px;height:44px}
+.thumb,.signal,.display-grade{border-radius:8px}
+.cv-panel,.empty-panel,.tg-card{border-radius:18px}
+.modal{border-radius:24px;max-height:calc(100dvh - env(safe-area-inset-top,0px) - 24px)}
+.close{border-radius:50%;min-width:44px;min-height:44px}
+@media(max-width:699px){
+ .appbar{min-height:54px;padding:4px max(12px,env(safe-area-inset-right)) 4px max(16px,env(safe-area-inset-left));gap:2px}
+ .appbar .logo{width:30px;height:30px;font-size:15px;border-radius:9px}
+ .brand b{font-size:17px;letter-spacing:-.035em}.brand small,.appbar .ver{display:none}
+ .iconbtn{width:44px;height:44px;border-radius:50%}
+ .nav{padding:0 max(8px,env(safe-area-inset-right)) 8px max(8px,env(safe-area-inset-left));gap:2px}
+ .nav button{min-height:44px;padding:9px 2px;font-size:11px;text-transform:none;letter-spacing:0;border:0;border-radius:13px}
+ .nav button.on{background:var(--soft-green);color:var(--gold);border:0}.nav-dot{display:none!important}
+ main{padding:20px max(16px,env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+ .exchange-heading h1{font-family:inherit;font-size:44px;line-height:.98;letter-spacing:-.055em;margin-top:12px}
+ .exchange-heading{margin-bottom:20px}.edition{font-size:8px}
+ .exchange-stats{border-top:0;border-bottom:0;gap:12px 8px;grid-template-columns:1fr 1fr;margin-bottom:22px}
+ .exchange-stats>div,.exchange-stats>button{border:0;padding:4px 0;gap:4px}
+ .exchange-stats strong{font:700 23px/1.15 inherit;letter-spacing:-.04em}.exchange-stats span{font-size:11px}
+ .lot-ticket{padding:20px}.ticket-main h2{font-size:25px}.lot-ticket .button{min-height:48px;font-size:12px}.lot-ticket>small{font-size:10px}
+ .ticket-reference{font-size:11px}.ticket-reference>b{font-size:14px}
+ .collection-rail{grid-auto-columns:100%;gap:16px;scroll-snap-type:x mandatory;scroll-padding:0}
+ .display-photo{height:280px}.display-meta h3{font-size:23px}.display-meta p{font-size:12px;min-height:0}.display-price{border-top-color:var(--border)}
+ .cv-section-head h2,.collection-display .cv-section-head h2{font-size:23px}
+ .page-head{border:0;padding-bottom:0;margin-bottom:20px}.page-head h1{font-size:33px}.page-head p{font-size:13px}
+ .cv-segments{border:0;background:var(--surface-2);padding:4px;border-radius:14px;margin-bottom:18px}
+ .cv-segments button{border:0;border-radius:10px;min-height:44px;font-size:12px}.cv-segments button.on{border:0;background:var(--surface);box-shadow:0 1px 4px #00000010}
+ .inventory-filters{grid-template-columns:1fr 1fr;gap:12px}.inventory-filters>label:first-child{grid-column:1/-1}
+ .inventory-filters select{font-size:16px;min-height:44px;padding:10px}.inventory-filters span{font-size:11px}
+ .review-list,.sale-tape{border-top-color:var(--border)}.review-buttons .button,.review-buttons .text-button{min-height:44px;font-size:11px}
+ .review-reason,.card-spec{font-size:11px}.review-money>span{font-size:9px}.review-photo{border-radius:8px}
+ .modal-wrap.open{padding-top:env(safe-area-inset-top,0px)}.modal{border-radius:24px 24px 0 0}
+}
+/* Compact vertical rhythm across every destination. */
+main{padding-top:18px}.page-head{padding-bottom:12px;margin-bottom:14px}.page-head h1{font-size:34px}.page-head p{margin-top:6px}
+.cv-section-head{margin-top:20px;margin-bottom:12px}.exchange-desk{gap:20px}.exchange-lower{gap:18px;margin-top:8px}
+.review-card{padding-top:13px;padding-bottom:13px}.cv-panel{padding:16px}.cv-segments{margin-bottom:16px}.section-note{margin:8px 0}
+@media(max-width:699px){
+ main{padding-top:16px}.exchange-heading h1{font-size:37px;margin-top:9px}.exchange-heading{margin-bottom:16px}
+ .exchange-stats{grid-template-columns:1fr 1fr 1.3fr 1fr;gap:7px;margin-bottom:17px}.exchange-stats strong{font-family:inherit;font-size:20px;font-weight:700;line-height:1.15}.exchange-stats span{font-size:9px}
+ .lot-ticket{padding:16px 18px}.ticket-main{margin:12px 0;gap:16px}.ticket-number{font-size:45px}.ticket-main h2{font-size:22px}.ticket-reference{padding:9px 0}.lot-ticket>small{margin-top:6px}
+ .draft-shortcut{padding:9px 0;min-height:44px}.display-photo{height:210px;padding:18px}.display-meta{padding:10px 0}.display-meta h3{font-size:20px;margin:5px 0}.display-price{padding-top:8px}
+ .page-head{padding-bottom:0;margin-bottom:15px}.page-head h1{font-size:29px}.page-head p{margin-top:6px;font-size:12px}
+ .cv-section-head h2,.collection-display .cv-section-head h2{font-size:21px}.cv-section-head p{margin-top:4px}
+ .inventory-toolbar{gap:8px}.inventory-filters{margin:12px 0;gap:8px;grid-template-columns:1fr 1fr 1fr}.inventory-filters>label:first-child{grid-column:auto}.inventory-filters select{padding:8px 3px;font-size:16px}.inventory-count{margin:12px 0 8px}
+ .inventory-card{padding-top:12px;padding-bottom:12px}.inventory-card-body>p{margin-top:4px}.review-reason{margin-top:4px}.review-buttons{gap:10px}
+ .plan-summary{padding:14px;gap:10px;margin-bottom:14px}.plan-summary p{padding-top:8px}.listing-card{padding:14px}.lot-group{margin-top:16px}.result-tile{padding:14px}.ledger-row{padding-top:12px;padding-bottom:12px}
+}
