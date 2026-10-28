@@ -8,6 +8,9 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Visual Targets — v59
+Jack wants both Targets and Buy Radar very visual and scannable. Targets now uses category tiles with counts, player/set search, sport filter and compact PSA 10 cards with one-tap listing links. Search ceilings and long explanations stay in details; they are never labeled buy recommendations. Preserve the buy-opportunities-only default and all existing grade/profit rules.
+
 ## Buy Radar visual pricing and PSA 10 focus — v58, October 27, 2026
 Jack asked: "Whats the card listed for. What do we think we can sell for. Less words more visuals."
 - Radar cards lead with **Listed for → Expected resale**, then a separate estimated
