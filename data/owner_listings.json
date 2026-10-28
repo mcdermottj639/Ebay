@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "source": "Owner eBay confirmation emails; public listing IDs only. No buyer details or raw messages.",
+  "listings": {
+    "CARD-0032": {
+      "item_id": "336866450901",
+      "url": "https://www.ebay.com/itm/336866450901",
+      "asking_price": 2500,
+      "currency": "USD",
+      "status": "listed",
+      "confirmed_at": "2026-10-27T20:16:35-04:00",
+      "best_offer": true,
+      "best_offer_source": "owner_statement",
+      "events": [
+        {
+          "event_id": "336866450901:listed:2026-10-27T20:16:35-04:00",
+          "type": "listed",
+          "occurred_at": "2026-10-27T20:16:35-04:00",
+          "item_id": "336866450901",
+          "price": 2500,
+          "currency": "USD",
+          "source": "ebay_listing_confirmation_email"
+        }
+      ]
+    },
+    "CARD-0021": {
+      "item_id": "336866460070",
+      "url": "https://www.ebay.com/itm/336866460070",
+      "asking_price": 100,
+      "currency": "USD",
+      "status": "sold_paid",
+      "confirmed_at": "2026-10-27T20:57:01-04:00",
+      "best_offer": true,
+      "best_offer_source": "owner_statement",
+      "events": [
+        {
+          "event_id": "336866460070:listed:2026-10-27T20:23:57-04:00",
+          "type": "listed",
+          "occurred_at": "2026-10-27T20:23:57-04:00",
+          "item_id": "336866460070",
+          "price": 100,
+          "currency": "USD",
+          "source": "ebay_listing_confirmation_email"
+        },
+        {
+          "event_id": "336866460070:sold_paid:2026-10-27T20:57:01-04:00",
+          "type": "sold_paid",
+          "occurred_at": "2026-10-27T20:57:01-04:00",
+          "item_id": "336866460070",
+          "price": 100,
+          "currency": "USD",
+          "source": "ebay_sale_confirmation_email"
+        }
+      ],
+      "sold_price": 100,
+      "sold_date": "2026-10-27",
+      "cost": 63,
+      "cost_source": "owner_statement",
+      "fees": null,
+      "outbound_shipping": null,
+      "net_profit": null
+    },
+    "CARD-0026": {
+      "item_id": "336866470596",
+      "url": "https://www.ebay.com/itm/336866470596",
+      "asking_price": 250,
+      "currency": "USD",
+      "status": "listed",
+      "confirmed_at": "2026-10-27T20:34:09-04:00",
+      "best_offer": true,
+      "best_offer_source": "owner_statement",
+      "events": [
+        {
+          "event_id": "336866470596:listed:2026-10-27T20:34:09-04:00",
+          "type": "listed",
+          "occurred_at": "2026-10-27T20:34:09-04:00",
+          "item_id": "336866470596",
+          "price": 250,
+          "currency": "USD",
+          "source": "ebay_listing_confirmation_email"
+        }
+      ]
+    },
+    "CARD-0029": {
+      "item_id": "336866522689",
+      "url": "https://www.ebay.com/itm/336866522689",
+      "asking_price": 300,
+      "currency": "USD",
+      "status": "listed",
+      "confirmed_at": "2026-10-27T21:19:38-04:00",
+      "best_offer": true,
+      "best_offer_source": "owner_statement",
+      "events": [
+        {
+          "event_id": "336866522689:listed:2026-10-27T21:19:38-04:00",
+          "type": "listed",
+          "occurred_at": "2026-10-27T21:19:38-04:00",
+          "item_id": "336866522689",
+          "price": 300,
+          "currency": "USD",
+          "source": "ebay_listing_confirmation_email"
+        }
+      ]
+    }
+  }
+}

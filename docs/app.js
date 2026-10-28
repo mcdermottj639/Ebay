@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v54";
+  var APP_VERSION = "v55";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -690,7 +690,7 @@
       var biz = el('<div class="tiles biz"></div>');
       var rCls = s.realized_profit >= 0 ? "pos" : "neg";
       [["Revenue", money(s.revenue), "pos"],
-       ["Realized profit", money(s.realized_profit), rCls],
+       ["Gross profit · before fees", money(s.realized_profit), rCls],
        ["Listed now", s.listed, ""],
        ["Sold", s.sold, ""]].forEach(function (t) {
         biz.appendChild(el('<div class="tile"><div class="k">' + t[0] + '</div><div class="v tnum ' + t[2] + '">' + t[1] + "</div></div>"));
@@ -1646,6 +1646,22 @@
   // Owner's ask (2026-07-31): opening a card should lead with what it could
   // sell for right now, what they paid, and the profit — not a spec sheet.
   // Big number + three stats + the price-history sparkline, all above the fold.
+  function ownerListingBox(c) {
+    var l = c.owner_listing;
+    if (!l) return "";
+    var paid = l.status === "sold_paid" && c.sold;
+    var active = l.status === "listed" && c.listed && !c.sold;
+    var label = paid ? "Your eBay sale · buyer paid" : active ? "Your eBay asking price" : "Previous eBay listing";
+    var amount = paid ? l.sold_price : l.asking_price;
+    var detail = paid ? "Gross sale; fees and shipping still need reconciliation. Payment confirmation is not payout settlement."
+      : "Separate from the market estimate. Last confirmed by email " + (l.confirmed_at || "").slice(0,10) + ".";
+    var validUrl = /^https:\/\/www\.ebay\.com\/itm\/[0-9]{12}$/.test(l.url || "");
+    return '<div class="compsbox"><div class="lab">' + label + '</div>' +
+      '<div class="val tnum">' + money(amount) + (active && l.best_offer ? " · Best Offer" : "") + '</div>' +
+      '<div class="cfoot">' + esc(detail) + '</div>' +
+      (validUrl ? '<a class="mbtn" href="' + esc(l.url) + '" target="_blank" rel="noopener">View eBay listing</a>' : "") + '</div>';
+  }
+
   function moneyHero(c) {
     var pf = profitOf(c), ms = mySold(c);
     var pts = (c.price_series || []).filter(function (p) { return p && typeof p.p === "number"; });
@@ -2009,6 +2025,7 @@
           '<div class="muted" style="font-size:13px">' + esc(c.line || "") + "</div>" +
           // MONEY FIRST — what it's worth, what you paid, profit, history.
           moneyHero(c) +
+          ownerListingBox(c) +
           marketBox(c) +
           priceHistoryBox(c) +
           myNumbersBox(c) +

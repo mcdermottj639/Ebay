@@ -414,9 +414,40 @@ def _owner_sold_value(sales) -> float | None:
     return round(med, 2)
 
 
+def _owner_listings():
+    """Owner asking prices/status: display-only, never market comps or valuation."""
+    path = DATA / "owner_listings.json"
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("schema_version") != 1:
+        raise ValueError("Unsupported owner listing schema")
+    listings = data.get("listings", {})
+    event_ids = set()
+    for sku, rec in listings.items():
+        if not re.fullmatch(r"(?:CARD|MERCH)-[0-9]{4}", sku):
+            raise ValueError("Invalid owner listing SKU")
+        item_id = rec.get("item_id", "")
+        if not re.fullmatch(r"[0-9]{12}", item_id):
+            raise ValueError("Invalid eBay item ID")
+        if rec.get("url") != "https://www.ebay.com/itm/" + item_id:
+            raise ValueError("Owner listing URL must match its eBay item ID")
+        if rec.get("currency") != "USD" or _num(rec.get("asking_price")) <= 0:
+            raise ValueError("Owner listing requires positive USD asking price")
+        if rec.get("status") not in ("listed", "sold_paid", "ended", "cancelled", "refunded"):
+            raise ValueError("Unknown owner listing status")
+        for event in rec.get("events", []):
+            key = event.get("event_id")
+            if not key or key in event_ids:
+                raise ValueError("Missing or duplicate owner listing event")
+            event_ids.add(key)
+    return listings
+
+
 def build_data(cards) -> dict:
     # App-saved costs fill blank sheet costs BEFORE any money math, so the
     # profit tiles and per-card cost all agree with what the owner entered.
+    owner_listings = _owner_listings()
     app_costs, app_sales, app_sold = _my_numbers()
     for c in cards:
         if _num(c.cost) <= 0 and c.sku.upper() in app_costs:
@@ -546,6 +577,7 @@ def build_data(cards) -> dict:
                 "price_basis": _price_basis(c), "image": _image_for(c.sku),
                 "line": _line(c), "title": titles.build_title(c), "status": _status(c),
                 "listed": c.is_listed(), "sold": c.is_sold(),
+                "owner_listing": owner_listings.get(c.sku),
                 "sold_price": _num(c.sold_price) if c.is_sold() else "",
                 "sold_date": c.sold_date, "cert": _cert_for(c),
                 "my_sales": manual_by_sku.get(c.sku.upper(), []),
