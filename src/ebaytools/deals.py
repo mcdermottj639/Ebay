@@ -395,6 +395,10 @@ def _search(token: str, query: str, limit: int,
             seller_pct = 0.0
         out.append({
             "title": it.get("title", ""),
+            "currency": it.get("price", {}).get("currency", ""),
+            "shipping": next((float(s["shippingCost"]["value"]) for s in it.get("shippingOptions", [])
+                              if s.get("shippingCost", {}).get("currency") == "USD"
+                              and s.get("shippingCost", {}).get("value") is not None), None),
             "price": _num(str(it.get("price", {}).get("value", ""))),
             "buying_option": "AUCTION" if is_auction else "FIXED_PRICE",
             "ends": ends,
@@ -468,3 +472,4 @@ def _ends_soon(iso_end: str) -> bool:
 
 def deals_to_dicts(deals: list[Deal]) -> list[dict]:
     return [asdict(d) for d in deals]
+

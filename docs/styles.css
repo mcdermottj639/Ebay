@@ -823,3 +823,31 @@ a.comp:hover .ct { color: var(--gold); }
 /* Explains a value-chart step caused by re-pricing rather than the market (v51). */
 .trendnote { margin: 8px 2px 0; font-size: 12.5px; line-height: 1.45; color: var(--muted);
              border-left: 3px solid var(--gold); padding-left: 9px; }
+
+/* Profit-first sourcing, v53. Scoped to Buy Radar/Targets. */
+.profit-radar { max-width:1180px; margin:auto; }
+.pr-hero { background:linear-gradient(130deg,#123c35,#142b2a); color:#f4f2e8; padding:24px; border-radius:18px; border:1px solid #4b6556; }
+.pr-kicker { color:#d6bd75; font-size:11px; letter-spacing:.16em; font-weight:800; }
+.pr-hero h2 { font-size:clamp(24px,4vw,36px); line-height:1.12; margin:12px 0; }
+.pr-hero p { color:#bfd0c8; max-width:540px; }
+.pr-stats { display:flex; gap:28px; border-top:1px solid #ffffff20; padding-top:18px; margin-top:20px; }
+.pr-stats div,.pr-metrics div { display:flex; flex-direction:column; gap:5px; min-width:0; }
+.pr-stats b { font-size:27px; }.pr-stats span { font-size:11px;color:#bfd0c8; }
+.pr-coverage {font-size:12px;line-height:1.6;opacity:.75;margin:14px 2px;}
+.pr-policy,.pr-card {border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;background:var(--surface);}
+.pr-policy summary,.pr-card summary {cursor:pointer;font-weight:700;font-size:13px;padding:4px 0;}
+.pr-policy p,.pr-card details p,.pr-card li {font-size:12px;line-height:1.6;}
+.pr-tier,.pr-math {margin:12px 0;}.pr-tier>div,.pr-math>div,.pr-sale {display:flex;justify-content:space-between;gap:18px;padding:8px 0;border-bottom:1px solid #8882;font-size:12px;}
+.pr-math>div:last-of-type {font-weight:800;font-size:14px;}.pr-math b {white-space:nowrap;}
+.pr-toolbar {display:flex;gap:12px;flex-wrap:wrap;margin:18px 0;}.pr-toolbar label {display:flex;flex-direction:column;gap:6px;font-size:11px;flex:1;min-width:130px;}
+.pr-toolbar select {font:inherit;font-size:13px;padding:10px;border-radius:8px;max-width:100%;background:var(--surface);color:inherit;border:1px solid #8885;}
+.pr-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start;}.pr-card {min-width:0;margin:0;}
+.pr-cardhead {display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:10px;}
+.pr-status {padding:5px 8px;border-radius:5px;display:inline-block;font-weight:800;background:#a48a4026;color:var(--fg);}
+.pr-qualified {background:#1eac6433;}.pr-excluded,.pr-pass {background:#ae545426;}
+.pr-card h3 {font-size:17px;line-height:1.35;margin:14px 0 6px;}.pr-title {font-size:11px;opacity:.7;line-height:1.5;overflow-wrap:anywhere;}
+.pr-metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:14px 0;}.pr-metrics span {font-size:10px;opacity:.7;}.pr-metrics b {font-size:16px;line-height:1.3;overflow-wrap:anywhere;}
+.pr-reason {font-size:12px;line-height:1.5;margin:0 0 12px;}.pr-actions {display:flex;gap:16px;margin-top:16px;font-size:12px;flex-wrap:wrap;}.pr-actions a,.pr-target a,.pr-policy a {color:inherit;text-decoration:underline;text-underline-offset:3px;}
+.pr-targets {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px;}.pr-target {display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid #8883;border-radius:10px;font-size:13px;}.pr-target span,.pr-target a {font-size:11px;line-height:1.4;}
+.pr-warning {padding:12px;border:1px solid #cba65b;border-radius:10px;font-size:12px;margin:12px 0;}
+@media(max-width:650px){.pr-grid,.pr-targets{grid-template-columns:1fr}.pr-hero{padding:20px}.pr-stats{gap:18px}.pr-cardhead{align-items:flex-start}.pr-cardhead>.muted{text-align:right;max-width:42%}}

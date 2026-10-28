@@ -315,6 +315,8 @@ def _radar_snapshot():
         return empty
     try:
         snap = json.loads(path.read_text(encoding="utf-8"))
+        if snap.get("schema_version") == 2:
+            return snap
         deals = snap.get("deals", [])
         return {
             "as_of": snap.get("as_of", ""),
@@ -346,6 +348,9 @@ def _targets():
                 "fair_value": _num(row.get("fair_value", "")) or "",
                 "alert_below": _num(row.get("alert_below", "")) or "",
                 "notes": (row.get("notes") or "").strip(),
+                "category": (row.get("category") or "rookies").strip(),
+                "sport": (row.get("sport") or "").strip(),
+                "price_max": _num(row.get("price_max", "")) or 1000,
             })
     return out
 
@@ -601,4 +606,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 

@@ -1,1565 +1,1134 @@
 {
-  "as_of": "2026-10-24",
-  "watch_count": 19,
-  "price_min": 100.0,
-  "price_max": 1000.0,
-  "scanned": 154,
-  "shown": 30,
-  "deals": [
+  "schema_version": 2,
+  "as_of": "2026-10-28T00:58:54.706149+00:00",
+  "watch_count": 36,
+  "scanned": 9,
+  "shown": 0,
+  "deals": [],
+  "candidates": [
     {
-      "label": "Patrick Mahomes Kaboom",
-      "item_title": "2021 Panini Player of the Day - Patrick Mahomes II #2 Kaboom /99",
-      "price": 500.0,
+      "label": "Anthony Edwards \u00b7 Silver PSA 9",
+      "item_title": "2020 Anthony Edwards Prizm Silver RC PSA 9",
+      "listing_id": "318891302316",
+      "url": "https://www.ebay.com/itm/318891302316",
+      "price": 320,
+      "shipping": 5.25,
+      "currency": "USD",
+      "identity": {
+        "year": 2020,
+        "set": "Prizm",
+        "player": "Anthony Edwards",
+        "number": "258",
+        "parallel": "Silver",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 9
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "rookies",
+      "sport": "basketball",
+      "page_state": "active",
       "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1249.49,
-      "discount_pct": 60.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/407263755495?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item5ed2cfbce7:g:ChYAAeSw3GJqwR4L",
-      "image": "https://i.ebayimg.com/images/g/ChYAAeSw3GJqwR4L/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "Panini Kaboom Patrick Mahomes",
-      "premium": true,
-      "ref_count": 14,
-      "grade_key": "raw",
-      "seller_score": 161,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "Patrick Mahomes KABOOM PRIZM STATUS EXPLOSION #/499 SP 2022 Donruss Elite CHIEFS",
-          "p": 149.95,
-          "u": "https://www.ebay.com/itm/387176025498?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item5a257d4d9a:g:xZkAAOSw-k9mZNrM"
-        },
-        {
-          "t": "Patrick Mahomes KABOOM PRIZM STATUS EXPLOSION #/275 SP 2021 Donruss Elite CHIEFS",
-          "p": 149.95,
-          "u": "https://www.ebay.com/itm/388611965380?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item5a7b1401c4:g:DTAAAOSwG5RoVYyc"
-        },
-        {
-          "t": "Patrick Mahomes KABOOM PRIZM STATUS EXPLOSION #/625 SP 2023 Donruss Elite CHIEFS",
-          "p": 195.95,
-          "u": "https://www.ebay.com/itm/387910105273?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item5a513e78b9:g:AQEAAOSwusBnqC5r"
-        },
-        {
-          "t": "2021 Panini Player Of The Day--Patrick Mahomes II--\"KABOOM\"--02/99--SUPER RARE!!",
-          "p": 375.0,
-          "u": "https://www.ebay.com/itm/206138844048?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item2ffed52390:g:Hk4AAeSw-AJptf5o"
-        },
-        {
-          "t": "2021 Panini Player of the Day - Patrick Mahomes II #2 Kaboom /99",
-          "p": 500.0,
-          "u": "https://www.ebay.com/itm/407263755495?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item5ed2cfbce7:g:ChYAAeSw3GJqwR4L"
-        },
-        {
-          "t": "2021 Panini Player of the Day - Patrick Mahomes II #2 Kaboom /99",
-          "p": 900.0,
-          "u": "https://www.ebay.com/itm/257589487925?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item3bf987a935:g:RAgAAeSw0DRqPzov"
-        }
-      ]
+      "seller_score": 65,
+      "seller_pct": 100,
+      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [],
+      "warnings": [
+        "Card Ladder shows a $288.50 latest sale (October 26), but individual sale provenance is unavailable; aggregate averages are not accepted as comps."
+      ],
+      "query": "2020 Anthony Edwards Prizm Silver RC PSA 9",
+      "context_sources": [
+        "https://www.cardladder.com/ladder/card/SCrPN9jhIbtqhRyWwZeF"
+      ],
+      "evidence": {
+        "sales": [],
+        "excluded": [],
+        "count": 0,
+        "primary_count": 0,
+        "freshest_days": null,
+        "freshest_primary_days": null,
+        "valuation_basis": "provisional reported sales",
+        "range": null,
+        "median": null,
+        "conservative_resale": null,
+        "confidence": "low"
+      },
+      "all_in": 348.02,
+      "economics": null,
+      "max_all_in": null,
+      "max_offer": null,
+      "opening_offer": null,
+      "status": "research",
+      "reasons": [
+        "Card Ladder shows a $288.50 latest sale (October 26), but individual sale provenance is unavailable; aggregate averages are not accepted as comps.",
+        "Card/slab condition needs photo review",
+        "Seller track record is missing or below screening minimum",
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+      ],
+      "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
     {
-      "label": "Jayden Daniels Kaboom",
-      "item_title": "2024 Panini Absolute - Kaboom! Horizontal Jayden Daniels #7 (RC) PSA 8",
-      "price": 1000.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1900.0,
-      "discount_pct": 47.4,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/960103377808?_skw=Panini+Kaboom+Jayden+Daniels&hash=itemdf8a9eeb90:g:WRcAAeSw9uFq2tPf",
-      "image": "https://i.ebayimg.com/images/g/WRcAAeSw9uFq2tPf/s-l225.jpg",
-      "bars": 3,
+      "label": "Justin Jefferson \u00b7 Genesis PSA 9",
+      "item_title": "2020 Panini Mosaic Justin Jefferson #209 Genesis RC PSA 9",
+      "listing_id": "198435397977",
+      "url": "https://www.ebay.com/itm/198435397977",
+      "price": 300,
+      "shipping": 5.99,
+      "currency": "USD",
+      "identity": {
+        "year": 2020,
+        "set": "Mosaic",
+        "player": "Justin Jefferson",
+        "number": "209",
+        "parallel": "Genesis",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 9
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "inserts",
       "sport": "football",
-      "query": "Panini Kaboom Jayden Daniels",
-      "premium": true,
-      "ref_count": 10,
-      "grade_key": "graded_other",
-      "seller_score": 354,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Panini Absolute - Kaboom! Horizontal Jayden Daniels #7 (RC) PSA 8",
-          "p": 1000.0,
-          "u": "https://www.ebay.com/itm/960103377808?_skw=Panini+Kaboom+Jayden+Daniels&hash=itemdf8a9eeb90:g:WRcAAeSw9uFq2tPf"
-        },
-        {
-          "t": "Panini 2024 Absolute Kaboom! Horizontal Jayden Daniels Commanders RC #7 PSA 6",
-          "p": 1399.0,
-          "u": "https://www.ebay.com/itm/257655079376?_skw=Panini+Kaboom+Jayden+Daniels&hash=item3bfd7081d0:g:e1sAAeSwnQxqbjkz"
-        },
-        {
-          "t": "2024 PANINI ABSOLUTE KABOOM! HORIZONTAL #7 JAYDEN DANIELS PSA 8",
-          "p": 1455.0,
-          "u": "https://www.ebay.com/itm/900033738612?_skw=Panini+Kaboom+Jayden+Daniels&hash=itemd18e30f774:g:9j8AAeSwc2lq2LX9"
-        },
-        {
-          "t": "JAYDEN DANIELS 2024 Panini Absolute Kaboom! Horizontal RC SSP BGS 9.5",
-          "p": 1750.0,
-          "u": "https://www.ebay.com/itm/398348259776?_skw=Panini+Kaboom+Jayden+Daniels&hash=item5cbf6811c0:g:XJUAAeSw02Jqlxzf"
-        },
-        {
-          "t": "2024 Panini Absolute Kaboom! Horizontal #7 Jayden Daniels BGS 9.5",
-          "p": 1850.0,
-          "u": "https://www.ebay.com/itm/137676744486?_skw=Panini+Kaboom+Jayden+Daniels&hash=item200e2c6726:g:BEsAAeSw0fJqk3wx"
-        },
-        {
-          "t": "2024 Panini Absolute Kaboom! Jayden Daniels Rookie RC SSP BGS 9.5",
-          "p": 1950.0,
-          "u": "https://www.ebay.com/itm/298674002952?_skw=Panini+Kaboom+Jayden+Daniels&hash=item458a5b9c08:g:q-AAAeSwgA5qwwfk"
-        }
-      ]
+      "page_state": "active",
+      "buying_option": "FIXED_PRICE",
+      "seller_score": 6187,
+      "seller_pct": 100,
+      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [],
+      "warnings": [
+        "No recent exact PSA 9 sold sample established in this first scan. NFL Debut #270 is not #209."
+      ],
+      "query": "2020 Panini Mosaic Justin Jefferson #209 Genesis RC PSA 9",
+      "evidence": {
+        "sales": [],
+        "excluded": [],
+        "count": 0,
+        "primary_count": 0,
+        "freshest_days": null,
+        "freshest_primary_days": null,
+        "valuation_basis": "provisional reported sales",
+        "range": null,
+        "median": null,
+        "conservative_resale": null,
+        "confidence": "low"
+      },
+      "all_in": 327.41,
+      "economics": null,
+      "max_all_in": null,
+      "max_offer": null,
+      "opening_offer": null,
+      "status": "research",
+      "reasons": [
+        "No recent exact PSA 9 sold sample established in this first scan. NFL Debut #270 is not #209.",
+        "Card/slab condition needs photo review",
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+      ],
+      "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
     {
-      "label": "Caleb Williams Downtown",
-      "item_title": "2024 Donruss Optic Caleb Williams Rome Odunze Downtown Duos RC SSP #10 PSA 10",
-      "price": 2299.99,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 4199.0,
-      "discount_pct": 45.2,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/137733245928?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item20118a8be8:g:JhsAAeSwYHRqpvIM&amdata=enc%3AAQALAAABAOf5zIIojhOf%2BkQK%2Bxzjn7mXvydv%2FHi8o6qElBqCrWVQupncrHDVxdhXm4adI1irnwmZuUN7fGz4Xz5FWEn%2BQ5668nCHJmIzdsgZR6XhZlzsHje6sh%2F1OHiNVOVsKKIC9BLIsJQU8sIQ%2BKeG6F6oQkLOvQ8shvr%2Ft7PRqGq7rGC4c%2BsEnL9Eyu9dy4KvrN5ix03MRcyuQCS04smP70ZETzqxwDeMneOwSEWbuGDp%2FMBG8qh%2FIXoA1tmaaBdisI6gfTh4clLp8AdE8plBuGfdrIKAij%2BKlHD0TUaRPm8ZFYXt7CuPS4TIW1C2iDd0GyiFpSI6NUFf6PSF7X%2FBUcz638Q%3D",
-      "image": "https://i.ebayimg.com/images/g/JhsAAeSwYHRqpvIM/s-l225.jpg",
-      "bars": 3,
+      "label": "Brock Purdy \u00b7 Mirror Teal /50 PSA 9",
+      "item_title": "2022 Panini Certified Brock Purdy Rookie Autograph Mirror Teal 41 /50 PSA 9",
+      "listing_id": "175896794065",
+      "url": "https://www.ebay.com/itm/175896794065",
+      "price": 1499,
+      "shipping": 6,
+      "currency": "USD",
+      "identity": {
+        "year": 2022,
+        "set": "Certified Rookie Signatures",
+        "player": "Brock Purdy",
+        "number": "RS-BP",
+        "parallel": "Mirror Teal",
+        "print_run": 50,
+        "autograph": true,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 9
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "autos",
       "sport": "football",
-      "query": "2024 Donruss Downtown Caleb Williams",
-      "premium": true,
-      "ref_count": 5,
-      "grade_key": "psa10",
-      "seller_score": 300,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Donruss Optic Caleb Williams Rome Odunze Downtown Duos RC SSP #10 PSA 10",
-          "p": 2299.99,
-          "u": "https://www.ebay.com/itm/137733245928?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item20118a8be8:g:JhsAAeSwYHRqpvIM&amdata=enc%3AAQALAAABAOf5zIIojhOf%2BkQK%2Bxzjn7mXvydv%2FHi8o6qElBqCrWVQupncrHDVxdhXm4adI1irnwmZuUN7fGz4Xz5FWEn%2BQ5668nCHJmIzdsgZR6XhZlzsHje6sh%2F1OHiNVOVsKKIC9BLIsJQU8sIQ%2BKeG6F6oQkLOvQ8shvr%2Ft7PRqGq7rGC4c%2BsEnL9Eyu9dy4KvrN5ix03MRcyuQCS04smP70ZETzqxwDeMneOwSEWbuGDp%2FMBG8qh%2FIXoA1tmaaBdisI6gfTh4clLp8AdE8plBuGfdrIKAij%2BKlHD0TUaRPm8ZFYXt7CuPS4TIW1C2iDd0GyiFpSI6NUFf6PSF7X%2FBUcz638Q%3D"
-        },
-        {
-          "t": "2024 PANINI DONRUSS DOWNTOWN! #21 CALEB WILLIAMS PSA 10",
-          "p": 3900.0,
-          "u": "https://www.ebay.com/itm/900034814436?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=itemd18e4161e4:g:vEkAAeSwJsNqua7k"
-        },
-        {
-          "t": "2024 PANINI DONRUSS OPTIC DOWNTOWN! #21 CALEB WILLIAMS PSA 10",
-          "p": 4199.0,
-          "u": "https://www.ebay.com/itm/117474644629?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item1b5a08d295:g:NcUAAeSwvClqqBq1"
-        },
-        {
-          "t": "2024 Panini Donruss - Downtown! Caleb Williams #21 (RC) PSA 10",
-          "p": 4200.0,
-          "u": "https://www.ebay.com/itm/128088492055?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item1dd2ab4817:g:KVgAAeSw2MBqrynl"
-        },
-        {
-          "t": "2024 Panini Donruss Optic Downtown! Caleb Williams #21 (RC) Rookie PSA 10",
-          "p": 4499.99,
-          "u": "https://www.ebay.com/itm/227570301717?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item34fc3f3b15:g:S70AAeSwUT1q0kmY"
-        }
-      ]
+      "page_state": "active",
+      "buying_option": "FIXED_PRICE",
+      "seller_score": 258,
+      "seller_pct": 100,
+      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [],
+      "warnings": [
+        "Above normal/exception limits. Not the same parallel as your /15. No recent exact sold valuation established. Seller away through October 30."
+      ],
+      "query": "2022 Panini Certified Brock Purdy Rookie Autograph Mirror Teal 41 /50 PSA 9",
+      "evidence": {
+        "sales": [],
+        "excluded": [],
+        "count": 0,
+        "primary_count": 0,
+        "freshest_days": null,
+        "freshest_primary_days": null,
+        "valuation_basis": "provisional reported sales",
+        "range": null,
+        "median": null,
+        "conservative_resale": null,
+        "confidence": "low"
+      },
+      "all_in": 1610.35,
+      "economics": null,
+      "max_all_in": null,
+      "max_offer": null,
+      "opening_offer": null,
+      "status": "research",
+      "reasons": [
+        "Above normal/exception limits. Not the same parallel as your /15. No recent exact sold valuation established. Seller away through October 30.",
+        "Card/slab condition needs photo review",
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Above $500 normal all-in limit; individual exception review",
+        "Premium watchlist only"
+      ],
+      "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
     {
-      "label": "Jayden Daniels Kaboom",
-      "item_title": "2024 Panini Absolute - Kaboom! Horizontal Jayden Daniels #7 (RC)\ud83d\udd25\ud83d\udd25",
-      "price": 999.99,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1799.0,
-      "discount_pct": 44.4,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/366741472081?_skw=Panini+Kaboom+Jayden+Daniels&hash=item55637ec351:g:bbAAAeSw6SFq1At8",
-      "image": "https://i.ebayimg.com/images/g/bbAAAeSw6SFq1At8/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "Panini Kaboom Jayden Daniels",
-      "premium": true,
-      "ref_count": 13,
-      "grade_key": "raw",
-      "seller_score": 426,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Panini Absolute - Kaboom! Horizontal Jayden Daniels #7 (RC)\ud83d\udd25\ud83d\udd25",
-          "p": 999.99,
-          "u": "https://www.ebay.com/itm/366741472081?_skw=Panini+Kaboom+Jayden+Daniels&hash=item55637ec351:g:bbAAAeSw6SFq1At8"
-        },
-        {
-          "t": "2024 Panini Absolute Kaboom! Jayden Daniels Rookie",
-          "p": 1150.0,
-          "u": "https://www.ebay.com/itm/318436851007?_skw=Panini+Kaboom+Jayden+Daniels&hash=item4a2450bd3f:g:~ukAAeSwu-VqKZLa"
-        },
-        {
-          "t": "Panini 2024 Absolute Football Kaboom! Horizontal Jayden Daniels RC #7",
-          "p": 1250.0,
-          "u": "https://www.ebay.com/itm/860020959745?_skw=Panini+Kaboom+Jayden+Daniels&hash=itemc83d3e6a01:g:ItwAAeSw87lqxtrn"
-        },
-        {
-          "t": "\ud83d\udd25\ud83d\udc40 2024 Panini Absolute - Kaboom! Horizontal Jayden Daniels #7 (RC) \ud83d\udc40\ud83d\udd25",
-          "p": 1400.0,
-          "u": "https://www.ebay.com/itm/227323875892?_skw=Panini+Kaboom+Jayden+Daniels&hash=item34ed8f1234:g:UA8AAeSwU9Bp89Yk"
-        },
-        {
-          "t": "Panini 2024 Absolute Kaboom! Horizontal Jayden Daniels #7 RC Commanders",
-          "p": 1600.0,
-          "u": "https://www.ebay.com/itm/820269702758?_skw=Panini+Kaboom+Jayden+Daniels&hash=itembefbe25e66:g:Z2AAAeSwrBhpe"
-        },
-        {
-          "t": "2024 Panini Absolute Kaboom Horizontal#7 Jayden Daniels",
-          "p": 1650.0,
-          "u": "https://www.ebay.com/itm/940013093913?_skw=Panini+Kaboom+Jayden+Daniels&hash=itemdadd258419:g:kJwAAeSwwQRqzxWk"
-        }
-      ]
+      "label": "Shohei Ohtani \u00b7 Chrome rookie PSA 10",
+      "item_title": "2018 Topps Chrome Shohei Ohtani Rookie Card PSA 10 Gem Mint card #150",
+      "listing_id": "257803071066",
+      "url": "https://www.ebay.com/itm/257803071066",
+      "price": 950,
+      "shipping": null,
+      "currency": "USD",
+      "identity": {
+        "year": 2018,
+        "set": "Topps Chrome",
+        "player": "Shohei Ohtani",
+        "number": "150",
+        "parallel": "base",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 10
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "established",
+      "sport": "baseball",
+      "page_state": "active",
+      "buying_option": "AUCTION",
+      "seller_score": 1154,
+      "seller_pct": 100,
+      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [],
+      "warnings": [
+        "Observed $950 is a bid, not an executable buy-now price; no bargain inference."
+      ],
+      "query": "2018 Topps Chrome Shohei Ohtani Rookie Card PSA 10 Gem Mint card #150",
+      "evidence": {
+        "sales": [],
+        "excluded": [],
+        "count": 0,
+        "primary_count": 0,
+        "freshest_days": null,
+        "freshest_primary_days": null,
+        "valuation_basis": "provisional reported sales",
+        "range": null,
+        "median": null,
+        "conservative_resale": null,
+        "confidence": "low"
+      },
+      "all_in": null,
+      "economics": null,
+      "max_all_in": null,
+      "max_offer": null,
+      "opening_offer": null,
+      "status": "research",
+      "reasons": [
+        "Observed $950 is a bid, not an executable buy-now price; no bargain inference.",
+        "Auction bid is not a buy-now acquisition price",
+        "Card/slab condition needs photo review",
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Incoming shipping is unknown"
+      ],
+      "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
     {
-      "label": "CJ Stroud Downtown",
-      "item_title": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC)",
-      "price": 777.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1349.99,
-      "discount_pct": 42.4,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/227551762493?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item34fb24583d:g:awEAAeSwPspqwlWP",
-      "image": "https://i.ebayimg.com/images/g/awEAAeSwPspqwlWP/s-l225.jpg",
-      "bars": 3,
+      "label": "Jalen Hurts \u00b7 Optic base PSA 10",
+      "item_title": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10",
+      "listing_id": "156974936364",
+      "url": "https://www.ebay.com/itm/156974936364",
+      "price": 100,
+      "shipping": 2.27,
+      "currency": "USD",
+      "identity": {
+        "year": 2020,
+        "set": "Donruss Optic",
+        "player": "Jalen Hurts",
+        "number": "164",
+        "parallel": "base",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 10
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "rookies",
       "sport": "football",
-      "query": "2023 Donruss Downtown CJ Stroud",
-      "premium": true,
-      "ref_count": 11,
-      "grade_key": "raw",
-      "seller_score": 86,
-      "seller_pct": 100.0,
-      "samples": [
+      "page_state": "active",
+      "buying_option": "FIXED_PRICE",
+      "seller_score": 15409,
+      "seller_pct": 100,
+      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [
         {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC)",
-          "p": 777.0,
-          "u": "https://www.ebay.com/itm/227551762493?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item34fb24583d:g:awEAAeSwPspqwlWP"
+          "identity": {
+            "year": 2020,
+            "set": "Donruss Optic",
+            "player": "Jalen Hurts",
+            "number": "164",
+            "parallel": "base",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-10-11",
+          "price": 51,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:336833836139",
+          "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+          "marketplace_url": "https://www.ebay.com/itm/336833836139",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
         },
         {
-          "t": "2023 Panini Donruss Downtown! CJ Stroud RC Case Hit Texans D2 READ CORNER DMG",
-          "p": 849.99,
-          "u": "https://www.ebay.com/itm/157198959317?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2499c9c2d5:g:4EsAAeSwA7Zooz99"
+          "identity": {
+            "year": 2020,
+            "set": "Donruss Optic",
+            "player": "Jalen Hurts",
+            "number": "164",
+            "parallel": "base",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-10-09",
+          "price": 55,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:377517477081",
+          "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+          "marketplace_url": "https://www.ebay.com/itm/377517477081",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
         },
         {
-          "t": "Panini 2023 Donruss Downtown! C.J. Stroud RC Rookie Insert #D-2 Texans",
-          "p": 1050.0,
-          "u": "https://www.ebay.com/itm/407210300016?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item5ecfa01270:g:TGMAAeSwgkJqpIpf"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) GEM MINT 10 \ud83d\udd25 \ud83d\udd25",
-          "p": 1200.0,
-          "u": "https://www.ebay.com/itm/168573348628?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item273fc12b14:g:bNAAAeSwlcJqaj06&amdata=enc%3AAQALAAABAOf5zIIojhOf%2BkQK%2Bxzjn7n5ZBFsOGqM5ycFJm8aIiI3tlEEN6ooHaYP48tb%2BtUNncheUsL2U6sywIhPws4wel1Sy1wZhHq556%2FNJDkdIo14tf4ScUlu1Luqq%2F69sezI2VSsRWn9ryX4QCq6Ai0H%2FCI8Iu0Wyu4y9tuciQQVKoL0jC4r3E4GSnf8PZTCngGr9U5pKnBt%2BV5lrbaIvJtdXthA%2BxdvJNHaVvsiLbgtpJ%2BvLeTYQFsERcHX2z0ePPzYV2Mzi4uyVQiK1lKlADRiDf5U7QLJ4JF5sUFyNq9peY7AlHrWfpkdYPorDbqGJ%2Fok82JVnh95fqQbGCPbpIg5%2FPw%3D"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) GEM MINT 10 \ud83d\udd25 \ud83d\udd25",
-          "p": 1250.0,
-          "u": "https://www.ebay.com/itm/168373312705?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2733d4dcc1:g:lyMAAeSwfqVqBNhW"
-        },
-        {
-          "t": "DOWNTOWN CJ STROUD 2023 DONRUSS ROOKIE RC SICK CARD BEAUTIFUL TEXANS HOT $",
-          "p": 1349.99,
-          "u": "https://www.ebay.com/itm/296987991298?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item4525dd1d02:g:iiwAAOSwUAVno-gG"
+          "identity": {
+            "year": 2020,
+            "set": "Donruss Optic",
+            "player": "Jalen Hurts",
+            "number": "164",
+            "parallel": "base",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-09-29",
+          "price": 45.01,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:800143726606",
+          "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+          "marketplace_url": "https://www.ebay.com/itm/800143726606",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
         }
-      ]
+      ],
+      "warnings": [
+        "Primary sold pages inaccessible or redirected; these three sale reports are provisional."
+      ],
+      "query": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10",
+      "evidence": {
+        "sales": [
+          {
+            "identity": {
+              "year": 2020,
+              "set": "Donruss Optic",
+              "player": "Jalen Hurts",
+              "number": "164",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-11",
+            "price": 51,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:336833836139",
+            "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+            "marketplace_url": "https://www.ebay.com/itm/336833836139",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          },
+          {
+            "identity": {
+              "year": 2020,
+              "set": "Donruss Optic",
+              "player": "Jalen Hurts",
+              "number": "164",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-09",
+            "price": 55,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:377517477081",
+            "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+            "marketplace_url": "https://www.ebay.com/itm/377517477081",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          },
+          {
+            "identity": {
+              "year": 2020,
+              "set": "Donruss Optic",
+              "player": "Jalen Hurts",
+              "number": "164",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-09-29",
+            "price": 45.01,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:800143726606",
+            "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+            "marketplace_url": "https://www.ebay.com/itm/800143726606",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          }
+        ],
+        "excluded": [],
+        "count": 3,
+        "primary_count": 0,
+        "freshest_days": 17.0,
+        "freshest_primary_days": null,
+        "valuation_basis": "provisional reported sales",
+        "range": [
+          45.01,
+          55
+        ],
+        "median": 51,
+        "conservative_resale": 45.01,
+        "confidence": "low"
+      },
+      "all_in": 109.43,
+      "economics": {
+        "resale": 45.01,
+        "acquisition": 109.43,
+        "selling_fee": 6.84,
+        "promotion_reserve": 0.97,
+        "outbound_shipping": 8,
+        "supplies": 2,
+        "contingency": 10,
+        "labor_allowance": 25.0,
+        "capital_allowance": 3.24,
+        "cash_margin": -82.23,
+        "adjusted_profit": -120.47,
+        "roi": -1.1,
+        "minimum_profit": 150.0,
+        "minimum_roi": 0.45,
+        "passes": false
+      },
+      "max_all_in": 0.0,
+      "max_offer": 0.0,
+      "opening_offer": 0,
+      "stress_profit": -128.27,
+      "status": "pass",
+      "reasons": [
+        "Fails net-profit and/or return hurdle at this asking price",
+        "Primary sold pages inaccessible or redirected; these three sale reports are provisional.",
+        "Card/slab condition needs photo review",
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+      ],
+      "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
     {
-      "label": "Anthony Richardson Downtown",
-      "item_title": "2023 Donruss Optic Anthony Richardson Downtown RC #D-3 PSA 9 MINT Colts SSP",
-      "price": 219.99,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 375.0,
-      "discount_pct": 41.3,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/178557507515?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item2992db57bb:g:dC8AAeSw1N1qw7SD",
-      "image": "https://i.ebayimg.com/images/g/dC8AAeSw1N1qw7SD/s-l225.jpg",
-      "bars": 3,
+      "label": "C.J. Stroud \u00b7 Stained Glass PSA 9",
+      "item_title": "2023 PANINI MOSAIC STAINED GLASS #SG22 CJ STROUD ROOKIE RC PSA 9",
+      "listing_id": "298443886169",
+      "url": "https://www.ebay.com/itm/298443886169",
+      "price": 399,
+      "shipping": 5.99,
+      "currency": "USD",
+      "identity": {
+        "year": 2023,
+        "set": "Mosaic Stained Glass",
+        "player": "CJ Stroud",
+        "number": "SG22",
+        "parallel": "base",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 9
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "inserts",
       "sport": "football",
-      "query": "2023 Donruss Downtown Anthony Richardson",
-      "premium": true,
-      "ref_count": 7,
-      "grade_key": "psa9",
-      "seller_score": 10,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2023 Donruss Optic Anthony Richardson Downtown RC #D-3 PSA 9 MINT Colts SSP",
-          "p": 219.99,
-          "u": "https://www.ebay.com/itm/178557507515?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item2992db57bb:g:dC8AAeSw1N1qw7SD"
-        },
-        {
-          "t": "2023 Panini Donruss Downtown Anthony Richardson #D3 ROOKIE MINT PSA 9 RC w/Guard",
-          "p": 338.25,
-          "u": "https://www.ebay.com/itm/318229243183?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item4a17f0e52f:g:y0MAAeSwph5p8~-C"
-        },
-        {
-          "t": "2023 Donruss Downtown! ANTHONY RICHARDSON Rookie #D3 - PSA 9",
-          "p": 349.0,
-          "u": "https://www.ebay.com/itm/336208701080?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item4e4799a698:g:2-0AAeSwPQ9o3EEQ"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! Anthony Richardson #D-3 (RC) PSA9",
-          "p": 375.0,
-          "u": "https://www.ebay.com/itm/397959639199?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item5ca83e309f:g:GMwAAeSwCy1qCgyr"
-        },
-        {
-          "t": "Panini Donruss Optic 2023 Downtown! Anthony Richardson Colts RC D-3 PSA 9",
-          "p": 385.0,
-          "u": "https://www.ebay.com/itm/188961648410?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item2bfefdef1a:g:rTIAAeSwKcdqsbJL"
-        },
-        {
-          "t": "2023 Donruss Downtown Rookie Anthony Richardson #D3 PSA 9 Mint RC Case Hit Card",
-          "p": 388.88,
-          "u": "https://www.ebay.com/itm/187538786870?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item2baa2eca36:g:D8oAAeSwYapot4DJ"
-        }
-      ]
-    },
-    {
-      "label": "Anthony Richardson Downtown",
-      "item_title": "2023 Panini Donruss Optic Downtown Anthony Richardson #D-3 Rookie Case Hit RC SP",
-      "price": 199.95,
+      "page_state": "active",
       "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 319.05,
-      "discount_pct": 37.3,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/327414520521?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item4c3b6d1ac9:g:fJAAAeSw3JNq12e0",
-      "image": "https://i.ebayimg.com/images/g/fJAAAeSw3JNq12e0/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Donruss Downtown Anthony Richardson",
-      "premium": true,
-      "ref_count": 11,
-      "grade_key": "raw",
-      "seller_score": 12216,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2023 Panini Donruss Optic Downtown Anthony Richardson #D-3 Rookie Case Hit RC SP",
-          "p": 199.95,
-          "u": "https://www.ebay.com/itm/327414520521?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item4c3b6d1ac9:g:fJAAAeSw3JNq12e0"
-        },
-        {
-          "t": "2023 Panini Donruss Optic Downtown Anthony Richardson RC #D-3 Colts",
-          "p": 200.0,
-          "u": "https://www.ebay.com/itm/377516779409?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item57e5c0e791:g:a3YAAeSwoUBqoob5"
-        },
-        {
-          "t": "Panini 2023 Donruss Optic Downtown Anthony Richardson RC Rookie #D-3 Colts",
-          "p": 220.0,
-          "u": "https://www.ebay.com/itm/407202838595?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item5ecf2e3843:g:MJYAAeSw~-lqoKhs"
-        },
-        {
-          "t": "Anthony Richardson 2023 Panini Donruss Downtown! Rookie #D-3 Indianapolis Colts",
-          "p": 240.0,
-          "u": "https://www.ebay.com/itm/227543927757?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item34faaccbcd:g:QEIAAeSwzJpquy0B"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! Anthony Richardson #D-3 (RC) Gem Mint 10 ",
-          "p": 280.0,
-          "u": "https://www.ebay.com/itm/298624260234?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item458764988a:g:460AAeSw3EVqkbrH"
-        },
-        {
-          "t": "2023 Panini Donruss Downtown! Anthony Richardson #D-3 Rookie RC 0gg9",
-          "p": 319.05,
-          "u": "https://www.ebay.com/itm/237112690282?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item373504866a:g:xpYAAeSwG9dqxkeq"
-        }
-      ]
-    },
-    {
-      "label": "Anthony Richardson Downtown",
-      "item_title": "2023 Panini Donruss Optic Downtown Anthony Richardson RC #D-3 Colts",
-      "price": 200.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 319.05,
-      "discount_pct": 37.3,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/377516779409?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item57e5c0e791:g:a3YAAeSwoUBqoob5",
-      "image": "https://i.ebayimg.com/images/g/a3YAAeSwoUBqoob5/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Donruss Downtown Anthony Richardson",
-      "premium": true,
-      "ref_count": 11,
-      "grade_key": "raw",
-      "seller_score": 106,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2023 Panini Donruss Optic Downtown Anthony Richardson #D-3 Rookie Case Hit RC SP",
-          "p": 199.95,
-          "u": "https://www.ebay.com/itm/327414520521?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item4c3b6d1ac9:g:fJAAAeSw3JNq12e0"
-        },
-        {
-          "t": "2023 Panini Donruss Optic Downtown Anthony Richardson RC #D-3 Colts",
-          "p": 200.0,
-          "u": "https://www.ebay.com/itm/377516779409?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item57e5c0e791:g:a3YAAeSwoUBqoob5"
-        },
-        {
-          "t": "Panini 2023 Donruss Optic Downtown Anthony Richardson RC Rookie #D-3 Colts",
-          "p": 220.0,
-          "u": "https://www.ebay.com/itm/407202838595?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item5ecf2e3843:g:MJYAAeSw~-lqoKhs"
-        },
-        {
-          "t": "Anthony Richardson 2023 Panini Donruss Downtown! Rookie #D-3 Indianapolis Colts",
-          "p": 240.0,
-          "u": "https://www.ebay.com/itm/227543927757?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item34faaccbcd:g:QEIAAeSwzJpquy0B"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! Anthony Richardson #D-3 (RC) Gem Mint 10 ",
-          "p": 280.0,
-          "u": "https://www.ebay.com/itm/298624260234?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item458764988a:g:460AAeSw3EVqkbrH"
-        },
-        {
-          "t": "2023 Panini Donruss Downtown! Anthony Richardson #D-3 Rookie RC 0gg9",
-          "p": 319.05,
-          "u": "https://www.ebay.com/itm/237112690282?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item373504866a:g:xpYAAeSwG9dqxkeq"
-        }
-      ]
-    },
-    {
-      "label": "CJ Stroud Downtown",
-      "item_title": "2023 Panini Donruss Downtown! CJ Stroud RC Case Hit Texans D2 READ CORNER DMG",
-      "price": 849.99,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1349.99,
-      "discount_pct": 37.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/157198959317?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2499c9c2d5:g:4EsAAeSwA7Zooz99",
-      "image": "https://i.ebayimg.com/images/g/4EsAAeSwA7Zooz99/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Donruss Downtown CJ Stroud",
-      "premium": true,
-      "ref_count": 11,
-      "grade_key": "raw",
-      "seller_score": 52656,
-      "seller_pct": 99.8,
-      "samples": [
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC)",
-          "p": 777.0,
-          "u": "https://www.ebay.com/itm/227551762493?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item34fb24583d:g:awEAAeSwPspqwlWP"
-        },
-        {
-          "t": "2023 Panini Donruss Downtown! CJ Stroud RC Case Hit Texans D2 READ CORNER DMG",
-          "p": 849.99,
-          "u": "https://www.ebay.com/itm/157198959317?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2499c9c2d5:g:4EsAAeSwA7Zooz99"
-        },
-        {
-          "t": "Panini 2023 Donruss Downtown! C.J. Stroud RC Rookie Insert #D-2 Texans",
-          "p": 1050.0,
-          "u": "https://www.ebay.com/itm/407210300016?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item5ecfa01270:g:TGMAAeSwgkJqpIpf"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) GEM MINT 10 \ud83d\udd25 \ud83d\udd25",
-          "p": 1200.0,
-          "u": "https://www.ebay.com/itm/168573348628?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item273fc12b14:g:bNAAAeSwlcJqaj06&amdata=enc%3AAQALAAABAOf5zIIojhOf%2BkQK%2Bxzjn7n5ZBFsOGqM5ycFJm8aIiI3tlEEN6ooHaYP48tb%2BtUNncheUsL2U6sywIhPws4wel1Sy1wZhHq556%2FNJDkdIo14tf4ScUlu1Luqq%2F69sezI2VSsRWn9ryX4QCq6Ai0H%2FCI8Iu0Wyu4y9tuciQQVKoL0jC4r3E4GSnf8PZTCngGr9U5pKnBt%2BV5lrbaIvJtdXthA%2BxdvJNHaVvsiLbgtpJ%2BvLeTYQFsERcHX2z0ePPzYV2Mzi4uyVQiK1lKlADRiDf5U7QLJ4JF5sUFyNq9peY7AlHrWfpkdYPorDbqGJ%2Fok82JVnh95fqQbGCPbpIg5%2FPw%3D"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) GEM MINT 10 \ud83d\udd25 \ud83d\udd25",
-          "p": 1250.0,
-          "u": "https://www.ebay.com/itm/168373312705?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2733d4dcc1:g:lyMAAeSwfqVqBNhW"
-        },
-        {
-          "t": "DOWNTOWN CJ STROUD 2023 DONRUSS ROOKIE RC SICK CARD BEAUTIFUL TEXANS HOT $",
-          "p": 1349.99,
-          "u": "https://www.ebay.com/itm/296987991298?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item4525dd1d02:g:iiwAAOSwUAVno-gG"
-        }
-      ]
-    },
-    {
-      "label": "Jayden Daniels Kaboom",
-      "item_title": "2024 Panini Absolute Kaboom! Jayden Daniels Rookie",
-      "price": 1150.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1799.0,
-      "discount_pct": 36.1,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/318436851007?_skw=Panini+Kaboom+Jayden+Daniels&hash=item4a2450bd3f:g:~ukAAeSwu-VqKZLa",
-      "image": "https://i.ebayimg.com/images/g/~ukAAeSwu-VqKZLa/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "Panini Kaboom Jayden Daniels",
-      "premium": true,
-      "ref_count": 13,
-      "grade_key": "raw",
-      "seller_score": 3367,
+      "seller_score": 859720,
       "seller_pct": 99.9,
-      "samples": [
+      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [
         {
-          "t": "2024 Panini Absolute - Kaboom! Horizontal Jayden Daniels #7 (RC)\ud83d\udd25\ud83d\udd25",
-          "p": 999.99,
-          "u": "https://www.ebay.com/itm/366741472081?_skw=Panini+Kaboom+Jayden+Daniels&hash=item55637ec351:g:bbAAAeSw6SFq1At8"
+          "identity": {
+            "year": 2023,
+            "set": "Mosaic Stained Glass",
+            "player": "CJ Stroud",
+            "number": "SG22",
+            "parallel": "base",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 9
+          },
+          "date": "2026-08-27",
+          "price": 330,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:820024297384",
+          "url": "https://theclector.com/cards/football/nfl/panini/2023/mosaic/stained-glass/c-j-stroud-14424/2377310",
+          "marketplace_url": "https://www.ebay.com/itm/820024297384",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
         },
         {
-          "t": "2024 Panini Absolute Kaboom! Jayden Daniels Rookie",
-          "p": 1150.0,
-          "u": "https://www.ebay.com/itm/318436851007?_skw=Panini+Kaboom+Jayden+Daniels&hash=item4a2450bd3f:g:~ukAAeSwu-VqKZLa"
-        },
-        {
-          "t": "Panini 2024 Absolute Football Kaboom! Horizontal Jayden Daniels RC #7",
-          "p": 1250.0,
-          "u": "https://www.ebay.com/itm/860020959745?_skw=Panini+Kaboom+Jayden+Daniels&hash=itemc83d3e6a01:g:ItwAAeSw87lqxtrn"
-        },
-        {
-          "t": "\ud83d\udd25\ud83d\udc40 2024 Panini Absolute - Kaboom! Horizontal Jayden Daniels #7 (RC) \ud83d\udc40\ud83d\udd25",
-          "p": 1400.0,
-          "u": "https://www.ebay.com/itm/227323875892?_skw=Panini+Kaboom+Jayden+Daniels&hash=item34ed8f1234:g:UA8AAeSwU9Bp89Yk"
-        },
-        {
-          "t": "Panini 2024 Absolute Kaboom! Horizontal Jayden Daniels #7 RC Commanders",
-          "p": 1600.0,
-          "u": "https://www.ebay.com/itm/820269702758?_skw=Panini+Kaboom+Jayden+Daniels&hash=itembefbe25e66:g:Z2AAAeSwrBhpe"
-        },
-        {
-          "t": "2024 Panini Absolute Kaboom Horizontal#7 Jayden Daniels",
-          "p": 1650.0,
-          "u": "https://www.ebay.com/itm/940013093913?_skw=Panini+Kaboom+Jayden+Daniels&hash=itemdadd258419:g:kJwAAeSwwQRqzxWk"
+          "identity": {
+            "year": 2023,
+            "set": "Mosaic Stained Glass",
+            "player": "CJ Stroud",
+            "number": "SG22",
+            "parallel": "base",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 9
+          },
+          "date": "2026-08-04",
+          "price": 285,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:287490004924",
+          "url": "https://theclector.com/cards/football/nfl/panini/2023/mosaic/stained-glass/c-j-stroud-14424/2377310",
+          "marketplace_url": "https://www.ebay.com/itm/287490004924",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
         }
-      ]
+      ],
+      "warnings": [
+        "Only two older secondary-reported sales; Best Offer amount is reported by Clector, not independently confirmed."
+      ],
+      "query": "2023 PANINI MOSAIC STAINED GLASS #SG22 CJ STROUD ROOKIE RC PSA 9",
+      "evidence": {
+        "sales": [
+          {
+            "identity": {
+              "year": 2023,
+              "set": "Mosaic Stained Glass",
+              "player": "CJ Stroud",
+              "number": "SG22",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 9
+            },
+            "date": "2026-08-27",
+            "price": 330,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:820024297384",
+            "url": "https://theclector.com/cards/football/nfl/panini/2023/mosaic/stained-glass/c-j-stroud-14424/2377310",
+            "marketplace_url": "https://www.ebay.com/itm/820024297384",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          },
+          {
+            "identity": {
+              "year": 2023,
+              "set": "Mosaic Stained Glass",
+              "player": "CJ Stroud",
+              "number": "SG22",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 9
+            },
+            "date": "2026-08-04",
+            "price": 285,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:287490004924",
+            "url": "https://theclector.com/cards/football/nfl/panini/2023/mosaic/stained-glass/c-j-stroud-14424/2377310",
+            "marketplace_url": "https://www.ebay.com/itm/287490004924",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          }
+        ],
+        "excluded": [],
+        "count": 2,
+        "primary_count": 0,
+        "freshest_days": 62.0,
+        "freshest_primary_days": null,
+        "valuation_basis": "provisional reported sales",
+        "range": [
+          285,
+          330
+        ],
+        "median": 307.5,
+        "conservative_resale": 276.75,
+        "confidence": "low"
+      },
+      "all_in": 433.34,
+      "economics": {
+        "resale": 276.75,
+        "acquisition": 433.34,
+        "selling_fee": 40.0,
+        "promotion_reserve": 5.98,
+        "outbound_shipping": 8,
+        "supplies": 2,
+        "contingency": 10,
+        "labor_allowance": 25.0,
+        "capital_allowance": 12.82,
+        "cash_margin": -212.57,
+        "adjusted_profit": -260.39,
+        "roi": -0.6,
+        "minimum_profit": 262.5,
+        "minimum_roi": 0.45,
+        "passes": false
+      },
+      "max_all_in": 99.99,
+      "max_offer": 87.45,
+      "opening_offer": 74,
+      "stress_profit": -303.62,
+      "status": "pass",
+      "reasons": [
+        "Fails net-profit and/or return hurdle at this asking price",
+        "Only two older secondary-reported sales; Best Offer amount is reported by Clector, not independently confirmed.",
+        "Card/slab condition needs photo review",
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+      ],
+      "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
     {
-      "label": "Caleb Williams Downtown",
-      "item_title": "2024 Panini Donruss Optic Downtown Duos Caleb Williams Rome Odunze #10 RC Prizm",
-      "price": 995.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1475.0,
-      "discount_pct": 32.5,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/137862966946?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item201945eea2:g:H5sAAeSwTmFq2MPb",
-      "image": "https://i.ebayimg.com/images/g/H5sAAeSwTmFq2MPb/s-l225.jpg",
-      "bars": 3,
+      "label": "Bijan Robinson \u00b7 rookie auto /199 PSA 10",
+      "item_title": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10",
+      "listing_id": "188957642860",
+      "url": "https://www.ebay.com/itm/188957642860",
+      "price": 275,
+      "shipping": 1.36,
+      "currency": "USD",
+      "identity": {
+        "year": 2023,
+        "set": "Select Rookie Signatures",
+        "player": "Bijan Robinson",
+        "number": "RSI-4",
+        "parallel": "Silver",
+        "print_run": 199,
+        "autograph": true,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 10
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "autos",
       "sport": "football",
-      "query": "2024 Donruss Downtown Caleb Williams",
-      "premium": true,
-      "ref_count": 12,
-      "grade_key": "raw",
-      "seller_score": 235,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Panini Donruss Optic Downtown Duos Caleb Williams Rome Odunze #10 RC Prizm",
-          "p": 995.0,
-          "u": "https://www.ebay.com/itm/137862966946?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item201945eea2:g:H5sAAeSwTmFq2MPb"
-        },
-        {
-          "t": "2024 Panini Donruss Optic - Downtown Duos Caleb Williams, Rome Odunze #10 (RC)",
-          "p": 1350.0,
-          "u": "https://www.ebay.com/itm/366713484780?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item5561d3b5ec:g:ZZAAAeSweVZqxBZ7"
-        },
-        {
-          "t": "Caleb Williams 2024 Panini Donruss Optic #21 Downtown! Rookie RC SSP",
-          "p": 1399.0,
-          "u": "https://www.ebay.com/itm/336786673919?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item4e6a0cd0ff:g:0PoAAeSwf4ZqoYAN"
-        },
-        {
-          "t": "2024 Panini Donruss Downtown! Caleb Williams RC #21 Chicago Bears",
-          "p": 1400.0,
-          "u": "https://www.ebay.com/itm/237128551053?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item3735f68a8d:g:~XoAAeSw8ZZq0zNg"
-        },
-        {
-          "t": "2024 Panini Donruss - Downtown! Caleb Williams #21 (RC)",
-          "p": 1400.0,
-          "u": "https://www.ebay.com/itm/287598610940?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item42f63689fc:g:TgAAAeSwDaxqpXjl"
-        },
-        {
-          "t": "2024 Donruss Caleb Williams Downtown Rookie NFL Chicago Bears case hit",
-          "p": 1400.0,
-          "u": "https://www.ebay.com/itm/397998422217?_skw=2024+Donruss+Downtown+Caleb+Williams&hash=item5caa8df8c9:g:brAAAeSwJSpqF9mK"
-        }
-      ]
+      "page_state": "sold",
+      "buying_option": "FIXED_PRICE",
+      "seller_score": 2738,
+      "seller_pct": 100,
+      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [],
+      "warnings": [
+        "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review."
+      ],
+      "query": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10",
+      "evidence": {
+        "sales": [],
+        "excluded": [],
+        "count": 0,
+        "primary_count": 0,
+        "freshest_days": null,
+        "freshest_primary_days": null,
+        "valuation_basis": "provisional reported sales",
+        "range": null,
+        "median": null,
+        "conservative_resale": null,
+        "confidence": "low"
+      },
+      "all_in": 295.71,
+      "economics": null,
+      "max_all_in": null,
+      "max_offer": null,
+      "opening_offer": null,
+      "status": "excluded",
+      "reasons": [
+        "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review.",
+        "Listing is sold/ended or current availability is unverified",
+        "Card/slab condition needs photo review",
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+      ],
+      "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
     {
-      "label": "CJ Stroud Downtown",
-      "item_title": "C.J. STROUD 2023 Donruss DOWNTOWN RC PSA 10 GEM MINT #D-2 SSP Texans \ud83d\udd25",
-      "price": 1350.0,
+      "label": "Cade Cunningham \u00b7 Pink Ice PSA 10",
+      "item_title": "2021 Panini Prizm Pink Ice Cade Cunningham ROOKIE #282 PSA 10 GEM MINT",
+      "listing_id": "fanatics:69c876a3-16e6-4e74-bafe-52159e662170",
+      "url": "https://www.fanaticscollect.com/buy-now/69c876a3-16e6-4e74-bafe-52159e662170/2021-panini-prizm-pink-ice-cade-cunningham-rookie-282-psa-10-gem-mint",
+      "price": 165,
+      "shipping": null,
+      "currency": "USD",
+      "identity": {
+        "year": 2021,
+        "set": "Prizm",
+        "player": "Cade Cunningham",
+        "number": "282",
+        "parallel": "Pink Ice",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 10
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "rookies",
+      "sport": "basketball",
+      "page_state": "sold",
       "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1987.5,
-      "discount_pct": 32.1,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/198619132985?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2e3e9f7439:g:DcoAAeSwj2Jqm251",
-      "image": "https://i.ebayimg.com/images/g/DcoAAeSwj2Jqm251/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Donruss Downtown CJ Stroud",
-      "premium": true,
-      "ref_count": 14,
-      "grade_key": "psa10",
-      "seller_score": 639,
-      "seller_pct": 100.0,
-      "samples": [
+      "seller_score": 0,
+      "seller_pct": 0,
+      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [
         {
-          "t": "C.J. STROUD 2023 Donruss DOWNTOWN RC PSA 10 GEM MINT #D-2 SSP Texans \ud83d\udd25",
-          "p": 1350.0,
-          "u": "https://www.ebay.com/itm/198619132985?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2e3e9f7439:g:DcoAAeSwj2Jqm251"
+          "identity": {
+            "year": 2021,
+            "set": "Prizm",
+            "player": "Cade Cunningham",
+            "number": "282",
+            "parallel": "Pink Ice",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-08-10",
+          "price": 190,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:267496350106",
+          "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+          "marketplace_url": "https://www.ebay.com/itm/267496350106",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
         },
         {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) PSA 10",
-          "p": 1350.0,
-          "u": "https://www.ebay.com/itm/336841457603?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item4e6d50bfc3:g:POgAAeSwahRqzSIO"
+          "identity": {
+            "year": 2021,
+            "set": "Prizm",
+            "player": "Cade Cunningham",
+            "number": "282",
+            "parallel": "Pink Ice",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-08-06",
+          "price": 239.95,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:117297906577",
+          "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+          "marketplace_url": "https://www.ebay.com/itm/117297906577",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
         },
         {
-          "t": "2023 Donruss CJ Stroud Downtown PSA 10 RC SSP #D-2 Texans Rookie",
-          "p": 1449.99,
-          "u": "https://www.ebay.com/itm/940014297489?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=itemdadd37e191:g:raAAAeSwORxqz7-z"
-        },
-        {
-          "t": "2023 PANINI DONRUSS DOWNTOWN! #D2 CJ STROUD PSA 10",
-          "p": 1500.0,
-          "u": "https://www.ebay.com/itm/307237791205?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item4788cca5e5:g:DKgAAeSwARVpnPQa"
-        },
-        {
-          "t": "C.J. STROUD PSA 10 2023 PANINI DONRUSS #D-2 ROOKIE DOWNTOWN! PRIZM SSP RC",
-          "p": 1650.0,
-          "u": "https://www.ebay.com/itm/198588762468?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2e3cd00964:g:jPkAAeSwc2ppcq2i"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) PSA 10",
-          "p": 1700.0,
-          "u": "https://www.ebay.com/itm/178067725946?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2975a9de7a:g:OpkAAeSwHUxp545J"
+          "identity": {
+            "year": 2021,
+            "set": "Prizm",
+            "player": "Cade Cunningham",
+            "number": "282",
+            "parallel": "Pink Ice",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-08-04",
+          "price": 237.5,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:178370395969",
+          "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+          "marketplace_url": "https://www.ebay.com/itm/178370395969",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
         }
-      ]
+      ],
+      "warnings": [
+        "Fanatics page is SOLD; $165 history is September 23, 2025 and is excluded as stale. No available purchase at $165.",
+        "Three secondary-reported accepted offers; oldest/latest sale evidence is not fresh. Primary eBay display for August 10 is $214.99 asking, not confirmed $190 settlement."
+      ],
+      "query": "2021 Panini Prizm Pink Ice Cade Cunningham ROOKIE #282 PSA 10 GEM MINT",
+      "evidence": {
+        "sales": [
+          {
+            "identity": {
+              "year": 2021,
+              "set": "Prizm",
+              "player": "Cade Cunningham",
+              "number": "282",
+              "parallel": "Pink Ice",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-08-10",
+            "price": 190,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:267496350106",
+            "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+            "marketplace_url": "https://www.ebay.com/itm/267496350106",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          },
+          {
+            "identity": {
+              "year": 2021,
+              "set": "Prizm",
+              "player": "Cade Cunningham",
+              "number": "282",
+              "parallel": "Pink Ice",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-08-06",
+            "price": 239.95,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:117297906577",
+            "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+            "marketplace_url": "https://www.ebay.com/itm/117297906577",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          },
+          {
+            "identity": {
+              "year": 2021,
+              "set": "Prizm",
+              "player": "Cade Cunningham",
+              "number": "282",
+              "parallel": "Pink Ice",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-08-04",
+            "price": 237.5,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:178370395969",
+            "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+            "marketplace_url": "https://www.ebay.com/itm/178370395969",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          }
+        ],
+        "excluded": [],
+        "count": 3,
+        "primary_count": 0,
+        "freshest_days": 79.0,
+        "freshest_primary_days": null,
+        "valuation_basis": "provisional reported sales",
+        "range": [
+          190,
+          239.95
+        ],
+        "median": 237.5,
+        "conservative_resale": 190,
+        "confidence": "low"
+      },
+      "all_in": null,
+      "economics": null,
+      "max_all_in": 37.2,
+      "max_offer": null,
+      "opening_offer": null,
+      "status": "excluded",
+      "reasons": [
+        "Fanatics page is SOLD; $165 history is September 23, 2025 and is excluded as stale. No available purchase at $165.",
+        "Three secondary-reported accepted offers; oldest/latest sale evidence is not fresh. Primary eBay display for August 10 is $214.99 asking, not confirmed $190 settlement.",
+        "Listing is sold/ended or current availability is unverified",
+        "Card/slab condition needs photo review",
+        "Seller track record is missing or below screening minimum",
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+        "Incoming shipping is unknown"
+      ],
+      "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     },
     {
-      "label": "CJ Stroud Downtown",
-      "item_title": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) PSA 10",
-      "price": 1350.0,
+      "label": "Cade search \u00b7 wrong grade excluded",
+      "item_title": "2021 PANINI PRIZM PINK ICE #282 CADE CUNNINGHAM ROOKIE RC PSA 9",
+      "listing_id": "epid:12056503365",
+      "url": "https://www.ebay.com/p/12056503365",
+      "price": 90,
+      "shipping": 5.17,
+      "currency": "USD",
+      "identity": {
+        "year": 2021,
+        "set": "Prizm",
+        "player": "Cade Cunningham",
+        "number": "282",
+        "parallel": "Pink Ice",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 9
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "rookies",
+      "sport": "basketball",
+      "page_state": "mismatch",
       "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1987.5,
-      "discount_pct": 32.1,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/336841457603?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item4e6d50bfc3:g:POgAAeSwahRqzSIO",
-      "image": "https://i.ebayimg.com/images/g/POgAAeSwahRqzSIO/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Donruss Downtown CJ Stroud",
-      "premium": true,
-      "ref_count": 14,
-      "grade_key": "psa10",
-      "seller_score": 1757,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "C.J. STROUD 2023 Donruss DOWNTOWN RC PSA 10 GEM MINT #D-2 SSP Texans \ud83d\udd25",
-          "p": 1350.0,
-          "u": "https://www.ebay.com/itm/198619132985?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2e3e9f7439:g:DcoAAeSwj2Jqm251"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) PSA 10",
-          "p": 1350.0,
-          "u": "https://www.ebay.com/itm/336841457603?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item4e6d50bfc3:g:POgAAeSwahRqzSIO"
-        },
-        {
-          "t": "2023 Donruss CJ Stroud Downtown PSA 10 RC SSP #D-2 Texans Rookie",
-          "p": 1449.99,
-          "u": "https://www.ebay.com/itm/940014297489?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=itemdadd37e191:g:raAAAeSwORxqz7-z"
-        },
-        {
-          "t": "2023 PANINI DONRUSS DOWNTOWN! #D2 CJ STROUD PSA 10",
-          "p": 1500.0,
-          "u": "https://www.ebay.com/itm/307237791205?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item4788cca5e5:g:DKgAAeSwARVpnPQa"
-        },
-        {
-          "t": "C.J. STROUD PSA 10 2023 PANINI DONRUSS #D-2 ROOKIE DOWNTOWN! PRIZM SSP RC",
-          "p": 1650.0,
-          "u": "https://www.ebay.com/itm/198588762468?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2e3cd00964:g:jPkAAeSwc2ppcq2i"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) PSA 10",
-          "p": 1700.0,
-          "u": "https://www.ebay.com/itm/178067725946?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item2975a9de7a:g:OpkAAeSwHUxp545J"
-        }
-      ]
-    },
-    {
-      "label": "Jayden Daniels Downtown",
-      "item_title": "2024 Donruss Jayden Daniels Downtown PSA 8",
-      "price": 525.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 772.5,
-      "discount_pct": 32.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/287619010512?_skw=2024+Donruss+Downtown+Jayden+Daniels&hash=item42f76dcfd0:g:H5oAAeSw6XBqvY3-",
-      "image": "https://i.ebayimg.com/images/g/H5oAAeSw6XBqvY3-/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2024 Donruss Downtown Jayden Daniels",
-      "premium": true,
-      "ref_count": 6,
-      "grade_key": "graded_other",
-      "seller_score": 2428,
-      "seller_pct": 99.5,
-      "samples": [
-        {
-          "t": "2024 Donruss Jayden Daniels Downtown PSA 8",
-          "p": 525.0,
-          "u": "https://www.ebay.com/itm/287619010512?_skw=2024+Donruss+Downtown+Jayden+Daniels&hash=item42f76dcfd0:g:H5oAAeSw6XBqvY3-"
-        },
-        {
-          "t": "2024 Panini Donruss - Downtown! Jayden Daniels #16 (RC) PSA 8",
-          "p": 659.95,
-          "u": "https://www.ebay.com/itm/398442197956?_skw=2024+Donruss+Downtown+Jayden+Daniels&hash=item5cc50173c4:g:v3EAAeSwmL1quzCA"
-        },
-        {
-          "t": "JAYDEN DANIELS & TERRY MCLAURIN 2024 DONRUSS OPTIC DOWNTOWN DUOS RC ROOKIE PSA 8",
-          "p": 699.99,
-          "u": "https://www.ebay.com/itm/147644187726?_skw=2024+Donruss+Downtown+Jayden+Daniels&hash=item226047844e:g:-vUAAeSwqBRq12~J"
-        },
-        {
-          "t": "2024 Donruss Downtown! Jayden Daniels RC #16 Commanders BGS 9.5",
-          "p": 845.0,
-          "u": "https://www.ebay.com/itm/287649003142?_skw=2024+Donruss+Downtown+Jayden+Daniels&hash=item42f9377686:g:Tx8AAeSwjeRq0Dqc"
-        },
-        {
-          "t": "2024 Panini Donruss - Downtown! Jayden Daniels #16 (RC) BGS 9.5 Commanders",
-          "p": 1099.0,
-          "u": "https://www.ebay.com/itm/800764861078?_skw=2024+Donruss+Downtown+Jayden+Daniels&hash=itemba714e1a96:g:TdkAAeSw4PpqxQ9v"
-        },
-        {
-          "t": "2024 Panini Clearly Donruss Jayden Daniels Downtown SP RC #16 Commanders PSA 8",
-          "p": 1750.0,
-          "u": "https://www.ebay.com/itm/880011269146?_skw=2024+Donruss+Downtown+Jayden+Daniels&hash=itemcce4c2541a:g:z9sAAeSwWTpqzRmh"
-        }
-      ]
-    },
-    {
-      "label": "Patrick Mahomes Kaboom",
-      "item_title": "2024 Panini Zenith Patrick Mahomes #1 Zoom Red KaBoom #'d /10 Graded PSA 9 Mint",
-      "price": 1999.99,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 2910.41,
-      "discount_pct": 31.3,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/227481329293?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item34f6f19e8d:g:KkQAAeSwPMdpcBpo",
-      "image": "https://i.ebayimg.com/images/g/KkQAAeSwPMdpcBpo/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "Panini Kaboom Patrick Mahomes",
-      "premium": true,
-      "ref_count": 10,
-      "grade_key": "psa9",
-      "seller_score": 1878,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Panini Zenith Patrick Mahomes #1 Zoom Red KaBoom #'d /10 Graded PSA 9 Mint",
-          "p": 1999.99,
-          "u": "https://www.ebay.com/itm/227481329293?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item34f6f19e8d:g:KkQAAeSwPMdpcBpo"
-        },
-        {
-          "t": "2023 Panini Absolute Kaboom! Horizontal #1 Patrick Mahomes II Chiefs PSA 9",
-          "p": 2395.0,
-          "u": "https://www.ebay.com/itm/267796369482?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item3e59e8504a:g:l-oAAeSwg8Fqt8jF"
-        },
-        {
-          "t": "2024 Panini Absolute Patrick Mahomes II Kaboom Horizontal SSP #1 Chiefs PSA 9",
-          "p": 2650.0,
-          "u": "https://www.ebay.com/itm/366757092082?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item55646d1af2:g:znYAAeSweYFq29eQ"
-        },
-        {
-          "t": "2024 Panini Absolute Football Patrick Mahomes II #1 Kaboom Horizontal SSP PSA 9",
-          "p": 2699.95,
-          "u": "https://www.ebay.com/itm/237093467190?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item3733df3436:g:AjMAAeSwJsNquR3g"
-        },
-        {
-          "t": "2023 Panini Absolute Patrick Mahomes II Kaboom! Horizontal #1 PSA 9",
-          "p": 2820.82,
-          "u": "https://www.ebay.com/itm/398452293279?_skw=Panini+Kaboom+Patrick+Mahomes&hash=item5cc59b7e9f:g:hZUAAeSw24tqvdUy"
-        },
-        {
-          "t": "Panini 2023 Absolute Kaboom! Horizontal Patrick Mahomes II Chiefs #1 PSA 9",
-          "p": 3000.0,
-          "u": "https://www.ebay.com/itm/860073508127?_skw=Panini+Kaboom+Patrick+Mahomes&hash=itemc840603d1f:g:7JgAAeSw-lpq2nld"
-        }
-      ]
-    },
-    {
-      "label": "Anthony Richardson Downtown",
-      "item_title": "Panini 2023 Donruss Optic Downtown Anthony Richardson RC Rookie #D-3 Colts",
-      "price": 220.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 319.05,
-      "discount_pct": 31.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/407202838595?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item5ecf2e3843:g:MJYAAeSw~-lqoKhs",
-      "image": "https://i.ebayimg.com/images/g/MJYAAeSw~-lqoKhs/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Donruss Downtown Anthony Richardson",
-      "premium": true,
-      "ref_count": 11,
-      "grade_key": "raw",
-      "seller_score": 37,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2023 Panini Donruss Optic Downtown Anthony Richardson #D-3 Rookie Case Hit RC SP",
-          "p": 199.95,
-          "u": "https://www.ebay.com/itm/327414520521?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item4c3b6d1ac9:g:fJAAAeSw3JNq12e0"
-        },
-        {
-          "t": "2023 Panini Donruss Optic Downtown Anthony Richardson RC #D-3 Colts",
-          "p": 200.0,
-          "u": "https://www.ebay.com/itm/377516779409?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item57e5c0e791:g:a3YAAeSwoUBqoob5"
-        },
-        {
-          "t": "Panini 2023 Donruss Optic Downtown Anthony Richardson RC Rookie #D-3 Colts",
-          "p": 220.0,
-          "u": "https://www.ebay.com/itm/407202838595?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item5ecf2e3843:g:MJYAAeSw~-lqoKhs"
-        },
-        {
-          "t": "Anthony Richardson 2023 Panini Donruss Downtown! Rookie #D-3 Indianapolis Colts",
-          "p": 240.0,
-          "u": "https://www.ebay.com/itm/227543927757?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item34faaccbcd:g:QEIAAeSwzJpquy0B"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! Anthony Richardson #D-3 (RC) Gem Mint 10 ",
-          "p": 280.0,
-          "u": "https://www.ebay.com/itm/298624260234?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item458764988a:g:460AAeSw3EVqkbrH"
-        },
-        {
-          "t": "2023 Panini Donruss Downtown! Anthony Richardson #D-3 Rookie RC 0gg9",
-          "p": 319.05,
-          "u": "https://www.ebay.com/itm/237112690282?_skw=2023+Donruss+Downtown+Anthony+Richardson&hash=item373504866a:g:xpYAAeSwG9dqxkeq"
-        }
-      ]
-    },
-    {
-      "label": "CJ Stroud Downtown",
-      "item_title": "2023 PANINI DONRUSS DOWNTOWN! #D2 CJ STROUD ROOKIE RC PSA 8",
-      "price": 800.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1150.0,
-      "discount_pct": 30.4,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/267239616883?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item3e38b8f173:g:n2YAAOSwxNBoFkh7",
-      "image": "https://i.ebayimg.com/images/g/n2YAAOSwxNBoFkh7/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Donruss Downtown CJ Stroud",
-      "premium": true,
-      "ref_count": 8,
-      "grade_key": "graded_other",
-      "seller_score": 88,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2023 PANINI DONRUSS DOWNTOWN! #D2 CJ STROUD ROOKIE RC PSA 8",
-          "p": 800.0,
-          "u": "https://www.ebay.com/itm/267239616883?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item3e38b8f173:g:n2YAAOSwxNBoFkh7"
-        },
-        {
-          "t": "Panini 2023 Donruss Downtown! C.J. Stroud RC #D-2 PSA 8 Houston Texans",
-          "p": 800.0,
-          "u": "https://www.ebay.com/itm/366637179474?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item555d476252:g:BKkAAeSwMcdqk6qn"
-        },
-        {
-          "t": "2023 Donruss CJ Stroud Downtown! Rookie - PSA 8",
-          "p": 899.0,
-          "u": "https://www.ebay.com/itm/336118553324?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item4e423a1aec:g:TCkAAeSw1aFolPBT"
-        },
-        {
-          "t": "2023 Panini Donruss CJ Stroud Rookie Downtown D-2 BGS 9",
-          "p": 1100.0,
-          "u": "https://www.ebay.com/itm/800444329474?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=itemba5e332e02:g:0ZwAAeSwtWFqbiVe"
-        },
-        {
-          "t": "2023 Donruss - CJ Stroud Downtown #D2  (RC) SGC9.5",
-          "p": 1200.0,
-          "u": "https://www.ebay.com/itm/157513917037?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item24ac8fa26d:g:5BcAAeSwxVxpLeL8"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) Bgs 9.5 *TWO 10 Subgrades!",
-          "p": 1299.99,
-          "u": "https://www.ebay.com/itm/407134490836?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item5ecb1b50d4:g:IAoAAeSwBclqeh01"
-        }
-      ]
-    },
-    {
-      "label": "CJ Stroud Downtown",
-      "item_title": "Panini 2023 Donruss Downtown! C.J. Stroud RC #D-2 PSA 8 Houston Texans",
-      "price": 800.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 1150.0,
-      "discount_pct": 30.4,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/366637179474?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item555d476252:g:BKkAAeSwMcdqk6qn",
-      "image": "https://i.ebayimg.com/images/g/BKkAAeSwMcdqk6qn/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Donruss Downtown CJ Stroud",
-      "premium": true,
-      "ref_count": 8,
-      "grade_key": "graded_other",
-      "seller_score": 72,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2023 PANINI DONRUSS DOWNTOWN! #D2 CJ STROUD ROOKIE RC PSA 8",
-          "p": 800.0,
-          "u": "https://www.ebay.com/itm/267239616883?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item3e38b8f173:g:n2YAAOSwxNBoFkh7"
-        },
-        {
-          "t": "Panini 2023 Donruss Downtown! C.J. Stroud RC #D-2 PSA 8 Houston Texans",
-          "p": 800.0,
-          "u": "https://www.ebay.com/itm/366637179474?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item555d476252:g:BKkAAeSwMcdqk6qn"
-        },
-        {
-          "t": "2023 Donruss CJ Stroud Downtown! Rookie - PSA 8",
-          "p": 899.0,
-          "u": "https://www.ebay.com/itm/336118553324?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item4e423a1aec:g:TCkAAeSw1aFolPBT"
-        },
-        {
-          "t": "2023 Panini Donruss CJ Stroud Rookie Downtown D-2 BGS 9",
-          "p": 1100.0,
-          "u": "https://www.ebay.com/itm/800444329474?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=itemba5e332e02:g:0ZwAAeSwtWFqbiVe"
-        },
-        {
-          "t": "2023 Donruss - CJ Stroud Downtown #D2  (RC) SGC9.5",
-          "p": 1200.0,
-          "u": "https://www.ebay.com/itm/157513917037?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item24ac8fa26d:g:5BcAAeSwxVxpLeL8"
-        },
-        {
-          "t": "2023 Panini Donruss - Downtown! C.J. Stroud #D-2 (RC) Bgs 9.5 *TWO 10 Subgrades!",
-          "p": 1299.99,
-          "u": "https://www.ebay.com/itm/407134490836?_skw=2023+Donruss+Downtown+CJ+Stroud&hash=item5ecb1b50d4:g:IAoAAeSwBclqeh01"
-        }
-      ]
-    },
-    {
-      "label": "Josh Allen Prizm RC PSA 10",
-      "item_title": "2018 Josh Allen Panini Prizm Trifecta Prizm Rookie Rc PSA 10 - Super Low Pop 19",
-      "price": 349.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 847.5,
-      "discount_pct": 58.8,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/266940029180?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item3e26dd98fc:g:eQ4AAOSweB1ms~Gp",
-      "image": "https://i.ebayimg.com/images/g/eQ4AAOSweB1ms~Gp/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2018 Panini Prizm Josh Allen Rookie PSA 10",
-      "premium": false,
-      "ref_count": 30,
-      "grade_key": "psa10",
-      "seller_score": 1737,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2018 Josh Allen Panini Prizm Trifecta Prizm Rookie Rc PSA 10 - Super Low Pop 19",
-          "p": 349.0,
-          "u": "https://www.ebay.com/itm/266940029180?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item3e26dd98fc:g:eQ4AAOSweB1ms~Gp"
-        },
-        {
-          "t": "2018 Prizm Josh Allen RC Instant Impact Silver Prizm PSA 10 #II5",
-          "p": 395.0,
-          "u": "https://www.ebay.com/itm/257618694397?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item3bfb4550fd:g:oogAAeSwlcJqVB4-"
-        },
-        {
-          "t": "2018 Panini Prizm Josh Allen Rookie Year Instant Impact PSA 10 Bills \ud83d\udc8e",
-          "p": 399.99,
-          "u": "https://www.ebay.com/itm/366680995327?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item555fe3f5ff:g:5PoAAeSwnyhqsBqy"
-        },
-        {
-          "t": "2018 Panini Prizm Trifecta Silver Prizm TRI-BUF Josh Allen RC Rookie PSA 10",
-          "p": 506.95,
-          "u": "https://www.ebay.com/itm/366451771772?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item55523a497c:g:ExkAAeSwaO1qH4DG"
-        },
-        {
-          "t": "2018 Panini Prizm Rookie Introduction Josh Allen RC Buffalo Bills #RI-5 PSA 10",
-          "p": 575.0,
-          "u": "https://www.ebay.com/itm/286262677758?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item42a695d0fe:g:HuoAAOSwA3lnhWyD"
-        },
-        {
-          "t": "2018 Panini Prizm Josh Allen Rookie Introduction #RI-5 PSA 10 (RC)",
-          "p": 599.99,
-          "u": "https://www.ebay.com/itm/287539137953?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item42f2ab0da1:g:qNwAAeSwDFZqiO8u"
-        }
-      ]
-    },
-    {
-      "label": "Bijan Robinson Prizm RC PSA 10",
-      "item_title": "2023 Panini Prizm - Rookies Bijan Robinson #305 (RC) PSA 10",
-      "price": 105.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 250.0,
-      "discount_pct": 58.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/147646058623?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item226064107f:g:L4IAAeSwTr1q2NUN",
-      "image": "https://i.ebayimg.com/images/g/L4IAAeSwTr1q2NUN/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Panini Prizm Bijan Robinson Rookie PSA 10",
-      "premium": false,
-      "ref_count": 29,
-      "grade_key": "psa10",
-      "seller_score": 426,
-      "seller_pct": 99.6,
-      "samples": [
-        {
-          "t": "2023 Panini Prizm - Rookies Bijan Robinson #305 (RC) PSA 10",
-          "p": 105.0,
-          "u": "https://www.ebay.com/itm/147646058623?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item226064107f:g:L4IAAeSwTr1q2NUN"
-        },
-        {
-          "t": "2023 Panini Prizm BIJAN ROBINSON (RC) Green Wave Prizm #305 PSA 10",
-          "p": 119.0,
-          "u": "https://www.ebay.com/itm/287608434858?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item42f6cc70aa:g:uxoAAeSwXm5qtruX"
-        },
-        {
-          "t": "BIJAN ROBINSON 2023 PANINI PRIZM FLASHBACK NO HUDDLE DISCO ROOKIE PSA 10 PFR-6",
-          "p": 119.99,
-          "u": "https://www.ebay.com/itm/147151951223?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item2242f09577:g:r-gAAeSwEdRpjuKJ"
-        },
-        {
-          "t": "2023 Panini Prizm Draft Picks - Bijan Robinson #115 - Blue Ice /99 PSA 10 RC",
-          "p": 124.99,
-          "u": "https://www.ebay.com/itm/137783616992?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item20148b25e0:g:Sw8AAeSwEhhquGuN"
-        },
-        {
-          "t": "2023 Panini Silver Prizm Flashback Rookie Bijan Robinson RC PSA 10 GEM MINT",
-          "p": 125.0,
-          "u": "https://www.ebay.com/itm/227125959157?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item34e1c319f5:g:bEIAAeSwXfdpOcDr&amdata=enc%3AAQALAAABEOf5zIIojhOf%2BkQK%2Bxzjn7kmr3XrxS604AD%2B9KzDKL3VEiZUG7mSR5x%2BrSX7bOfaimb1Rw6hr2PasGO71S65A3iVaiZyY6L9rTkJm%2Bgaf%2BMofLoJsvqhwUN1smyH8AlRvaOJMBYGxInngdd8CStBBSQv%2F5B1vueeaNWZdQD%2F5vudYoohZzqthuz8rr%2F8hPFkuD6Qc8o1cvX5iG77mObenOepiTvOmH05ovSGhXSxXmiAt9rl71Bn1ravhHmVF%2FlnOvXnNnVX%2B11peMlb3YFndHwLL5VDtIBDPAYghQ3aYFQo0DZLJG7T%2BdfktP4PNp85YLtwMi4kOcbTGiXBT20djAM%2BG1fcCFN7PvciHOa%2F27g%2F"
-        },
-        {
-          "t": "Graded 2023 Panini Prizm Bijan Robinson #PO8 Portals Rookie Card PSA 10",
-          "p": 144.5,
-          "u": "https://www.ebay.com/itm/267806605572?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item3e5a848104:g:X1kAAeSwGhZqyUoQ&amdata=enc%3AAQALAAABEOf5zIIojhOf%2BkQK%2Bxzjn7kJ05nKLSKAMDxEjlZ3eZ4jxWr1TAYrs1MndDwsxQGTtIH%2BB2wONUVbOSBAQBqolYtQ5IDKYALZskTH%2FDBwy5eDKXAZETUIWptmQXWMo3SWRNiRHovq2jfWbfjhsu1LsYJ4RG4gTgokfMrbYQRxZb0yUjYsE6a7sYXLE5YuH36nO5HfOLJ7BbCm02p2W%2B1tj%2FtCrAqgINRB%2BCiqbQ68lNukhmKasmC2Dhi9Jw6q8QoCTrdBBh%2FnhQUoK2sYJpjmpYhOtcO%2B1r7dkUVJKtlRFgcvwEio%2FCyV7CMMKTR1jIOUlNqMDvyChtEvX74e1d0wZeOIxfYKZjPt%2FfC%2Ft9OtVDB3"
-        }
-      ]
-    },
-    {
-      "label": "Caleb Williams Prizm RC PSA 10",
-      "item_title": "Caleb Williams 2024 Panini Prizm Football #1 Prizmatic-Silver Prizm RC PSA 10",
-      "price": 189.99,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 450.0,
-      "discount_pct": 57.8,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/336848540864?_skw=2024+Panini+Prizm+Caleb+Williams+Rookie+PSA+10&hash=item4e6dbcd4c0:g:9hgAAeSw8vtq0yAB",
-      "image": "https://i.ebayimg.com/images/g/9hgAAeSw8vtq0yAB/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2024 Panini Prizm Caleb Williams Rookie PSA 10",
-      "premium": false,
-      "ref_count": 29,
-      "grade_key": "psa10",
-      "seller_score": 1300,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Panini Prizm - Fireworks Caleb Williams #25 (RC) PSA 10 \ud83d\udd25\ud83d\udd25",
-          "p": 113.5,
-          "u": "https://www.ebay.com/itm/880044731286?_skw=2024+Panini+Prizm+Caleb+Williams+Rookie+PSA+10&hash=itemcce6c0eb96:g:7EsAAeSw03Nq28dC"
-        },
-        {
-          "t": "2024 Prizm Caleb Williams Fireworks #25 Rookie RC Bears PSA 10 GEM MINT \ud83d\udc8e\ud83d\udc8e",
-          "p": 129.95,
-          "u": "https://www.ebay.com/itm/147647607448?_skw=2024+Panini+Prizm+Caleb+Williams+Rookie+PSA+10&hash=item22607bb298:g:HuEAAeSwmgVq2j8w"
-        },
-        {
-          "t": "2024 Panini Prizm Caleb Williams Prizmatic Green Prizm #1 Rookie PSA 10 Bears",
-          "p": 139.99,
-          "u": "https://www.ebay.com/itm/137855837318?_skw=2024+Panini+Prizm+Caleb+Williams+Rookie+PSA+10&hash=item2018d92486:g:oFMAAeSw51Jq1YOY"
-        },
-        {
-          "t": "2024 Panini Prizm Emergent Caleb Williams #1 Green Rookie PSA 10",
-          "p": 150.0,
-          "u": "https://www.ebay.com/itm/168573567793?_skw=2024+Panini+Prizm+Caleb+Williams+Rookie+PSA+10&hash=item273fc48331:g:OS4AAeSwPFVqaloq"
-        },
-        {
-          "t": "Caleb Williams 2024 Panini Prizm Football #1 Prizmatic-Silver Prizm RC PSA 10",
-          "p": 189.99,
-          "u": "https://www.ebay.com/itm/336848540864?_skw=2024+Panini+Prizm+Caleb+Williams+Rookie+PSA+10&hash=item4e6dbcd4c0:g:9hgAAeSw8vtq0yAB"
-        },
-        {
-          "t": "Panini 2024 Prizm Prizmatic Caleb Williams Rookie #1 Chicago Bears PSA 10",
-          "p": 225.0,
-          "u": "https://www.ebay.com/itm/407216026681?_skw=2024+Panini+Prizm+Caleb+Williams+Rookie+PSA+10&hash=item5ecff77439:g:024AAeSwH2Jqp~Bq&amdata=enc%3AAQALAAABEOf5zIIojhOf%2BkQK%2Bxzjn7kilSlIu6rkvJovmYyAc4FOG6jRMsw28ZAQUFSRxmQQLPkttkQOCg3s4zZfk%2B8Jzks37U6XhvamgxMOY--ZQIUBedQ%2BiKfHMZ%2BpW1WHsH9hPr9LCzLuyOnul8QsHnly%2BKuWKb82GrjDy0IAewWDQP5EDWowWPBiICRvatzQaUgktHTTR9aRhrNI2rEHpkEEVdCH8rbevqECmZ9j3CvM%2FUcr8v59LlvPw%2BkmEdF69oLRrT2hzT%2FjNU4Zv8RTMEvocBYTY%2Bp4dCgeE14D0OI%2FCZ9QQdd8fs%2BqlmQryhMLIOmwBgZ9vFXd9Rs4n7kqAbsugHQoo4NUummHQx6Jwdgdqb0b"
-        }
-      ]
-    },
-    {
-      "label": "Josh Allen Prizm RC PSA 10",
-      "item_title": "2018 Prizm Josh Allen RC Instant Impact Silver Prizm PSA 10 #II5",
-      "price": 395.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 847.5,
-      "discount_pct": 53.4,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/257618694397?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item3bfb4550fd:g:oogAAeSwlcJqVB4-",
-      "image": "https://i.ebayimg.com/images/g/oogAAeSwlcJqVB4-/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2018 Panini Prizm Josh Allen Rookie PSA 10",
-      "premium": false,
-      "ref_count": 30,
-      "grade_key": "psa10",
-      "seller_score": 25,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2018 Josh Allen Panini Prizm Trifecta Prizm Rookie Rc PSA 10 - Super Low Pop 19",
-          "p": 349.0,
-          "u": "https://www.ebay.com/itm/266940029180?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item3e26dd98fc:g:eQ4AAOSweB1ms~Gp"
-        },
-        {
-          "t": "2018 Prizm Josh Allen RC Instant Impact Silver Prizm PSA 10 #II5",
-          "p": 395.0,
-          "u": "https://www.ebay.com/itm/257618694397?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item3bfb4550fd:g:oogAAeSwlcJqVB4-"
-        },
-        {
-          "t": "2018 Panini Prizm Josh Allen Rookie Year Instant Impact PSA 10 Bills \ud83d\udc8e",
-          "p": 399.99,
-          "u": "https://www.ebay.com/itm/366680995327?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item555fe3f5ff:g:5PoAAeSwnyhqsBqy"
-        },
-        {
-          "t": "2018 Panini Prizm Trifecta Silver Prizm TRI-BUF Josh Allen RC Rookie PSA 10",
-          "p": 506.95,
-          "u": "https://www.ebay.com/itm/366451771772?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item55523a497c:g:ExkAAeSwaO1qH4DG"
-        },
-        {
-          "t": "2018 Panini Prizm Rookie Introduction Josh Allen RC Buffalo Bills #RI-5 PSA 10",
-          "p": 575.0,
-          "u": "https://www.ebay.com/itm/286262677758?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item42a695d0fe:g:HuoAAOSwA3lnhWyD"
-        },
-        {
-          "t": "2018 Panini Prizm Josh Allen Rookie Introduction #RI-5 PSA 10 (RC)",
-          "p": 599.99,
-          "u": "https://www.ebay.com/itm/287539137953?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item42f2ab0da1:g:qNwAAeSwDFZqiO8u"
-        }
-      ]
-    },
-    {
-      "label": "Josh Allen Prizm RC PSA 10",
-      "item_title": "2018 Panini Prizm Josh Allen Rookie Year Instant Impact PSA 10 Bills \ud83d\udc8e",
-      "price": 399.99,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 847.5,
-      "discount_pct": 52.8,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/366680995327?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item555fe3f5ff:g:5PoAAeSwnyhqsBqy",
-      "image": "https://i.ebayimg.com/images/g/5PoAAeSwnyhqsBqy/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2018 Panini Prizm Josh Allen Rookie PSA 10",
-      "premium": false,
-      "ref_count": 30,
-      "grade_key": "psa10",
-      "seller_score": 129,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2018 Josh Allen Panini Prizm Trifecta Prizm Rookie Rc PSA 10 - Super Low Pop 19",
-          "p": 349.0,
-          "u": "https://www.ebay.com/itm/266940029180?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item3e26dd98fc:g:eQ4AAOSweB1ms~Gp"
-        },
-        {
-          "t": "2018 Prizm Josh Allen RC Instant Impact Silver Prizm PSA 10 #II5",
-          "p": 395.0,
-          "u": "https://www.ebay.com/itm/257618694397?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item3bfb4550fd:g:oogAAeSwlcJqVB4-"
-        },
-        {
-          "t": "2018 Panini Prizm Josh Allen Rookie Year Instant Impact PSA 10 Bills \ud83d\udc8e",
-          "p": 399.99,
-          "u": "https://www.ebay.com/itm/366680995327?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item555fe3f5ff:g:5PoAAeSwnyhqsBqy"
-        },
-        {
-          "t": "2018 Panini Prizm Trifecta Silver Prizm TRI-BUF Josh Allen RC Rookie PSA 10",
-          "p": 506.95,
-          "u": "https://www.ebay.com/itm/366451771772?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item55523a497c:g:ExkAAeSwaO1qH4DG"
-        },
-        {
-          "t": "2018 Panini Prizm Rookie Introduction Josh Allen RC Buffalo Bills #RI-5 PSA 10",
-          "p": 575.0,
-          "u": "https://www.ebay.com/itm/286262677758?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item42a695d0fe:g:HuoAAOSwA3lnhWyD"
-        },
-        {
-          "t": "2018 Panini Prizm Josh Allen Rookie Introduction #RI-5 PSA 10 (RC)",
-          "p": 599.99,
-          "u": "https://www.ebay.com/itm/287539137953?_skw=2018+Panini+Prizm+Josh+Allen+Rookie+PSA+10&hash=item42f2ab0da1:g:qNwAAeSwDFZqiO8u"
-        }
-      ]
-    },
-    {
-      "label": "Bijan Robinson Prizm RC PSA 10",
-      "item_title": "2023 Panini Prizm BIJAN ROBINSON (RC) Green Wave Prizm #305 PSA 10",
-      "price": 119.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 250.0,
-      "discount_pct": 52.4,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/287608434858?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item42f6cc70aa:g:uxoAAeSwXm5qtruX",
-      "image": "https://i.ebayimg.com/images/g/uxoAAeSwXm5qtruX/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Panini Prizm Bijan Robinson Rookie PSA 10",
-      "premium": false,
-      "ref_count": 29,
-      "grade_key": "psa10",
-      "seller_score": 207,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2023 Panini Prizm - Rookies Bijan Robinson #305 (RC) PSA 10",
-          "p": 105.0,
-          "u": "https://www.ebay.com/itm/147646058623?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item226064107f:g:L4IAAeSwTr1q2NUN"
-        },
-        {
-          "t": "2023 Panini Prizm BIJAN ROBINSON (RC) Green Wave Prizm #305 PSA 10",
-          "p": 119.0,
-          "u": "https://www.ebay.com/itm/287608434858?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item42f6cc70aa:g:uxoAAeSwXm5qtruX"
-        },
-        {
-          "t": "BIJAN ROBINSON 2023 PANINI PRIZM FLASHBACK NO HUDDLE DISCO ROOKIE PSA 10 PFR-6",
-          "p": 119.99,
-          "u": "https://www.ebay.com/itm/147151951223?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item2242f09577:g:r-gAAeSwEdRpjuKJ"
-        },
-        {
-          "t": "2023 Panini Prizm Draft Picks - Bijan Robinson #115 - Blue Ice /99 PSA 10 RC",
-          "p": 124.99,
-          "u": "https://www.ebay.com/itm/137783616992?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item20148b25e0:g:Sw8AAeSwEhhquGuN"
-        },
-        {
-          "t": "2023 Panini Silver Prizm Flashback Rookie Bijan Robinson RC PSA 10 GEM MINT",
-          "p": 125.0,
-          "u": "https://www.ebay.com/itm/227125959157?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item34e1c319f5:g:bEIAAeSwXfdpOcDr&amdata=enc%3AAQALAAABEOf5zIIojhOf%2BkQK%2Bxzjn7kmr3XrxS604AD%2B9KzDKL3VEiZUG7mSR5x%2BrSX7bOfaimb1Rw6hr2PasGO71S65A3iVaiZyY6L9rTkJm%2Bgaf%2BMofLoJsvqhwUN1smyH8AlRvaOJMBYGxInngdd8CStBBSQv%2F5B1vueeaNWZdQD%2F5vudYoohZzqthuz8rr%2F8hPFkuD6Qc8o1cvX5iG77mObenOepiTvOmH05ovSGhXSxXmiAt9rl71Bn1ravhHmVF%2FlnOvXnNnVX%2B11peMlb3YFndHwLL5VDtIBDPAYghQ3aYFQo0DZLJG7T%2BdfktP4PNp85YLtwMi4kOcbTGiXBT20djAM%2BG1fcCFN7PvciHOa%2F27g%2F"
-        },
-        {
-          "t": "Graded 2023 Panini Prizm Bijan Robinson #PO8 Portals Rookie Card PSA 10",
-          "p": 144.5,
-          "u": "https://www.ebay.com/itm/267806605572?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item3e5a848104:g:X1kAAeSwGhZqyUoQ&amdata=enc%3AAQALAAABEOf5zIIojhOf%2BkQK%2Bxzjn7kJ05nKLSKAMDxEjlZ3eZ4jxWr1TAYrs1MndDwsxQGTtIH%2BB2wONUVbOSBAQBqolYtQ5IDKYALZskTH%2FDBwy5eDKXAZETUIWptmQXWMo3SWRNiRHovq2jfWbfjhsu1LsYJ4RG4gTgokfMrbYQRxZb0yUjYsE6a7sYXLE5YuH36nO5HfOLJ7BbCm02p2W%2B1tj%2FtCrAqgINRB%2BCiqbQ68lNukhmKasmC2Dhi9Jw6q8QoCTrdBBh%2FnhQUoK2sYJpjmpYhOtcO%2B1r7dkUVJKtlRFgcvwEio%2FCyV7CMMKTR1jIOUlNqMDvyChtEvX74e1d0wZeOIxfYKZjPt%2FfC%2Ft9OtVDB3"
-        }
-      ]
-    },
-    {
-      "label": "Bijan Robinson Prizm RC PSA 10",
-      "item_title": "BIJAN ROBINSON 2023 PANINI PRIZM FLASHBACK NO HUDDLE DISCO ROOKIE PSA 10 PFR-6",
-      "price": 119.99,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 250.0,
-      "discount_pct": 52.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/147151951223?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item2242f09577:g:r-gAAeSwEdRpjuKJ",
-      "image": "https://i.ebayimg.com/images/g/r-gAAeSwEdRpjuKJ/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Panini Prizm Bijan Robinson Rookie PSA 10",
-      "premium": false,
-      "ref_count": 29,
-      "grade_key": "psa10",
-      "seller_score": 661,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2023 Panini Prizm - Rookies Bijan Robinson #305 (RC) PSA 10",
-          "p": 105.0,
-          "u": "https://www.ebay.com/itm/147646058623?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item226064107f:g:L4IAAeSwTr1q2NUN"
-        },
-        {
-          "t": "2023 Panini Prizm BIJAN ROBINSON (RC) Green Wave Prizm #305 PSA 10",
-          "p": 119.0,
-          "u": "https://www.ebay.com/itm/287608434858?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item42f6cc70aa:g:uxoAAeSwXm5qtruX"
-        },
-        {
-          "t": "BIJAN ROBINSON 2023 PANINI PRIZM FLASHBACK NO HUDDLE DISCO ROOKIE PSA 10 PFR-6",
-          "p": 119.99,
-          "u": "https://www.ebay.com/itm/147151951223?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item2242f09577:g:r-gAAeSwEdRpjuKJ"
-        },
-        {
-          "t": "2023 Panini Prizm Draft Picks - Bijan Robinson #115 - Blue Ice /99 PSA 10 RC",
-          "p": 124.99,
-          "u": "https://www.ebay.com/itm/137783616992?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item20148b25e0:g:Sw8AAeSwEhhquGuN"
-        },
-        {
-          "t": "2023 Panini Silver Prizm Flashback Rookie Bijan Robinson RC PSA 10 GEM MINT",
-          "p": 125.0,
-          "u": "https://www.ebay.com/itm/227125959157?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item34e1c319f5:g:bEIAAeSwXfdpOcDr&amdata=enc%3AAQALAAABEOf5zIIojhOf%2BkQK%2Bxzjn7kmr3XrxS604AD%2B9KzDKL3VEiZUG7mSR5x%2BrSX7bOfaimb1Rw6hr2PasGO71S65A3iVaiZyY6L9rTkJm%2Bgaf%2BMofLoJsvqhwUN1smyH8AlRvaOJMBYGxInngdd8CStBBSQv%2F5B1vueeaNWZdQD%2F5vudYoohZzqthuz8rr%2F8hPFkuD6Qc8o1cvX5iG77mObenOepiTvOmH05ovSGhXSxXmiAt9rl71Bn1ravhHmVF%2FlnOvXnNnVX%2B11peMlb3YFndHwLL5VDtIBDPAYghQ3aYFQo0DZLJG7T%2BdfktP4PNp85YLtwMi4kOcbTGiXBT20djAM%2BG1fcCFN7PvciHOa%2F27g%2F"
-        },
-        {
-          "t": "Graded 2023 Panini Prizm Bijan Robinson #PO8 Portals Rookie Card PSA 10",
-          "p": 144.5,
-          "u": "https://www.ebay.com/itm/267806605572?_skw=2023+Panini+Prizm+Bijan+Robinson+Rookie+PSA+10&hash=item3e5a848104:g:X1kAAeSwGhZqyUoQ&amdata=enc%3AAQALAAABEOf5zIIojhOf%2BkQK%2Bxzjn7kJ05nKLSKAMDxEjlZ3eZ4jxWr1TAYrs1MndDwsxQGTtIH%2BB2wONUVbOSBAQBqolYtQ5IDKYALZskTH%2FDBwy5eDKXAZETUIWptmQXWMo3SWRNiRHovq2jfWbfjhsu1LsYJ4RG4gTgokfMrbYQRxZb0yUjYsE6a7sYXLE5YuH36nO5HfOLJ7BbCm02p2W%2B1tj%2FtCrAqgINRB%2BCiqbQ68lNukhmKasmC2Dhi9Jw6q8QoCTrdBBh%2FnhQUoK2sYJpjmpYhOtcO%2B1r7dkUVJKtlRFgcvwEio%2FCyV7CMMKTR1jIOUlNqMDvyChtEvX74e1d0wZeOIxfYKZjPt%2FfC%2Ft9OtVDB3"
-        }
-      ]
-    },
-    {
-      "label": "CJ Stroud Prizm RC PSA 10",
-      "item_title": "CJ Stroud ~ 2023 Panini Prizm Green Wave #339 Rookie RC ~ PSA 10 (GEM MT)",
-      "price": 100.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 199.99,
-      "discount_pct": 50.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/267820945593?_skw=2023+Panini+Prizm+CJ+Stroud+Rookie+PSA+10&hash=item3e5b5f50b9:g:~GAAAeSwcr9q2lKR",
-      "image": "https://i.ebayimg.com/images/g/~GAAAeSwcr9q2lKR/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2023 Panini Prizm CJ Stroud Rookie PSA 10",
-      "premium": false,
-      "ref_count": 33,
-      "grade_key": "psa10",
-      "seller_score": 725,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "CJ Stroud ~ 2023 Panini Prizm Green Wave #339 Rookie RC ~ PSA 10 (GEM MT)",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/267820945593?_skw=2023+Panini+Prizm+CJ+Stroud+Rookie+PSA+10&hash=item3e5b5f50b9:g:~GAAAeSwcr9q2lKR"
-        },
-        {
-          "t": "2023 Panini Prizm CJ Stroud NEON GREEN PULSAR RC Rookie Card 339 PSA 10 Pop=851*",
-          "p": 104.32,
-          "u": "https://www.ebay.com/itm/257765386105?_skw=2023+Panini+Prizm+CJ+Stroud+Rookie+PSA+10&hash=item3c0403a779:g:EYYAAeSwORdqtrBH"
-        },
-        {
-          "t": "C.J. Stroud - 2023 Panini Prizm Rookie Prizm Green #339 PSA 10 GEM MINT z",
-          "p": 105.0,
-          "u": "https://www.ebay.com/itm/800487206125?_skw=2023+Panini+Prizm+CJ+Stroud+Rookie+PSA+10&hash=itemba60c16ced:g:uGsAAeSwqylqegzM"
-        },
-        {
-          "t": "2023 Panini Prizm Rookies CJ Stroud 339 Neon Green Pulsar Prizm RC PSA 10 Graded",
-          "p": 109.0,
-          "u": "https://www.ebay.com/itm/267811720204?_skw=2023+Panini+Prizm+CJ+Stroud+Rookie+PSA+10&hash=item3e5ad28c0c:g:ZekAAeSweihqzRdY"
-        },
-        {
-          "t": "2023 Panini Donruss Optic CJ Stroud Rated Rookie Holo Prizm (RC) PSA 10",
-          "p": 114.99,
-          "u": "https://www.ebay.com/itm/407236213572?_skw=2023+Panini+Prizm+CJ+Stroud+Rookie+PSA+10&hash=item5ed12b7b44:g:ZFAAAeSw2thqskh4&amdata=enc%3AAQALAAABEOf5zIIojhOf%2BkQK%2Bxzjn7nooLa0PoMLb93lSQ9C5SPVidLwVKPdiZoE4fqlflzuJ12%2FEXz40Z0kAHaoLZlju34YTYPW9sX1vVw9yP3xgJOunrqXxrvY0XJzWksWal0%2BRLnbR4J8SMpYYyklfxDpvvb2QMOWpLnKdSBtLNcHmX30TbCR5AZ%2FRl0AfSFyIUOsuDPADtnvimrjYlsct4mPnjRG3eicXhX8OQKobpF13IFymanizs3PzlfEjL%2BqcHl3zL%2BNsvk2VIIVrSWQO3M7dyyfg013VNUdwvoE6duhQQau8b4kSlSOlEDfN1rsbiVVHAPAwNqgg02F%2Bvz%2FQKTbY8B7KeAxyjyz7NtoHGiUTRFO"
-        },
-        {
-          "t": "2023 Prizm Red White Blue CJ Stroud ROOKIE CARD PSA 10 #339 RC 2nd Pick Overall",
-          "p": 115.0,
-          "u": "https://www.ebay.com/itm/800820990631?_skw=2023+Panini+Prizm+CJ+Stroud+Rookie+PSA+10&hash=itemba74a692a7:g:GAUAAeSwQURq2Kfe"
-        }
-      ]
-    },
-    {
-      "label": "Jayden Daniels Prizm RC PSA 10",
-      "item_title": "2024 Panini Prizm Jayden Daniels #347 Rookie PSA 10",
-      "price": 100.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 200.0,
-      "discount_pct": 50.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/407295539847?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item5ed4b4ba87:g:zNAAAeSwgPtqc-SB",
-      "image": "https://i.ebayimg.com/images/g/zNAAAeSwgPtqc-SB/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2024 Panini Prizm Jayden Daniels Rookie PSA 10",
-      "premium": false,
-      "ref_count": 36,
-      "grade_key": "psa10",
-      "seller_score": 651,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Panini Prizm Jayden Daniels #347 Rookie PSA 10",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/407295539847?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item5ed4b4ba87:g:zNAAAeSwgPtqc-SB"
-        },
-        {
-          "t": "2024 Panini Prizm - Rookies Jayden Daniels #347 (RC) PSA 10",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/820267307495?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itembefbbdd1e7:g:Nm8AAeSwTYtq2pE9"
-        },
-        {
-          "t": "2024 PANINI PRIZM JAYDEN DANIELS #347 ROOKIE RC  PSA 10 GEM MINT",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/307238563661?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item4788d86f4d:g:XEcAAeSwY95q1amW"
-        },
-        {
-          "t": "2024 Panini Prizm Jayden Daniels Green Wave RC PSA 10 GEM MINT",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/800696873212?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itemba6d40b0fc:g:L4sAAeSw1Xpqsbf7"
-        },
-        {
-          "t": "2024 Panini Prizm Jayden Daniels Orange Lazer Rookie RC #347 PSA 10 Gem Mint",
-          "p": 120.0,
-          "u": "https://www.ebay.com/itm/206572754293?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item3018b21575:g:G9gAAeSwsMpqovO8"
-        },
-        {
-          "t": "2024 PANINI PRIZM JAYDEN DANIELS NEON GREEN PULSAR ROOKIE RC SP #347 PSA 10",
-          "p": 124.95,
-          "u": "https://www.ebay.com/itm/960018411471?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itemdf858e6fcf:g:RuEAAeSw6clqw6YR"
-        }
-      ]
-    },
-    {
-      "label": "Jayden Daniels Prizm RC PSA 10",
-      "item_title": "2024 Panini Prizm - Rookies Jayden Daniels #347 (RC) PSA 10",
-      "price": 100.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 200.0,
-      "discount_pct": 50.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/820267307495?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itembefbbdd1e7:g:Nm8AAeSwTYtq2pE9",
-      "image": "https://i.ebayimg.com/images/g/Nm8AAeSwTYtq2pE9/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2024 Panini Prizm Jayden Daniels Rookie PSA 10",
-      "premium": false,
-      "ref_count": 36,
-      "grade_key": "psa10",
-      "seller_score": 738,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Panini Prizm Jayden Daniels #347 Rookie PSA 10",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/407295539847?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item5ed4b4ba87:g:zNAAAeSwgPtqc-SB"
-        },
-        {
-          "t": "2024 Panini Prizm - Rookies Jayden Daniels #347 (RC) PSA 10",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/820267307495?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itembefbbdd1e7:g:Nm8AAeSwTYtq2pE9"
-        },
-        {
-          "t": "2024 PANINI PRIZM JAYDEN DANIELS #347 ROOKIE RC  PSA 10 GEM MINT",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/307238563661?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item4788d86f4d:g:XEcAAeSwY95q1amW"
-        },
-        {
-          "t": "2024 Panini Prizm Jayden Daniels Green Wave RC PSA 10 GEM MINT",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/800696873212?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itemba6d40b0fc:g:L4sAAeSw1Xpqsbf7"
-        },
-        {
-          "t": "2024 Panini Prizm Jayden Daniels Orange Lazer Rookie RC #347 PSA 10 Gem Mint",
-          "p": 120.0,
-          "u": "https://www.ebay.com/itm/206572754293?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item3018b21575:g:G9gAAeSwsMpqovO8"
-        },
-        {
-          "t": "2024 PANINI PRIZM JAYDEN DANIELS NEON GREEN PULSAR ROOKIE RC SP #347 PSA 10",
-          "p": 124.95,
-          "u": "https://www.ebay.com/itm/960018411471?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itemdf858e6fcf:g:RuEAAeSw6clqw6YR"
-        }
-      ]
-    },
-    {
-      "label": "Jayden Daniels Prizm RC PSA 10",
-      "item_title": "2024 PANINI PRIZM JAYDEN DANIELS #347 ROOKIE RC  PSA 10 GEM MINT",
-      "price": 100.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 200.0,
-      "discount_pct": 50.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/307238563661?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item4788d86f4d:g:XEcAAeSwY95q1amW",
-      "image": "https://i.ebayimg.com/images/g/XEcAAeSwY95q1amW/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2024 Panini Prizm Jayden Daniels Rookie PSA 10",
-      "premium": false,
-      "ref_count": 36,
-      "grade_key": "psa10",
-      "seller_score": 167,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Panini Prizm Jayden Daniels #347 Rookie PSA 10",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/407295539847?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item5ed4b4ba87:g:zNAAAeSwgPtqc-SB"
-        },
-        {
-          "t": "2024 Panini Prizm - Rookies Jayden Daniels #347 (RC) PSA 10",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/820267307495?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itembefbbdd1e7:g:Nm8AAeSwTYtq2pE9"
-        },
-        {
-          "t": "2024 PANINI PRIZM JAYDEN DANIELS #347 ROOKIE RC  PSA 10 GEM MINT",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/307238563661?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item4788d86f4d:g:XEcAAeSwY95q1amW"
-        },
-        {
-          "t": "2024 Panini Prizm Jayden Daniels Green Wave RC PSA 10 GEM MINT",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/800696873212?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itemba6d40b0fc:g:L4sAAeSw1Xpqsbf7"
-        },
-        {
-          "t": "2024 Panini Prizm Jayden Daniels Orange Lazer Rookie RC #347 PSA 10 Gem Mint",
-          "p": 120.0,
-          "u": "https://www.ebay.com/itm/206572754293?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item3018b21575:g:G9gAAeSwsMpqovO8"
-        },
-        {
-          "t": "2024 PANINI PRIZM JAYDEN DANIELS NEON GREEN PULSAR ROOKIE RC SP #347 PSA 10",
-          "p": 124.95,
-          "u": "https://www.ebay.com/itm/960018411471?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itemdf858e6fcf:g:RuEAAeSw6clqw6YR"
-        }
-      ]
-    },
-    {
-      "label": "Jayden Daniels Prizm RC PSA 10",
-      "item_title": "2024 Panini Prizm Jayden Daniels Green Wave RC PSA 10 GEM MINT",
-      "price": 100.0,
-      "buying_option": "FIXED_PRICE",
-      "ends": "",
-      "reference": 200.0,
-      "discount_pct": 50.0,
-      "snipe": false,
-      "url": "https://www.ebay.com/itm/800696873212?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itemba6d40b0fc:g:L4sAAeSw1Xpqsbf7",
-      "image": "https://i.ebayimg.com/images/g/L4sAAeSw1Xpqsbf7/s-l225.jpg",
-      "bars": 3,
-      "sport": "football",
-      "query": "2024 Panini Prizm Jayden Daniels Rookie PSA 10",
-      "premium": false,
-      "ref_count": 36,
-      "grade_key": "psa10",
-      "seller_score": 110,
-      "seller_pct": 100.0,
-      "samples": [
-        {
-          "t": "2024 Panini Prizm Jayden Daniels #347 Rookie PSA 10",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/407295539847?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item5ed4b4ba87:g:zNAAAeSwgPtqc-SB"
-        },
-        {
-          "t": "2024 Panini Prizm - Rookies Jayden Daniels #347 (RC) PSA 10",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/820267307495?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itembefbbdd1e7:g:Nm8AAeSwTYtq2pE9"
-        },
-        {
-          "t": "2024 PANINI PRIZM JAYDEN DANIELS #347 ROOKIE RC  PSA 10 GEM MINT",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/307238563661?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item4788d86f4d:g:XEcAAeSwY95q1amW"
-        },
-        {
-          "t": "2024 Panini Prizm Jayden Daniels Green Wave RC PSA 10 GEM MINT",
-          "p": 100.0,
-          "u": "https://www.ebay.com/itm/800696873212?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itemba6d40b0fc:g:L4sAAeSw1Xpqsbf7"
-        },
-        {
-          "t": "2024 Panini Prizm Jayden Daniels Orange Lazer Rookie RC #347 PSA 10 Gem Mint",
-          "p": 120.0,
-          "u": "https://www.ebay.com/itm/206572754293?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=item3018b21575:g:G9gAAeSwsMpqovO8"
-        },
-        {
-          "t": "2024 PANINI PRIZM JAYDEN DANIELS NEON GREEN PULSAR ROOKIE RC SP #347 PSA 10",
-          "p": 124.95,
-          "u": "https://www.ebay.com/itm/960018411471?_skw=2024+Panini+Prizm+Jayden+Daniels+Rookie+PSA+10&hash=itemdf858e6fcf:g:RuEAAeSw6clqw6YR"
-        }
-      ]
+      "seller_score": 0,
+      "seller_pct": 0,
+      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "hold_days": 90,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "sales": [],
+      "warnings": [
+        "PSA 10 search led to a product-page offer for PSA 9. Not an exact target match; product offers can rotate."
+      ],
+      "query": "2021 PANINI PRIZM PINK ICE #282 CADE CUNNINGHAM ROOKIE RC PSA 9",
+      "evidence": {
+        "sales": [],
+        "excluded": [],
+        "count": 0,
+        "primary_count": 0,
+        "freshest_days": null,
+        "freshest_primary_days": null,
+        "valuation_basis": "provisional reported sales",
+        "range": null,
+        "median": null,
+        "conservative_resale": null,
+        "confidence": "low"
+      },
+      "all_in": 101.83,
+      "economics": null,
+      "max_all_in": null,
+      "max_offer": null,
+      "opening_offer": null,
+      "status": "excluded",
+      "reasons": [
+        "PSA 10 search led to a product-page offer for PSA 9. Not an exact target match; product offers can rotate.",
+        "Listing is sold/ended or current availability is unverified",
+        "Card/slab condition needs photo review",
+        "Seller track record is missing or below screening minimum",
+        "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+      ],
+      "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
     }
-  ]
+  ],
+  "coverage": {
+    "mode": "reviewed public research",
+    "notes": "First public-page sample: 9 listing/product observations across 8 search families. API keys unavailable here; not a full 36-target API scan. Public pages may be cached. No purchase or offer sent.",
+    "researched_at": "2026-10-28T00:50:51.114968+00:00",
+    "queries_run": [
+      "Cade Pink Ice PSA 10",
+      "Jalen Hurts Optic PSA 10",
+      "Brock Purdy Certified auto PSA 9",
+      "Justin Jefferson Genesis PSA 9",
+      "Bijan Select auto PSA 10",
+      "Anthony Edwards Silver PSA 9",
+      "CJ Stroud Stained Glass PSA 9",
+      "Ohtani Chrome PSA 10"
+    ],
+    "api_queries": 0,
+    "api_errors": [],
+    "complete_market_coverage": false
+  },
+  "policy": {
+    "version": 1,
+    "purpose": "Profit-only side business; no collection premium or automatic purchases",
+    "fee_rate": 0.1325,
+    "fee_threshold": 7500,
+    "fee_rate_above": 0.0235,
+    "per_order_fee": 0.4,
+    "purchase_tax_rate": 0.07,
+    "resale_buyer_tax_rate": 0.08,
+    "promotion_reserve_rate": 0.02,
+    "outbound_shipping": 8,
+    "outbound_shipping_premium": 16,
+    "supplies": 2,
+    "contingency_rate": 0.03,
+    "contingency_min": 10,
+    "labor_hours": 0.5,
+    "hourly_value": 50,
+    "annual_capital_hurdle": 0.12,
+    "default_hold_days": 90,
+    "default_max_all_in": 500,
+    "exception_max_all_in": 1000,
+    "research_max_price": 2500,
+    "min_primary_sales": 3,
+    "sales_window_days": 90,
+    "freshest_sale_days": 30,
+    "listing_max_age_hours": 48,
+    "tiers": [
+      {
+        "below": 100,
+        "profit": 50,
+        "roi": 0.4
+      },
+      {
+        "below": 250,
+        "profit": 100,
+        "roi": 0.35
+      },
+      {
+        "below": 500,
+        "profit": 175,
+        "roi": 0.35
+      },
+      {
+        "below": 1000,
+        "profit": 300,
+        "roi": 0.3
+      },
+      {
+        "below": null,
+        "profit": 500,
+        "roi": 0.3
+      }
+    ],
+    "assumptions": "Non-Store US sports-card fee schedule; actual seller plan unconfirmed. Purchase tax 7% and resale-buyer tax 8% are planning allowances, not tax advice. A 2% promotion reserve is budgeted, not an enabled campaign. Free shipping on resale. $25 owner-time allowance and 12% annual capital hurdle are decision costs, not cash expenses. Profit thresholds apply AFTER these allowances and before income tax. Unknown hold time uses a 90-day planning scenario; it is not a sale-time forecast. Shipping/insurance and checkout tax must be verified before buying.",
+    "fee_source": "https://www.ebay.com/help/selling/fees/fees-sellers?id=4822",
+    "fee_checked_on": "2026-10-27"
+  },
+  "price_min": 25,
+  "price_max": 500,
+  "summary": {
+    "qualified": 0,
+    "research": 4,
+    "pass": 2,
+    "excluded": 3
+  }
 }

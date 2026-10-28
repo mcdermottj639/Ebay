@@ -8,6 +8,45 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Current sourcing rules — v53, October 27, 2026
+Jack approved a profit-only side business radar, expanded targets, and a first run.
+These rules supersede the historical asking-median radar/Great Value notes below.
+- `data/buy_policy.json` is the authoritative cost/hurdle configuration. Both dollar
+  profit and ROI must pass AFTER selling fees, purchase tax/shipping, promotion
+  reserve, outbound costs, contingency, owner time and capital allowance. Before
+  income tax. Rates other than the sourced non-Store fee schedule are labeled
+  assumptions; confirm the actual account/checkout costs before buying.
+- 36 discovery targets in `data/watchlist.csv`, football first but basketball and
+  baseball included. Eight Downtown/Kaboom searches (22%), plus autos, rookies,
+  other inserts and established names. Discovery price cap is NOT a buy ceiling.
+- `src/ebaytools/buy_radar.py` is the standard-library evidence/economics engine.
+  Exact normalized identity includes grade, serial denominator, auto and relic.
+  Three deduplicated primary sold prices <=90d, newest <=30d, reviewed condition,
+  seller history, <=48h observed availability and known shipping are required to
+  qualify. Secondary-only or two-sale ceilings are explicitly provisional.
+- `data/buy_research.json` stores reviewed public evidence. Keep sale IDs, URLs,
+  accepted-price status and source type. Asking/guide prices NEVER become resale
+  estimates. Default resale scenario = lower of lower-quartile sold price and
+  90% of median. No rarity multiplier, grading-upgrade or price-growth assumption.
+- `radar.py` now does Browse discovery WITHOUT the old asking-discount gate, then
+  evaluates saved/reviewed evidence. Unreviewed API matches remain research only.
+  Run `python radar.py --evidence-only` explicitly for saved public-page research;
+  this does NOT fetch new listings. Without API keys/dependencies, default exits
+  without overwriting the snapshot. Failed queries and incomplete coverage show.
+- Normal all-in cap $500; >$500 individual exception review, >$1000 premium
+  watchlist only. Default 90-day holding scenario is NOT a sale-time prediction.
+  61–120d requires 1.5x dollar hurdle and +10pp return; >120d stays research.
+- New schema-v2 Buy Radar shows zero qualified honestly, pass/research/excluded
+  reasons, detailed math, source links and stress case. Qualified cards expire
+  client-side after 48h too. Targets explain discovery bands without made-up prices.
+- First public sample: 9 observations / 8 search families; 0 qualified, 4 research,
+  2 price passes, 3 exclusions. API scan unavailable in this implementation session.
+  Sample includes sold Bijan/Cade listings and wrong-grade Cade product result.
+- Keep collection-price research and repricer separate. Never buy, bid, submit an
+  offer, change listings or collection prices from this workflow.
+- Validate: `python -m unittest discover -s tests -v`, `node --check docs/app.js`,
+  `python radar.py --evidence-only`, `python build_web.py`, catalog preservation.
+
 ## Standing rules (owner-set — always follow)
 1. **Be the efficiency tracker.** Proactively fix minor title/logic/data issues
    the moment you notice them — don't wait to be asked. Note what you fixed.
@@ -1438,4 +1477,5 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   rows rate against a fixed reference, not a per-run median. (c) Auction/snipe
   alerts are underused — everything surfacing is FIXED_PRICE; consider weighting
   or a dedicated ending-soon view. (d) Photograph cards for listing (above).
+
 
