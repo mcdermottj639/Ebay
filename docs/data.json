@@ -83,8 +83,8 @@
       "n": 33
     }
   ],
-  "generated": "Oct 28, 2026 \u00b7 01:27 UTC",
-  "app_version": "v55",
+  "generated": "Oct 28, 2026 \u00b7 01:43 UTC",
+  "app_version": "v56",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -449,9 +449,9 @@
   ],
   "radar": {
     "schema_version": 2,
-    "as_of": "2026-10-28T00:58:54.706149+00:00",
+    "as_of": "2026-10-28T01:43:23.711228+00:00",
     "watch_count": 36,
-    "scanned": 9,
+    "scanned": 13,
     "shown": 0,
     "deals": [],
     "candidates": [
@@ -712,6 +712,190 @@
         "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
       },
       {
+        "label": "Amon-Ra St. Brown \u00b7 Prizm Silver Auto PSA 9",
+        "item_title": "2021 Panini Prizm Amon Ra St Brown Silver Auto PSA 9",
+        "listing_id": "820142772410",
+        "url": "https://www.ebay.com/itm/820142772410",
+        "price": 190,
+        "shipping": 0,
+        "currency": "USD",
+        "identity": {
+          "year": 2021,
+          "set": "Panini Prizm",
+          "player": "Amon-Ra St. Brown",
+          "number": "358",
+          "parallel": "Silver",
+          "print_run": "none",
+          "autograph": true,
+          "relic": false,
+          "grader": "PSA",
+          "grade": 9
+        },
+        "identity_reviewed": true,
+        "condition_reviewed": false,
+        "category": "autos",
+        "sport": "football",
+        "page_state": "active",
+        "buying_option": "FIXED_PRICE",
+        "seller_score": 14964,
+        "seller_pct": 100,
+        "checked_at": "2026-10-28T01:43:23.162595+00:00",
+        "hold_days": 90,
+        "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+        "sales": [],
+        "warnings": [],
+        "query": "Amon-Ra St Brown rookie autos PSA 9",
+        "evidence": {
+          "sales": [],
+          "excluded": [],
+          "count": 0,
+          "primary_count": 0,
+          "freshest_days": null,
+          "freshest_primary_days": null,
+          "valuation_basis": "provisional reported sales",
+          "range": null,
+          "median": null,
+          "conservative_resale": null,
+          "confidence": "low"
+        },
+        "all_in": 203.3,
+        "economics": null,
+        "max_all_in": null,
+        "max_offer": null,
+        "opening_offer": null,
+        "status": "research",
+        "reasons": [
+          "Card/slab condition needs photo review",
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        ],
+        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
+      },
+      {
+        "label": "Michael Jordan \u00b7 Fleer #17 PSA 9",
+        "item_title": "1988 Fleer Michael Jordan #17 PSA 9 MINT Chicago Bulls Basketball",
+        "listing_id": "800658746039",
+        "url": "https://www.ebay.com/itm/800658746039",
+        "price": 1300,
+        "shipping": 6.07,
+        "currency": "USD",
+        "identity": {
+          "year": 1988,
+          "set": "Fleer",
+          "player": "Michael Jordan",
+          "number": "17",
+          "parallel": "base",
+          "print_run": "none",
+          "autograph": false,
+          "relic": false,
+          "grader": "PSA",
+          "grade": 9
+        },
+        "identity_reviewed": true,
+        "condition_reviewed": false,
+        "category": "established",
+        "sport": "basketball",
+        "page_state": "unverified",
+        "buying_option": "FIXED_PRICE",
+        "seller_score": 3,
+        "seller_pct": 100,
+        "checked_at": "2026-10-28T01:43:23.162595+00:00",
+        "hold_days": 90,
+        "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+        "sales": [
+          {
+            "identity": {
+              "year": 1988,
+              "set": "Fleer",
+              "player": "Michael Jordan",
+              "number": "17",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 9
+            },
+            "date": "2026-10-19",
+            "price": 825,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:327406649905",
+            "url": "https://www.ebay.com/itm/327406649905",
+            "source_type": "primary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "separate",
+            "shipping": 11.99,
+            "note": "Primary page explicitly labels the listing sold Oct 19 at $825; no accepted-Best-Offer ambiguity shown. Source-reported sale, not proof of payment settlement."
+          }
+        ],
+        "warnings": [
+          "Public listing snapshot was crawled two weeks earlier; current availability is unverified.",
+          "Asking price exceeds this target discovery band; retained as context, not a buy."
+        ],
+        "query": "Michael Jordan Fleer PSA 9",
+        "evidence": {
+          "sales": [
+            {
+              "identity": {
+                "year": 1988,
+                "set": "Fleer",
+                "player": "Michael Jordan",
+                "number": "17",
+                "parallel": "base",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 9
+              },
+              "date": "2026-10-19",
+              "price": 825,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:327406649905",
+              "url": "https://www.ebay.com/itm/327406649905",
+              "source_type": "primary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "separate",
+              "shipping": 11.99,
+              "note": "Primary page explicitly labels the listing sold Oct 19 at $825; no accepted-Best-Offer ambiguity shown. Source-reported sale, not proof of payment settlement."
+            }
+          ],
+          "excluded": [],
+          "count": 1,
+          "primary_count": 1,
+          "freshest_days": 9.1,
+          "freshest_primary_days": 9.1,
+          "valuation_basis": "provisional reported sales",
+          "range": [
+            825,
+            825
+          ],
+          "median": 825,
+          "conservative_resale": null,
+          "confidence": "low"
+        },
+        "all_in": 1397.49,
+        "economics": null,
+        "max_all_in": null,
+        "max_offer": null,
+        "opening_offer": null,
+        "status": "research",
+        "reasons": [
+          "Public listing snapshot was crawled two weeks earlier; current availability is unverified.",
+          "Asking price exceeds this target discovery band; retained as context, not a buy.",
+          "Listing is sold/ended or current availability is unverified",
+          "Card/slab condition needs photo review",
+          "Seller track record is missing or below screening minimum",
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+          "Above $500 normal all-in limit; individual exception review",
+          "Premium watchlist only"
+        ],
+        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
+      },
+      {
         "label": "Jalen Hurts \u00b7 Optic base PSA 10",
         "item_title": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10",
         "listing_id": "156974936364",
@@ -910,7 +1094,7 @@
           "excluded": [],
           "count": 3,
           "primary_count": 0,
-          "freshest_days": 17.0,
+          "freshest_days": 17.1,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -935,8 +1119,8 @@
           "cash_margin": -82.23,
           "adjusted_profit": -120.47,
           "roi": -1.1,
-          "minimum_profit": 150.0,
-          "minimum_roi": 0.45,
+          "minimum_profit": 100,
+          "minimum_roi": 0.3,
           "passes": false
         },
         "max_all_in": 0.0,
@@ -1099,7 +1283,7 @@
           "excluded": [],
           "count": 2,
           "primary_count": 0,
-          "freshest_days": 62.0,
+          "freshest_days": 62.1,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -1124,13 +1308,13 @@
           "cash_margin": -212.57,
           "adjusted_profit": -260.39,
           "roi": -0.6,
-          "minimum_profit": 262.5,
-          "minimum_roi": 0.45,
+          "minimum_profit": 100,
+          "minimum_roi": 0.3,
           "passes": false
         },
-        "max_all_in": 99.99,
-        "max_offer": 87.45,
-        "opening_offer": 74,
+        "max_all_in": 83.3,
+        "max_offer": 71.86,
+        "opening_offer": 61,
         "stress_profit": -303.62,
         "status": "pass",
         "reasons": [
@@ -1404,7 +1588,7 @@
           "excluded": [],
           "count": 3,
           "primary_count": 0,
-          "freshest_days": 79.0,
+          "freshest_days": 79.1,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -1417,7 +1601,7 @@
         },
         "all_in": null,
         "economics": null,
-        "max_all_in": 37.2,
+        "max_all_in": 12.92,
         "max_offer": null,
         "opening_offer": null,
         "status": "excluded",
@@ -1495,12 +1679,143 @@
           "Need 3 exact primary sold prices within 90 days, including one within 30 days"
         ],
         "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
+      },
+      {
+        "label": "DeVonta Smith \u00b7 Select White rookie auto /35",
+        "item_title": "2021 Panini Select Rookie Signatures DeVonta Smith #RS-10 White Prizm /35",
+        "listing_id": "227495991287",
+        "url": "https://www.ebay.com/p/25056187880",
+        "price": null,
+        "shipping": null,
+        "currency": "USD",
+        "identity": {
+          "year": 2021,
+          "set": "Panini Select Rookie Signatures",
+          "player": "DeVonta Smith",
+          "number": "RS-10",
+          "parallel": "White Prizm",
+          "print_run": 35,
+          "autograph": true,
+          "relic": false,
+          "grader": null,
+          "grade": null
+        },
+        "identity_reviewed": false,
+        "condition_reviewed": false,
+        "category": "autos",
+        "sport": "football",
+        "page_state": "ended",
+        "buying_option": null,
+        "seller_score": null,
+        "seller_pct": null,
+        "checked_at": "2026-10-28T01:43:23.162595+00:00",
+        "hold_days": 90,
+        "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+        "sales": [],
+        "warnings": [
+          "Search result redirected to a sold-out product page; no available PSA 10 offer verified."
+        ],
+        "query": "DeVonta Smith rookie autos PSA 10",
+        "evidence": {
+          "sales": [],
+          "excluded": [],
+          "count": 0,
+          "primary_count": 0,
+          "freshest_days": null,
+          "freshest_primary_days": null,
+          "valuation_basis": "provisional reported sales",
+          "range": null,
+          "median": null,
+          "conservative_resale": null,
+          "confidence": "low"
+        },
+        "all_in": null,
+        "economics": null,
+        "max_all_in": null,
+        "max_offer": null,
+        "opening_offer": null,
+        "status": "excluded",
+        "reasons": [
+          "Search result redirected to a sold-out product page; no available PSA 10 offer verified.",
+          "Listing is sold/ended or current availability is unverified",
+          "Auction bid is not a buy-now acquisition price",
+          "Exact card identity needs review",
+          "Card/slab condition needs photo review",
+          "Seller track record is missing or below screening minimum",
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days",
+          "USD acquisition price is missing",
+          "Incoming shipping is unknown"
+        ],
+        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
+      },
+      {
+        "label": "Aaron Judge \u00b7 Chrome grade mismatch",
+        "item_title": "2017 Topps Chrome Aaron Judge #169 PSA 9 product offer",
+        "listing_id": "840035056494",
+        "url": "https://www.ebay.com/p/19065174031",
+        "price": 189.99,
+        "shipping": 5.99,
+        "currency": "USD",
+        "identity": {
+          "year": 2017,
+          "set": "Topps Chrome",
+          "player": "Aaron Judge",
+          "number": "169",
+          "parallel": "base",
+          "print_run": "none",
+          "autograph": false,
+          "relic": false,
+          "grader": "PSA",
+          "grade": 9
+        },
+        "identity_reviewed": true,
+        "condition_reviewed": false,
+        "category": "established",
+        "sport": "baseball",
+        "page_state": "mismatch",
+        "buying_option": "FIXED_PRICE",
+        "seller_score": 859255,
+        "seller_pct": 99.9,
+        "checked_at": "2026-10-28T01:43:23.162595+00:00",
+        "hold_days": 90,
+        "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+        "sales": [],
+        "warnings": [
+          "PSA 10 search redirected to a product page displaying a PSA 9 offer. That offer is not a PSA 10 comparable."
+        ],
+        "query": "Aaron Judge Topps Chrome PSA 10",
+        "evidence": {
+          "sales": [],
+          "excluded": [],
+          "count": 0,
+          "primary_count": 0,
+          "freshest_days": null,
+          "freshest_primary_days": null,
+          "valuation_basis": "provisional reported sales",
+          "range": null,
+          "median": null,
+          "conservative_resale": null,
+          "confidence": "low"
+        },
+        "all_in": 209.7,
+        "economics": null,
+        "max_all_in": null,
+        "max_offer": null,
+        "opening_offer": null,
+        "status": "excluded",
+        "reasons": [
+          "PSA 10 search redirected to a product page displaying a PSA 9 offer. That offer is not a PSA 10 comparable.",
+          "Listing is sold/ended or current availability is unverified",
+          "Card/slab condition needs photo review",
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        ],
+        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
       }
     ],
     "coverage": {
       "mode": "reviewed public research",
-      "notes": "First public-page sample: 9 listing/product observations across 8 search families. API keys unavailable here; not a full 36-target API scan. Public pages may be cached. No purchase or offer sent.",
-      "researched_at": "2026-10-28T00:50:51.114968+00:00",
+      "notes": "Accumulated public research: 13 listing/product observations across 12 target families. Latest pass added four families; the original nine retain their original observation times. Public pages may be cached. This is partial discovery, not a full 36-target API scan. No purchase or offer sent.",
+      "researched_at": "2026-10-28T01:43:23.162595+00:00",
       "queries_run": [
         "Cade Pink Ice PSA 10",
         "Jalen Hurts Optic PSA 10",
@@ -1509,14 +1824,66 @@
         "Bijan Select auto PSA 10",
         "Anthony Edwards Silver PSA 9",
         "CJ Stroud Stained Glass PSA 9",
-        "Ohtani Chrome PSA 10"
+        "Ohtani Chrome PSA 10",
+        "Amon-Ra St Brown rookie autos PSA 9",
+        "DeVonta Smith rookie autos PSA 10",
+        "Aaron Judge Topps Chrome PSA 10",
+        "Michael Jordan Fleer PSA 9"
       ],
       "api_queries": 0,
       "api_errors": [],
-      "complete_market_coverage": false
+      "complete_market_coverage": false,
+      "api_access": {
+        "checked_at": "2026-10-28T01:43:23.162595+00:00",
+        "production_configured": false,
+        "credentials_present": false,
+        "browse": "credentials_unavailable",
+        "sold_history": "not_tested",
+        "note": "No production eBay credentials available in this runner; this does not establish whether another authorized runtime has access."
+      },
+      "run_log": [
+        {
+          "researched_at": "2026-10-28T00:50:51.114968+00:00",
+          "mode": "public sources",
+          "queries_attempted": [
+            "Cade Pink Ice PSA 10",
+            "Jalen Hurts Optic PSA 10",
+            "Brock Purdy Certified auto PSA 9",
+            "Justin Jefferson Genesis PSA 9",
+            "Bijan Select auto PSA 10",
+            "Anthony Edwards Silver PSA 9",
+            "CJ Stroud Stained Glass PSA 9",
+            "Ohtani Chrome PSA 10"
+          ],
+          "observations_added": 9,
+          "note": "Initial sample; primary-sale coverage incomplete."
+        },
+        {
+          "researched_at": "2026-10-28T01:43:23.162595+00:00",
+          "mode": "public sources",
+          "queries_attempted": [
+            "Amon-Ra St Brown rookie autos PSA 9",
+            "DeVonta Smith rookie autos PSA 10",
+            "Aaron Judge Topps Chrome PSA 10",
+            "Michael Jordan Fleer PSA 9"
+          ],
+          "observations_added": 4,
+          "source_checks": [
+            "https://www.ebay.com/itm/820142772410",
+            "https://www.ebay.com/itm/227495991287",
+            "https://www.ebay.com/itm/840035056494",
+            "https://www.ebay.com/itm/800658746039",
+            "https://www.ebay.com/itm/327406649905"
+          ],
+          "failures": [
+            "Secondary Jordan candidate 147608336388 inaccessible; no price recorded."
+          ],
+          "note": "One directly inspected Jordan sold-price record; no candidate meets the three-sale evidence minimum. Redirected grades and sold-out results are excluded."
+        }
+      ]
     },
     "policy": {
-      "version": 1,
+      "version": 2,
       "purpose": "Profit-only side business; no collection premium or automatic purchases",
       "fee_rate": 0.1325,
       "fee_threshold": 7500,
@@ -1541,44 +1908,41 @@
       "sales_window_days": 90,
       "freshest_sale_days": 30,
       "listing_max_age_hours": 48,
-      "tiers": [
+      "hold_tiers": [
         {
-          "below": 100,
-          "profit": 50,
-          "roi": 0.4
+          "through_days": 30,
+          "profit": 75,
+          "roi": 0.25
         },
         {
-          "below": 250,
+          "through_days": 90,
           "profit": 100,
-          "roi": 0.35
-        },
-        {
-          "below": 500,
-          "profit": 175,
-          "roi": 0.35
-        },
-        {
-          "below": 1000,
-          "profit": 300,
           "roi": 0.3
         },
         {
-          "below": null,
-          "profit": 500,
-          "roi": 0.3
+          "through_days": 120,
+          "profit": 150,
+          "roi": 0.35
         }
       ],
-      "assumptions": "Non-Store US sports-card fee schedule; actual seller plan unconfirmed. Purchase tax 7% and resale-buyer tax 8% are planning allowances, not tax advice. A 2% promotion reserve is budgeted, not an enabled campaign. Free shipping on resale. $25 owner-time allowance and 12% annual capital hurdle are decision costs, not cash expenses. Profit thresholds apply AFTER these allowances and before income tax. Unknown hold time uses a 90-day planning scenario; it is not a sale-time forecast. Shipping/insurance and checkout tax must be verified before buying.",
+      "assumptions": "Non-Store US sports-card fee schedule; actual seller plan unconfirmed. Purchase tax 7% and resale-buyer tax 8% are planning allowances, not tax advice. A 2% promotion reserve is budgeted, not an enabled campaign. Free shipping on resale. $25 owner-time allowance and 12% annual capital hurdle are decision costs, not cash expenses. Profit thresholds apply AFTER these allowances and before income tax. Both the dollar floor and return percentage must pass. Unknown or unsupported short hold time uses a 90-day planning scenario; it is not a sale-time forecast. A shorter hold requires a reviewed rationale and source links. Shipping/insurance and checkout tax must be verified before buying.",
       "fee_source": "https://www.ebay.com/help/selling/fees/fees-sellers?id=4822",
       "fee_checked_on": "2026-10-27"
+    },
+    "diagnostics": {
+      "sales_supported": 0,
+      "missing_sales_evidence": 13,
+      "condition_review_needed": 13,
+      "priced_scenarios": 2,
+      "profit_screen_pass": 0
     },
     "price_min": 25,
     "price_max": 500,
     "summary": {
       "qualified": 0,
-      "research": 4,
+      "research": 6,
       "pass": 2,
-      "excluded": 3
+      "excluded": 5
     }
   },
   "summary": {

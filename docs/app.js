@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v55";
+  var APP_VERSION = "v56";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1139,12 +1139,12 @@
       '<h3>' + esc(c.label) + '</h3><p class="pr-title">' + esc(c.item_title) + '</p>' +
       '<div class="pr-metrics"><div><span>' + (c.buying_option === "AUCTION" ? "Observed bid" : c.page_state === "sold" ? "Historical display" : "Observed ask") + '</span><b>' + radarMoney(c.price) + '</b></div>' +
       '<div><span>All-in estimate</span><b>' + radarMoney(c.all_in) + '</b></div>' +
-      '<div><span>' + (ev.confidence === "medium" ? "Maximum all-in" : "Provisional ceiling") + '</span><b>' + radarMoney(c.max_all_in) + '</b></div></div>' +
+      '<div><span>' + (ev.confidence === "medium" ? "Maximum all-in" : "Provisional ceiling") + '</span><b>' + (c.max_all_in === 0 ? 'No viable price' : radarMoney(c.max_all_in)) + '</b></div></div>' +
       '<p class="pr-reason">' + esc((c.reasons || [])[0] || "Meets the configured evidence and profit hurdles; verify checkout before acting.") + '</p>' +
       '<details><summary>Evidence & profit math</summary><p class="muted">' + esc(c.ceiling_label || "") + '. ' + ev.count + ' usable reported sales · ' + ev.primary_count + ' primary confirmations.' +
       (ev.freshest_days !== null && ev.freshest_days !== undefined ? ' Newest: ' + ev.freshest_days + ' days.' : '') + '</p>' +
       '<p>' + esc(c.hold_days) + '-day hold: ' + esc(c.hold_basis) + '.</p>' +
-      (c.max_offer !== null ? '<p>Item-price ceiling: <b>' + money(c.max_offer) + '</b> after allowing for incoming shipping and purchase tax. Opening-offer scenario: ' + money(c.opening_offer) + '. No offer sent.</p>' : '') +
+      (c.max_offer > 0 ? '<p>Item-price ceiling: <b>' + money(c.max_offer) + '</b> after allowing for incoming shipping and purchase tax. Opening-offer scenario: ' + money(c.opening_offer) + '. No offer sent.</p>' : '') +
       math + '<ul>' + (c.reasons || []).map(function(r){return '<li>' + esc(r) + '</li>';}).join("") + '</ul>' + soldRows +
       '<p class="muted">Observed ' + esc(c.checked_at || "unknown") + '. Shipping is location-dependent; recheck listing and checkout. Source-reported sales are not proof of settlement.</p></details>' +
       '<div class="pr-actions"><a target="_blank" rel="noopener" href="' + safeBuyLink(c.url) + '">View source ↗</a><a target="_blank" rel="noopener" href="' + dealSearchUrl(c, true) + '">Check sold matches ↗</a></div></article>';
@@ -1161,14 +1161,17 @@
     var coverage = radar.coverage || {};
     wrap.appendChild(el('<div class="eyebrow">Buy Radar · profit first</div>'));
     wrap.appendChild(el('<div class="pr-hero"><div class="pr-kicker">CAPITAL DISCIPLINE</div><h2>' +
-      ((counts.qualified || 0) ? counts.qualified + ' opportunities clear the screen' : 'No qualifying buys this scan') +
+      ((counts.qualified || 0) ? counts.qualified + ' opportunities clear the screen' : 'No verified buys yet') +
       '</h2><p>Keep the cash until the evidence and net profit justify the work.</p><div class="pr-stats"><div><b>' + radar.watch_count + '</b><span>search targets</span></div><div><b>' + radar.scanned + '</b><span>listings evaluated</span></div><div><b>' + (counts.qualified || 0) + '</b><span>qualified</span></div></div></div>'));
     wrap.appendChild(el('<p class="pr-coverage">' + esc(coverage.mode || "Research snapshot") + ' · evaluated ' + esc((radar.as_of || "").slice(0,16).replace("T"," ")) + ' UTC<br>' + esc(coverage.notes || "Partial discovery, not a complete market scan.") + '</p>'));
+    var diagnostic = radar.diagnostics || {};
+    if (typeof diagnostic.sales_supported === 'number') wrap.appendChild(el('<p class="pr-coverage"><b>Sales evidence:</b> ' + diagnostic.sales_supported + ' of ' + radar.scanned + ' observations have the required exact primary sold records. ' + diagnostic.priced_scenarios + ' have a resale scenario. Incomplete evidence limits what this scan can conclude.</p>'));
+    if ((coverage.api_access || {}).browse === 'credentials_unavailable') wrap.appendChild(el('<p class="pr-coverage">Live eBay API search is unavailable in this research runner. Results below come from reviewed public sources.</p>'));
     var stale = rows.some(function(c) { return !c.checked_at || Date.now()-Date.parse(c.checked_at)>48*3600000; });
     if(stale) wrap.appendChild(el('<div class="pr-warning">Some listing observations are over 48 hours old. Recheck availability and pricing before acting.</div>'));
     var rules = '<details class="pr-policy"><summary>Buying rules & cost assumptions</summary><p>Normal all-in ceiling $500. $500–$1,000 needs individual review; higher-priced cards are research only. Both profit and return hurdles must pass.</p><div class="pr-tier">';
-    (policy.tiers || []).forEach(function(t,i){ var prev = i ? policy.tiers[i-1].below : 0; rules += '<div><span>' + money0(prev) + (t.below ? '–under ' + money0(t.below) : '+') + '</span><b>' + money0(t.profit) + ' + ' + Math.round(t.roi*100) + '% return</b></div>'; });
-    rules += '</div><p>61–120 days: 1.5× dollar hurdle and +10 percentage points return. Over 120 days: research only. No forced purchases.</p><p class="muted">' + esc(policy.assumptions || "") + '</p><a target="_blank" rel="noopener" href="' + safeBuyLink(policy.fee_source) + '">eBay fee schedule ↗</a></details>';
+    (policy.hold_tiers || []).forEach(function(t,i){ var prev = i ? policy.hold_tiers[i-1].through_days + 1 : 1; rules += '<div><span>' + prev + '–' + t.through_days + ' days</span><b>' + money0(t.profit) + ' AND ' + Math.round(t.roi*100) + '% return</b></div>'; });
+    rules += '</div><p>Unknown hold: 90-day planning scenario. Shorter holds require reviewed supporting sources. Over 120 days: research only. Dollar requirements do not jump at purchase-price boundaries.</p><p class="muted">' + esc(policy.assumptions || "") + '</p><a target="_blank" rel="noopener" href="' + safeBuyLink(policy.fee_source) + '">eBay fee schedule ↗</a></details>';
     wrap.appendChild(el(rules));
     var toolbar = el('<div class="pr-toolbar"><label>Show <select id="profitStatus"><option value="all">All reviewed listings</option><option value="qualified">Qualified only</option><option value="research">Needs evidence</option><option value="pass">Pass at this price</option><option value="excluded">Excluded</option></select></label><label>Category <select id="profitCategory"><option value="all">All categories</option>' + Object.keys(BUY_CATEGORIES).map(function(k){return '<option value="' + k + '">' + BUY_CATEGORIES[k] + '</option>';}).join("") + '</select></label></div>');
     wrap.appendChild(toolbar);

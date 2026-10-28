@@ -29,9 +29,10 @@ def finite(value):
 
 
 def requirements(cost, days, policy):
-    tier = next(t for t in policy["tiers"] if t["below"] is None or cost < t["below"])
-    slower = days > 60
-    return tier["profit"] * (1.5 if slower else 1), tier["roi"] + (0.10 if slower else 0)
+    # Dollar and ROI floors vary by supported holding period, never purchase tier.
+    tiers = policy["hold_tiers"]
+    tier = next((t for t in tiers if days <= t["through_days"]), tiers[-1])
+    return tier["profit"], tier["roi"]
 
 
 def economics(resale, all_in, days, policy):
@@ -56,12 +57,12 @@ def economics(resale, all_in, days, policy):
         "cash_margin": cash, "adjusted_profit": adjusted,
         "roi": adjusted / all_in if all_in else 0,
         "minimum_profit": minimum, "minimum_roi": roi,
-        "passes": adjusted >= minimum and adjusted >= all_in * roi,
+        "passes": days <= 120 and adjusted >= minimum and adjusted >= all_in * roi,
     }
 
 
 def max_buy(resale, days, policy):
-    # Integer-cent search handles tier jumps conservatively (e.g. $99.99/$100).
+    # Integer-cent search returns the highest price meeting BOTH profit floors.
     lo, hi = 0, int(resale * 100)
     while lo < hi:
         mid = (lo + hi + 1) // 2
@@ -126,6 +127,12 @@ def evaluate(candidate, policy, now=None):
     days = c.get("hold_days", policy["default_hold_days"])
     if not finite(days) or days < 1:
         days = policy["default_hold_days"]
+    hold_supported = (c.get("hold_reviewed") is True and bool(c.get("hold_basis"))
+                      and any(isinstance(s, str) and s.startswith("https://")
+                              for s in (c.get("hold_sources") or [])))
+    if days < policy["default_hold_days"] and not hold_supported:
+        days = policy["default_hold_days"]
+        c["hold_basis"] = "90-day planning scenario; shorter hold lacks a reviewed rationale and sources"
     c["hold_days"] = days
     c["hold_basis"] = c.get("hold_basis") or "Planning scenario; sale time is not established"
     listing_age = instant(c.get("checked_at"))
@@ -200,8 +207,15 @@ def snapshot(candidates, policy, watch_count, coverage, now=None):
     order = {"qualified": 0, "research": 1, "pass": 2, "excluded": 3}
     rows.sort(key=lambda r: (order[r["status"]], -((r.get("economics") or {}).get("adjusted_profit", -99999) / r["hold_days"])))
     qualified = [r for r in rows if r["status"] == "qualified"]
+    diagnostics = {
+        "sales_supported": sum(r["evidence"]["confidence"] == "medium" for r in rows),
+        "missing_sales_evidence": sum(r["evidence"]["confidence"] != "medium" for r in rows),
+        "condition_review_needed": sum(not r.get("condition_reviewed") for r in rows),
+        "priced_scenarios": sum(r["economics"] is not None for r in rows),
+        "profit_screen_pass": sum(bool(r["economics"] and r["economics"]["passes"]) for r in rows),
+    }
     return {"schema_version": 2, "as_of": now.isoformat(), "watch_count": watch_count,
             "scanned": len(rows), "shown": len(qualified), "deals": qualified,
-            "candidates": rows, "coverage": coverage, "policy": policy,
+            "candidates": rows, "coverage": coverage, "policy": policy, "diagnostics": diagnostics,
             "price_min": 25, "price_max": policy["default_max_all_in"],
             "summary": {s: sum(r["status"] == s for r in rows) for s in order}}
