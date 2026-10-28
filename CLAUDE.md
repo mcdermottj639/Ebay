@@ -8,7 +8,7 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
-## Current sourcing rules — v53, October 27, 2026
+## Current sourcing rules — v54, October 27, 2026
 Jack approved a profit-only side business radar, expanded targets, and a first run.
 These rules supersede the historical asking-median radar/Great Value notes below.
 - `data/buy_policy.json` is the authoritative cost/hurdle configuration. Both dollar
@@ -36,6 +36,12 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - Normal all-in cap $500; >$500 individual exception review, >$1000 premium
   watchlist only. Default 90-day holding scenario is NOT a sale-time prediction.
   61–120d requires 1.5x dollar hurdle and +10pp return; >120d stays research.
+- v54 renders the scan hero/counts as a separate DOM element (the shared `el`
+  helper returns one root); browser acceptance covers the counts and filters.
+- Sourcing refresh automation `Card Buy Radar` is enabled Tuesday/Friday evenings
+  America/New_York, up to 12 rotating target families, at most 3 Downtown/Kaboom.
+  It updates reviewed evidence and the tested sourcing snapshot only; notify for
+  new qualifying candidates or a blocker requiring Jack, not routine no-buys.
 - New schema-v2 Buy Radar shows zero qualified honestly, pass/research/excluded
   reasons, detailed math, source links and stress case. Qualified cards expire
   client-side after 48h too. Targets explain discovery bands without made-up prices.

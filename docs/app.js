@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v53";
+  var APP_VERSION = "v54";
   var state = { tab: "collection", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "tier",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -1159,7 +1159,8 @@
     });
     var counts = {qualified:rows.filter(function(c){return c.status === "qualified";}).length}, policy = radar.policy || {};
     var coverage = radar.coverage || {};
-    wrap.appendChild(el('<div class="eyebrow">Buy Radar · profit first</div><div class="pr-hero"><div class="pr-kicker">CAPITAL DISCIPLINE</div><h2>' +
+    wrap.appendChild(el('<div class="eyebrow">Buy Radar · profit first</div>'));
+    wrap.appendChild(el('<div class="pr-hero"><div class="pr-kicker">CAPITAL DISCIPLINE</div><h2>' +
       ((counts.qualified || 0) ? counts.qualified + ' opportunities clear the screen' : 'No qualifying buys this scan') +
       '</h2><p>Keep the cash until the evidence and net profit justify the work.</p><div class="pr-stats"><div><b>' + radar.watch_count + '</b><span>search targets</span></div><div><b>' + radar.scanned + '</b><span>listings evaluated</span></div><div><b>' + (counts.qualified || 0) + '</b><span>qualified</span></div></div></div>'));
     wrap.appendChild(el('<p class="pr-coverage">' + esc(coverage.mode || "Research snapshot") + ' · evaluated ' + esc((radar.as_of || "").slice(0,16).replace("T"," ")) + ' UTC<br>' + esc(coverage.notes || "Partial discovery, not a complete market scan.") + '</p>'));
