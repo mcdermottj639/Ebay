@@ -1,178 +1,84 @@
 #!/usr/bin/env python3
-"""Buy Radar snapshot — scan eBay for watchlist deals and save them for the app.
-
-This is the app-facing sibling of find_deals.py. It scans eBay's active
-listings for the cards on your watchlist (data/watchlist.csv), keeps the ones
-priced under market, rates each Great / Good / Fair, and writes the results to
-data/radar_snapshot.json. That file is committed, so build_web.py bakes it into
-the app and the 🔎 Buy Radar tab shows the latest deals — no live server needed.
-
-A scheduled Routine runs this every morning, rebuilds, and ships to main, so the
-tab refreshes itself. You can also run it by hand any time:
-
-    python3 radar.py
-
-Needs your eBay API keys (same ones as pricing — see docs/01-getting-ebay-api-keys.md).
+"""Profit-first Buy Radar. Public research: --evidence-only; keyed discovery: default.
+Reviewed sources: data/buy_research.json. No purchases or inventory/listing writes.
 """
-
+import argparse
+import csv
 import json
 import sys
-from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT / "src"))
+from ebaytools.buy_radar import snapshot
 
-sys.path.insert(0, str(Path(__file__).parent / "src"))
-from ebaytools import config, deals  # noqa: E402
-
-DATA = Path(__file__).parent / "data"
-SNAPSHOT = DATA / "radar_snapshot.json"
-
-# Curation: watchlist queries are broad, so the "market" median gets dragged up
-# by premium parallels/autos in the same search — which makes cheap base cards
-# look like 90%+ "steals" that aren't real. We keep only believable discounts
-# and cap the list, so the tab shows trustworthy deals, not a wall of noise.
-# (An owner-set fair_value/alert_below on a watchlist row makes that item's
-# deals reliable regardless — those are the sharpest ones.)
-MIN_DISCOUNT = 15.0   # below this isn't worth flagging as a deal
-MAX_DISCOUNT = 65.0   # above this the reference is almost certainly polluted
-TOP_N = 30            # show the best ~30
-# Downtowns/Kabooms sort to the top, so without a reserve they'd fill every
-# slot and the "no Kaboom/Downtown" filter would show nothing. Hold back some
-# slots for non-premium deals so that filter always has cards to show.
-OTHER_SLOTS = 12
-
-# Price band the owner wants to shop in: the more expensive, premium end.
-# We pass this to the eBay search so both the listings AND the market
-# reference stay inside the window (no cheap base cards muddying it), and we
-# keep only deals whose asking price lands here.
-MIN_PRICE = 100.0
-MAX_PRICE = 1000.0
-
-# Premium inserts the owner specifically hunts (Downtowns + Kabooms). These run
-# well over $1000, and the owner says that's fine WHEN the savings are big — so
-# we widen their band and keep the pricey ones only if the discount is meaty.
-PREMIUM_TERMS = ("downtown", "kaboom")
-PREMIUM_MAX_PRICE = 5000.0
-PREMIUM_MIN_DISCOUNT = 25.0   # over $1000, only flag a real bargain
-
-# Owner preference: surface football first, then everything else (baseball etc.).
-SPORT_ORDER = {"football": 0}
-
-# Scam guard for pricey cards: a "too good" deal from a brand-new / low-rated
-# seller is a red flag (e.g. a misspelled "Dunruss … Gem Rare" $700 listing).
-# Require a real track record. eBay returns feedbackScore 0 / pct 0 when it
-# omits the seller block; treat that as "unknown" and keep it rather than nuking
-# every deal, but drop clearly-bad sellers.
-MIN_SELLER_SCORE = 10
-MIN_SELLER_PCT = 95.0
-
-
-def _is_premium(item) -> bool:
-    """True for Downtown/Kaboom-style premium inserts (by label or query)."""
-    hay = f"{item.label} {item.query}".lower()
-    return any(term in hay for term in PREMIUM_TERMS)
-
-
-def _keep(d) -> bool:
-    """Is this deal believable and in the owner's price rules?"""
-    # Oversized/jumbo Downtowns are a separate, differently-priced market — never
-    # rate one against a standard-size median (it shows as a fake "great value").
-    # deals.scan already drops these from a standard query; this guards the
-    # snapshot too, unless the watchlist row is specifically hunting oversized.
-    if deals._is_oversized(d.item_title) and not deals._query_wants_oversized(d.query or ""):
-        return False
-    # Scam guard: drop a deal from a seller with a real but poor record. A score
-    # of 0 means eBay didn't return seller data (unknown) — don't punish that.
-    if d.seller_score and d.seller_score < MIN_SELLER_SCORE:
-        return False
-    if d.seller_pct and d.seller_pct < MIN_SELLER_PCT:
-        return False
-    if not (MIN_DISCOUNT <= d.discount_pct <= MAX_DISCOUNT):
-        return False
-    if d.price < MIN_PRICE:
-        return False
-    if d.price <= MAX_PRICE:
-        return True
-    # Above $1000: only Downtowns/Kabooms, and only with big savings.
-    return bool(d.premium and d.price <= PREMIUM_MAX_PRICE
-                and d.discount_pct >= PREMIUM_MIN_DISCOUNT)
-
-
-def _order(deal_list):
-    """Football first, Downtowns/Kabooms next, then biggest discount."""
-    return sorted(deal_list, key=lambda d: (SPORT_ORDER.get(d.sport, 1),
-                                            0 if d.premium else 1, -d.discount_pct))
-
-
-def _curate(found):
-    """Keep believable, in-band deals, reserving room for non-premium ones so
-    the 'no Kaboom/Downtown' filter always has cards. Returns (kept, dropped)."""
-    kept = [d for d in found if _keep(d)]
-    premium = _order([d for d in kept if d.premium])
-    other = _order([d for d in kept if not d.premium])
-    # Reserve up to OTHER_SLOTS for non-premium; premium fills whatever's left.
-    other_keep = other[:OTHER_SLOTS]
-    premium_keep = premium[:TOP_N - len(other_keep)]
-    final = _order(premium_keep + other_keep)
-    return final, len(found) - len(final)
-
-
-def main() -> int:
-    items = deals.load_watchlist()
-    if not items:
-        print("Your watchlist is empty. Add cards you want to buy to data/watchlist.csv.")
-        return 1
-
-    if not config.have_api_keys():
-        print("Buy Radar needs eBay API keys yet to be set up.")
-        print(f"Missing: {', '.join(config.missing_keys())} in your .env file.")
-        print("See docs/01-getting-ebay-api-keys.md.")
-        return 1
-
-    # Downtowns/Kabooms can run past $1000 — the owner wants those too, so give
-    # them a wider band and flag them premium.
-    premium_n = 0
-    for it in items:
-        if _is_premium(it):
-            it.premium = True
-            it.price_max = PREMIUM_MAX_PRICE
-            premium_n += 1
-
-    band = f"${MIN_PRICE:.0f}–${MAX_PRICE:.0f}"
-    if premium_n:
-        band += f" (Downtowns/Kabooms up to ${PREMIUM_MAX_PRICE:.0f})"
-    print(f"Scanning eBay for {len(items)} watchlist item(s) "
-          f"({band}, football first)...\n")
-    found = deals.scan(items, price_min=MIN_PRICE, price_max=MAX_PRICE)
-    kept, dropped = _curate(found)
-
-    payload = {
-        "as_of": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-        "watch_count": len(items),
-        "price_min": MIN_PRICE,     # the band we shopped in
-        "price_max": MAX_PRICE,
-        "scanned": len(found),      # total under-market listings eBay returned
-        "shown": len(kept),         # believable deals we kept
-        "deals": [asdict(d) for d in kept],
-    }
-    DATA.mkdir(exist_ok=True)
-    SNAPSHOT.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-
-    if not kept:
-        print(f"Scanned {len(found)} under-market listing(s), but none in the believable "
-              f"{MIN_DISCOUNT:.0f}–{MAX_DISCOUNT:.0f}% range and ${MIN_PRICE:.0f}–${MAX_PRICE:.0f} "
-              f"band right now.")
-        print(f"Saved an empty snapshot → {SNAPSHOT.name}. Run build_web.py to refresh the app.")
-        return 0
-
-    print(f"Kept {len(kept)} believable deal(s) (filtered out {dropped} as noise/over-market):\n")
-    for d in kept:
-        tag = "  SNIPE" if d.snipe else ""
-        print(f"  [{d.discount_pct:+.0f}% vs ${d.reference:.0f}] ${d.price:.2f} {d.buying_option}{tag}")
-        print(f"     {d.item_title[:70]}")
-    print(f"\nSaved {len(kept)} deal(s) → {SNAPSHOT.name}. Now run: python3 build_web.py")
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--evidence-only", action="store_true", help="Evaluate saved research; no API discovery")
+    args = parser.parse_args()
+    data = ROOT / "data"
+    policy = json.loads((data / "buy_policy.json").read_text())
+    research = json.loads((data / "buy_research.json").read_text()) if (data / "buy_research.json").exists() else {"candidates": []}
+    with (data / "watchlist.csv").open() as f:
+        targets = list(csv.DictReader(f))
+    candidates = list(research.get("candidates", []))
+    coverage = {"mode": "reviewed public research", "notes": research.get("coverage_notes", ""),
+                "researched_at": research.get("researched_at"), "queries_run": research.get("queries_run", []),
+                "api_queries": 0, "api_errors": [], "complete_market_coverage": False}
+    now = datetime.now(timezone.utc)
+    if not args.evidence_only:
+        try:
+            from ebaytools import config, deals, ebay_auth
+        except ImportError:
+            print("API dependencies unavailable. Install requirements.txt or use --evidence-only. Snapshot unchanged.")
+            return 1
+        if not config.have_api_keys():
+            print("eBay API keys unavailable. Snapshot unchanged. Public research: --evidence-only.")
+            return 1
+        try:
+            token = ebay_auth.application_token()
+        except Exception:
+            print("eBay authentication failed. Snapshot unchanged; check authorized configuration privately.")
+            return 1
+        coverage["mode"] = "Browse discovery plus reviewed evidence"
+        by_url = {c["url"]: c for c in candidates if c.get("url")}
+        fresh = []
+        for target in targets:
+            try:
+                listings = deals._search(token, target["query"], 50, price_min=25,
+                                         price_max=float(target.get("price_max") or 1000))
+                coverage["api_queries"] += 1
+            except Exception:
+                coverage["api_errors"].append(target["label"])
+                continue
+            for item in listings:
+                title = item["title"]
+                if not deals._is_single_card(title) or deals._is_junk(title) or deals._is_oversized(title):
+                    continue
+                if not deals._matches_query(target["query"], title):
+                    continue
+                old = by_url.get(item["url"], {})
+                reviewed = dict(old) if old.get("item_title") == title else {}
+                reviewed.update(item)
+                reviewed.update({"item_title": title, "label": target["label"], "category": target.get("category", "rookies"),
+                                 "sport": target.get("sport", ""), "query": target["query"],
+                                 "checked_at": now.isoformat(), "page_state": "active",
+                                 "listing_id": deals._item_id(item["url"]), "currency": item.get("currency", "USD")})
+                fresh.append(reviewed)
+        if not coverage["api_queries"]:
+            print("All Browse searches failed. Snapshot unchanged.")
+            return 1
+        fresh_ids = {c.get("listing_id") for c in fresh}
+        candidates = fresh + [c for c in candidates if c.get("listing_id") not in fresh_ids]
+    result = snapshot(candidates, policy, len(targets), coverage, now)
+    path = data / "radar_snapshot.json"
+    temporary = path.with_suffix(".tmp")
+    temporary.write_text(json.dumps(result, indent=2) + "\n")
+    temporary.replace(path)
+    print(json.dumps({"mode": coverage["mode"], "targets": len(targets), "listings_evaluated": result["scanned"],
+                      "summary": result["summary"], "api_errors": coverage["api_errors"]}, indent=2))
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
