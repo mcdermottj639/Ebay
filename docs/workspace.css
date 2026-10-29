@@ -114,3 +114,63 @@ main{padding-top:18px}.page-head{padding-bottom:12px;margin-bottom:14px}.page-he
  .inventory-card{padding-top:12px;padding-bottom:12px}.inventory-card-body>p{margin-top:4px}.review-reason{margin-top:4px}.review-buttons{gap:10px}
  .plan-summary{padding:14px;gap:10px;margin-bottom:14px}.plan-summary p{padding-top:8px}.listing-card{padding:14px}.lot-group{margin-top:16px}.result-tile{padding:14px}.ledger-row{padding-top:12px;padding-bottom:12px}
 }
+/* v63: restored visuals in the exchange identity — price ladder, inventory
+   trend lines, value bars, collection map and reference movers. */
+.price-ladder{margin:4px 0 4px;padding:12px 0 13px;border-top:0;border-bottom:1px solid var(--border)}
+.price-ladder.empty p{font-size:12px;color:var(--muted);margin:0}
+.pl-head p{margin:6px 0 4px;font-size:14px;font-weight:700;line-height:1.35}
+.pl-svg{display:block;width:100%;height:auto;overflow:visible;margin-top:4px}
+.pl-axis{stroke:var(--fg);stroke-width:1.5}
+.pl-end{font:8px var(--mono);fill:var(--muted)}
+.pl-sale{fill:none;stroke:var(--muted);stroke-width:1.4}.pl-sale.recent{fill:var(--accent);stroke:var(--surface);stroke-width:1.2}
+.pl-mark line{stroke-width:2}.pl-mark text{font:700 8.5px var(--mono);letter-spacing:.04em}
+.pl-mark.k-ref line{stroke:var(--fg)}.pl-mark.k-ref text{fill:var(--fg)}
+.pl-mark.k-list line{stroke:var(--orange)}.pl-mark.k-list text{fill:var(--orange)}
+.pl-mark.k-tgt line{stroke:var(--good);stroke-dasharray:3 2}.pl-mark.k-tgt text{fill:var(--good)}
+.pl-mark.k-cost line{stroke:var(--muted);stroke-dasharray:2 2}.pl-mark.k-cost text{fill:var(--muted)}
+.pl-mark.k-asks line{stroke:var(--warn);stroke-dasharray:1 3}.pl-mark.k-asks text{fill:var(--warn)}
+.pl-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:11px;color:var(--muted)}
+.pl-key{display:inline-flex;align-items:center;gap:6px}.pl-key b{color:var(--fg);font-family:var(--mono);font-size:11px}
+.pl-key i{width:12px;height:3px;background:var(--fg);display:inline-block}.pl-key.k-list i{background:var(--orange)}.pl-key.k-tgt i{background:var(--good)}.pl-key.k-cost i{background:var(--muted)}.pl-key.k-asks i{background:var(--warn)}
+.pl-key.k-sale i,.pl-key.k-old i{width:9px;height:9px;border-radius:50%;background:var(--accent)}.pl-key.k-old i{background:none;border:1.4px solid var(--muted)}
+.pl-history{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:4px 12px;margin-top:13px;font-size:11px;color:var(--muted)}
+.pl-history .spark{width:100%;height:34px}.pl-history small{grid-column:1/-1;font:10px var(--mono)}
+.pl-note{display:block;margin-top:9px;font-size:10.5px;color:var(--muted)}
+.spark{display:block;overflow:visible}.spark path{stroke:var(--muted)}.spark circle{fill:var(--muted)}
+.spark.up path{stroke:var(--good)}.spark.up circle{fill:var(--good)}.spark.down path{stroke:var(--bad)}.spark.down circle{fill:var(--bad)}
+.chg{font:700 10.5px var(--mono);margin-left:6px;letter-spacing:0;vertical-align:middle}.chg.up{color:var(--good)}.chg.down{color:var(--bad)}
+.inv-trend{display:flex;align-items:center;gap:9px;margin-top:9px;font:9px var(--mono);color:var(--muted)}.inv-trend .spark{width:120px;height:22px;flex:none}
+.results-visuals{margin:6px 0 24px}.results-visuals .cv-section-head{margin-top:26px}
+.value-bar-grid{display:grid;gap:12px}
+.value-bars h3{font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 12px}
+.vb-row{display:grid;grid-template-columns:92px 1fr 64px;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--border)}
+.vb-name{font-size:13px;font-weight:700;display:flex;flex-direction:column}.vb-name small,.vb-row b small{font:9px var(--mono);color:var(--muted);font-weight:400}
+.vb-track{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden}.vb-track i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.value-bars .vb-row:first-of-type .vb-track i{background:var(--orange)}
+.vb-row b{text-align:right;font:700 13px var(--mono);display:flex;flex-direction:column}
+.collection-map{padding:14px 12px 16px}.collection-map .qmap{width:100%;height:auto;display:block}
+.collection-map .qquad{fill:var(--soft-green)}.collection-map .qax{stroke:var(--border);stroke-dasharray:3 3}.collection-map .qbord{stroke:var(--fg)}
+.collection-map .tx{font:15px var(--mono);fill:var(--muted)}.collection-map .qlab{font:700 16px var(--mono);fill:var(--accent)}
+.collection-map .qd{stroke:var(--surface);stroke-width:1.2}.collection-map .qd.great,.cm-legend .great i{fill:var(--accent);background:var(--accent)}
+.collection-map .qd.good,.cm-legend .good i{fill:var(--orange);background:var(--orange)}.collection-map .qd.fair,.cm-legend .fair i{fill:var(--warn);background:var(--warn)}
+.collection-map .qd.over,.cm-legend .over i{fill:var(--muted);background:var(--muted)}
+.cm-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font:10px var(--mono);color:var(--muted)}.cm-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.movers-panel{padding:4px 16px}.mover-row{display:grid;grid-template-columns:40px minmax(0,1fr) 70px auto;align-items:center;gap:11px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--border);padding:12px 0;color:var(--fg)}
+.mover-row:last-child{border-bottom:0}.mover-row .thumb{width:40px;height:56px}.mv-name{min-width:0;display:flex;flex-direction:column}.mv-name b{font-size:14px}.mv-name small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mv-spark .spark{width:70px;height:26px}.mv-val{display:flex;flex-direction:column;align-items:flex-end;font-family:var(--mono)}.mv-val b{font-size:14px}.mv-val .chg{margin:0}.mv-val small{font-size:9px;color:var(--muted)}
+@media(min-width:600px){.value-bar-grid{grid-template-columns:1fr 1fr}.mover-row{grid-template-columns:44px minmax(0,1fr) 110px 110px}.mv-spark .spark{width:110px}}
+/* v63 fix: v60 moved the Buy Radar header onto a light surface but kept the
+   old cream text, so it was nearly invisible in light mode. It is now a
+   cobalt score panel matching the Results "Recorded sales" tile. */
+.pr-overview{background:var(--accent);color:var(--accent-fg);border:0;border-radius:16px;padding:20px 20px 16px;margin-bottom:16px}
+.pr-overview h2{font-size:34px;color:var(--accent-fg)}
+.pr-overview .pr-kicker{color:var(--accent-fg);opacity:.8}
+.pr-overview .pr-partial{color:var(--accent-fg);border-color:color-mix(in srgb,var(--accent-fg) 40%,transparent)}
+.pr-overview .pr-counts>div{background:color-mix(in srgb,var(--accent-fg) 12%,transparent);padding:9px 10px;border-radius:10px}
+.pr-overview .pr-counts b{color:var(--accent-fg);font-family:var(--mono)}
+.pr-overview .pr-counts span,.pr-overview .pr-overviewfoot{color:var(--accent-fg);opacity:.85}
+.pr-overview .pr-overviewfoot{border-top-color:color-mix(in srgb,var(--accent-fg) 25%,transparent)}
+.pr-overview .pr-counts{gap:8px}.pr-overview .pr-counts>div{min-width:0;padding:8px}
+/* v63: inventory search row overflowed a 320px phone by ~5px. */
+.inventory-toolbar,.inventory-tools,.inventory-toolbar .search{min-width:0;max-width:100%;box-sizing:border-box}
+.inventory-tools>*{min-width:0}

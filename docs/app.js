@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v62";
+  var APP_VERSION = "v63";
   var state = { tab: "today", filter: "All", data: null, bucket: "Cards",
                 collapsed: {}, q: "", sort: "val-desc", sellMode: "plan", buyMode: "radar", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryLayout: "list",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -324,9 +324,69 @@
   function showWorkspaceModal(html) {
     modalFocus=document.activeElement;var m=document.getElementById('modal');m.className='modal workspace-modal';m.innerHTML='<button class="close" id="mClose" aria-label="Close dialog">×</button>'+html;m.setAttribute('aria-labelledby','workspaceTitle');m.querySelector('#mClose').onclick=closeModal;document.getElementById('modalWrap').classList.add('open');document.body.classList.add('sheet-open');m.querySelector('#mClose').focus();return m;
   }
+  // v63 price ladder: every number the owner is weighing, on one axis.
+  // Recorded sales are dots (filled = inside the 90-day evidence window,
+  // hollow = older context). Reference, listing, target, cost and the active
+  // asking median are labelled markers. Purely descriptive — no recommendation.
+  function priceLadder(c, target) {
+    var rows = Selling.soldRows(c), recent = rows.filter(function (r) { return r.recent; });
+    var o = c.owner_listing || {}, marks = [];
+    var ref = Selling.reference(c), listing = Selling.listed(c) ? Selling.amount(o.asking_price) : null;
+    var cost = Selling.cost(c), tgt = Selling.amount(target), asks = c.market && Selling.amount(c.market.median);
+    if (ref) marks.push({k:'ref', label:'REF', name:referenceLabel(c), v:ref});
+    if (listing) marks.push({k:'list', label:'LIST', name:'Your listing', v:listing});
+    if (tgt) marks.push({k:'tgt', label:'TARGET', name:'Your target', v:tgt});
+    if (cost) marks.push({k:'cost', label:'COST', name:'Your cost', v:cost});
+    if (asks) marks.push({k:'asks', label:'ASKS', name:'Last saved asking median' + (c.market.count ? ' (' + c.market.count + ' listings)' : ''), v:asks});
+    var vals = rows.map(function (r) { return r.p; }).concat(marks.map(function (m) { return m.v; }));
+    if (vals.length < 2) return '<div class="price-ladder empty"><p>Not enough recorded prices to chart yet. Check Product Research first.</p></div>';
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals), pad = Math.max((hi - lo) * 0.08, hi * 0.03, 1);
+    lo = Math.max(0, lo - pad); hi += pad;
+    var W = 340, L = 10, R = 10, AX = 62;
+    var X = function (v) { return L + (W - L - R) * (v - lo) / (hi - lo); };
+    var lanes = [];
+    var dots = rows.slice().reverse().map(function (r) {
+      var x = X(r.p), lane = 0;
+      while ((lanes[lane] || []).some(function (px) { return Math.abs(px - x) < 9; })) lane++;
+      (lanes[lane] = lanes[lane] || []).push(x);
+      var y = AX - 9 - lane * 9;
+      return '<circle class="pl-sale' + (r.recent ? ' recent' : '') + '" cx="' + x.toFixed(1) + '" cy="' + y + '" r="4"><title>' + esc(savedDate(r.d)) + ' · ' + esc(money(r.p)) + (r.recent ? '' : ' (older than 90 days)') + '</title></circle>';
+    }).join('');
+    var used = [];
+    var markers = marks.map(function (m) {
+      var x = X(m.v), row = 0;
+      while ((used[row] || []).some(function (px) { return Math.abs(px - x) < 46; })) row++;
+      (used[row] = used[row] || []).push(x);
+      var ty = AX + 18 + row * 13, anchor = x < 40 ? 'start' : x > W - 40 ? 'end' : 'middle';
+      return '<g class="pl-mark k-' + m.k + '"><line x1="' + x.toFixed(1) + '" x2="' + x.toFixed(1) + '" y1="' + (AX - 30) + '" y2="' + (ty - 9) + '"/>' +
+        '<text x="' + x.toFixed(1) + '" y="' + ty + '" text-anchor="' + anchor + '">' + m.label + '</text></g>';
+    }).join('');
+    var h = AX + 18 + Math.max(0, used.length - 1) * 13 + 8;
+    var svg = '<svg class="pl-svg" viewBox="0 0 ' + W + ' ' + h + '" role="img" aria-label="Price ladder: recorded sales and your saved prices">' +
+      '<line class="pl-axis" x1="' + L + '" x2="' + (W - R) + '" y1="' + AX + '" y2="' + AX + '"/>' +
+      '<text class="pl-end" x="' + L + '" y="' + (AX + 12) + '">' + esc(money0(lo)) + '</text>' +
+      '<text class="pl-end" x="' + (W - R) + '" y="' + (AX + 12) + '" text-anchor="end">' + esc(money0(hi)) + '</text>' +
+      markers + dots + '</svg>';
+    var legend = marks.map(function (m) { return '<span class="pl-key k-' + m.k + '"><i></i>' + esc(m.name) + ' <b>' + esc(displayPrice(m.v)) + '</b></span>'; }).join('') +
+      (rows.length ? '<span class="pl-key k-sale"><i></i>Recorded sales, 90 days <b>' + recent.length + '</b></span>' + (rows.length > recent.length ? '<span class="pl-key k-old"><i></i>Older sales <b>' + (rows.length - recent.length) + '</b></span>' : '') : '');
+    var fact = '';
+    if (recent.length) {
+      var rlo = Math.min.apply(null, recent.map(function (r) { return r.p; })), rhi = Math.max.apply(null, recent.map(function (r) { return r.p; }));
+      var range = recent.length === 1 ? money0(rlo) : money0(rlo) + '–' + money0(rhi);
+      var who = listing ? ['Your listing', listing] : tgt ? ['Your target', tgt] : null;
+      if (who) fact = who[0] + ' ' + money0(who[1]) + (who[1] > rhi ? ' is above every' : who[1] < rlo ? ' is below every' : ' sits inside the range of the') +
+        ' recorded sale in the last 90 days (' + range + ', ' + recent.length + ' sale' + (recent.length === 1 ? '' : 's') + ').';
+      else fact = recent.length + ' recorded sale' + (recent.length === 1 ? '' : 's') + ' in the last 90 days: ' + range + '.';
+    } else if (rows.length) fact = 'No recorded sales in the last 90 days; hollow dots are older sales shown for context only.';
+    var series = (c.price_series || []).filter(function (p) { return p && typeof p.p === 'number'; });
+    var hist = series.length >= 2 ? '<div class="pl-history"><span>Saved reference history</span>' + sparkline(series, 200, 34) +
+      '<small>' + esc(savedDate(series[0].d)) + ' ' + esc(money0(series[0].p)) + ' → ' + esc(savedDate(series[series.length - 1].d)) + ' ' + esc(money0(series[series.length - 1].p)) + '</small></div>' : '';
+    return '<div class="price-ladder"><div class="pl-head"><span class="cv-kicker">PRICE PICTURE</span>' + (fact ? '<p>' + esc(fact) + '</p>' : '') + '</div>' + svg +
+      '<div class="pl-legend">' + legend + '</div>' + hist + '<small class="pl-note">Recorded sales and saved references, not live quotes. Asking prices are not sales.</small></div>';
+  }
   function openSellPlan(c) {
-    var p=workspace.plans[c.sku]||{},signal=Selling.planFor(c,p),o=c.owner_listing||{},e=Selling.soldEvidence(c),m=showWorkspaceModal('<div class="modal-heading">'+thumb(c)+'<div><span class="cv-kicker">INDIVIDUAL SELLING PLAN</span><h2 id="workspaceTitle">'+esc(c.player)+'</h2><p>'+esc(c.line)+'</p></div></div><div class="plan-price"><div><span>'+esc(referenceLabel(c))+'</span><b>'+displayPrice(Selling.reference(c))+'</b></div><div><span>'+(Selling.listed(c)?'Your listing':'Recorded cost')+'</span><b>'+displayPrice(Selling.listed(c)?Selling.amount(o.asking_price):Selling.cost(c))+'</b></div></div><div class="evidence-note"><span class="signal '+signal.tone+'">'+esc(signal.label)+'</span><p>'+esc(signal.reason)+'</p><small>'+e.count+' recorded sales in the last 90 days'+(e.newest?' · newest '+esc(e.newest):'')+'. Confirm exact card, parallel and grade. Saved references are not live market quotes.</small></div>'+compResearchLinks(c.title,ebaySearchUrl(c,true))+'<div class="form-grid"><label class="full">Your plan<select id="planAction"><option value="review">Review before deciding</option><option value="hold">Hold for my price</option><option value="list">Prepare to list</option></select></label><label>Target sale price ($)<input id="planTarget" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Your target" value="'+esc(p.target||'')+'"></label><label>Review on<input id="planDate" type="date" value="'+esc(p.reviewDate||'')+'"></label><label class="full">Your notes<textarea id="planNote" rows="3" maxlength="800" placeholder="What would make you sell?">'+esc(p.note||'')+'</textarea></label></div><div class="button-row"><button class="button" id="planSave">Save selling plan</button></div><p class="section-note">Saved on this device. Review dates appear on Today when you open the app. This plan does not change your eBay listing.</p>');
-    m.querySelector('#planAction').value=p.action||'review';m.querySelector('#planSave').onclick=function(){var target=m.querySelector('#planTarget');if(!target.reportValidity())return;workspace.plans[c.sku]={action:m.querySelector('#planAction').value,target:target.value,reviewDate:m.querySelector('#planDate').value,note:m.querySelector('#planNote').value.trim()};if(saveWorkspace()){closeModal();render();toast('Selling plan saved on this device');}};
+    var p=workspace.plans[c.sku]||{},signal=Selling.planFor(c,p),o=c.owner_listing||{},e=Selling.soldEvidence(c),m=showWorkspaceModal('<div class="modal-heading">'+thumb(c)+'<div><span class="cv-kicker">INDIVIDUAL SELLING PLAN</span><h2 id="workspaceTitle">'+esc(c.player)+'</h2><p>'+esc(c.line)+'</p></div></div><div class="plan-price"><div><span>'+esc(referenceLabel(c))+'</span><b>'+displayPrice(Selling.reference(c))+'</b></div><div><span>'+(Selling.listed(c)?'Your listing':'Recorded cost')+'</span><b>'+displayPrice(Selling.listed(c)?Selling.amount(o.asking_price):Selling.cost(c))+'</b></div></div><div id="planLadder">'+priceLadder(c,p.target)+'</div><div class="evidence-note"><span class="signal '+signal.tone+'">'+esc(signal.label)+'</span><p>'+esc(signal.reason)+'</p><small>'+e.count+' recorded sales in the last 90 days'+(e.newest?' · newest '+esc(e.newest):'')+'. Confirm exact card, parallel and grade. Saved references are not live market quotes.</small></div>'+compResearchLinks(c.title,ebaySearchUrl(c,true))+'<div class="form-grid"><label class="full">Your plan<select id="planAction"><option value="review">Review before deciding</option><option value="hold">Hold for my price</option><option value="list">Prepare to list</option></select></label><label>Target sale price ($)<input id="planTarget" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Your target" value="'+esc(p.target||'')+'"></label><label>Review on<input id="planDate" type="date" value="'+esc(p.reviewDate||'')+'"></label><label class="full">Your notes<textarea id="planNote" rows="3" maxlength="800" placeholder="What would make you sell?">'+esc(p.note||'')+'</textarea></label></div><div class="button-row"><button class="button" id="planSave">Save selling plan</button></div><p class="section-note">Saved on this device. Review dates appear on Today when you open the app. This plan does not change your eBay listing.</p>');
+    m.querySelector('#planAction').value=p.action||'review';m.querySelector('#planTarget').addEventListener('input',function(){m.querySelector('#planLadder').innerHTML=priceLadder(c,this.value);});m.querySelector('#planSave').onclick=function(){var target=m.querySelector('#planTarget');if(!target.reportValidity())return;workspace.plans[c.sku]={action:m.querySelector('#planAction').value,target:target.value,reviewDate:m.querySelector('#planDate').value,note:m.querySelector('#planNote').value.trim()};if(saveWorkspace()){closeModal();render();toast('Selling plan saved on this device');}};
   }
   function openLotDraft(cards,existing) {
     if(cards.length<2){toast('Select at least two eligible cards to build a lot.');return;}
@@ -344,6 +404,36 @@
     var single=el('<details class="single-drafts"><summary>Individual card listing drafts</summary></details>');single.appendChild(viewDrafts());wrap.appendChild(single);return wrap;
   }
   function viewBuy() {var w=el('<div class="view buy-view"></div>');w.appendChild(pageHead('BUY WITH DISCIPLINE','Find your next opportunity','Profitable buys, backed by evidence.'));w.appendChild(segment([['radar','Buy opportunities'],['targets','Explore targets']],state.buyMode||'radar',function(x){state.buyMode=x;render();}));w.appendChild(state.buyMode==='targets'?viewTargets():viewRadar());return w;}
+  // v63: the collection charts that lived on the old Value and Sales Map tabs
+  // (orphaned by the v60 redesign), restyled for the exchange identity.
+  function resultsVisuals() {
+    var s=state.data.summary||{},wrap=el('<div class="results-visuals"></div>');
+    wrap.appendChild(sectionHead('Where your value sits','Saved references for cards you still hold.'));
+    function bars(title,stats){
+      var max=Math.max.apply(null,(stats||[]).map(function(g){return g.value;}).concat([1])),total=(stats||[]).reduce(function(n,g){return n+g.value;},0)||1;
+      return '<section class="cv-panel value-bars"><h3>'+esc(title)+'</h3>'+((stats||[]).length?(stats||[]).map(function(g){return '<div class="vb-row"><span class="vb-name">'+esc(g.name)+'<small>'+g.count+' item'+(g.count===1?'':'s')+'</small></span><span class="vb-track"><i style="width:'+(g.value/max*100).toFixed(1)+'%"></i></span><b class="tnum">'+money0(g.value)+'<small>'+Math.round(g.value/total*100)+'%</small></b></div>';}).join(''):'<p>Nothing here yet.</p>')+'</section>';
+    }
+    wrap.appendChild(el('<div class="value-bar-grid">'+bars('By sport',s.sport_stats)+bars('By grade',s.grade_stats)+'</div>'));
+    var held=state.data.cards.filter(function(c){return !c.sold&&num(c.asking_price)>0;});
+    var scored=held.map(function(c){var x=sellScore(c);x.c=c;return x;});
+    if(scored.length>=2){
+      wrap.appendChild(sectionHead('Collection map','Each dot is a card you hold. Tap one to open it.'));
+      var panel=quadrantMap(scored);panel.className='cv-panel collection-map';
+      var t=panel.querySelector('.ptitle');if(t)t.remove();var cap=panel.querySelector('.qcap');if(cap)cap.remove();
+      var lab=panel.querySelector('.qlab');if(lab){lab.textContent='▲ more ready';lab.setAttribute('x','330');lab.setAttribute('text-anchor','start');}
+      panel.appendChild(el('<div class="cm-legend"><span class="great"><i></i>Strong</span><span class="good"><i></i>Good</span><span class="fair"><i></i>Fair</span><span class="over"><i></i>Low</span></div>'));
+      panel.appendChild(el('<p>Right = higher saved reference. Up = a readiness score built from grade, autograph, serial, rookie, football and how the reference was sourced. It is a sorting aid, not a sale-timing forecast; check Product Research before pricing.</p>'));
+      wrap.appendChild(panel);
+    }
+    var movers=held.filter(function(c){return c.prev_price&&Math.abs(num(c.asking_price)-num(c.prev_price))/num(c.prev_price)>=0.005;}).sort(function(a,b){return Math.abs(num(b.asking_price)-num(b.prev_price))/num(b.prev_price)-Math.abs(num(a.asking_price)-num(a.prev_price))/num(a.prev_price);}).slice(0,6);
+    if(movers.length){
+      wrap.appendChild(sectionHead('Reference movers','Largest changes from each card’s previous saved reference.'));
+      var list=el('<div class="cv-panel movers-panel"></div>');
+      movers.forEach(function(c){var pts=(c.price_series||[]).filter(function(p){return p&&typeof p.p==='number';});var row=el('<button class="mover-row">'+thumb(c)+'<span class="mv-name"><b>'+esc(c.player)+'</b><small>'+esc(c.line||'')+'</small></span><span class="mv-spark">'+sparkline(pts,90,26)+'</span><span class="mv-val"><b class="tnum">'+money0(c.asking_price)+'</b>'+changeChip(c)+'<small>was '+money0(c.prev_price)+'</small></span></button>');row.onclick=function(){openModal(c);};list.appendChild(row);});
+      wrap.appendChild(list);
+    }
+    return wrap;
+  }
   function viewResults() {
     var cards=state.data.cards,s=Selling.results(cards),w=el('<div class="view results-view"></div>');w.appendChild(pageHead('KNOW YOUR NUMBERS','Results','Sale proceeds, costs and profit — kept separate.'));
     w.appendChild(el('<div class="result-tiles"><div class="result-tile accent"><span>Recorded sales</span><strong>'+money0(s.revenue)+'</strong><small>'+s.sold+' items sold · before selling costs</small></div><div class="result-tile"><span>Gross profit</span><strong>'+(s.gross===null?'—':money0(s.gross))+'</strong><small>Before fees and shipping · '+s.knownSoldCosts+'/'+s.sold+' costs known</small></div><div class="result-tile"><span>Confirmed net profit</span><strong>'+(s.net===null?'—':money0(s.net))+'</strong><small>'+(s.net===null?'Actual selling costs are incomplete':'After recorded selling costs')+'</small></div></div>'));
@@ -351,6 +441,7 @@
     w.appendChild(sectionHead('Your inventory picture','Saved references describe the collection; they are not sale proceeds.'));
     w.appendChild(el('<div class="result-tiles"><div class="result-tile"><span>Saved reference value</span><strong>'+money0(state.data.summary.total_value)+'</strong><small>'+s.held+' held items</small></div><div class="result-tile"><span>Recorded purchase costs</span><strong>'+money0(s.knownCapital)+'</strong><small>Known costs only · '+s.heldCostCount+'/'+s.held+' items</small></div><div class="result-tile"><span>Missing purchase costs</span><strong>'+(s.held-s.heldCostCount)+'</strong><small>Add costs to unlock complete profit tracking</small></div></div>'));
     var missing=cards.filter(function(c){return Selling.held(c)&&Selling.cost(c)===null;}).sort(function(a,b){return (Selling.reference(b)||0)-(Selling.reference(a)||0);});if(missing.length){var gaps=el('<details class="cv-panel data-gaps"><summary>Add your missing costs ('+missing.length+')</summary><p class="section-note">Start with higher-value cards. Enter what you paid in the card details.</p><div class="compact-card-list"></div></details>');missing.forEach(function(c){var b=el('<button><span>'+esc(c.player)+'</span><b>Add cost +</b></button>');b.onclick=function(){openModal(c);var input=document.getElementById('myCost');if(input){input.scrollIntoView({block:'center'});input.focus();}};gaps.querySelector('.compact-card-list').appendChild(b);});w.appendChild(gaps);}
+    w.appendChild(resultsVisuals());
     var history=el('<section class="cv-panel reference-history"><h2>Reference value over time</h2><p class="section-note">Includes inventory changes and valuation corrections; this is not investment performance.</p>'+trendChart(state.data.history||[])+'</section>');w.appendChild(history);return w;
   }
 
@@ -577,8 +668,14 @@
     toolbar.querySelector('input').oninput=function(){state.q=this.value;update();};toolbar.querySelector('select').onchange=function(){state.sort=this.value;saveViewPrefs();update();};toolbar.querySelectorAll('.layout-toggle button').forEach(function(b,i){b.onclick=function(){state.inventoryLayout=i?'grid':'list';toolbar.querySelectorAll('.layout-toggle button').forEach(function(x){x.classList.toggle('on',x===b);});saveViewPrefs();update();};});
     fs.forEach(function(s,i){s.onchange=function(){state[['inventoryStatus','inventorySport','inventoryType'][i]]=this.value;saveViewPrefs();update();};});update();return wrap;
   }
+  // v63: restore the saved-reference trend line that v59 rows carried.
+  function invTrend(c) {
+    var pts=(c.price_series||[]).filter(function(p){return p&&typeof p.p==='number';});
+    if(pts.length<2||c.sold)return '';
+    return '<div class="inv-trend" title="Saved reference history, not live market quotes">'+sparkline(pts,120,22)+'<span>'+esc(savedDate(pts[0].d))+' → now</span></div>';
+  }
   function inventoryCard(c) {
-    var o=c.owner_listing||{},row=el('<button class="inventory-card">'+thumb(c)+'<div class="inventory-card-body"><div class="inventory-card-top"><span class="inventory-status '+(Selling.listed(c)?'listed':'')+'">'+(Selling.listed(c)?'Listed':'Not listed')+'</span><span class="inventory-sku">'+esc(c.sku)+'</span></div><h3>'+esc(c.player)+'</h3><p>'+esc(c.line)+'</p>'+badges(c)+'<div class="inventory-card-money"><div><strong>'+displayPrice(Selling.reference(c))+'</strong><span>'+esc(referenceLabel(c))+'</span></div>'+(Selling.listed(c)&&o.asking_price?'<div><b>'+money0(o.asking_price)+'</b><span>Your listing</span></div>':'<span class="inventory-arrow">'+icon('arrow')+'</span>')+'</div></div></button>');row.onclick=function(){openModal(c);};return row;
+    var o=c.owner_listing||{},row=el('<button class="inventory-card">'+thumb(c)+'<div class="inventory-card-body"><div class="inventory-card-top"><span class="inventory-status '+(Selling.listed(c)?'listed':'')+'">'+(Selling.listed(c)?'Listed':'Not listed')+'</span><span class="inventory-sku">'+esc(c.sku)+'</span></div><h3>'+esc(c.player)+'</h3><p>'+esc(c.line)+'</p>'+badges(c)+'<div class="inventory-card-money"><div><strong>'+displayPrice(Selling.reference(c))+changeChip(c)+'</strong><span>'+esc(referenceLabel(c))+'</span></div>'+(Selling.listed(c)&&o.asking_price?'<div><b>'+money0(o.asking_price)+'</b><span>Your listing</span></div>':'<span class="inventory-arrow">'+icon('arrow')+'</span>')+'</div>'+invTrend(c)+'</div></button>');row.onclick=function(){openModal(c);};return row;
   }
   function saveViewPrefs() {try{localStorage.setItem('cv-view-v60',JSON.stringify({sort:state.sort,inventoryLayout:state.inventoryLayout,inventoryStatus:state.inventoryStatus,inventorySport:state.inventorySport,inventoryType:state.inventoryType}));}catch(e){}}
 

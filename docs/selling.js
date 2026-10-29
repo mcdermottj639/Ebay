@@ -54,13 +54,19 @@
       return { label: label, cards: rows, value: round(rows.reduce(function (n, c) { return n + reference(c); }, 0)) };
     }).sort(function (a, b) { return b.cards.length - a.cards.length || b.value - a.value || a.label.localeCompare(b.label); });
   }
-  function soldEvidence(c, now) {
+  // Every valid recorded sale (newest first), flagged recent when it is inside
+  // the same 90-day window soldEvidence counts. Older valid sales are kept for
+  // context in charts but never counted as current evidence.
+  function soldRows(c, now) {
     var seen = {}, minYear = Number(c.year) || 1900;
-    var rows = (c.my_sales_all || c.my_sales || []).filter(function (s) {
+    return (c.my_sales_all || c.my_sales || []).map(function (s) {
       var age = daysSince(s.d, now), p = amount(s.p), key = s.d + "|" + p;
-      if (age === null || age > 90 || p === null || p <= 0 || Number(String(s.d).slice(0,4)) < minYear || seen[key]) return false;
-      seen[key] = true; return true;
-    }).sort(function (a,b) { return String(b.d).localeCompare(String(a.d)); });
+      if (age === null || p === null || p <= 0 || Number(String(s.d).slice(0,4)) < minYear || seen[key]) return null;
+      seen[key] = true; return {d:s.d, p:p, age:age, recent:age <= 90};
+    }).filter(Boolean).sort(function (a,b) { return String(b.d).localeCompare(String(a.d)); });
+  }
+  function soldEvidence(c, now) {
+    var rows = soldRows(c, now).filter(function (s) { return s.recent; });
     return {count:rows.length, newest:rows.length ? rows[0].d : null, fresh:rows.length >= 3 && daysSince(rows[0].d, now) <= 30};
   }
   function listingAge(c, now) {
@@ -117,5 +123,5 @@
     var sold=cards.filter(function(c) { return !held(c); }), known=sold.filter(function(c) { return cost(c) !== null; });
     return {held:cards.filter(held).length, listed:cards.filter(listed).length, sold:sold.length, revenue:round(sold.reduce(function(n,c) { return n + (amount(c.sold_price) || 0); },0)), gross:known.length === sold.length && sold.length ? round(known.reduce(function(n,c) { return n + (amount(c.sold_price) || 0) - cost(c); },0)) : null, knownSoldCosts:known.length, heldCostCount:cards.filter(function(c) { return held(c) && cost(c) !== null; }).length, knownCapital:round(cards.filter(held).reduce(function(n,c) { return n + (cost(c) || 0); },0)), net:sold.length && sold.every(function(c) { return typeof (c.owner_listing || {}).net_profit === "number" && Number.isFinite(c.owner_listing.net_profit); }) ? round(sold.reduce(function(n,c) { return n+c.owner_listing.net_profit; },0)) : null};
   }
-  return {amount:amount,round:round,held:held,listed:listed,reference:reference,cost:cost,today:today,formatDate:formatDate,daysSince:daysSince,protectedCard:protectedCard,batchEligible:batchEligible,groups:groups,soldEvidence:soldEvidence,listingAge:listingAge,planFor:planFor,premium:premium,lotQuote:lotQuote,lotTitle:lotTitle,lotDescription:lotDescription,results:results};
+  return {amount:amount,round:round,held:held,listed:listed,reference:reference,cost:cost,today:today,formatDate:formatDate,daysSince:daysSince,protectedCard:protectedCard,batchEligible:batchEligible,groups:groups,soldEvidence:soldEvidence,soldRows:soldRows,listingAge:listingAge,planFor:planFor,premium:premium,lotQuote:lotQuote,lotTitle:lotTitle,lotDescription:lotDescription,results:results};
 }));
