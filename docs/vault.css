@@ -927,3 +927,35 @@ details.dsec[open] > summary { margin-bottom: 12px; }
   .foil-text, .art-ini { color: CanvasText; -webkit-text-fill-color: CanvasText; background: none; }
   .bar-track i, .stack-seg, .meter i, .tm-tile { forced-color-adjust: none; }
 }
+
+/* v65 — private offer plans inside the selling sheet (no new dashboard). */
+.offer-exchange-entry { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 4px 0 14px; padding: 12px 14px; border: 1px solid var(--hair-2); border-radius: var(--r-md); background: var(--ink-1); font: 600 13px var(--font-ui); color: var(--text-2); }
+.offer-import-shortcut { margin-top: 12px; }
+.plan-ids { display: block; margin-top: 4px; font: 600 11.5px var(--font-ui); color: var(--muted); }
+.offer-plan { margin: 16px 0; padding: 16px; border: 1px solid var(--hair-2); border-top: 2px solid var(--gold-300); border-radius: var(--r-lg); background: var(--ink-1); }
+.offer-plan > summary { cursor: pointer; font: 800 19px var(--font-ui); color: var(--text); line-height: 1.35; }
+.offer-plan > summary > span { display: block; margin-top: 2px; font: 600 12px var(--font-ui); color: var(--muted); }
+.offer-plan fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.offer-plan fieldset:disabled { opacity: .5; }
+.offer-enable, .offer-import-review label { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; font: 700 13px var(--font-ui); color: var(--text); line-height: 1.45; }
+.offer-enable input, .offer-import-review input { width: 20px; height: 20px; flex: none; margin-top: 1px; accent-color: var(--gold-500); }
+.offer-import-review { margin: 14px 0; padding: 14px 16px; border-radius: var(--r-md); border: 1px solid var(--hair-2); border-left: 3px solid var(--warn); background: var(--ink-2); font-size: 13px; line-height: 1.5; color: var(--text-2); }
+.offer-import-review b { color: var(--text); }
+.offer-import-review p { margin-top: 6px; }
+.offer-timing { margin: 14px 0; }
+.offer-timing > summary, .offer-plan .cost-assumptions > summary { cursor: pointer; font: 700 13px var(--font-ui); color: var(--text-2); }
+.offer-timing .evidence-note { margin: 12px 0 0; font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
+.offer-timing .form-grid > label { grid-column: 1 / -1; }
+.workspace-modal .field textarea, .offer-plan textarea { width: 100%; box-sizing: border-box; font-size: 16px; min-height: 84px; resize: vertical; }
+.workspace-modal .field input[type=file] { max-width: 100%; font-size: 13px; padding: 10px 0; }
+#offerExportText, #offerImportText { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.5; }
+#offerExport[hidden] { display: none; }
+#offerError, #offerImportError { overflow-wrap: anywhere; font-size: 13px; }
+#offerError:empty, #offerImportError:empty { display: none; }
+#offerScenarioNote { overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .offer-exchange-entry { flex-direction: column; align-items: flex-start; }
+  .offer-plan .form-grid, .offer-plan .quote-panel { grid-template-columns: 1fr; }
+  .offer-plan .form-grid > label { grid-column: 1; }
+  .offer-plan { padding: 14px 12px; }
+}

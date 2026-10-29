@@ -73,3 +73,82 @@ test('price ladder rows keep older valid sales as context but count only the 90-
   assert.deepEqual(rows.map(r=>[r.d,r.p,r.recent]),[['2026-10-20',12,true],['2026-07-01',90,false]]);
   assert.equal(S.soldEvidence(c,'2026-10-27').count,rows.filter(r=>r.recent).length);
 });
+
+// Synthetic private-offer fixtures only: no owner offer, floor or buyer data.
+const offerAssumptions={shipping:8,supplies:2,feeRate:13.25,orderFee:.4,promotion:2,buyerTax:8,feeThreshold:7500,feeRateAbove:2.35};
+const sampleOffer={amount:50,currency:'USD',receivedAt:'2030-01-15T10:00:00-05:00',expiresAt:'2030-01-16T10:00:00-05:00',expiryNote:'',counterAmount:60,minimumNet:null,recommendation:'counter',rationale:'Review exact sold evidence before deciding.',basisNote:'Planning example, not a listing action.',assumptions:offerAssumptions};
+const sampleEnvelope={format:'card-vault-offer-plan',schema:1,sku:'C1',offer:sampleOffer};
+test('offer normalization keeps unknown amounts and assumptions distinct from explicit zero', () => {
+ const empty=S.normalizeOffer({});
+ assert.equal(empty.amount,null);assert.equal(empty.minimumNet,null);assert.equal(empty.acquisitionCost,null);
+ assert.equal(empty.currency,'USD');assert.equal(empty.recommendation,'review');assert.equal(empty.expiresAt,'');
+ assert.ok(Object.values(empty.assumptions).every(v=>v===null));
+ const explicit=S.normalizeOffer({...sampleOffer,acquisitionCost:'0',minimumNet:0,assumptions:{...offerAssumptions,shipping:'0'}});
+ assert.equal(explicit.acquisitionCost,0);assert.equal(explicit.minimumNet,0);assert.equal(explicit.assumptions.shipping,0);
+ assert.equal(S.normalizeOffer({...sampleOffer,amount:'50.25'}).amount,50.25);
+ assert.equal(S.normalizeOffer({...sampleOffer,amount:'.5'}).amount,.5);
+ assert.equal(S.normalizeOffer({...sampleOffer,minimumNet:' '}).minimumNet,null);
+});
+test('invalid offer fields, numbers, currencies and private metadata are rejected', () => {
+ for(const edit of [{amount:-1},{amount:0},{amount:Infinity},{amount:true},{amount:[]},{amount:'0x20'},{currency:'EUR'},{counterAmount:0},{minimumNet:-1},{acquisitionCost:-2},{recommendation:'send'},{rationale:'x'.repeat(2001)},{buyerId:'not-allowed'},{gmailId:'not-allowed'},{orderId:'not-allowed'},{assumptions:[]},{assumptions:{buyerTax:100}},{assumptions:{feeRateAbove:100}},{assumptions:{feeThreshold:0}},{assumptions:{extra:1}}]) assert.throws(()=>S.normalizeOffer({...sampleOffer,...edit}),JSON.stringify(edit));
+ assert.throws(()=>S.normalizeOffer(JSON.parse('{"__proto__":{"polluted":true}}')),/unsupported field/);
+ assert.throws(()=>S.normalizeOffer(Object.create({amount:10})),/must be an object/);
+ assert.throws(()=>S.normalizeOffer({...sampleOffer,assumptions:JSON.parse('{"constructor":{}}')}),/unsupported field/);
+ assert.equal({}.polluted,undefined);
+});
+test('offer time requires a valid explicit offset and never guesses a timezone', () => {
+ for(const expiresAt of ['2030-01-16T10:00','2030-01-16','2030-02-30T10:00:00Z','2030-01-16T24:00:00Z','2030-01-16T10:00:00+14:01','2030-01-16T10:61:00Z','2030-01-16T10:00:00-00:00','tomorrow']) assert.throws(()=>S.normalizeOffer({...sampleOffer,expiresAt}),/explicit UTC offset/);
+ assert.throws(()=>S.normalizeOffer({...sampleOffer,expiresAt:'2030-01-14T10:00:00-05:00'}),/before the received/);
+ assert.equal(S.normalizeOffer({...sampleOffer,expiresAt:'2030-01-16T15:00:00Z'}).expiresAt,'2030-01-16T15:00:00Z');
+ const unknown={...sampleOffer,expiresAt:'',expiryNote:'Jan 16 at 10 AM; timezone not confirmed'};
+ assert.equal(S.offerDeadline(unknown).key,'unconfirmed');
+ assert.equal(S.offerDeadline({...unknown,expiryNote:''}).key,'unknown');
+ assert.equal(S.offerDeadline({...sampleOffer,expiresAt:'2030-01-16T10:00'}).key,'unconfirmed');
+ assert.equal(S.offerDeadline(sampleOffer,'2030-01-16T14:59:59.999Z').key,'upcoming');
+ assert.equal(S.offerDeadline(sampleOffer,'2030-01-16T15:00:00Z').key,'expired');
+ assert.equal(S.offerDeadline(sampleOffer,'2030-01-16T10:00:00-05:00').at,Date.parse('2030-01-16T15:00:00Z'));
+ assert.match(S.offerDeadline(sampleOffer,'2030-01-15T00:00:00Z').label,/UTC/);
+});
+test('offer scenario reuses lot quote without changing acquisition cost or inventory', () => {
+ const card=Object.freeze({...base}), offer=Object.freeze({...sampleOffer,assumptions:Object.freeze({...offerAssumptions})});
+ const expected=S.lotQuote([card],{...offerAssumptions,price:50}), actual=S.offerQuote(card,offer);
+ assert.deepEqual(actual,{...expected,costSource:'recorded cost'});assert.equal(actual.profit,null);
+ assert.equal(S.offerQuote(card,{...offer,acquisitionCost:10}).profit,21.44);
+ assert.equal(S.offerQuote(card,{...offer,acquisitionCost:0}).profit,31.44);
+ assert.equal(S.offerQuote(card,{...offer,acquisitionCost:10}).costSource,'offer scenario');
+ assert.equal(card.cost,'');assert.equal(card.sold,false);assert.equal(card.listed,false);
+ assert.equal(S.offerQuote({...base,cost:15},offer).profit,16.44);
+ assert.equal(S.offerQuote({...base,cost:15},{...offer,acquisitionCost:10}).profit,21.44);
+ for(const key of Object.keys(offerAssumptions)) assert.equal(S.offerQuote(card,{...offer,assumptions:{...offerAssumptions,[key]:null}}).proceeds,null,key);
+ assert.equal(S.offerQuote(card,{...offer,amount:1}).proceeds,-9.56);
+});
+test('private offer JSON round-trips an exact card and does not touch its plan or ledger', () => {
+ const card=Object.freeze({...base,owner_listing:Object.freeze({item_id:'LISTING-EXAMPLE'})});
+ const original=JSON.stringify(card), normalized=S.normalizeOffer(sampleOffer);
+ const exported=S.exportOfferExchange(card,sampleOffer);
+ assert.equal(exported.format,'card-vault-offer-plan');assert.equal(exported.schema,1);assert.equal(exported.listingId,'LISTING-EXAMPLE');
+ const parsed=S.parseOfferExchange(JSON.stringify(exported),[card]);
+ assert.equal(parsed.card,card);assert.deepEqual(parsed.offer,normalized);assert.equal(JSON.stringify(card),original);
+ assert.equal(S.parseOfferExchange(JSON.stringify(sampleEnvelope),[base]).card,base);
+});
+test('offer import rejects invalid, stale-identity, sold, unsupported and comparison payloads', () => {
+ const card={...base,owner_listing:{item_id:'LISTING-EXAMPLE'}};
+ for(const payload of [{...sampleEnvelope,schema:2},{...sampleEnvelope,format:'claudex-card-pricing',mode:'comparison_only'},{...sampleEnvelope,sku:'MISSING'},{...sampleEnvelope,listingId:'OTHER-LISTING'},{...sampleEnvelope,listingId:null},{...sampleEnvelope,buyerId:'not-allowed'},{...sampleEnvelope,offer:{...sampleOffer,amount:null}},{...sampleEnvelope,offer:{...sampleOffer,gmailId:'not-allowed'}},null,[]]) assert.throws(()=>S.parseOfferExchange(JSON.stringify(payload),[card]));
+ assert.throws(()=>S.parseOfferExchange(JSON.stringify(sampleEnvelope),[{...card,sold:true}]),/recorded sold/);
+ assert.throws(()=>S.parseOfferExchange(JSON.stringify(sampleEnvelope),[card,card]),/exactly one/);
+ assert.throws(()=>S.parseOfferExchange('{bad',[card]),/not valid/);
+ assert.throws(()=>S.parseOfferExchange(' '.repeat(20001),[card]),/20,000/);
+ assert.throws(()=>S.parseOfferExchange('{"__proto__":{}}',[card]),/unsupported field/);
+ assert.throws(()=>S.exportOfferExchange({...card,sold:true},sampleOffer),/recorded sold/);
+ assert.throws(()=>S.exportOfferExchange(card,{}),/positive offer amount/);
+});
+test('saved offers protect lots and lead the review queue without recording a sale', () => {
+ const plans={C1:{offer:sampleOffer,action:'hold'},DUE:{reviewDate:'2030-01-15'}};
+ const cards=[base,{...base,sku:'DUE',asking_price:900,graded:true}];
+ assert.equal(S.batchEligible(base,25,false,plans.C1),false);
+ assert.equal(S.premium(cards,plans,25,'2030-01-15')[0].card.sku,'C1');
+ assert.equal(S.planFor(base,plans.C1,'2030-01-15').key,'offer');
+ assert.equal(S.planFor({...base,sold:true},plans.C1,'2030-01-15').key,'sold');
+ assert.equal(S.planFor(base,plans.C1,'2030-01-17').label,'Offer deadline passed');
+ assert.equal(S.results(cards).sold,0);assert.equal(S.results(cards).revenue,0);
+});

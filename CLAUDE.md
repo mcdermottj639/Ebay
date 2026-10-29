@@ -8,7 +8,43 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
-## Gold vault reimagine — v64, October 29, 2026 (Claude) — CURRENT RELEASE
+## Private offer plans — v65, October 29, 2026 (Claude) — CURRENT RELEASE
+Jack routed the CARD-0026 offer-plan integration from ChatGPT/dot to Claude
+(Claudex Ebay handoff, 02:54 ET) and chose to build it now (10:14 ET). Engine
+from dot's generic code package (Drive, 02:56 ET), UI ported by hand onto v64.
+
+- **Engine (`docs/selling.js`, dot's patch applied unchanged)**: strict
+  `card-vault-offer-plan` / schema 1 envelope (`parseOfferExchange`,
+  `exportOfferExchange`), `normalizeOffer` (USD only, unknown fields rejected,
+  explicit-offset timestamps only), `offerDeadline` (no countdown without a
+  confirmed timezone), `offerQuote` (reuses `lotQuote`; any null assumption keeps
+  net/profit unknown). `planFor` returns key `offer`, which ranks first.
+  20 Node selling tests (13 old + 7 new).
+- **UI (`docs/app.js`)**: Import entry on Sell and under Next moves on Today;
+  `openOfferImport` → preview inside `openSellPlan(c, offer)`; save requires the
+  "I checked" box; Cancel / Escape / tab change discard the preview
+  (`setTab` now closes an open sheet; `showWorkspaceModal` keeps the original
+  focus target when one sheet replaces another). Offers chip on Sell, offer amount
+  on the review card, offers counted in Reviews due. "Fill blanks with my saved
+  selling costs" is an explicit owner action, never automatic. Styles: `.offer-*`
+  block at the end of `docs/vault.css`.
+- **Privacy rule**: offer terms live only in `cv-selling-v1` on the device
+  (`plans[sku].offer`). Never in my_numbers.json, inventory, docs/data.json, the
+  comparison feed or this repo. The JSON travels only through the private Claudex
+  handoff. An import in an agent's browser does not reach Jack's phone.
+- **No marketplace action**: nothing accepts, counters, declines, messages a
+  buyer, edits a listing or records a sale. The scenario cost basis never edits
+  the inventory cost; minimum net stays null until the owner sets it.
+- Validation: 37 Python + 27 Node tests, node --check app.js/sw.js, catalog,
+  build. Playwright (local server, real CARD-0026 plan in a throwaway browser):
+  38/38 checks covering malformed / wrong-format / unknown-SKU / listing-mismatch /
+  sold-card rejection, unreviewed save, cancel, Escape, tab change, exact-cents
+  quote after filling costs, persistence across reload, other plans/lots/unknown
+  fields preserved, export round-trip, remove-only-offer, corrupted-offer
+  recovery, no external requests, no overflow on all five screens + sheet at
+  320 dark / 390 light / 1280 dark. Physical iPhone not tested.
+
+## Gold vault reimagine — v64, October 29, 2026 (Claude)
 Jack, on the v63 Today screen: "This colors gross and these visuals are cheap
 and shitty… scrap it and complete reimagine… easy to scan things where I can
 click for information… numbers always supported by visuals and deeper
@@ -586,14 +622,14 @@ These rules supersede the historical asking-median radar/Great Value notes below
   NOTE: the Artifact CSP blocks images, so photos only show on the live Pages
   site, not in the Artifact preview (placeholders show there).
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
-  `?v=N` on vault.css, selling.js, charts.js + app.js in `index.html` (v64
+  `?v=N` on vault.css, selling.js, charts.js + app.js in `index.html` (v64+
   file set), the manifest icons, and `CACHE`/SHELL `?v=N` in `sw.js`, run
   `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v64. The live
+  this makes the service worker serve stale CSS/JS. Current: v65. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v64. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v65. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
