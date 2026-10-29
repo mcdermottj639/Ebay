@@ -581,7 +581,11 @@ def build_data(cards) -> dict:
                 "sold_price": _num(c.sold_price) if c.is_sold() else "",
                 "sold_date": c.sold_date, "cert": _cert_for(c),
                 "my_sales": manual_by_sku.get(c.sku.upper(), []),
-                "prev_price": changes.get(c.sku, {}).get("prev", ""),
+                # A change chip answers "did the market move?". When the value now
+                # comes from sold prices the owner recorded (est_price is set),
+                # price_history still tracks the older estimate, so comparing the
+                # two would report a change of source as a market move (v51 rule).
+                "prev_price": "" if hasattr(c, "est_price") else changes.get(c.sku, {}).get("prev", ""),
                 "price_series": series_by_sku.get(c.sku, []),
                 "market": market_by_sku.get(c.sku),
                 "comps": ({"as_of": comps_as_of,
@@ -609,10 +613,10 @@ def main() -> int:
     print(f"Wrote {DOCS/'data.json'} ({data['summary']['total_cards']} cards)")
 
     # Self-contained preview: inline the same CSS + JS + data into one file.
-    css = (DOCS / "styles.css").read_text(encoding="utf-8") if (DOCS / "styles.css").exists() else ""
-    css += "\n" + (DOCS / "workspace.css").read_text(encoding="utf-8")
-    sellingjs = (DOCS / "selling.js").read_text(encoding="utf-8")
-    appjs = sellingjs + "\n" + (DOCS / "app.js").read_text(encoding="utf-8") if (DOCS / "app.js").exists() else ""
+    # v64: one stylesheet (vault.css) and three scripts, in index.html order.
+    css = (DOCS / "vault.css").read_text(encoding="utf-8") if (DOCS / "vault.css").exists() else ""
+    scripts = [DOCS / "selling.js", DOCS / "charts.js", DOCS / "app.js"]
+    appjs = "\n".join(f.read_text(encoding="utf-8") for f in scripts) if all(f.exists() for f in scripts) else ""
     if css and appjs:
         # A <title> makes the file publishable as an Artifact (a hosted page the
         # owner can actually open — raw HTML files preview without running JS).
@@ -622,13 +626,19 @@ def main() -> int:
             # em-dash in the app renders as mojibake (the tab icons, the ✓/⚠
             # trust notes, "What it's going for"). index.html carries both tags.
             '<meta charset="utf-8">\n'
-            "<title>Card Vault — Preview</title>\n"
+            "<title>Card Vault</title>\n"
             # Without this the preview lays out at desktop width (~980px) in a
             # phone-sized window, so any width check run against it is
             # meaningless — it reported a 7px overflow that the real
             # docs/index.html does not have. index.html carries the same tag.
             '<meta name="viewport" content="width=device-width, initial-scale=1, '
             'viewport-fit=cover">\n'
+            # Same type as the live app (Google Fonts is the one allowed
+            # external stylesheet in the hosted preview).
+            '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
+            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+            '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders:'
+            'opsz,wght@10..72,600..900&family=Manrope:wght@400..800&display=swap">\n'
             "<style>\n" + css + "\n</style>\n<div id=\"root\"></div>\n"
             "<script>window.__CARD_DATA__=" + json.dumps(data) + ";\n" + appjs + "\n</script>"
         )
