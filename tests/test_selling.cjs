@@ -67,3 +67,9 @@ test('due reviews outrank expensive cards and a new listing does not force an ur
  const cards=[{...base,sku:'HIGH',graded:true,asking_price:900,listed:true},{...base,sku:'DUE',graded:true,asking_price:30}];
  assert.equal(S.premium(cards,{DUE:{reviewDate:'2026-10-27'}},25,'2026-10-27')[0].card.sku,'DUE');
 });
+test('price ladder rows keep older valid sales as context but count only the 90-day window', () => {
+  const c={...base,my_sales:[{d:'2024-10-27',p:100},{d:'2026-10-28',p:100},{d:'2026-02-30',p:100},{d:'2026-07-01',p:90},{d:'2026-10-20',p:12},{d:'2026-10-20',p:12}]};
+  const rows=S.soldRows(c,'2026-10-27');
+  assert.deepEqual(rows.map(r=>[r.d,r.p,r.recent]),[['2026-10-20',12,true],['2026-07-01',90,false]]);
+  assert.equal(S.soldEvidence(c,'2026-10-27').count,rows.filter(r=>r.recent).length);
+});

@@ -8,6 +8,40 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Restored visuals — v63, October 28, 2026 (Claude)
+Jack said the v60–v62 redesign "lost so much visuals". v60 left `viewValue` and
+`viewSalesMap` defined but unrouted, so their charts vanished. v63 brings the
+visuals back inside the v61/v62 ink/cobalt/coral identity; data, selling math
+and the Terapeak-first research order are unchanged.
+
+- **Selling plan sheet → Price picture** (`priceLadder` in app.js). One axis with
+  every recorded sale (filled = inside the 90-day evidence window, hollow =
+  older context), plus labelled REF / LIST / TARGET / COST / ASKS markers. The
+  TARGET marker redraws live as the owner types. One factual sentence compares
+  the listing (or target) with the 90-day sale range; it never recommends.
+  ASKS is the last saved ACTIVE asking median from price_history.csv — label it
+  as asking, never as sold. Saved-reference history sparkline underneath.
+- `Selling.soldRows(c, now)` (selling.js) is the single source for the ladder
+  AND `soldEvidence`, so the dot count always matches "N recorded sales in the
+  last 90 days". Node test added (13 total).
+- **Inventory rows**: ▲/▼ chip vs the previous saved reference + a saved-reference
+  trend sparkline (`invTrend`). The chip and line can disagree (week change vs
+  since-first-point); both are labelled saved references, not market quotes.
+- **Results → `resultsVisuals()`**: value by sport and by grade bars, Collection
+  map (the old Sales Map scatter, `quadrantMap` + `sellScore`, relabelled as a
+  readiness sorting aid — not a sale-timing forecast), and Reference movers with
+  sparklines. Do not reintroduce "Prime to sell" wording.
+- **Bug fix**: v60 put the Buy Radar header (`.pr-overview`) on a light surface
+  while keeping its old cream text — "0 ready to buy" and the counts were nearly
+  invisible in light mode. It is now a cobalt score panel.
+- **Bug fix**: inventory search row overflowed a 320px phone by ~5px.
+- Ladder/legend classes are prefixed `k-` because legacy styles.css owns `.list`.
+- Validation: 35 Python + 13 Node tests, JS syntax, catalog check, build; browser
+  checks of all five screens at 390px light/dark and 320px (no horizontal
+  scroll, no page errors), plan sheet with live target input. Physical iPhone
+  not tested. data.json changed only by version/generated time and the build's
+  normal daily history point.
+
 ## Collector exchange visual identity — v61, October 28, 2026
 Jack rejected v60 because its layout and feel repeated Golf Hub. This correction
 supersedes v60's green/sage dashboard identity; the sell-first features remain.

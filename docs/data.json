@@ -81,10 +81,15 @@
       "d": "2026-10-28",
       "v": 2700.39,
       "n": 33
+    },
+    {
+      "d": "2026-10-29",
+      "v": 2700.39,
+      "n": 33
     }
   ],
-  "generated": "Oct 28, 2026 \u00b7 02:24 UTC",
-  "app_version": "v62",
+  "generated": "Oct 29, 2026 \u00b7 02:39 UTC",
+  "app_version": "v63",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
