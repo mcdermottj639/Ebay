@@ -8,6 +8,90 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Gold vault reimagine — v64, October 29, 2026 (Claude) — CURRENT RELEASE
+Jack, on the v63 Today screen: "This colors gross and these visuals are cheap
+and shitty… scrap it and complete reimagine… easy to scan things where I can
+click for information… numbers always supported by visuals and deeper
+analytics… a gold plated card business… pop and feel alive." v64 replaces the
+v61/v62 ink/cobalt/coral identity completely. Selling math (selling.js), buying
+gates, the Terapeak-first research order, data files and the storage keys
+`cv-selling-v1`, `cv-view-v60`, `cv-mydata` and `cv-gh-token` are unchanged.
+
+- **Identity**: black-and-gold vault. Dark is the default whatever the phone's
+  system setting (`cv-theme-v64`; the sun button opts into ivory light; the
+  app always sets `data-theme` itself). Big Shoulders (display) + Manrope (UI
+  and every number) from Google Fonts; sw.js keeps them in `card-vault-fonts`.
+  One loud element: gold foil on the vault value and the slab plates. Ordinal
+  ramps (tiers `--t1..3`, pricing source `--c1..4`) were checked with the
+  dataviz validator in both themes; up/down/warn are status colours with text.
+- **Files**: `docs/vault.css` replaces styles.css + workspace.css (deleted).
+  `docs/charts.js` (`window.CardVaultCharts`, UMD, tested by
+  `node --test tests/test_charts.cjs`) draws every chart at its true pixel
+  width via `hydrate()` in app.js: area (crosshair, arrow keys, table twin),
+  sparkline, squarified treemap, Pareto, scatter, bar list, stacked bar, meter.
+  Load order selling.js → charts.js → app.js; build_web inlines vault.css and
+  all three into output/preview.html. Release markers are all v64.
+- **Shell**: phone = sticky bottom dock (v45 rule: sticky inside the
+  flex-column body, never fixed); ≥1000px = fixed top-centre pill. measureNav
+  and updateBanner depend on that. The v61 numbered-nav rules are superseded;
+  still never a left rail.
+- **Card art**: graded = slab with a gold label plate, raw = toploader, merch =
+  frame; autos/numbered get a refractor edge. A graded card WITH a photo shows
+  the photo alone in a 3:5 window (the photo already is a slab). Placeholders
+  are team-colour art faces with gold initials, kept under photos so a slow or
+  blocked photo never shows black. Tiles share a 3:5 shelf (`.slab-stage`);
+  all-merch grids get `.flat`.
+- **Today**: vault hero (plate, foil value with count-up, value-over-time area
+  chart with hollow re-pricing dots, chips → filtered Inventory), the "Latest"
+  tape, Next moves tiles (bundle / on eBay / reviews / buy radar, each with a
+  visual), Top of the vault rail, Where the money is (treemap sized by saved
+  value, tier legend → Inventory tier filter, table twin), Sold so far (paid vs
+  profit split). Tapping the value opens a breakdown sheet. The tape lists only
+  real, priced, dated events: owner sales, live owner asks, recorded comps from
+  the last 90 days (one per card, its latest day) and genuine value moves —
+  never a forecast.
+- **Inventory**: tier stacked bar (tap to filter), All/Cards/Merch, search,
+  sort, grid/list, filter chips. Default layout grid; a saved layout is honoured
+  only from prefs written by v64 (`v: 64` inside cv-view-v60).
+- **Card sheet**: slab, value block (saved value + basis sentence, You paid
+  meter, profit, eBay ask vs value meter), Price picture (v63 ladder; its
+  history row is suppressed here), Value history chart, then the existing
+  listing / market / your-numbers / comps boxes, list-this-card, links, folded
+  specs. Desktop is two panes (360px side). Every v29–v48 My-numbers ID and
+  behaviour is unchanged.
+- **Sell / Buy**: segments with counts, plan-state chips, review cards with a
+  mini ladder (recorded sales, saved value, your ask), listing cards with an
+  ask-vs-value meter. Buy Radar and Targets logic untouched; status stamps
+  (BUY CANDIDATE / DO NOT BUY / RESEARCH ONLY / REJECTED) keep their caps.
+- **Results**: P&L waterfall + KPIs, sales dumbbells (solid = sold, hollow =
+  paid), concentration (Pareto), pricing-source stack, sport/grade bars, asks
+  vs saved values, value moves, collection map (readiness sorting aid, never a
+  timing forecast; table twin), vault value history, purchase-cost meter.
+- **Honesty fixes**: (1) build_web no longer emits `prev_price` for a card whose
+  value now comes from owner-recorded sold prices (`est_price` set) —
+  price_history tracks the older estimate, so the chip compared two sources
+  (the v51 rule). That removed false chips on Richardson ▼72%, Purdy ▲46%,
+  Cunningham ▲8% and Bijan ▼6%; covered by tests/test_build_web.py. (2) Tile,
+  row and plan-sheet trend lines draw only the stretch since the last
+  correction, and nothing for overlaid cards; the card's Value history chart
+  keeps the full line with re-pricing dots plus a note on overlaid cards.
+- **Open data question for Jack (not changed)**: CARD-0032 Purdy's $900 value
+  rests on one owner-entered comp dated 2021-09-10 (my_numbers.json, saved
+  2026-10-24) — before the 2022 card existed. Selling.soldRows already ignores
+  it as evidence, but build_web's overlay still prices the card from it. Get the
+  real date from Jack before changing anything.
+- **Copy**: the UI says "saved value" (= saved reference, never a live quote);
+  sentence case; no emoji labels in the card sheet; no middle-dot meta strings
+  in new UI.
+- **Validation**: 37 Python + 20 Node tests (13 selling + 7 charts), node --check
+  of app.js/charts.js/sw.js, catalog check, build. Playwright QA with the real
+  fonts at 390 dark/light, 320 and 1280: all five screens, card sheet, vault
+  sheet, plan with a live target, lot builder and draft, list layout, merch,
+  crosshair tooltip, treemap tap, tier filter — no horizontal scroll, no page or
+  console errors; reduced motion stops the tape and animations. Physical iPhone
+  not tested. Preview artifact (republish output/preview.html to it):
+  https://claude.ai/artifact/D5C875EfpKoMA1p1d68AQW
+
 ## Restored visuals — v63, October 28, 2026 (Claude)
 Jack said the v60–v62 redesign "lost so much visuals". v60 left `viewValue` and
 `viewSalesMap` defined but unrouted, so their charts vanished. v63 brings the
@@ -502,13 +586,14 @@ These rules supersede the historical asking-median radar/Great Value notes below
   NOTE: the Artifact CSP blocks images, so photos only show on the live Pages
   site, not in the Artifact preview (placeholders show there).
 - PWA release ritual (on any `docs/` frontend edit, à la Sports-Hub): bump the
-  `?v=N` on styles.css + app.js in `index.html`, bump `CACHE`/SHELL `?v=N` in
-  `sw.js`, run `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v51. The live
+  `?v=N` on vault.css, selling.js, charts.js + app.js in `index.html` (v64
+  file set), the manifest icons, and `CACHE`/SHELL `?v=N` in `sw.js`, run
+  `node --check docs/app.js`, rebuild, then ship to main. Skipping
+  this makes the service worker serve stale CSS/JS. Current: v64. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v51. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v64. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now

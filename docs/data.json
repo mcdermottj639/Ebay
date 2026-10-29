@@ -88,8 +88,8 @@
       "n": 33
     }
   ],
-  "generated": "Oct 29, 2026 \u00b7 02:39 UTC",
-  "app_version": "v63",
+  "generated": "Oct 29, 2026 \u00b7 07:51 UTC",
+  "app_version": "v64",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -4137,7 +4137,7 @@
           "n": "eBay sold (Terapeak 2yr): Rookies & Stars Thrillers Anthony Richardson"
         }
       ],
-      "prev_price": 70.39,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -4681,7 +4681,7 @@
           "n": "eBay sold (Terapeak 2yr): Donruss Elite Turn of the Century Auto Bijan Robinson /249"
         }
       ],
-      "prev_price": 163.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -5621,7 +5621,7 @@
           "n": ""
         }
       ],
-      "prev_price": 215.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -6015,7 +6015,7 @@
           "n": ""
         }
       ],
-      "prev_price": 617.97,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",

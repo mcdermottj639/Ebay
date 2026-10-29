@@ -1,15 +1,15 @@
 {
   "name": "Card Vault",
   "short_name": "Card Vault",
-  "description": "Your personal sports-card collection, value, and eBay listing hub.",
+  "description": "Your sports-card collection, values, selling plans and buying rules in one place.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#15161a",
-  "theme_color": "#15161a",
+  "background_color": "#050404",
+  "theme_color": "#050404",
   "icons": [
-    { "src": "./icon.svg?v=63", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "./icon.svg?v=63", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+    { "src": "./icon.svg?v=64", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "./icon.svg?v=64", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
   ]
 }

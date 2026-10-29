@@ -1,13 +1,16 @@
 /* Card Vault service worker.
    HTML navigations + data.json are network-first (so a new build's CSS/JS and
    the latest data load immediately when online, with a cached fallback when
-   offline). Versioned assets (styles.css?v=N, app.js?v=N, icons) are
+   offline). Versioned assets (vault.css?v=N, app.js?v=N, icons) are
    cache-first — they're immutable per version, so a fresh build busts them via
-   the bumped ?v and the always-fresh index.html that references them. */
+   the bumped ?v and the always-fresh index.html that references them.
+   Google Fonts are kept in their own cache so the vault keeps its type
+   offline; that cache survives version bumps. */
 
-var CACHE = "card-vault-v63";
-var SHELL = ["./", "./index.html", "./styles.css?v=63", "./app.js?v=63",
-             "./workspace.css?v=63", "./selling.js?v=63", "./manifest.webmanifest?v=63", "./icon.svg?v=63"];
+var CACHE = "card-vault-v64";
+var FONT_CACHE = "card-vault-fonts";
+var SHELL = ["./", "./index.html", "./vault.css?v=64", "./selling.js?v=64", "./charts.js?v=64",
+             "./app.js?v=64", "./manifest.webmanifest?v=64", "./icon.svg?v=64"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); }));
@@ -15,7 +18,7 @@ self.addEventListener("install", function (e) {
 
 self.addEventListener("activate", function (e) {
   e.waitUntil(caches.keys().then(function (keys) {
-    return Promise.all(keys.filter(function (k) { return k !== CACHE; }).map(function (k) { return caches.delete(k); }));
+    return Promise.all(keys.filter(function (k) { return k !== CACHE && k !== FONT_CACHE; }).map(function (k) { return caches.delete(k); }));
   }).then(function () { return self.clients.claim(); }));
 });
 
@@ -36,6 +39,20 @@ self.addEventListener("fetch", function (e) {
   if (req.method !== "GET") return;
   var url = req.url;
 
+  // Fonts: serve the saved copy, refresh it in the background.
+  if (/^https:\/\/fonts\.(googleapis|gstatic)\.com\//.test(url)) {
+    e.respondWith(caches.open(FONT_CACHE).then(function (c) {
+      return c.match(req).then(function (hit) {
+        var net = fetch(req).then(function (res) {
+          if (res && (res.ok || res.type === "opaque")) c.put(req, res.clone());
+          return res;
+        }).catch(function () { return hit; });
+        return hit || net;
+      });
+    }));
+    return;
+  }
+
   // Latest data on every online load.
   if (url.indexOf("data.json") !== -1) { networkFirst(e); return; }
 
@@ -49,5 +66,3 @@ self.addEventListener("fetch", function (e) {
   // Versioned assets + icons: cache-first (fast, offline).
   e.respondWith(caches.match(req).then(function (hit) { return hit || fetch(req); }));
 });
-
-
