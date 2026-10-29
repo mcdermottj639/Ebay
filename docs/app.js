@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v64";
+  var APP_VERSION = "v65";
   var state = { tab: "today", data: null, bucket: "All",
                 q: "", sort: "val-desc", sellMode: "plan", buyMode: "radar", planFilter: "all", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryTier: "all", inventoryLayout: "grid",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -620,7 +620,7 @@
     var batch = eligibleCards(), listed = heldCards().filter(Selling.listed);
     var asks = listed.reduce(function (n, c) { return n + (Selling.amount((c.owner_listing || {}).asking_price) || 0); }, 0);
     var premium = Selling.premium(state.data.cards, workspace.plans, workspace.limit, null, workspace.includeSpecial);
-    var due = premium.filter(function (x) { return x.plan.key === "due"; }).length, buys = qualifiedBuys().length, targets = (state.data.targets || []).length;
+    var due = premium.filter(function (x) { return x.plan.key === "due" || x.plan.key === "offer"; }).length, buys = qualifiedBuys().length, targets = (state.data.targets || []).length;
     var sec = el('<section class="moves-section" aria-label="Next moves"></section>');
     sec.appendChild(sectionHead("Next moves"));
     var grid = el('<div class="action-grid"></div>');
@@ -634,6 +634,9 @@
     grid.appendChild(actionTile("Reviews due", due, "", week.html, due ? "Open your plans" : week.next ? "Next review " + week.next : "No review dates set", function () { goSell("plan"); }));
     grid.appendChild(actionTile("Buy radar", buys, "ready", radarMini(buys), targets + " targets watched", function () { state.buyMode = buys ? "radar" : "targets"; setTab("radar"); }));
     sec.appendChild(grid);
+    var offerImport = el('<button class="text-button offer-import-shortcut" type="button">Import a private offer plan ' + icon("arrow") + "</button>");
+    offerImport.onclick = openOfferImport;
+    sec.appendChild(offerImport);
     return sec;
   }
   function showcase() {
@@ -807,8 +810,9 @@
   }
   function premiumRow(item) {
     var c = item.card, p = item.plan, o = c.owner_listing || {}, ask = Selling.listed(c) ? Selling.amount(o.asking_price) : null;
+    var offer = (workspace.plans[c.sku] || {}).offer, offerAmt = offer ? Selling.amount(offer.amount) : null;
     var ml = miniLadder(c, ask);
-    var row = el('<article class="review-card"><span class="review-photo">' + slab(c, "sm") + '</span><div class="review-top"><h3>' + esc(c.player) + '</h3><span class="row-money"><b>' + displayPrice(Selling.reference(c)) + "</b><small>" + esc(referenceLabel(c)) + '</small></span></div><p class="card-spec">' + esc(subline(c)) + '</p><div class="review-meta"><span class="signal ' + p.tone + '">' + esc(p.label) + "</span>" + (ask != null ? '<span class="signal green">Ask ' + money0(ask) + "</span>" : "") + "</div>" + (ml ? '<div class="review-viz">' + ml + "</div>" : "") + '<p class="review-reason">' + esc(p.reason) + '</p><div class="review-buttons"><button class="button small" type="button">Plan this card</button><button class="text-button" type="button" data-details>Card details</button></div></article>');
+    var row = el('<article class="review-card"><span class="review-photo">' + slab(c, "sm") + '</span><div class="review-top"><h3>' + esc(c.player) + '</h3><span class="row-money"><b>' + displayPrice(offerAmt != null ? offerAmt : Selling.reference(c)) + "</b><small>" + esc(offerAmt != null ? "Private offer" : referenceLabel(c)) + '</small></span></div><p class="card-spec">' + esc(subline(c)) + '</p><div class="review-meta"><span class="signal ' + p.tone + '">' + esc(p.label) + "</span>" + (ask != null ? '<span class="signal green">Ask ' + money0(ask) + "</span>" : "") + "</div>" + (ml ? '<div class="review-viz">' + ml + "</div>" : "") + '<p class="review-reason">' + esc(p.reason) + '</p><div class="review-buttons"><button class="button small" type="button">Plan this card</button><button class="text-button" type="button" data-details>Card details</button></div></article>');
     row.querySelector(".button").onclick = function () { openSellPlan(c); };
     row.querySelector("[data-details]").onclick = function () { openModal(c); };
     return row;
@@ -826,6 +830,9 @@
     var wrap = el('<div class="view sell-view"></div>'), mode = state.sellMode || "plan";
     var items = Selling.premium(state.data.cards, workspace.plans, workspace.limit, null, workspace.includeSpecial), batch = eligibleCards(), listed = state.data.cards.filter(Selling.listed);
     wrap.appendChild(pageHead("Sell", "Bundle the small cards into lots. Plan the valuable ones one at a time."));
+    var exchange = el('<div class="offer-exchange-entry"><span>Got an offer plan from Jarvis or your assistant?</span><button class="button secondary small" type="button">Import offer plan</button></div>');
+    exchange.querySelector("button").onclick = openOfferImport;
+    wrap.appendChild(exchange);
     wrap.appendChild(segment([["plan", "Plans", items.length], ["lots", "Lots", batch.length], ["listings", "On eBay", listed.length], ["drafts", "Drafts", workspace.lots.length]], mode, function (x) { state.sellMode = x; render(); }));
     if (mode === "lots") { wrap.appendChild(lotBuilder()); return wrap; }
     if (mode === "drafts") { wrap.appendChild(savedLotDrafts()); return wrap; }
@@ -836,7 +843,7 @@
       wrap.appendChild(listed.length ? grid : emptyPanel("No recorded listings", "Your confirmed eBay listings will appear here."));
       return wrap;
     }
-    var KEYS = [["all", "All"], ["due", "Review due"], ["target", "Check target"], ["list", "Ready to list"], ["listed", "On eBay"], ["research", "Needs comps"], ["hold", "Holding"]];
+    var KEYS = [["all", "All"], ["offer", "Offers"], ["due", "Review due"], ["target", "Check target"], ["list", "Ready to list"], ["listed", "On eBay"], ["research", "Needs comps"], ["hold", "Holding"]];
     var countOf = function (k) { return k === "all" ? items.length : items.filter(function (x) { return x.plan.key === k; }).length; };
     var filter = state.planFilter || "all";
     if (filter !== "all" && !countOf(filter)) filter = state.planFilter = "all";
@@ -1202,7 +1209,7 @@
     wrap.appendChild(list);if(!groups.length)wrap.appendChild(emptyPanel('No cards fit this cutoff','Raise the reference limit, or use an individual selling plan.'));wrap.appendChild(summary);summary.querySelector('button').onclick=function(){openLotDraft(validSelection());};sync();return wrap;
   }
   function showWorkspaceModal(html) {
-    modalFocus=document.activeElement;var m=document.getElementById('modal');m.className='modal workspace-modal';m.innerHTML='<button class="close" id="mClose" type="button" aria-label="Close dialog">×</button>'+html;m.scrollTop=0;m.setAttribute('aria-labelledby','workspaceTitle');m.querySelector('#mClose').onclick=closeModal;document.getElementById('modalWrap').classList.add('open');document.body.classList.add('sheet-open');m.querySelector('#mClose').focus();return m;
+    if(!document.getElementById('modalWrap').classList.contains('open'))modalFocus=document.activeElement;var m=document.getElementById('modal');m.className='modal workspace-modal';m.innerHTML='<button class="close" id="mClose" type="button" aria-label="Close dialog">×</button>'+html;m.scrollTop=0;m.setAttribute('aria-labelledby','workspaceTitle');m.querySelector('#mClose').onclick=closeModal;document.getElementById('modalWrap').classList.add('open');document.body.classList.add('sheet-open');m.querySelector('#mClose').focus();return m;
   }
   // v63 price ladder: every number the owner is weighing, on one axis.
   // Recorded sales are dots (filled = inside the 90-day evidence window,
@@ -1269,9 +1276,67 @@
     return '<div class="price-ladder">' + (fact ? '<div class="pl-head"><p>' + esc(fact) + '</p></div>' : '') + svg +
       '<div class="pl-legend">' + legend + '</div>' + hist + '<small class="pl-note">Recorded sales and saved values, not live quotes. Asking prices are not sales.</small></div>';
   }
-  function openSellPlan(c) {
-    var p=workspace.plans[c.sku]||{},signal=Selling.planFor(c,p),o=c.owner_listing||{},e=Selling.soldEvidence(c),m=showWorkspaceModal('<div class="modal-heading">'+slab(c,'sm')+'<div><span class="cv-kicker">Selling plan</span><h2 id="workspaceTitle">'+esc(c.player)+'</h2><p>'+esc(c.line)+'</p></div></div><div class="plan-price"><div><span>'+esc(referenceLabel(c))+'</span><b>'+displayPrice(Selling.reference(c))+'</b></div><div><span>'+(Selling.listed(c)?'Your listing':'Recorded cost')+'</span><b>'+displayPrice(Selling.listed(c)?Selling.amount(o.asking_price):Selling.cost(c))+'</b></div></div><section class="sheet-section plan-picture"><h3>Price picture</h3><div id="planLadder">'+priceLadder(c,p.target)+'</div></section><div class="evidence-note"><span class="signal '+signal.tone+'">'+esc(signal.label)+'</span><p>'+esc(signal.reason)+'</p><small>'+e.count+' recorded sales in the last 90 days'+(e.newest?', newest '+esc(savedDate(e.newest)):'')+'. Confirm the exact card, parallel and grade. Saved values are not live market quotes.</small></div>'+compResearchLinks(c.title,ebaySearchUrl(c,true))+'<div class="form-grid"><label class="full">Your plan<select id="planAction"><option value="review">Review before deciding</option><option value="hold">Hold for my price</option><option value="list">Prepare to list</option></select></label><label>Target sale price ($)<input id="planTarget" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Your target" value="'+esc(p.target||'')+'"></label><label>Review on<input id="planDate" type="date" value="'+esc(p.reviewDate||'')+'"></label><label class="full">Your notes<textarea id="planNote" rows="3" maxlength="800" placeholder="What would make you sell?">'+esc(p.note||'')+'</textarea></label></div><div class="button-row"><button class="button" id="planSave" type="button">Save selling plan</button></div><p class="section-note">Saved on this device. Review dates appear on Today when you open the app. This plan does not change your eBay listing.</p>');
-    m.querySelector('#planAction').value=p.action||'review';m.querySelector('#planTarget').addEventListener('input',function(){m.querySelector('#planLadder').innerHTML=priceLadder(c,this.value);});m.querySelector('#planSave').onclick=function(){var target=m.querySelector('#planTarget');if(!target.reportValidity())return;workspace.plans[c.sku]={action:m.querySelector('#planAction').value,target:target.value,reviewDate:m.querySelector('#planDate').value,note:m.querySelector('#planNote').value.trim()};if(saveWorkspace()){closeModal();render();toast('Selling plan saved on this device');}};
+  // v65 private offer plans (ported from ChatGPT/dot's generic package onto v64).
+  // Offer terms live only in this device's selling workspace (cv-selling-v1),
+  // never in my_numbers, data.json or the public comparison feed. An import is a
+  // preview until the owner ticks the review box and saves.
+  function defaultOfferAssumptions() {
+    var p=(state.data.radar||{}).policy||{};
+    return {shipping:p.outbound_shipping==null?8:p.outbound_shipping,supplies:p.supplies==null?2:p.supplies,feeRate:(p.fee_rate==null?.1325:p.fee_rate)*100,orderFee:p.per_order_fee==null?.4:p.per_order_fee,promotion:(p.promotion_reserve_rate==null?.02:p.promotion_reserve_rate)*100,buyerTax:(p.resale_buyer_tax_rate==null?.08:p.resale_buyer_tax_rate)*100,feeThreshold:p.fee_threshold||7500,feeRateAbove:(p.fee_rate_above==null?.0235:p.fee_rate_above)*100};
+  }
+  function openOfferImport() {
+    var m=showWorkspaceModal('<span class="cv-kicker">Private offer plan</span><h2 id="workspaceTitle">Review an offer plan</h2><p class="section-note">Choose the private JSON file or paste its contents. Nothing is uploaded. It only matches a card you still own, and nothing saves until you review it.</p><label class="field">Choose JSON file<input id="offerImportFile" type="file" accept=".json,application/json"></label><label class="field">Or paste the offer-plan JSON<textarea id="offerImportText" rows="8" maxlength="20000" spellcheck="false" placeholder="card-vault-offer-plan, schema 1"></textarea></label><p id="offerImportError" class="warning-text" role="alert"></p><div class="button-row"><button class="button" id="offerImportReview" type="button">Review matched card</button><button class="button secondary" id="offerImportCancel" type="button">Cancel</button></div><p class="section-note">Never include buyer details, order IDs or passwords. Closing this discards the preview.</p>');
+    var input=m.querySelector('#offerImportText'),error=m.querySelector('#offerImportError'),review=m.querySelector('#offerImportReview'),fileRevision=0;
+    input.oninput=function(){fileRevision++;review.disabled=false;};
+    m.querySelector('#offerImportFile').onchange=function(){var file=this.files[0],revision=++fileRevision;error.textContent='';input.value='';review.disabled=false;if(!file)return;if(file.size>20000){error.textContent='File is too large. Use one offer plan under 20 KB.';return;}review.disabled=true;file.text().then(function(text){if(revision===fileRevision&&document.contains(input)){input.value=text;review.disabled=false;}},function(){if(revision===fileRevision&&document.contains(error)){error.textContent='Could not read this file. Try pasting its JSON instead.';review.disabled=false;}});};
+    review.onclick=function(){try{var result=Selling.parseOfferExchange(input.value,state.data.cards);openSellPlan(result.card,result.offer);}catch(e){error.textContent=e.message;}};
+    m.querySelector('#offerImportCancel').onclick=closeModal;
+  }
+  function offerFields(offer,enabled,imported) {
+    function field(key,label,extra){return '<label>'+label+'<input data-offer="'+key+'" '+(extra||'type="number" min="0" step="0.01" inputmode="decimal"')+' value="'+esc(offer[key]==null?'':offer[key])+'"></label>';}
+    var costs=[['shipping','Shipping and insurance you pay ($)'],['supplies','Packaging ($)'],['feeRate','Base selling fee (%)'],['orderFee','Per-order fee ($)'],['promotion','Promotion reserve (%)'],['buyerTax','Buyer tax allowance (%)'],['feeThreshold','Fee tier threshold ($)'],['feeRateAbove','Fee above threshold (%)']];
+    return '<details class="offer-plan"'+(enabled?' open':'')+'><summary>Offer decision<span>Private, saved on this device only</span></summary><label class="offer-enable"><input id="offerEnabled" type="checkbox"'+(enabled?' checked':'')+(imported?' disabled':'')+'> Include an offer in this plan</label><p class="section-note">Recommendations are notes, not approval. Nothing here accepts, counters or messages anyone on eBay. Untick and save to remove the offer; your card records stay unchanged.</p><fieldset id="offerFields"><div class="form-grid">'+
+      field('amount','Offer amount (USD)','type="number" required min="0.01" step="0.01" inputmode="decimal"')+field('counterAmount','Counter scenario (USD)')+
+      field('minimumNet','Your minimum net ($)')+field('acquisitionCost','Scenario cost basis ($)')+
+      '<label class="full">Recommendation to review<select data-offer="recommendation"><option value="review">Review before deciding</option><option value="accept">Consider accepting</option><option value="counter">Consider a counter</option><option value="hold">Hold, do not act yet</option></select></label><label class="full">Decision notes<textarea data-offer="rationale" rows="4" maxlength="2000" placeholder="Why accept, counter or hold? What still needs checking?">'+esc(offer.rationale)+'</textarea></label><label class="full">Basis and evidence notes<textarea data-offer="basisNote" rows="3" maxlength="1000" placeholder="Source and limits. Not a ledger update.">'+esc(offer.basisNote)+'</textarea></label></div><p class="section-note">The minimum is your own optional floor and is never inferred from a recommendation. The scenario cost changes only this estimate, not your recorded cost.</p><div id="offerQuote" class="quote-panel" aria-live="polite"></div><p id="offerScenarioNote" class="section-note"></p><details class="cost-assumptions"><summary>Selling cost assumptions</summary><div class="form-grid">'+
+      costs.map(function(f){return '<label>'+f[1]+'<input data-offer-cost="'+f[0]+'" type="number" min="0" '+(/Rate|promotion|buyerTax/.test(f[0])?'max="99.99" ':'')+'step="0.01" inputmode="decimal" value="'+esc(offer.assumptions[f[0]]==null?'':offer.assumptions[f[0]])+'"></label>';}).join('')+
+      '</div><p class="section-note">Planning assumptions, not verified account fees. While any box is blank the net and profit stay unknown. Free shipping to the buyer; the fee basis includes the buyer-tax allowance. Before income tax.</p><button class="text-button" id="offerUseDefaults" type="button">Fill blanks with my saved selling costs</button></details><details class="offer-timing"'+(offer.expiryNote||offer.expiresAt?' open':'')+'><summary>Expiration and timing</summary><div id="offerDeadline" class="evidence-note" aria-live="polite"></div><div class="form-grid"><label class="full">Original expiration wording<textarea data-offer="expiryNote" rows="2" maxlength="500" placeholder="Keep the source wording. Say if the timezone is unknown.">'+esc(offer.expiryNote)+'</textarea></label>'+
+      field('expiresAt','Confirmed expiry with timezone','type="text" placeholder="2026-10-29T20:40:00-04:00" autocomplete="off" spellcheck="false"')+field('receivedAt','Received time with timezone','type="text" placeholder="2026-10-29T03:40:34Z" autocomplete="off" spellcheck="false"')+
+      '</div><p class="section-note">Leave the confirmed expiry blank until the timezone is verified in eBay. Wording alone never becomes a countdown, and the app sends no reminders.</p></details><div class="button-row"><button class="text-button" id="offerExportPrepare" type="button">Prepare private JSON</button></div><div id="offerExport" hidden><label class="field">Private offer-plan JSON<textarea id="offerExportText" rows="6" readonly spellcheck="false"></textarea></label><div class="button-row"><button class="button secondary small" id="offerExportCopy" type="button">Copy JSON</button><button class="button secondary small" id="offerExportDownload" type="button">Download JSON</button></div><p class="section-note">Contains private negotiation terms. Share it only through your private Jarvis handoff, never a public repository or the pricing feed. Exporting does not save changes.</p></div></fieldset></details>';
+  }
+  function openSellPlan(c,incomingOffer) {
+    var p=workspace.plans[c.sku]||{},signal=Selling.planFor(c,p),o=c.owner_listing||{},e=Selling.soldEvidence(c),imported=!!incomingOffer;
+    var offer,enabled=!!(incomingOffer||p.offer),offerWarning='';
+    try{offer=Selling.normalizeOffer(incomingOffer||p.offer||{assumptions:defaultOfferAssumptions()});}catch(error){offer=Selling.normalizeOffer({assumptions:defaultOfferAssumptions()});enabled=false;offerWarning='This saved offer cannot be read: '+error.message+' It stays untouched until you save. Tick the box and enter corrected terms, or leave it unticked and save to remove only the offer.';}
+    var reviewBox=imported?'<div class="offer-import-review"><b>Imported preview, not saved yet</b><p>Check the card, the offer, the deadline and every cost. Saving replaces only this card’s offer'+(p.offer?' ('+displayPrice(p.offer.amount)+' saved now)':'')+'; your other plan details and card records stay the same.</p><label><input id="offerReviewed" type="checkbox" required> I checked the matched card and the private terms</label></div>':'';
+    var m=showWorkspaceModal('<div class="modal-heading">'+slab(c,'sm')+'<div><span class="cv-kicker">Selling plan</span><h2 id="workspaceTitle">'+esc(c.player)+'</h2><p>'+esc(c.line)+'</p><small class="plan-ids">'+esc(c.sku)+(o.item_id?', listing '+esc(o.item_id):'')+'</small></div></div>'+reviewBox+'<div class="plan-price"><div><span>'+esc(referenceLabel(c))+'</span><b>'+displayPrice(Selling.reference(c))+'</b></div><div><span>'+(Selling.listed(c)?'Your listing':'Recorded cost')+'</span><b>'+displayPrice(Selling.listed(c)?Selling.amount(o.asking_price):Selling.cost(c))+'</b></div></div>'+(offerWarning?'<p class="warning-text" role="alert">'+esc(offerWarning)+'</p>':'')+offerFields(offer,enabled,imported)+'<section class="sheet-section plan-picture"><h3>Price picture</h3><div id="planLadder">'+priceLadder(c,p.target)+'</div></section><div class="evidence-note"><span class="signal '+signal.tone+'">'+esc(signal.label)+'</span><p>'+esc(signal.reason)+'</p><small>'+e.count+' recorded sales in the last 90 days'+(e.newest?', newest '+esc(savedDate(e.newest)):'')+'. Confirm the exact card, parallel and grade. Saved values are not live market quotes.</small></div>'+compResearchLinks(c.title,ebaySearchUrl(c,true))+'<div class="form-grid"><label class="full">Your plan<select id="planAction"><option value="review">Review before deciding</option><option value="hold">Hold for my price</option><option value="list">Prepare to list</option></select></label><label>Target sale price ($)<input id="planTarget" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Your target" value="'+esc(p.target==null?'':p.target)+'"></label><label>Review on<input id="planDate" type="date" value="'+esc(p.reviewDate||'')+'"></label><label class="full">Your notes<textarea id="planNote" rows="3" maxlength="800" placeholder="What would make you sell?">'+esc(p.note||'')+'</textarea></label></div><p id="offerError" class="warning-text" role="alert"></p><div class="button-row"><button class="button" id="planSave" type="button">Save selling plan</button><button class="button secondary" id="planCancel" type="button">Cancel</button></div><p class="section-note">Saved on this device only. Offer reviews appear on Today when you open the app. Nothing here accepts, counters, messages a buyer, changes a listing or records a sale, and private offers are never included in Send to Claude or the one-tap sheet save.</p>');
+    var error=m.querySelector('#offerError');
+    m.querySelector('#planAction').value=p.action||'review';m.querySelector('[data-offer="recommendation"]').value=offer.recommendation;
+    m.querySelector('#planTarget').addEventListener('input',function(){m.querySelector('#planLadder').innerHTML=priceLadder(c,this.value);});
+    function readOffer(){var row={currency:'USD',assumptions:{}};m.querySelectorAll('[data-offer]').forEach(function(i){row[i.dataset.offer]=i.value;});m.querySelectorAll('[data-offer-cost]').forEach(function(i){row.assumptions[i.dataset.offerCost]=i.value;});return Selling.normalizeOffer(row);}
+    function validate(){var invalid=Array.from(m.querySelectorAll('input,textarea,select')).find(function(i){return !i.disabled&&!i.checkValidity();});if(invalid){var d=invalid.closest('details');while(d){d.open=true;d=d.parentElement.closest('details');}invalid.reportValidity();return false;}return true;}
+    function updateOffer(){
+      var active=m.querySelector('#offerEnabled').checked;m.querySelector('#offerFields').disabled=!active;m.querySelector('#offerExport').hidden=true;error.textContent='';if(!active)return;
+      try{var value=readOffer(),q=Selling.offerQuote(c,value),deadline=Selling.offerDeadline(value),counter=value.counterAmount===null?null:Selling.offerQuote(c,Object.assign({},value,{amount:value.counterAmount}));
+        var costNote=value.acquisitionCost!==null?'Uses your scenario cost basis':q.costCount?'Uses your recorded cost':'Cost unknown';
+        m.querySelector('#offerQuote').innerHTML='<div><span>Offer '+money(value.amount)+', est. net</span><strong class="'+(q.proceeds<0?'neg':'')+'">'+(q.proceeds===null?'—':money(q.proceeds))+'</strong><small>'+(q.proceeds===null?'Fill in the cost assumptions':'After modeled selling costs')+'</small></div><div><span>Offer, est. profit</span><strong class="'+(q.profit<0?'neg':'')+'">'+(q.profit===null?'—':money(q.profit))+'</strong><small>'+costNote+'</small></div>'+(counter?'<div><span>Counter '+money(value.counterAmount)+', est. net</span><strong>'+(counter.proceeds===null?'—':money(counter.proceeds))+'</strong><small>Scenario only</small></div><div><span>Counter, est. profit</span><strong>'+(counter.profit===null?'—':money(counter.profit))+'</strong><small>Same assumptions</small></div>':'')+(value.minimumNet!==null?'<p>Your minimum net is '+money(value.minimumNet)+'. '+(q.proceeds===null?'Fill in the costs to compare.':q.proceeds>=value.minimumNet?'The offer clears it. That is not approval to accept.':'The offer is below it.')+'</p>':'');
+        m.querySelector('#offerScenarioNote').textContent='Recorded cost: '+(Selling.cost(c)===null?'unknown':money(Selling.cost(c)))+'. '+(value.acquisitionCost!==null?'Scenario cost basis: '+money(value.acquisitionCost)+'. ':'')+'Net is not profit, and neither is a settled payout.';
+        m.querySelector('#offerDeadline').textContent=deadline.label+(value.expiresAt?'. '+value.expiresAt:'')+(value.expiryNote?'. '+value.expiryNote:'');
+      }catch(e){m.querySelector('#offerQuote').textContent='Complete valid offer details to see a scenario.';m.querySelector('#offerDeadline').textContent='No confirmed countdown. Check the timestamp and timezone.';m.querySelector('#offerScenarioNote').textContent=e.message;}
+    }
+    m.querySelectorAll('[data-offer],[data-offer-cost],#offerEnabled').forEach(function(i){i.addEventListener('input',updateOffer);i.addEventListener('change',updateOffer);});
+    m.querySelector('#offerUseDefaults').onclick=function(){var d=defaultOfferAssumptions();m.querySelectorAll('[data-offer-cost]').forEach(function(i){if(i.value.trim()==='')i.value=d[i.dataset.offerCost];});updateOffer();};
+    m.querySelector('#offerExportPrepare').onclick=function(){try{if(!validate())return;m.querySelector('#offerExportText').value=JSON.stringify(Selling.exportOfferExchange(c,readOffer()),null,2);m.querySelector('#offerExport').hidden=false;}catch(e){error.textContent=e.message;}};
+    m.querySelector('#offerExportCopy').onclick=function(){copyAndReport(m.querySelector('#offerExportText').value,this,'JSON copied');};
+    m.querySelector('#offerExportDownload').onclick=function(){var url=URL.createObjectURL(new Blob([m.querySelector('#offerExportText').value],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='private-offer-plan-'+c.sku+'.json';a.click();setTimeout(function(){URL.revokeObjectURL(url);},1000);};
+    m.querySelector('#planCancel').onclick=closeModal;
+    m.querySelector('#planSave').onclick=function(){
+      error.textContent='';if(!validate())return;if(!Selling.held(c)){error.textContent='This card is recorded sold. Recheck its status before saving an offer.';return;}
+      var next=Object.assign({},p,{action:m.querySelector('#planAction').value,target:m.querySelector('#planTarget').value,reviewDate:m.querySelector('#planDate').value,note:m.querySelector('#planNote').value.trim()});
+      try{if(m.querySelector('#offerEnabled').checked)next.offer=readOffer();else delete next.offer;}catch(e){error.textContent=e.message;return;}
+      var old=workspace.plans[c.sku];workspace.plans[c.sku]=next;if(saveWorkspace()){closeModal();render();toast('Selling plan saved on this device');}else{if(old===undefined)delete workspace.plans[c.sku];else workspace.plans[c.sku]=old;}
+    };
+    updateOffer();
   }
   function openLotDraft(cards,existing) {
     if(cards.length<2){toast('Select at least two eligible cards to build a lot.');return;}
@@ -1292,6 +1357,7 @@
 
 
   function setTab(tab) {
+    var openSheet=document.getElementById('modalWrap');if(openSheet&&openSheet.classList.contains('open'))closeModal();
     if(tab==='targets'){state.buyMode='targets';tab='radar';}
     if(tab==='drafts'){state.sellMode='drafts';tab='sell';}
     if(tab==='salesmap'){state.sellMode='plan';tab='sell';}
