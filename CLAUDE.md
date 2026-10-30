@@ -8,7 +8,20 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
-## Pinned ticker — v66, October 29, 2026 (Claude) — CURRENT RELEASE
+## Lower bottom bar — v67, October 29, 2026 (Claude) — CURRENT RELEASE
+Jack (iPhone screenshot, light theme): "Move bottom bar down". The phone dock
+pill ended ~42pt above the screen edge (8px + the ~34pt home-indicator inset).
+- `.dock` bottom padding is now `max(8px, calc(env(safe-area-inset-bottom) - 14px))`
+  and `.dock::before` bottom `max(6px, calc(env(safe-area-inset-bottom) - 16px))`:
+  the pill overlaps the home-indicator zone but ends ~18pt above the edge,
+  clear of the indicator bar. Desktop rail unchanged; `measureNav()` unchanged
+  (it reads the dock's real height).
+- Validation: 37 Python + 27 Node tests, node --check app.js/sw.js. Playwright
+  390x844 with the safe-area inset substituted as 34px: v66 pill 42px above the
+  bottom → v67 18px (buttons 44 → 20); dock flush to the viewport; page content
+  still ends above the dock; no overflow; no page errors. Physical iPhone not tested.
+
+## Pinned ticker — v66, October 29, 2026 (Claude)
 Jack: "make the ticker at the top of the page and make it permanent so even
 when I scroll it's there."
 - The "Latest" ticker left the Today view and now lives in `#tickerSlot` inside
@@ -643,11 +656,11 @@ These rules supersede the historical asking-median radar/Great Value notes below
   `?v=N` on vault.css, selling.js, charts.js + app.js in `index.html` (v64+
   file set), the manifest icons, and `CACHE`/SHELL `?v=N` in `sw.js`, run
   `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v66. The live
+  this makes the service worker serve stale CSS/JS. Current: v67. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v66. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v67. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
