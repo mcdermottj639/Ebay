@@ -93,7 +93,7 @@
       "n": 33
     }
   ],
-  "generated": "Oct 30, 2026 \u00b7 23:20 UTC",
+  "generated": "Oct 30, 2026 \u00b7 23:50 UTC",
   "app_version": "v67",
   "targets": [
     {
@@ -5536,6 +5536,15 @@
             "price": 100,
             "currency": "USD",
             "source": "ebay_sale_confirmation_email"
+          },
+          {
+            "event_id": "336866460070:shipping_label_purchased:2026-10-27T21:44:10-04:00",
+            "type": "shipping_label_purchased",
+            "occurred_at": "2026-10-27T21:44:10-04:00",
+            "item_id": "336866460070",
+            "price": 7.08,
+            "currency": "USD",
+            "source": "ebay_shipping_label_confirmation_email"
           }
         ],
         "sold_price": 100,
@@ -5543,7 +5552,7 @@
         "cost": 63,
         "cost_source": "owner_statement",
         "fees": null,
-        "outbound_shipping": null,
+        "outbound_shipping": 7.08,
         "net_profit": null
       },
       "sold_price": 100.0,
