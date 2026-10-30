@@ -86,9 +86,14 @@
       "d": "2026-10-29",
       "v": 2700.39,
       "n": 33
+    },
+    {
+      "d": "2026-10-30",
+      "v": 2700.39,
+      "n": 33
     }
   ],
-  "generated": "Oct 30, 2026 \u00b7 01:41 UTC",
+  "generated": "Oct 30, 2026 \u00b7 23:20 UTC",
   "app_version": "v67",
   "targets": [
     {
@@ -454,9 +459,9 @@
   ],
   "radar": {
     "schema_version": 2,
-    "as_of": "2026-10-28T02:06:27.424556+00:00",
+    "as_of": "2026-10-30T23:20:31.824805+00:00",
     "watch_count": 36,
-    "scanned": 13,
+    "scanned": 16,
     "shown": 0,
     "deals": [],
     "candidates": [
@@ -522,6 +527,7 @@
         "reasons": [
           "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
           "Card Ladder shows a $288.50 latest sale (October 26), but individual sale provenance is unavailable; aggregate averages are not accepted as comps.",
+          "Listing observation is stale or undated",
           "Card/slab condition needs photo review",
           "Seller track record is missing or below screening minimum",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days",
@@ -588,6 +594,7 @@
         "reasons": [
           "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
           "No recent exact PSA 9 sold sample established in this first scan. NFL Debut #270 is not #209.",
+          "Listing observation is stale or undated",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days",
           "Other grades require a reviewed hold of 30 days or less"
@@ -653,6 +660,7 @@
         "reasons": [
           "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
           "Above normal/exception limits. Not the same parallel as your /15. No recent exact sold valuation established. Seller away through October 30.",
+          "Listing observation is stale or undated",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days",
           "Other grades require a reviewed hold of 30 days or less",
@@ -719,6 +727,7 @@
         "grade_scope": "psa10",
         "reasons": [
           "Observed $950 is a bid, not an executable buy-now price; no bargain inference.",
+          "Listing observation is stale or undated",
           "Auction bid is not a buy-now acquisition price",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days",
@@ -782,6 +791,7 @@
         "grade_scope": "outside_focus",
         "reasons": [
           "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
+          "Listing observation is stale or undated",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days",
           "Other grades require a reviewed hold of 30 days or less"
@@ -884,8 +894,8 @@
           "excluded": [],
           "count": 1,
           "primary_count": 1,
-          "freshest_days": 9.1,
-          "freshest_primary_days": 9.1,
+          "freshest_days": 12.0,
+          "freshest_primary_days": 12.0,
           "valuation_basis": "provisional reported sales",
           "range": [
             825,
@@ -906,6 +916,7 @@
           "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
           "Public listing snapshot was crawled two weeks earlier; current availability is unverified.",
           "Asking price exceeds this target discovery band; retained as context, not a buy.",
+          "Listing observation is stale or undated",
           "Listing is sold/ended or current availability is unverified",
           "Card/slab condition needs photo review",
           "Seller track record is missing or below screening minimum",
@@ -913,6 +924,306 @@
           "Other grades require a reviewed hold of 30 days or less",
           "Above $500 normal all-in limit; individual exception review",
           "Premium watchlist only"
+        ],
+        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
+      },
+      {
+        "label": "Anthony Richardson \u00b7 Prizm Silver #343 PSA 10",
+        "item_title": "Anthony Richardson \u00b7 Prizm Silver #343 PSA 10",
+        "listing_id": "335793293894",
+        "url": "https://www.ebay.com/itm/335793293894",
+        "price": 95,
+        "shipping": 4.99,
+        "currency": "USD",
+        "identity": {
+          "year": 2023,
+          "set": "Prizm",
+          "player": "Anthony Richardson",
+          "number": "343",
+          "parallel": "Silver",
+          "print_run": "none",
+          "autograph": false,
+          "relic": false,
+          "grader": "PSA",
+          "grade": 10
+        },
+        "identity_reviewed": true,
+        "condition_reviewed": true,
+        "category": "rookies",
+        "sport": "football",
+        "page_state": "active",
+        "buying_option": "FIXED_PRICE",
+        "seller_score": 165,
+        "seller_pct": 100,
+        "checked_at": "2026-10-30T23:20:18+00:00",
+        "observation_method": "live public browser; Buy It Now and shipping displayed",
+        "query": "Anthony Richardson \u00b7 Prizm Silver #343 PSA 10",
+        "hold_days": 90,
+        "hold_reviewed": false,
+        "hold_basis": "90-day planning scenario; listing-to-sale time not established",
+        "sales": [
+          {
+            "identity": {
+              "year": 2023,
+              "set": "Prizm",
+              "player": "Anthony Richardson",
+              "number": "343",
+              "parallel": "Silver",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-25",
+            "price": 43.5,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:960085259898",
+            "url": "https://www.sportscardspro.com/game/football-cards-2023-panini-prizm/anthony-richardson-silver-343",
+            "marketplace_url": "https://www.ebay.com/itm/960085259898",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+          },
+          {
+            "identity": {
+              "year": 2023,
+              "set": "Prizm",
+              "player": "Anthony Richardson",
+              "number": "343",
+              "parallel": "Silver",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-21",
+            "price": 60.03,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:336851127392",
+            "url": "https://www.sportscardspro.com/game/football-cards-2023-panini-prizm/anthony-richardson-silver-343",
+            "marketplace_url": "https://www.ebay.com/itm/336851127392",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+          },
+          {
+            "identity": {
+              "year": 2023,
+              "set": "Prizm",
+              "player": "Anthony Richardson",
+              "number": "343",
+              "parallel": "Silver",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-19",
+            "price": 49.99,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:366743707936",
+            "url": "https://www.sportscardspro.com/game/football-cards-2023-panini-prizm/anthony-richardson-silver-343",
+            "marketplace_url": "https://www.ebay.com/itm/366743707936",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+          },
+          {
+            "identity": {
+              "year": 2023,
+              "set": "Prizm",
+              "player": "Anthony Richardson",
+              "number": "343",
+              "parallel": "Silver",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-09-26",
+            "price": 85,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "fanatics:fcc0df72-fab0-43f0-a33b-02d189d68c7c",
+            "url": "https://www.fanaticscollect.com/buy-now/fcc0df72-fab0-43f0-a33b-02d189d68c7c",
+            "source_type": "primary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Primary page labels SOLD Sep 26 2026 at $85. Other dated history rows on the page lack distinct transaction IDs and were not counted. Source-reported amount, not settlement proof."
+          }
+        ],
+        "warnings": [
+          "Product Research inaccessible (sign-in wall); public sold-search fallback also required sign-in. Individual secondary reports remain provisional.",
+          "Displayed incoming shipping is for the browser's destination; owner checkout tax/shipping and fee plan remain unconfirmed."
+        ],
+        "photo_review": {
+          "reviewed_at": "2026-10-30T23:20:18+00:00",
+          "cert": "89187697",
+          "note": "Viewed front and reverse listing images: 2023 Prizm #343 Silver GEM MT 10 label; no obvious slab damage visible at displayed resolution. Not an independent authenticity guarantee."
+        },
+        "evidence": {
+          "sales": [
+            {
+              "identity": {
+                "year": 2023,
+                "set": "Prizm",
+                "player": "Anthony Richardson",
+                "number": "343",
+                "parallel": "Silver",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-25",
+              "price": 43.5,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:960085259898",
+              "url": "https://www.sportscardspro.com/game/football-cards-2023-panini-prizm/anthony-richardson-silver-343",
+              "marketplace_url": "https://www.ebay.com/itm/960085259898",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+            },
+            {
+              "identity": {
+                "year": 2023,
+                "set": "Prizm",
+                "player": "Anthony Richardson",
+                "number": "343",
+                "parallel": "Silver",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-21",
+              "price": 60.03,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:336851127392",
+              "url": "https://www.sportscardspro.com/game/football-cards-2023-panini-prizm/anthony-richardson-silver-343",
+              "marketplace_url": "https://www.ebay.com/itm/336851127392",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+            },
+            {
+              "identity": {
+                "year": 2023,
+                "set": "Prizm",
+                "player": "Anthony Richardson",
+                "number": "343",
+                "parallel": "Silver",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-19",
+              "price": 49.99,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:366743707936",
+              "url": "https://www.sportscardspro.com/game/football-cards-2023-panini-prizm/anthony-richardson-silver-343",
+              "marketplace_url": "https://www.ebay.com/itm/366743707936",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+            },
+            {
+              "identity": {
+                "year": 2023,
+                "set": "Prizm",
+                "player": "Anthony Richardson",
+                "number": "343",
+                "parallel": "Silver",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-09-26",
+              "price": 85,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "fanatics:fcc0df72-fab0-43f0-a33b-02d189d68c7c",
+              "url": "https://www.fanaticscollect.com/buy-now/fcc0df72-fab0-43f0-a33b-02d189d68c7c",
+              "source_type": "primary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Primary page labels SOLD Sep 26 2026 at $85. Other dated history rows on the page lack distinct transaction IDs and were not counted. Source-reported amount, not settlement proof."
+            }
+          ],
+          "excluded": [],
+          "count": 4,
+          "primary_count": 1,
+          "freshest_days": 6.0,
+          "freshest_primary_days": 35.0,
+          "valuation_basis": "provisional reported sales",
+          "range": [
+            43.5,
+            85
+          ],
+          "median": 55.010000000000005,
+          "conservative_resale": 43.5,
+          "confidence": "low"
+        },
+        "all_in": 106.99,
+        "economics": {
+          "resale": 43.5,
+          "acquisition": 106.99,
+          "selling_fee": 6.62,
+          "promotion_reserve": 0.94,
+          "outbound_shipping": 8,
+          "supplies": 2,
+          "contingency": 10,
+          "labor_allowance": 25.0,
+          "capital_allowance": 3.17,
+          "cash_margin": -81.05,
+          "adjusted_profit": -119.22,
+          "roi": -1.11,
+          "minimum_profit": 100,
+          "minimum_roi": 0.3,
+          "passes": false
+        },
+        "max_all_in": 0.0,
+        "max_offer": 0.0,
+        "opening_offer": 0,
+        "stress_profit": -126.78,
+        "status": "pass",
+        "grade_scope": "psa10",
+        "reasons": [
+          "Fails net-profit and/or return hurdle at this asking price",
+          "Product Research inaccessible (sign-in wall); public sold-search fallback also required sign-in. Individual secondary reports remain provisional.",
+          "Displayed incoming shipping is for the browser's destination; owner checkout tax/shipping and fee plan remain unconfirmed.",
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
         ],
         "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
       },
@@ -1115,7 +1426,7 @@
           "excluded": [],
           "count": 3,
           "primary_count": 0,
-          "freshest_days": 17.1,
+          "freshest_days": 20.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -1153,6 +1464,505 @@
         "reasons": [
           "Fails net-profit and/or return hurdle at this asking price",
           "Primary sold pages inaccessible or redirected; these three sale reports are provisional.",
+          "Listing observation is stale or undated",
+          "Card/slab condition needs photo review",
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        ],
+        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
+      },
+      {
+        "label": "Marvin Harrison Jr. \u00b7 Prizm Silver #375 PSA 10",
+        "item_title": "Marvin Harrison Jr. \u00b7 Prizm Silver #375 PSA 10",
+        "listing_id": "388849255858",
+        "url": "https://www.ebay.com/itm/388849255858",
+        "price": 159.99,
+        "shipping": 6,
+        "currency": "USD",
+        "identity": {
+          "year": 2024,
+          "set": "Prizm",
+          "player": "Marvin Harrison Jr.",
+          "number": "375",
+          "parallel": "Silver",
+          "print_run": "none",
+          "autograph": false,
+          "relic": false,
+          "grader": "PSA",
+          "grade": 10
+        },
+        "identity_reviewed": false,
+        "condition_reviewed": false,
+        "category": "rookies",
+        "sport": "football",
+        "page_state": "active",
+        "buying_option": "FIXED_PRICE",
+        "seller_score": 305,
+        "seller_pct": 100,
+        "checked_at": "2026-10-30T23:20:18+00:00",
+        "observation_method": "live public browser; Buy It Now and shipping displayed",
+        "query": "Marvin Harrison Jr. \u00b7 Prizm Silver #375 PSA 10",
+        "hold_days": 90,
+        "hold_reviewed": false,
+        "hold_basis": "90-day planning scenario; listing-to-sale time not established",
+        "sales": [
+          {
+            "identity": {
+              "year": 2024,
+              "set": "Prizm",
+              "player": "Marvin Harrison Jr.",
+              "number": "375",
+              "parallel": "Silver",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-21",
+            "price": 139.95,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:168793908033",
+            "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/marvin-harrison-jr-silver-375",
+            "marketplace_url": "https://www.ebay.com/itm/168793908033",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+          },
+          {
+            "identity": {
+              "year": 2024,
+              "set": "Prizm",
+              "player": "Marvin Harrison Jr.",
+              "number": "375",
+              "parallel": "Silver",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-16",
+            "price": 100,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:187433840341",
+            "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/marvin-harrison-jr-silver-375",
+            "marketplace_url": "https://www.ebay.com/itm/187433840341",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+          },
+          {
+            "identity": {
+              "year": 2024,
+              "set": "Prizm",
+              "player": "Marvin Harrison Jr.",
+              "number": "375",
+              "parallel": "Silver",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-15",
+            "price": 115,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:168794612320",
+            "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/marvin-harrison-jr-silver-375",
+            "marketplace_url": "https://www.ebay.com/itm/168794612320",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+          }
+        ],
+        "warnings": [
+          "Product Research inaccessible (sign-in wall); public sold-search fallback also required sign-in. Individual secondary reports remain provisional.",
+          "Displayed incoming shipping is for the browser's destination; owner checkout tax/shipping and fee plan remain unconfirmed.",
+          "Photo review not completed; item specifics contain unrelated autograph fields. Exact identity remains unreviewed."
+        ],
+        "evidence": {
+          "sales": [
+            {
+              "identity": {
+                "year": 2024,
+                "set": "Prizm",
+                "player": "Marvin Harrison Jr.",
+                "number": "375",
+                "parallel": "Silver",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-21",
+              "price": 139.95,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:168793908033",
+              "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/marvin-harrison-jr-silver-375",
+              "marketplace_url": "https://www.ebay.com/itm/168793908033",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+            },
+            {
+              "identity": {
+                "year": 2024,
+                "set": "Prizm",
+                "player": "Marvin Harrison Jr.",
+                "number": "375",
+                "parallel": "Silver",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-16",
+              "price": 100,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:187433840341",
+              "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/marvin-harrison-jr-silver-375",
+              "marketplace_url": "https://www.ebay.com/itm/187433840341",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+            },
+            {
+              "identity": {
+                "year": 2024,
+                "set": "Prizm",
+                "player": "Marvin Harrison Jr.",
+                "number": "375",
+                "parallel": "Silver",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-15",
+              "price": 115,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:168794612320",
+              "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/marvin-harrison-jr-silver-375",
+              "marketplace_url": "https://www.ebay.com/itm/168794612320",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+            }
+          ],
+          "excluded": [],
+          "count": 3,
+          "primary_count": 0,
+          "freshest_days": 10.0,
+          "freshest_primary_days": null,
+          "valuation_basis": "provisional reported sales",
+          "range": [
+            100,
+            139.95
+          ],
+          "median": 115,
+          "conservative_resale": 100,
+          "confidence": "low"
+        },
+        "all_in": 177.61,
+        "economics": {
+          "resale": 100,
+          "acquisition": 177.61,
+          "selling_fee": 14.71,
+          "promotion_reserve": 2.16,
+          "outbound_shipping": 8,
+          "supplies": 2,
+          "contingency": 10,
+          "labor_allowance": 25.0,
+          "capital_allowance": 5.26,
+          "cash_margin": -104.48,
+          "adjusted_profit": -144.73,
+          "roi": -0.81,
+          "minimum_profit": 100,
+          "minimum_roi": 0.3,
+          "passes": false
+        },
+        "max_all_in": 0.0,
+        "max_offer": 0.0,
+        "opening_offer": 0,
+        "stress_profit": -160.77,
+        "status": "pass",
+        "grade_scope": "psa10",
+        "reasons": [
+          "Fails net-profit and/or return hurdle at this asking price",
+          "Product Research inaccessible (sign-in wall); public sold-search fallback also required sign-in. Individual secondary reports remain provisional.",
+          "Displayed incoming shipping is for the browser's destination; owner checkout tax/shipping and fee plan remain unconfirmed.",
+          "Photo review not completed; item specifics contain unrelated autograph fields. Exact identity remains unreviewed.",
+          "Exact card identity needs review",
+          "Card/slab condition needs photo review",
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        ],
+        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
+      },
+      {
+        "label": "Jayden Daniels \u00b7 Prizm #347 PSA 10",
+        "item_title": "Jayden Daniels \u00b7 Prizm #347 PSA 10",
+        "listing_id": "297127091469",
+        "url": "https://www.ebay.com/itm/297127091469",
+        "price": 189,
+        "shipping": 5.99,
+        "currency": "USD",
+        "identity": {
+          "year": 2024,
+          "set": "Prizm",
+          "player": "Jayden Daniels",
+          "number": "347",
+          "parallel": "base",
+          "print_run": "none",
+          "autograph": false,
+          "relic": false,
+          "grader": "PSA",
+          "grade": 10
+        },
+        "identity_reviewed": false,
+        "condition_reviewed": false,
+        "category": "rookies",
+        "sport": "football",
+        "page_state": "active",
+        "buying_option": "FIXED_PRICE",
+        "seller_score": 866739,
+        "seller_pct": 99.9,
+        "checked_at": "2026-10-30T23:20:18+00:00",
+        "observation_method": "live public browser; Buy It Now and shipping displayed",
+        "query": "Jayden Daniels \u00b7 Prizm #347 PSA 10",
+        "hold_days": 90,
+        "hold_reviewed": false,
+        "hold_basis": "90-day planning scenario; listing-to-sale time not established",
+        "sales": [
+          {
+            "identity": {
+              "year": 2024,
+              "set": "Prizm",
+              "player": "Jayden Daniels",
+              "number": "347",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-29",
+            "price": 43.32,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:940031030318",
+            "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/jayden-daniels-347",
+            "marketplace_url": "https://www.ebay.com/itm/940031030318",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+          },
+          {
+            "identity": {
+              "year": 2024,
+              "set": "Prizm",
+              "player": "Jayden Daniels",
+              "number": "347",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-27",
+            "price": 46,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:327408003303",
+            "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/jayden-daniels-347",
+            "marketplace_url": "https://www.ebay.com/itm/327408003303",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+          },
+          {
+            "identity": {
+              "year": 2024,
+              "set": "Prizm",
+              "player": "Jayden Daniels",
+              "number": "347",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-27",
+            "price": 35,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:307225354622",
+            "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/jayden-daniels-347",
+            "marketplace_url": "https://www.ebay.com/itm/307225354622",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+          }
+        ],
+        "warnings": [
+          "Product Research inaccessible (sign-in wall); public sold-search fallback also required sign-in. Individual secondary reports remain provisional.",
+          "Displayed incoming shipping is for the browser's destination; owner checkout tax/shipping and fee plan remain unconfirmed.",
+          "Photo review not completed; cracked-slab sale dated Oct 28 was excluded."
+        ],
+        "evidence": {
+          "sales": [
+            {
+              "identity": {
+                "year": 2024,
+                "set": "Prizm",
+                "player": "Jayden Daniels",
+                "number": "347",
+                "parallel": "base",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-29",
+              "price": 43.32,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:940031030318",
+              "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/jayden-daniels-347",
+              "marketplace_url": "https://www.ebay.com/itm/940031030318",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+            },
+            {
+              "identity": {
+                "year": 2024,
+                "set": "Prizm",
+                "player": "Jayden Daniels",
+                "number": "347",
+                "parallel": "base",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-27",
+              "price": 46,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:327408003303",
+              "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/jayden-daniels-347",
+              "marketplace_url": "https://www.ebay.com/itm/327408003303",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+            },
+            {
+              "identity": {
+                "year": 2024,
+                "set": "Prizm",
+                "player": "Jayden Daniels",
+                "number": "347",
+                "parallel": "base",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-27",
+              "price": 35,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:307225354622",
+              "url": "https://www.sportscardspro.com/game/football-cards-2024-panini-prizm/jayden-daniels-347",
+              "marketplace_url": "https://www.ebay.com/itm/307225354622",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported individual sale; primary link retrieval failed. Accepted amount and payment settlement not independently verified. Provisional only."
+            }
+          ],
+          "excluded": [],
+          "count": 3,
+          "primary_count": 0,
+          "freshest_days": 2.0,
+          "freshest_primary_days": null,
+          "valuation_basis": "provisional reported sales",
+          "range": [
+            35,
+            46
+          ],
+          "median": 43.32,
+          "conservative_resale": 35,
+          "confidence": "low"
+        },
+        "all_in": 208.64,
+        "economics": {
+          "resale": 35,
+          "acquisition": 208.64,
+          "selling_fee": 5.41,
+          "promotion_reserve": 0.76,
+          "outbound_shipping": 8,
+          "supplies": 2,
+          "contingency": 10,
+          "labor_allowance": 25.0,
+          "capital_allowance": 6.17,
+          "cash_margin": -189.8,
+          "adjusted_profit": -230.98,
+          "roi": -1.11,
+          "minimum_profit": 100,
+          "minimum_roi": 0.3,
+          "passes": false
+        },
+        "max_all_in": 0.0,
+        "max_offer": 0.0,
+        "opening_offer": 0,
+        "stress_profit": -239.48,
+        "status": "pass",
+        "grade_scope": "psa10",
+        "reasons": [
+          "Fails net-profit and/or return hurdle at this asking price",
+          "Product Research inaccessible (sign-in wall); public sold-search fallback also required sign-in. Individual secondary reports remain provisional.",
+          "Displayed incoming shipping is for the browser's destination; owner checkout tax/shipping and fee plan remain unconfirmed.",
+          "Photo review not completed; cracked-slab sale dated Oct 28 was excluded.",
+          "Exact card identity needs review",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days"
         ],
@@ -1305,7 +2115,7 @@
           "excluded": [],
           "count": 2,
           "primary_count": 0,
-          "freshest_days": 62.1,
+          "freshest_days": 65.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -1344,6 +2154,7 @@
           "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
           "Fails net-profit and/or return hurdle at this asking price",
           "Only two older secondary-reported sales; Best Offer amount is reported by Clector, not independently confirmed.",
+          "Listing observation is stale or undated",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days",
           "Other grades require a reviewed hold of 30 days or less"
@@ -1408,6 +2219,7 @@
         "grade_scope": "psa10",
         "reasons": [
           "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review.",
+          "Listing observation is stale or undated",
           "Listing is sold/ended or current availability is unverified",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days"
@@ -1614,7 +2426,7 @@
           "excluded": [],
           "count": 3,
           "primary_count": 0,
-          "freshest_days": 79.1,
+          "freshest_days": 82.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -1635,6 +2447,7 @@
         "reasons": [
           "Fanatics page is SOLD; $165 history is September 23, 2025 and is excluded as stale. No available purchase at $165.",
           "Three secondary-reported accepted offers; oldest/latest sale evidence is not fresh. Primary eBay display for August 10 is $214.99 asking, not confirmed $190 settlement.",
+          "Listing observation is stale or undated",
           "Listing is sold/ended or current availability is unverified",
           "Card/slab condition needs photo review",
           "Seller track record is missing or below screening minimum",
@@ -1702,6 +2515,7 @@
         "reasons": [
           "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
           "PSA 10 search led to a product-page offer for PSA 9. Not an exact target match; product offers can rotate.",
+          "Listing observation is stale or undated",
           "Listing is sold/ended or current availability is unverified",
           "Card/slab condition needs photo review",
           "Seller track record is missing or below screening minimum",
@@ -1769,6 +2583,7 @@
         "reasons": [
           "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
           "Search result redirected to a sold-out product page; no available PSA 10 offer verified.",
+          "Listing observation is stale or undated",
           "Listing is sold/ended or current availability is unverified",
           "Auction bid is not a buy-now acquisition price",
           "Exact card identity needs review",
@@ -1840,6 +2655,7 @@
         "reasons": [
           "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
           "PSA 10 search redirected to a product page displaying a PSA 9 offer. That offer is not a PSA 10 comparable.",
+          "Listing observation is stale or undated",
           "Listing is sold/ended or current availability is unverified",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days",
@@ -1850,8 +2666,8 @@
     ],
     "coverage": {
       "mode": "reviewed public research",
-      "notes": "Accumulated public research: 13 listing/product observations across 12 target families. Latest pass added four families; the original nine retain their original observation times. Public pages may be cached. This is partial discovery, not a full 36-target API scan. No purchase or offer sent.",
-      "researched_at": "2026-10-28T01:43:23.162595+00:00",
+      "notes": "October 30: 12 previously unresearched target families checked across all five categories (one Downtown/Kaboom). Three live PSA 10 observations added; one primary and nine secondary reported sales. Product Research checked first but inaccessible; public sold-search also required sign-in. Partial discovery, not a complete market scan. No qualifying buys; historic observations keep original dates.",
+      "researched_at": "2026-10-30T23:20:18+00:00",
       "queries_run": [
         "Cade Pink Ice PSA 10",
         "Jalen Hurts Optic PSA 10",
@@ -1864,18 +2680,30 @@
         "Amon-Ra St Brown rookie autos PSA 9",
         "DeVonta Smith rookie autos PSA 10",
         "Aaron Judge Topps Chrome PSA 10",
-        "Michael Jordan Fleer PSA 9"
+        "Michael Jordan Fleer PSA 9",
+        "2023 Panini Prizm CJ Stroud Rookie PSA 10",
+        "2024 Panini Prizm Jayden Daniels Rookie PSA 10",
+        "2024 Panini Prizm Caleb Williams Rookie PSA 10",
+        "2024 Panini Prizm Marvin Harrison Jr Rookie PSA 10",
+        "2023 Panini Prizm Anthony Richardson Silver Rookie PSA 10",
+        "2022 Bowman Chrome Elly De La Cruz 1st Auto PSA 10",
+        "2023 Select Jahmyr Gibbs Auto PSA 10",
+        "2023 Mosaic Josh Allen Stained Glass PSA 10",
+        "Prizm Patrick Mahomes Color Blast PSA 10",
+        "2003 Topps LeBron James 221 PSA 10",
+        "2009 Topps Stephen Curry 321 PSA 10",
+        "2023 Donruss Downtown Anthony Richardson PSA 10"
       ],
       "api_queries": 0,
       "api_errors": [],
       "complete_market_coverage": false,
       "api_access": {
-        "checked_at": "2026-10-28T01:43:23.162595+00:00",
         "production_configured": false,
         "credentials_present": false,
         "browse": "credentials_unavailable",
         "sold_history": "not_tested",
-        "note": "No production eBay credentials available in this runner; this does not establish whether another authorized runtime has access."
+        "checked_at": "2026-10-30T23:20:18+00:00",
+        "note": "Read-only check; no snapshot mutation. This runner only; no inference about other authorized runtimes."
       },
       "run_log": [
         {
@@ -1915,6 +2743,193 @@
             "Secondary Jordan candidate 147608336388 inaccessible; no price recorded."
           ],
           "note": "One directly inspected Jordan sold-price record; no candidate meets the three-sale evidence minimum. Redirected grades and sold-out results are excluded."
+        },
+        {
+          "researched_at": "2026-10-30T23:20:18+00:00",
+          "mode": "public discovery; Product Research unavailable; evidence-only evaluation",
+          "selection_basis": "12 previously unresearched families, rotating five categories; one Downtown/Kaboom. Historic PSA 9 observations retained, not treated as PSA 10 checks.",
+          "queries_attempted": [
+            "2023 Panini Prizm CJ Stroud Rookie PSA 10",
+            "2024 Panini Prizm Jayden Daniels Rookie PSA 10",
+            "2024 Panini Prizm Caleb Williams Rookie PSA 10",
+            "2024 Panini Prizm Marvin Harrison Jr Rookie PSA 10",
+            "2023 Panini Prizm Anthony Richardson Silver Rookie PSA 10",
+            "2022 Bowman Chrome Elly De La Cruz 1st Auto PSA 10",
+            "2023 Select Jahmyr Gibbs Auto PSA 10",
+            "2023 Mosaic Josh Allen Stained Glass PSA 10",
+            "Prizm Patrick Mahomes Color Blast PSA 10",
+            "2003 Topps LeBron James 221 PSA 10",
+            "2009 Topps Stephen Curry 321 PSA 10",
+            "2023 Donruss Downtown Anthony Richardson PSA 10"
+          ],
+          "targets_attempted": [
+            {
+              "label": "CJ Stroud Prizm RC PSA 10",
+              "category": "rookies",
+              "query": "2023 Panini Prizm CJ Stroud Rookie PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/227274315713"
+              ],
+              "outcome": "Cached primary ask $55 + $5.62, below core discovery band. Live availability unverified; public sold search returned other sets/variants, none admitted."
+            },
+            {
+              "label": "Jayden Daniels Prizm RC PSA 10",
+              "category": "rookies",
+              "query": "2024 Panini Prizm Jayden Daniels Rookie PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/297127091469"
+              ],
+              "outcome": "Live ask $189 + $5.99. Three secondary reported exact sales; primary retrieval failed; cracked slab excluded."
+            },
+            {
+              "label": "Caleb Williams Prizm RC PSA 10",
+              "category": "rookies",
+              "query": "2024 Panini Prizm Caleb Williams Rookie PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/146682857737"
+              ],
+              "outcome": "Cached $194.99 PSA 10 result redirected live to https://www.ebay.com/p/20074120911 displaying a CGC 8 offer. Not an available PSA 10. Separate Prizmatic #1 result excluded from base #301 comps."
+            },
+            {
+              "label": "Marvin Harrison Jr Prizm RC PSA 10",
+              "category": "rookies",
+              "query": "2024 Panini Prizm Marvin Harrison Jr Rookie PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/388849255858"
+              ],
+              "outcome": "Live Silver #375 PSA 10 $159.99 + $6.00. Three secondary sale reports; primary retrieval failed; no complete image review."
+            },
+            {
+              "label": "Anthony Richardson Prizm Silver RC PSA 10",
+              "category": "rookies",
+              "query": "2023 Panini Prizm Anthony Richardson Silver Rookie PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/335793293894"
+              ],
+              "outcome": "Live $95 + $4.99 superseded cached $150. Front/back slab images reviewed. One primary Fanatics sold record plus three secondary records; no qualifying profit."
+            },
+            {
+              "label": "Elly De La Cruz Bowman Chrome Auto PSA 10",
+              "category": "autos",
+              "query": "2022 Bowman Chrome Elly De La Cruz 1st Auto PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/126348269299"
+              ],
+              "outcome": "Opened cached Purple /250 auto asking $3999.99 + $9.65; above research budget. No within-budget executable match verified; no comp valuation pursued."
+            },
+            {
+              "label": "Jahmyr Gibbs Select rookie autos PSA 10",
+              "category": "autos",
+              "query": "2023 Select Jahmyr Gibbs Auto PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/b/2023-Panini-Select-Jahmyr-Gibbs-RSM-JGI/212/bn_38195232785"
+              ],
+              "outcome": "Opened category page: cheap $394.99 result belongs to Tie-Dye /25, not the adjacent PSA 10 Orange /33. PSA 10 Orange listing displayed $10000 in opened cache; newer index $6250. No verified PSA 10 within budget; no candidate/valuation created."
+            },
+            {
+              "label": "Josh Allen Stained Glass PSA 10",
+              "category": "inserts",
+              "query": "2023 Mosaic Josh Allen Stained Glass PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/287393335680"
+              ],
+              "outcome": "Opened exact 2023 SG5 PSA 10 $900 listing: ended July 31; not a sale or available purchase. No available match established."
+            },
+            {
+              "label": "Patrick Mahomes Color Blast PSA 10",
+              "category": "inserts",
+              "query": "Prizm Patrick Mahomes Color Blast PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/335238872021"
+              ],
+              "outcome": "Opened cached 2020 Color Blast ask $4000 + $6.07, seller 5 feedback. Above research budget; no within-budget executable listing verified; no comp valuation pursued."
+            },
+            {
+              "label": "LeBron James Topps rookie PSA 10",
+              "category": "established",
+              "query": "2003 Topps LeBron James 221 PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/224756168962"
+              ],
+              "outcome": "Opened cached #221 PSA 10 ask $9500, free shipping. Above research budget; no within-budget executable listing verified; no comp valuation pursued."
+            },
+            {
+              "label": "Stephen Curry Topps rookie PSA 10",
+              "category": "established",
+              "query": "2009 Topps Stephen Curry 321 PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/117259927307"
+              ],
+              "outcome": "Opened #321 PSA 10 page: ended August 5, $17888 display. Not an available card or confirmed sale. No within-budget match verified."
+            },
+            {
+              "label": "Anthony Richardson Downtown PSA 10",
+              "category": "downtown_kaboom",
+              "query": "2023 Donruss Downtown Anthony Richardson PSA 10",
+              "checked_at": "2026-10-30T23:20:18+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/396599413380"
+              ],
+              "outcome": "Opened cached 2023 Downtown PSA 10 ask $854.99 + $19.99. Above normal all-in budget; live availability/identity/images/sold evidence not reviewed, no exception recommended."
+            }
+          ],
+          "target_count": 36,
+          "families_attempted": 12,
+          "category_counts": {
+            "rookies": 5,
+            "autos": 2,
+            "inserts": 2,
+            "established": 2,
+            "downtown_kaboom": 1
+          },
+          "product_research": {
+            "checked_at": "2026-10-30T23:20:18+00:00",
+            "url": "https://www.ebay.com/sh/research",
+            "status": "inaccessible_sign_in_required",
+            "checked_before_public_sold": true,
+            "usable_comp_records": 0,
+            "note": "Direct navigation reached eBay sign-in. eBay blocks sign-in from this cloud browser; no authentication attempted, no Product Research results obtained.",
+            "help_url": "https://help.openai.com/articles/20001280-using-cloud-browser-in-chatgpt#when-a-website-blocks-the-task"
+          },
+          "public_sold_fallback": {
+            "status": "sign_in_required",
+            "url": "https://www.ebay.com/sch/i.html?_nkw=2023+Prizm+Anthony+Richardson+343+Silver+PSA+10&LH_Sold=1&LH_Complete=1",
+            "note": "Richardson exact public sold search redirected to sign-in. Indexed public primary item pages and public secondary individual records used afterward; no sign-in attempted."
+          },
+          "primary_sale_records_added": 1,
+          "secondary_sale_records_added": 9,
+          "observations_added": 3,
+          "live_listing_checks": 4,
+          "complete_market_coverage": false,
+          "failures": [
+            "Production Browse credentials unavailable in this runner.",
+            "Product Research and public sold-search sign-in barriers.",
+            "Nine individual eBay sale links could not be retrieved by web search; retained solely as secondary source-reported records.",
+            "Caleb base PSA 10 listing redirects to a different-grade product offer."
+          ],
+          "null_results": [
+            "CJ Stroud Prizm RC PSA 10",
+            "Caleb Williams Prizm RC PSA 10",
+            "Elly De La Cruz Bowman Chrome Auto PSA 10",
+            "Jahmyr Gibbs Select rookie autos PSA 10",
+            "Josh Allen Stained Glass PSA 10",
+            "Patrick Mahomes Color Blast PSA 10",
+            "LeBron James Topps rookie PSA 10",
+            "Stephen Curry Topps rookie PSA 10",
+            "Anthony Richardson Downtown PSA 10"
+          ],
+          "note": "No qualifying buys. Null results mean no verified eligible available listing in this partial search, not absence from the market. No thresholds relaxed. No purchases, messages, inventory/pricing/feed changes."
         }
       ]
     },
@@ -1976,13 +2991,13 @@
       }
     },
     "diagnostics": {
-      "psa10_observations": 4,
+      "psa10_observations": 7,
       "qualified_grade_exceptions": 0,
       "outside_grade_focus": 9,
       "sales_supported": 0,
-      "missing_sales_evidence": 13,
-      "condition_review_needed": 13,
-      "priced_scenarios": 2,
+      "missing_sales_evidence": 16,
+      "condition_review_needed": 15,
+      "priced_scenarios": 5,
       "profit_screen_pass": 0
     },
     "price_min": 25,
@@ -1990,7 +3005,7 @@
     "summary": {
       "qualified": 0,
       "research": 6,
-      "pass": 2,
+      "pass": 5,
       "excluded": 5
     }
   },
