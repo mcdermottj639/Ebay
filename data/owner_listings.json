@@ -50,6 +50,15 @@
           "price": 100,
           "currency": "USD",
           "source": "ebay_sale_confirmation_email"
+        },
+        {
+          "event_id": "336866460070:shipping_label_purchased:2026-10-27T21:44:10-04:00",
+          "type": "shipping_label_purchased",
+          "occurred_at": "2026-10-27T21:44:10-04:00",
+          "item_id": "336866460070",
+          "price": 7.08,
+          "currency": "USD",
+          "source": "ebay_shipping_label_confirmation_email"
         }
       ],
       "sold_price": 100,
@@ -57,7 +66,7 @@
       "cost": 63,
       "cost_source": "owner_statement",
       "fees": null,
-      "outbound_shipping": null,
+      "outbound_shipping": 7.08,
       "net_profit": null
     },
     "CARD-0026": {
@@ -102,5 +111,27 @@
         }
       ]
     }
-  }
+  },
+  "unresolved_matches": [
+    {
+      "item_id": "336866528719",
+      "url": "https://www.ebay.com/itm/336866528719",
+      "asking_price": 450,
+      "currency": "USD",
+      "occurred_at": "2026-10-27T21:26:13-04:00",
+      "status": "listing_confirmed_sku_unresolved",
+      "title": "Jerry Rice John Taylor Dual Auto 18/25 2023",
+      "reason": "No matching stable inventory SKU; linked page inaccessible. Do not create or guess a card."
+    },
+    {
+      "item_id": "336871213729",
+      "url": "https://www.ebay.com/itm/336871213729",
+      "asking_price": 800,
+      "currency": "USD",
+      "occurred_at": "2026-10-30T18:15:58-04:00",
+      "status": "outside_card_inventory",
+      "title": "L.A.B. Golf LINK.2.1 Custom Putter 34 inch",
+      "reason": "Golf equipment, no matching inventory SKU; excluded from card feed."
+    }
+  ]
 }
