@@ -127,12 +127,13 @@ main { flex: 1 0 auto; width: 100%; max-width: 1200px; margin: 0 auto; padding: 
    float above a short page (the v45 iOS lesson). */
 .dock {
   position: sticky; bottom: 0; z-index: 40; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
-  padding: 10px max(14px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  /* v67: sit low — the pill overlaps the home-indicator zone but stays clear of the bar itself */
+  padding: 10px max(14px, env(safe-area-inset-right)) max(8px, calc(env(safe-area-inset-bottom) - 14px)) max(14px, env(safe-area-inset-left));
   background: linear-gradient(to top, var(--ink-0) 64%, transparent);
 }
 .dock::before {
   content: ""; position: absolute; left: max(10px, env(safe-area-inset-left)); right: max(10px, env(safe-area-inset-right));
-  top: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); border-radius: 22px;
+  top: 8px; bottom: max(6px, calc(env(safe-area-inset-bottom) - 16px)); border-radius: 22px;
   background: var(--ink-1); border: 1px solid var(--hair-2); box-shadow: var(--lift);
 }
 .dock button {
