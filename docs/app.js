@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v65";
+  var APP_VERSION = "v66";
   var state = { tab: "today", data: null, bucket: "All",
                 q: "", sort: "val-desc", sellMode: "plan", buyMode: "radar", planFilter: "all", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryTier: "all", inventoryLayout: "grid",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -596,6 +596,18 @@
     sec.addEventListener("touchend", function () { setTimeout(function () { sec.classList.remove("paused"); }, 1500); }, { passive: true });
     return sec;
   }
+  // v66: the ticker is pinned under the top bar on every tab (sticky
+  // .masthead). Rebuilt only when its content changes, so switching tabs does
+  // not restart the scroll.
+  function pinTicker() {
+    var slot = document.getElementById("tickerSlot");
+    if (!slot) return;
+    var t = ticker(), key = t ? t.textContent : "";
+    if (slot.getAttribute("data-key") === key) return;
+    slot.innerHTML = "";
+    slot.setAttribute("data-key", key);
+    if (t) slot.appendChild(t);
+  }
   function actionTile(label, value, unit, visual, foot, fn) {
     var b = el('<button class="action-tile" type="button"><span class="at-label">' + esc(label) + '</span><span class="at-value"><span data-count="' + value + '" data-fmt="int">' + value + "</span>" + (unit ? "<small>" + esc(unit) + "</small>" : "") + '</span><span class="at-visual">' + visual + '</span><span class="at-foot">' + esc(foot) + "</span></button>");
     b.onclick = fn;
@@ -708,7 +720,7 @@
   }
   function viewToday() {
     var w = el('<div class="view today"></div>');
-    [vaultHero(), ticker(), nextMoves(), showcase(), moneyMap(), soldStrip()].forEach(function (x) { if (x) w.appendChild(x); });
+    [vaultHero(), nextMoves(), showcase(), moneyMap(), soldStrip()].forEach(function (x) { if (x) w.appendChild(x); });
     w.appendChild(el('<p class="fineprint">Values are saved references from recorded sold prices, PSA and eBay listings. They are estimates, not live quotes, and your eBay asks stay separate from them.</p>'));
     return w;
   }
@@ -1124,7 +1136,7 @@
   }
   function shell() {
     document.body.innerHTML = "";
-    document.body.appendChild(el('<header class="topbar"><a href="#tab=today" class="brand-home" aria-label="Card Vault home">' + coinSvg() + '<span class="wordmark foil-text">Card Vault</span></a><div class="topbar-actions"><span class="ver" id="verpill" title="App version">' + APP_VERSION + '</span><button class="iconbtn" id="themebtn" type="button"></button><button class="iconbtn" id="settingsbtn" type="button" aria-label="About this app">' + icon("info") + "</button></div></header>"));
+    document.body.appendChild(el('<div class="masthead" id="masthead"><header class="topbar"><a href="#tab=today" class="brand-home" aria-label="Card Vault home">' + coinSvg() + '<span class="wordmark foil-text">Card Vault</span></a><div class="topbar-actions"><span class="ver" id="verpill" title="App version">' + APP_VERSION + '</span><button class="iconbtn" id="themebtn" type="button"></button><button class="iconbtn" id="settingsbtn" type="button" aria-label="About this app">' + icon("info") + '</button></div></header><div id="tickerSlot"></div></div>'));
     document.body.appendChild(el('<main id="view"></main>'));
     var nav = el('<nav class="nav dock" aria-label="Main navigation"></nav>');
     [["today", "Today"], ["sell", "Sell"], ["collection", "Inventory"], ["radar", "Buy"], ["value", "Results"]].forEach(function (t) {
@@ -1163,6 +1175,7 @@
     v.innerHTML = "";
     v.appendChild(({ today: viewToday, sell: viewSell, collection: viewCollection, value: viewResults, radar: viewBuy, about: viewAbout }[state.tab] || viewToday)());
     document.body.dataset.page = state.tab;
+    pinTicker();
     window.scrollTo(0, 0);
     hydrate(v);
     countUp(v);

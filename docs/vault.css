@@ -105,8 +105,10 @@ details > summary::-webkit-details-marker { display: none; }
 @keyframes foil-sweep { from { background-position: 100% 50%; } to { background-position: 0% 50%; } }
 
 /* ---------- shell ---------- */
+/* v66: top bar + Latest ticker stick together as one masthead. */
+.masthead { position: sticky; top: 0; z-index: 30; background: var(--ink-0); }
 .topbar {
-  position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 10px;
+  position: relative; display: flex; align-items: center; gap: 10px;
   padding: calc(8px + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 8px max(16px, env(safe-area-inset-left));
   background: var(--ink-0); border-bottom: 1px solid var(--hair);
 }
@@ -401,7 +403,7 @@ button.legend-item.on { box-shadow: inset 0 0 0 1.5px var(--gold-300); }
 .stat-chip b { font: 800 22px/1.05 var(--font-ui); color: var(--text); }
 .stat-chip:active { transform: scale(.97); }
 
-.ticker { position: relative; display: flex; align-items: stretch; margin: 16px -16px 0; border-block: 1px solid var(--hair); background: var(--ink-1); overflow: hidden; }
+.ticker { position: relative; display: flex; align-items: stretch; margin: 0; border-bottom: 1px solid var(--hair); background: var(--ink-1); overflow: hidden; }
 .ticker-label { flex: none; z-index: 2; display: flex; align-items: center; gap: 7px; padding: 0 12px 0 16px; font: 800 12.5px var(--font-ui); color: var(--gold-300); background: var(--ink-1); box-shadow: 12px 0 14px var(--ink-1); }
 .ticker-track { flex: 1; min-width: 0; overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent); }
 .ticker-run { display: flex; width: max-content; animation: ticker 44s linear infinite; }
@@ -879,7 +881,6 @@ details.dsec[open] > summary { margin-bottom: 12px; }
   .today { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 22px; align-items: start; }
   .today > .vault-hero { grid-column: 1 / 8; grid-row: 1; }
   .today > .moves-section { grid-column: 8 / 13; grid-row: 1; align-self: stretch; display: flex; flex-direction: column; }
-  .today > .ticker { grid-column: 1 / -1; grid-row: 2; margin: 0; border: 1px solid var(--hair); border-radius: var(--r-lg); }
   .today > .showcase { grid-column: 1 / -1; }
   .today > .money-map { grid-column: 1 / 9; }
   .today > .sold-section { grid-column: 9 / 13; }
@@ -900,7 +901,6 @@ details.dsec[open] > summary { margin-bottom: 12px; }
   .detail-head { text-align: left; }
   .detail-tags { justify-content: flex-start; }
   .chip-row { margin: 0 0 14px; padding: 2px 0 4px; }
-  .ticker { margin: 0; }
   .tg-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .listing-grid, .review-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .updbar { left: auto; right: 20px; bottom: 20px !important; max-width: 340px; }
@@ -912,7 +912,6 @@ details.dsec[open] > summary { margin-bottom: 12px; }
   .at-value { font-size: 34px; }
   .stat-tiles { grid-template-columns: 1fr 1fr; }
   .chip-row, .showcase-rail { margin-left: -13px; margin-right: -13px; padding-left: 13px; padding-right: 13px; scroll-padding: 0 13px; }
-  .ticker { margin-left: -13px; margin-right: -13px; }
   .tg-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 

@@ -8,7 +8,25 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
-## Private offer plans — v65, October 29, 2026 (Claude) — CURRENT RELEASE
+## Pinned ticker — v66, October 29, 2026 (Claude) — CURRENT RELEASE
+Jack: "make the ticker at the top of the page and make it permanent so even
+when I scroll it's there."
+- The "Latest" ticker left the Today view and now lives in `#tickerSlot` inside
+  a new sticky `.masthead` wrapper with the top bar (`shell()`), on EVERY tab.
+  `.topbar` is no longer sticky itself; `.masthead` is (`top:0; z-index:30`).
+- `pinTicker()` runs from `render()` and rebuilds only when the ticker's text
+  changes, so switching tabs does not restart the scroll. `ticker()` and
+  `tapeEvents()` are unchanged; taps still open the card sheet.
+- Removed the Today-only grid placement (`.today > .ticker`) and the old
+  negative-margin ticker rules. Reduced-motion fallback unchanged.
+- Validation: 37 Python + 27 Node tests, node --check app.js/sw.js, catalog,
+  build. Playwright 390 dark / 320 light / 1280 dark: ticker top stays at 57px
+  (phone) / 72px (desktop) after scrolling Today, Inventory and Results; no
+  horizontal overflow; no page errors; same ticker node after a tab switch; a
+  tick opens the card sheet. data.json changed only by version/generated time.
+  Physical iPhone not tested.
+
+## Private offer plans — v65, October 29, 2026 (Claude)
 Jack routed the CARD-0026 offer-plan integration from ChatGPT/dot to Claude
 (Claudex Ebay handoff, 02:54 ET) and chose to build it now (10:14 ET). Engine
 from dot's generic code package (Drive, 02:56 ET), UI ported by hand onto v64.
@@ -625,11 +643,11 @@ These rules supersede the historical asking-median radar/Great Value notes below
   `?v=N` on vault.css, selling.js, charts.js + app.js in `index.html` (v64+
   file set), the manifest icons, and `CACHE`/SHELL `?v=N` in `sw.js`, run
   `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v65. The live
+  this makes the service worker serve stale CSS/JS. Current: v66. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v65. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v66. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
