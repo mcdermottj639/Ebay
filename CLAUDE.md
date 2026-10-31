@@ -1381,6 +1381,15 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-10-31 — CARD-0034 added (Claude, owner request).** Jerry Rice / John
+  Taylor 2023 National Treasures Prime Pairings #PPA-SF dual auto, serial 18/25.
+  Jack sent the listing screenshot and asked to add it. Resolved owner listing
+  336866528719 ($450, listed 2026-10-27) out of `unresolved_matches` into
+  `listings.CARD-0034` (new `sku_resolution` note; event history unchanged);
+  inventory `listed=yes`. Value $185 is a provisional `est_sold` judgment (no sold
+  /25 copy found; same-set /25 asks $95-$165; Platinum 1/1 listed $525) — held in
+  `SKIP_SKUS` so broad Rice queries can't auto-reprice it. Cost unknown (owner to
+  add); on-card vs sticker unconfirmed; no photo in docs/img yet. No UI change, v67.
 - **2026-10-23 v52 — owner-approved one-time reviewed sale medians.**
   CARD-0025 $28 → $23.95 (3 sales); CARD-0026 catalog $160 / displayed $177.50
   → $196.76 (4); CARD-0028 $67 → $69 (5); CARD-0031 $23 → $25 (5).
