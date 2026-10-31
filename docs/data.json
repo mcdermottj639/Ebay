@@ -91,9 +91,14 @@
       "d": "2026-10-30",
       "v": 2700.39,
       "n": 33
+    },
+    {
+      "d": "2026-10-31",
+      "v": 2885.39,
+      "n": 34
     }
   ],
-  "generated": "Oct 30, 2026 \u00b7 23:50 UTC",
+  "generated": "Oct 31, 2026 \u00b7 06:27 UTC",
   "app_version": "v67",
   "targets": [
     {
@@ -3010,23 +3015,23 @@
     }
   },
   "summary": {
-    "total_cards": 36,
+    "total_cards": 37,
     "merch": 2,
-    "physical": 33,
+    "physical": 34,
     "rookies": 27,
-    "autos": 8,
+    "autos": 9,
     "graded": 14,
-    "priced": 33,
+    "priced": 34,
     "total_cost": 120.0,
-    "total_value": 2700.39,
+    "total_value": 2885.39,
     "profit": 264.49,
     "cost_count": 2,
-    "listed": 5,
+    "listed": 6,
     "sold": 3,
     "revenue": 755.0,
     "realized_profit": 592.0,
     "by_sport": {
-      "Football": 27,
+      "Football": 28,
       "Basketball": 3,
       "Hockey": 1,
       "Soccer": 1,
@@ -3035,8 +3040,8 @@
     "sport_stats": [
       {
         "name": "Football",
-        "count": 27,
-        "value": 2073.68
+        "count": 28,
+        "value": 2258.68
       },
       {
         "name": "Basketball",
@@ -3072,8 +3077,8 @@
       },
       {
         "name": "Raw",
-        "count": 17,
-        "value": 305.19
+        "count": 18,
+        "value": 490.19
       }
     ]
   },
@@ -7513,6 +7518,76 @@
           }
         ]
       }
+    },
+    {
+      "sku": "CARD-0034",
+      "item_type": "Card",
+      "is_merch": false,
+      "sport": "Football",
+      "year": "2023",
+      "brand": "Panini",
+      "set": "National Treasures",
+      "player": "Jerry Rice / John Taylor",
+      "card_number": "PPA-SF",
+      "parallel": "",
+      "insert": "Prime Pairings",
+      "team": "49ers",
+      "league": "NFL",
+      "rookie": false,
+      "auto": true,
+      "graded": false,
+      "relic": false,
+      "grader": "",
+      "grade": "",
+      "serial_run": "25",
+      "condition": "Near mint or better",
+      "authentication": "",
+      "cost": "",
+      "asking_price": "185.00",
+      "notes": "Dual auto, serial 18/25 (base Prime Pairings /25; Platinum is the 1/1). Added 2026-10-31 from owner's eBay listing screenshot. eBay 336866528719 LIVE at $450 (listing email 2026-10-27). Owner cost not yet given. On-card vs sticker autographs not yet confirmed.",
+      "est_price": "",
+      "est_basis": "",
+      "basis_note": "Provisional judgment estimate 2026-10-31, not a sold comp: no sold /25 copy found. Same-set /25 Prime Pairings asks $95-$165 (Long/Hendricks, J. Taylor/Z. Thomas, Kincaid/LaPorta RC); Rice/Taylor Platinum 1/1 listed at $525 fixed price (May 2025, sale unconfirmed). Range ~$150-$225.",
+      "reviewed_price": false,
+      "price_basis": "est_sold",
+      "image": "",
+      "line": "2023 Panini National Treasures #PPA-SF",
+      "title": "2023 Panini National Treasures Jerry Rice / John Taylor #PPA-SF AUTO /25",
+      "status": "priced",
+      "listed": true,
+      "sold": false,
+      "owner_listing": {
+        "item_id": "336866528719",
+        "url": "https://www.ebay.com/itm/336866528719",
+        "asking_price": 450,
+        "currency": "USD",
+        "status": "listed",
+        "confirmed_at": "2026-10-27T21:26:13-04:00",
+        "sku_resolution": {
+          "resolved_at": "2026-10-31T02:35:00-04:00",
+          "source": "owner_statement",
+          "note": "Owner sent the listing screenshot (same title, serial 18/25) and asked to add it to inventory."
+        },
+        "events": [
+          {
+            "event_id": "336866528719:listed:2026-10-27T21:26:13-04:00",
+            "type": "listed",
+            "occurred_at": "2026-10-27T21:26:13-04:00",
+            "item_id": "336866528719",
+            "price": 450,
+            "currency": "USD",
+            "source": "ebay_listing_confirmation_email"
+          }
+        ]
+      },
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "my_sales": [],
+      "prev_price": "",
+      "price_series": [],
+      "market": null,
+      "comps": null
     }
   ]
 }

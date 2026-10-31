@@ -110,19 +110,33 @@
           "source": "ebay_listing_confirmation_email"
         }
       ]
-    }
-  },
-  "unresolved_matches": [
-    {
+    },
+    "CARD-0034": {
       "item_id": "336866528719",
       "url": "https://www.ebay.com/itm/336866528719",
       "asking_price": 450,
       "currency": "USD",
-      "occurred_at": "2026-10-27T21:26:13-04:00",
-      "status": "listing_confirmed_sku_unresolved",
-      "title": "Jerry Rice John Taylor Dual Auto 18/25 2023",
-      "reason": "No matching stable inventory SKU; linked page inaccessible. Do not create or guess a card."
-    },
+      "status": "listed",
+      "confirmed_at": "2026-10-27T21:26:13-04:00",
+      "sku_resolution": {
+        "resolved_at": "2026-10-31T02:35:00-04:00",
+        "source": "owner_statement",
+        "note": "Owner sent the listing screenshot (same title, serial 18/25) and asked to add it to inventory."
+      },
+      "events": [
+        {
+          "event_id": "336866528719:listed:2026-10-27T21:26:13-04:00",
+          "type": "listed",
+          "occurred_at": "2026-10-27T21:26:13-04:00",
+          "item_id": "336866528719",
+          "price": 450,
+          "currency": "USD",
+          "source": "ebay_listing_confirmation_email"
+        }
+      ]
+    }
+  },
+  "unresolved_matches": [
     {
       "item_id": "336871213729",
       "url": "https://www.ebay.com/itm/336871213729",

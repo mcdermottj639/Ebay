@@ -58,7 +58,9 @@ SOLD_DISCOUNT = 0.12
 SKIP_SKUS = {"CARD-0001", "CARD-0011", "CARD-0013", "CARD-0014",
              "CARD-0016", "CARD-0023", "CARD-0030", "CARD-0032",
              # Owner-approved reported-sale anchors (2026-10-23).
-             "CARD-0025", "CARD-0026", "CARD-0028", "CARD-0031"}
+             "CARD-0025", "CARD-0026", "CARD-0028", "CARD-0031",
+             # Hand-set provisional estimate; dual-auto queries match other Rice cards (2026-10-31).
+             "CARD-0034"}
 
 
 def _num(v: str) -> float:
