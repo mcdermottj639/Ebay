@@ -1381,6 +1381,15 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-01 — MERCH-0002 helmet sold (Claude, owner request).** Baker Mayfield
+  Bucs Flash replica helmet, eBay 336728712522, sold/paid $225 on 2026-10-31
+  (eBay sale email, re-read by Claude; event first reported by dot in claudex).
+  inventory `sold_price`/`sold_date` set, `listed` cleared. owner_listings.json
+  gains `listings.MERCH-0002` with the sold_paid event and a $9.66 FedEx label
+  event (label ready, carrier handover unverified). `asking_price` 300 comes from
+  the 2026-09-09 inventory note (`asking_price_source: inventory_note`) because
+  the schema requires one. Cost, fees and net unknown (owner to add cost). No UI
+  change, still v67.
 - **2026-10-31 — CARD-0034 added (Claude, owner request).** Jerry Rice / John
   Taylor 2023 National Treasures Prime Pairings #PPA-SF dual auto, serial 18/25.
   Jack sent the listing screenshot and asked to add it. Resolved owner listing

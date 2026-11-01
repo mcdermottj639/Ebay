@@ -96,9 +96,14 @@
       "d": "2026-10-31",
       "v": 2884.08,
       "n": 34
+    },
+    {
+      "d": "2026-11-01",
+      "v": 2634.08,
+      "n": 33
     }
   ],
-  "generated": "Oct 31, 2026 \u00b7 13:08 UTC",
+  "generated": "Nov 01, 2026 \u00b7 19:01 UTC",
   "app_version": "v67",
   "targets": [
     {
@@ -37394,22 +37399,22 @@
   },
   "summary": {
     "total_cards": 37,
-    "merch": 2,
-    "physical": 34,
+    "merch": 1,
+    "physical": 33,
     "rookies": 27,
-    "autos": 9,
+    "autos": 8,
     "graded": 14,
-    "priced": 34,
+    "priced": 33,
     "total_cost": 120.0,
-    "total_value": 2884.08,
+    "total_value": 2634.08,
     "profit": 264.49,
     "cost_count": 2,
-    "listed": 6,
-    "sold": 3,
-    "revenue": 755.0,
-    "realized_profit": 592.0,
+    "listed": 5,
+    "sold": 4,
+    "revenue": 980.0,
+    "realized_profit": 817.0,
     "by_sport": {
-      "Football": 28,
+      "Football": 27,
       "Basketball": 3,
       "Hockey": 1,
       "Soccer": 1,
@@ -37418,8 +37423,8 @@
     "sport_stats": [
       {
         "name": "Football",
-        "count": 28,
-        "value": 2257.37
+        "count": 27,
+        "value": 2007.37
       },
       {
         "name": "Basketball",
@@ -41755,7 +41760,7 @@
       "authentication": "Beckett",
       "cost": "",
       "asking_price": "250.00",
-      "notes": "Bucs FLASH (orange chrome) alternate, RED VISOR, #6 - owner CONFIRMED Flash not creamsicle, and REPLICA not authentic; Beckett Witness cert 1W622369; eBay 336728712522 LIVE at $300 + Best Offer. REPRICED 2026-09-09 from $449 to $250 est_sold: same 45% haircut on the replica-tier asking median ($450 x 0.55), per the MERCH-0003 sold datapoint. Floor ~$215 - do NOT accept below. DO NOT revise the live listing UP (the old $449 advice is cancelled); $300 + Best Offer leaves room to land near $250. Comps 2026-08-10: replica tier n=15, median $450, range $300-550 (authentic tier medians $674 - do not use)",
+      "notes": "Bucs FLASH (orange chrome) alternate, RED VISOR, #6 - owner CONFIRMED Flash not creamsicle, and REPLICA not authentic; Beckett Witness cert 1W622369; eBay 336728712522 LIVE at $300 + Best Offer. REPRICED 2026-09-09 from $449 to $250 est_sold: same 45% haircut on the replica-tier asking median ($450 x 0.55), per the MERCH-0003 sold datapoint. Floor ~$215 - do NOT accept below. DO NOT revise the live listing UP (the old $449 advice is cancelled); $300 + Best Offer leaves room to land near $250. Comps 2026-08-10: replica tier n=15, median $450, range $300-550 (authentic tier medians $674 - do not use); Owner sale confirmed by eBay email 2026-10-31: $225 gross, buyer paid, item 336728712522; FedEx label $9.66 bought 2026-10-31 (carrier handover unverified); fees/net not yet reconciled; cost unknown.",
       "est_price": "",
       "est_basis": "",
       "basis_note": "",
@@ -41765,11 +41770,52 @@
       "line": "Tampa Bay Buccaneers \u00b7 Full Size Replica Helmet",
       "title": "Baker Mayfield Autographed Full Size Replica Helmet Tampa Bay Buccaneers",
       "status": "priced",
-      "listed": true,
-      "sold": false,
-      "owner_listing": null,
-      "sold_price": "",
-      "sold_date": "",
+      "listed": false,
+      "sold": true,
+      "owner_listing": {
+        "item_id": "336728712522",
+        "url": "https://www.ebay.com/itm/336728712522",
+        "asking_price": 300,
+        "asking_price_source": "inventory_note",
+        "asking_price_note": "Last recorded ask ($300 + Best Offer) from the 2026-09-09 inventory note; no listing email in this file. The $225 sale is the real price.",
+        "currency": "USD",
+        "status": "sold_paid",
+        "confirmed_at": "2026-10-31T17:32:48-04:00",
+        "events": [
+          {
+            "event_id": "336728712522:sold_paid:2026-10-31T17:32:48-04:00",
+            "type": "sold_paid",
+            "occurred_at": "2026-10-31T17:32:48-04:00",
+            "item_id": "336728712522",
+            "price": 225,
+            "currency": "USD",
+            "source": "ebay_sale_confirmation_email",
+            "time_note": "eBay notification time; exact transaction time not stated"
+          },
+          {
+            "event_id": "336728712522:shipping_label_purchased:2026-10-31T17:36:17-04:00",
+            "type": "shipping_label_purchased",
+            "occurred_at": "2026-10-31T17:36:17-04:00",
+            "item_id": "336728712522",
+            "price": 9.66,
+            "currency": "USD",
+            "source": "ebay_shipping_label_confirmation_email",
+            "note": "Label ready is not carrier acceptance; ship-by Nov 4 per sale email (label email says Nov 5)."
+          }
+        ],
+        "sold_price": 225,
+        "sold_date": "2026-10-31",
+        "cost": null,
+        "fees": null,
+        "outbound_shipping": 9.66,
+        "net_profit": null,
+        "sku_resolution": {
+          "source": "inventory_note",
+          "note": "inventory.csv MERCH-0002 notes name eBay 336728712522 as this helmet's listing."
+        }
+      },
+      "sold_price": 225.0,
+      "sold_date": "2026-10-31",
       "cert": "1W622369",
       "my_sales": [],
       "prev_price": 250.0,
@@ -42081,7 +42127,7 @@
       "sold_date": "",
       "cert": "",
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 185.0,
       "price_series": [
         {
           "d": "2026-10-31",

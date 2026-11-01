@@ -134,6 +134,48 @@
           "source": "ebay_listing_confirmation_email"
         }
       ]
+    },
+    "MERCH-0002": {
+      "item_id": "336728712522",
+      "url": "https://www.ebay.com/itm/336728712522",
+      "asking_price": 300,
+      "asking_price_source": "inventory_note",
+      "asking_price_note": "Last recorded ask ($300 + Best Offer) from the 2026-09-09 inventory note; no listing email in this file. The $225 sale is the real price.",
+      "currency": "USD",
+      "status": "sold_paid",
+      "confirmed_at": "2026-10-31T17:32:48-04:00",
+      "events": [
+        {
+          "event_id": "336728712522:sold_paid:2026-10-31T17:32:48-04:00",
+          "type": "sold_paid",
+          "occurred_at": "2026-10-31T17:32:48-04:00",
+          "item_id": "336728712522",
+          "price": 225,
+          "currency": "USD",
+          "source": "ebay_sale_confirmation_email",
+          "time_note": "eBay notification time; exact transaction time not stated"
+        },
+        {
+          "event_id": "336728712522:shipping_label_purchased:2026-10-31T17:36:17-04:00",
+          "type": "shipping_label_purchased",
+          "occurred_at": "2026-10-31T17:36:17-04:00",
+          "item_id": "336728712522",
+          "price": 9.66,
+          "currency": "USD",
+          "source": "ebay_shipping_label_confirmation_email",
+          "note": "Label ready is not carrier acceptance; ship-by Nov 4 per sale email (label email says Nov 5)."
+        }
+      ],
+      "sold_price": 225,
+      "sold_date": "2026-10-31",
+      "cost": null,
+      "fees": null,
+      "outbound_shipping": 9.66,
+      "net_profit": null,
+      "sku_resolution": {
+        "source": "inventory_note",
+        "note": "inventory.csv MERCH-0002 notes name eBay 336728712522 as this helmet's listing."
+      }
     }
   },
   "unresolved_matches": [
