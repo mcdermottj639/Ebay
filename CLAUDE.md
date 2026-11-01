@@ -1388,8 +1388,8 @@ These rules supersede the historical asking-median radar/Great Value notes below
   gains `listings.MERCH-0002` with the sold_paid event and a $9.66 FedEx label
   event (label ready, carrier handover unverified). `asking_price` 300 comes from
   the 2026-09-09 inventory note (`asking_price_source: inventory_note`) because
-  the schema requires one. Cost, fees and net unknown (owner to add cost). No UI
-  change, still v67.
+  the schema requires one. Owner reported cost $50 on 2026-11-01 (added same day). Fees and net
+  unknown. No UI change, still v67.
 - **2026-10-31 — CARD-0034 added (Claude, owner request).** Jerry Rice / John
   Taylor 2023 National Treasures Prime Pairings #PPA-SF dual auto, serial 18/25.
   Jack sent the listing screenshot and asked to add it. Resolved owner listing
