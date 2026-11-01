@@ -103,7 +103,7 @@
       "n": 33
     }
   ],
-  "generated": "Nov 01, 2026 \u00b7 19:01 UTC",
+  "generated": "Nov 01, 2026 \u00b7 19:09 UTC",
   "app_version": "v67",
   "targets": [
     {
@@ -37412,7 +37412,7 @@
     "listed": 5,
     "sold": 4,
     "revenue": 980.0,
-    "realized_profit": 817.0,
+    "realized_profit": 767.0,
     "by_sport": {
       "Football": 27,
       "Basketball": 3,
@@ -41758,9 +41758,9 @@
       "serial_run": "",
       "condition": "Excellent",
       "authentication": "Beckett",
-      "cost": "",
+      "cost": "50.00",
       "asking_price": "250.00",
-      "notes": "Bucs FLASH (orange chrome) alternate, RED VISOR, #6 - owner CONFIRMED Flash not creamsicle, and REPLICA not authentic; Beckett Witness cert 1W622369; eBay 336728712522 LIVE at $300 + Best Offer. REPRICED 2026-09-09 from $449 to $250 est_sold: same 45% haircut on the replica-tier asking median ($450 x 0.55), per the MERCH-0003 sold datapoint. Floor ~$215 - do NOT accept below. DO NOT revise the live listing UP (the old $449 advice is cancelled); $300 + Best Offer leaves room to land near $250. Comps 2026-08-10: replica tier n=15, median $450, range $300-550 (authentic tier medians $674 - do not use); Owner sale confirmed by eBay email 2026-10-31: $225 gross, buyer paid, item 336728712522; FedEx label $9.66 bought 2026-10-31 (carrier handover unverified); fees/net not yet reconciled; cost unknown.",
+      "notes": "Bucs FLASH (orange chrome) alternate, RED VISOR, #6 - owner CONFIRMED Flash not creamsicle, and REPLICA not authentic; Beckett Witness cert 1W622369; eBay 336728712522 LIVE at $300 + Best Offer. REPRICED 2026-09-09 from $449 to $250 est_sold: same 45% haircut on the replica-tier asking median ($450 x 0.55), per the MERCH-0003 sold datapoint. Floor ~$215 - do NOT accept below. DO NOT revise the live listing UP (the old $449 advice is cancelled); $300 + Best Offer leaves room to land near $250. Comps 2026-08-10: replica tier n=15, median $450, range $300-550 (authentic tier medians $674 - do not use); Owner sale confirmed by eBay email 2026-10-31: $225 gross, buyer paid, item 336728712522; FedEx label $9.66 bought 2026-10-31 (carrier handover unverified); fees/net not yet reconciled; owner reported cost $50 (2026-11-01).",
       "est_price": "",
       "est_basis": "",
       "basis_note": "",
@@ -41805,7 +41805,8 @@
         ],
         "sold_price": 225,
         "sold_date": "2026-10-31",
-        "cost": null,
+        "cost": 50,
+        "cost_source": "owner_statement",
         "fees": null,
         "outbound_shipping": 9.66,
         "net_profit": null,
