@@ -9,6 +9,8 @@ sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
 ## Net profit + money split — v68, November 2, 2026 (Claude) — CURRENT RELEASE
+LIVE: PR #98 squash-merged as main ef2b97d at Jack's "Merge" (00:39 ET);
+both Pages runs succeeded; live data.json reports v68. Physical iPhone not checked.
 Jack (iPhone screenshot of Results, v67) chose: fill in Net profit, fix the bar
 chart, check the numbers.
 - **Chart**: the v64 three-column waterfall (its red "You paid" bar hung from
@@ -34,7 +36,8 @@ chart, check the numbers.
   CARD-0026 LeBron/Wemby $50 → **$55.25** (2024-10-09: 46 + 5.95 + 3.30);
   CARD-0033 Hurts $50 → **$244.16** (2025-01-02: accepted offer $225 + 4.58 +
   14.58 tax; listing titled #TR-JAH /249, Authenticity Guarantee — any later
-  grading cost not included; Jack to confirm it is the same card).
+  grading cost not included; Jack confirmed 2026-11-02 00:39 ET it is the same
+  card he sold).
   No single-item receipt found for MERCH-0002/0003 (TikTok Shop orders are
   mixed boxes), so their owner-stated $50 stays. Results now: paid $462,
   net ≈$491 (41%). tests/test_owner_listings.py pins $63.04.
