@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v67";
+  var APP_VERSION = "v68";
   var state = { tab: "today", data: null, bucket: "All",
                 q: "", sort: "val-desc", sellMode: "plan", buyMode: "radar", planFilter: "all", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryTier: "all", inventoryLayout: "grid",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -699,19 +699,29 @@
     sec.appendChild(valueTwin(held));
     return sec;
   }
+  // v68: per-sale estimated net, shown under the gross figure.
+  function netOf(c) { var b = Selling.saleBreakdown(c, salePolicy()); return b && b.net != null ? b.net : null; }
+  function netLine(c, pr) {
+    var n = netOf(c);
+    if (pr == null) return "cost unknown";
+    return n == null ? (pr >= 0 ? "+" : "−") + money0(Math.abs(pr)) + " profit" : (n < 0 ? "−≈" : "≈") + money0(Math.abs(n)) + " net";
+  }
+  function netSmall(c) { var n = netOf(c); return n == null ? "" : '<small class="net-small' + (n < 0 ? " loss" : "") + '">' + (n < 0 ? "−≈" : "≈") + money0(Math.abs(n)) + " net</small>"; }
   function soldStrip() {
     var sold = state.data.cards.filter(function (c) { return c.sold; }).sort(function (a, b) { return String(b.sold_date).localeCompare(String(a.sold_date)); });
     if (!sold.length) return null;
-    var r = Selling.results(state.data.cards), cost = sold.reduce(function (n, c) { return n + (Selling.cost(c) || 0); }, 0);
+    var r = Selling.results(state.data.cards), m = Selling.moneySplit(state.data.cards, salePolicy()), cost = sold.reduce(function (n, c) { return n + (Selling.cost(c) || 0); }, 0);
     var sec = el('<section class="sold-section" aria-label="Sold so far"></section>');
     sec.appendChild(sectionHead("Sold so far", null, "Results", function () { setTab("value"); }));
-    var p = el('<div class="panel sold-panel"><div class="sold-top"><div><p class="big-label">Sales</p><p class="big" data-count="' + r.revenue + '">' + money0(r.revenue) + '</p></div><div class="row-money"><b class="up-text">' + (r.gross == null ? "—" : "+" + money0(r.gross)) + "</b><small>" + (r.gross == null ? "profit needs every cost" : "gross profit") + "</small></div></div></div>");
-    if (r.gross != null && r.gross >= 0 && r.revenue > 0) {
+    var p = el('<div class="panel sold-panel"><div class="sold-top"><div><p class="big-label">Sales</p><p class="big" data-count="' + r.revenue + '">' + money0(r.revenue) + '</p></div><div class="row-money"><b class="up-text">' + (m && m.net != null ? "≈" + money0(m.net) : r.gross == null ? "—" : "+" + money0(r.gross)) + "</b><small>" + (m && m.net != null ? "net profit, est." : r.gross == null ? "profit needs every cost" : "gross profit") + "</small></div></div></div>");
+    if (m && r.revenue > 0) {
+      p.appendChild(el('<div class="sold-split">' + moneySplitHtml(m, true) + "</div>"));
+    } else if (r.gross != null && r.gross >= 0 && r.revenue > 0) {
       p.appendChild(el('<div class="sold-split"><div class="stack" role="img" aria-label="' + esc("You paid " + money0(cost) + ", profit " + money0(r.gross)) + '"><span class="stack-seg seg-cost" style="flex-grow:' + cost + '"></span><span class="stack-seg seg-profit" style="flex-grow:' + r.gross + '"></span></div><div class="split-legend"><span><i class="seg-cost"></i>You paid ' + money0(cost) + '</span><span><i class="seg-profit"></i>Profit ' + money0(r.gross) + "</span></div></div>"));
     }
     sold.slice(0, 3).forEach(function (c) {
       var cst = Selling.cost(c), pr = cst == null ? null : num(c.sold_price) - cst;
-      var row = el('<button class="sale-row" type="button">' + thumb(c) + "<span><b>" + esc(c.player) + "</b><small>" + esc(savedDate(c.sold_date)) + '</small></span><span class="row-money"><b>' + money0(c.sold_price) + "</b><small>" + (pr == null ? "cost unknown" : (pr >= 0 ? "+" : "−") + money0(Math.abs(pr)) + " profit") + "</small></span></button>");
+      var row = el('<button class="sale-row" type="button">' + thumb(c) + "<span><b>" + esc(c.player) + "</b><small>" + esc(savedDate(c.sold_date)) + '</small></span><span class="row-money"><b>' + money0(c.sold_price) + "</b><small>" + netLine(c, pr) + "</small></span></button>");
       row.onclick = function () { openModal(c); };
       p.appendChild(row);
     });
@@ -899,10 +909,41 @@
   function wfCol(label, val, cls, bottom, height) {
     return '<div class="wf-col"><span class="wf-val">' + val + '</span><span class="wf-plot"><span class="wf-bar ' + cls + '" style="bottom:' + bottom.toFixed(1) + "%;height:" + Math.max(1, height).toFixed(1) + '%"></span></span><span class="wf-label">' + esc(label) + "</span></div>";
   }
+  // v68: one bar for where the sales money went (paid / eBay fees / shipping /
+  // kept). Replaces the v64 waterfall, whose cost bar floated from the top.
+  function salePolicy() { return (state.data.radar || {}).policy || null; }
+  function moneySplitHtml(m, compact) {
+    var left = Math.max(0, m.revenue - m.paid - m.fees - m.shipping);
+    var segs = [
+      { k: "cost", label: "You paid", v: m.paid, est: false },
+      { k: "fee", label: "eBay fees", v: m.fees, est: m.realFees < m.count },
+      { k: "ship", label: "Shipping + supplies", v: m.shipping, est: true },
+      { k: "profit", label: m.net == null ? "Left over" : "You kept", v: left, est: true }
+    ];
+    var pct = function (v) { return m.revenue ? Math.round(v / m.revenue * 100) : 0; };
+    var amt = function (s) { return (s.est ? "≈" : "") + money0(s.v); };
+    var bar = '<div class="money-bar" role="img" aria-label="' + esc(segs.map(function (s) { return s.label + " " + amt(s); }).join(", ")) + '">' +
+      segs.map(function (s) { return '<span class="ms-seg seg-' + s.k + '" style="flex-grow:' + Math.max(s.v, 0.01).toFixed(2) + '"></span>'; }).join("") + "</div>";
+    if (compact) return bar + '<div class="split-legend">' + segs.map(function (s) { return '<span><i class="seg-' + s.k + '"></i>' + esc(s.label.replace(" + supplies", "")) + "</span>"; }).join("") + "</div>";
+    return bar + '<div class="ms-legend">' + segs.map(function (s) {
+      return '<div class="ms-row' + (s.k === "profit" ? " kept" : "") + '"><i class="seg-' + s.k + '"></i><span>' + esc(s.label) + (s.est ? ' <em class="est">est.</em>' : "") + "</span><b>" + amt(s) + "</b><small>" + pct(s.v) + "%</small></div>";
+    }).join("") + "</div>";
+  }
   function pnlPanel(r, sold) {
-    var cost = sold.reduce(function (n, c) { return n + (Selling.cost(c) || 0); }, 0);
-    var p = el('<section class="panel pnl-hero wide"><p class="big-label">Sold so far</p><p class="big foil-text shine" data-count="' + r.revenue + '">' + money0(r.revenue) + '</p><p class="sub">' + r.sold + " " + (r.sold === 1 ? "sale" : "sales") + ", before eBay fees and shipping</p></section>");
+    var cost = sold.reduce(function (n, c) { return n + (Selling.cost(c) || 0); }, 0), m = Selling.moneySplit(state.data.cards, salePolicy());
+    var p = el('<section class="panel pnl-hero wide"><p class="big-label">Sold so far</p><p class="big foil-text shine" data-count="' + r.revenue + '">' + money0(r.revenue) + '</p><p class="sub">' + r.sold + " " + (r.sold === 1 ? "sale" : "sales") + (m ? ". Here is where the money went." : ", before eBay fees and shipping") + "</p></section>");
     if (!r.sold) { p.appendChild(el('<p class="panel-note">Your first recorded sale will start this page.</p>')); return p; }
+    if (m) {
+      p.appendChild(el('<div class="money-split">' + moneySplitHtml(m) + "</div>"));
+      var best0 = sold.slice().sort(function (a, b) { return num(b.sold_price) - num(a.sold_price); })[0], nm = m.net == null || !m.revenue ? null : m.net / m.revenue;
+      p.appendChild(el('<div class="kpi-row"><div class="kpi kpi-net"><span>Net profit</span><b class="' + (m.net != null && m.net < 0 ? "down-text" : "up-text") + '">' + (m.net == null ? "—" : (m.net < 0 ? "−≈" : "≈") + money0(Math.abs(m.net))) + "</b><small>" + (m.net == null ? "Needs the cost of " + m.unknownCost + (m.unknownCost === 1 ? " sale" : " sales") : "Estimate. Real labels on " + m.realLabels + " of " + m.count) + '</small></div><div class="kpi"><span>Net margin</span><b>' + (nm == null ? "—" : Math.round(nm * 100) + "%") + "</b>" + (nm == null ? "" : Charts.meter(Math.max(0, nm) * 100, 100, { label: "Net margin" })) + '</div><div class="kpi"><span>Average sale</span><b>' + money0(r.revenue / r.sold) + "</b><small>" + r.sold + " " + (r.sold === 1 ? "sale" : "sales") + '</small></div><div class="kpi"><span>Best sale</span><b>' + money0(best0.sold_price) + "</b><small>" + esc(best0.player) + "</small></div></div>"));
+      p.appendChild(el('<details class="twin"><summary>How net is figured</summary><ul class="ms-notes">' +
+        "<li>Before costs: sales " + money0(m.revenue) + " − paid " + money0(m.paid) + " = " + (r.gross == null ? "—" : money0(r.gross)) + " gross.</li>" +
+        "<li>eBay fees: " + (m.realFees ? m.realFees + " from eBay, the rest " : "") + "estimated at 13.25% for cards and 13.6% for merch, on the sale plus 8% buyer sales tax, plus $0.40 an order.</li>" +
+        "<li>Shipping: " + m.realLabels + " of " + m.count + " are real eBay label costs; the others use your planning number ($8, or $16 over $500). Plus $2 supplies a sale.</li>" +
+        "<li>Not counted: promoted-listing fees, refunds and payout timing.</li></ul></details>"));
+      return p;
+    }
     if (r.gross != null && r.gross >= 0) {
       var max = Math.max(r.revenue, 1), pc = cost / max * 100, pg = r.gross / max * 100;
       p.appendChild(el('<div class="waterfall" role="img" aria-label="' + esc("Sales " + money0(r.revenue) + ", minus what you paid " + money0(cost) + ", equals gross profit " + money0(r.gross)) + '">' + wfCol("Sales", money0(r.revenue), "", 0, 100) + wfCol("You paid", "−" + money0(cost), "neg", pg, pc) + wfCol("Gross profit", money0(r.gross), "pos", 0, pg) + "</div>"));
@@ -924,7 +965,7 @@
       var cost = Selling.cost(c), price = num(c.sold_price), profit = cost == null ? null : price - cost;
       var lo = cost == null ? price : Math.min(cost, price), span = cost == null ? 0 : Math.abs(price - cost);
       var db = '<span class="dumbbell" aria-hidden="true"><span class="db-track"></span>' + (cost != null ? '<span class="db-span' + (profit < 0 ? " neg" : "") + '" style="left:' + (lo / max * 100).toFixed(1) + "%;width:" + (span / max * 100).toFixed(1) + '%"></span><span class="db-a" style="left:' + (cost / max * 100).toFixed(1) + '%"></span>' : "") + '<span class="db-b" style="left:' + (price / max * 100).toFixed(1) + '%"></span></span>';
-      var row = el('<button class="ledger-row" type="button">' + thumb(c) + '<span class="ledger-main"><b>' + esc(c.player) + "</b><small>" + esc(savedDate(c.sold_date)) + (cost != null ? ", paid " + money0(cost) : "") + "</small>" + db + '</span><span class="ledger-money"><b>' + money0(price) + "</b>" + (profit == null ? '<small class="na">cost unknown</small>' : '<small class="' + (profit < 0 ? "loss" : "") + '">' + (profit >= 0 ? "+" : "−") + money0(Math.abs(profit)) + "</small>") + "</span></button>");
+      var row = el('<button class="ledger-row" type="button">' + thumb(c) + '<span class="ledger-main"><b>' + esc(c.player) + "</b><small>" + esc(savedDate(c.sold_date)) + (cost != null ? ", paid " + money0(cost) : "") + "</small>" + db + '</span><span class="ledger-money"><b>' + money0(price) + "</b>" + (profit == null ? '<small class="na">cost unknown</small>' : '<small class="gross' + (profit < 0 ? " loss" : "") + '">' + (profit >= 0 ? "+" : "−") + money0(Math.abs(profit)) + " gross</small>" + netSmall(c)) + "</span></button>");
       row.onclick = function () { openModal(c); };
       p.appendChild(row);
     });

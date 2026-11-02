@@ -444,10 +444,41 @@ def _owner_listings():
     return listings
 
 
+def _sale_costs():
+    """Recorded outbound selling costs (v68). Real values only; the app
+    estimates anything missing and says so."""
+    path = DATA / "sale_costs.json"
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("schema_version") != 1:
+        raise ValueError("Unsupported sale costs schema")
+    out = {}
+    for sku, rec in data.get("sales", {}).items():
+        if not re.fullmatch(r"(?:CARD|MERCH)-[0-9]{4}", sku):
+            raise ValueError("Invalid sale costs SKU")
+        unknown = set(rec) - {"label", "label_source", "fees", "fees_source"}
+        if unknown:
+            raise ValueError("Unknown sale costs field: " + ", ".join(sorted(unknown)))
+        clean = {}
+        for key in ("label", "fees"):
+            if key in rec:
+                val = rec[key]
+                if not isinstance(val, (int, float)) or isinstance(val, bool) or val < 0:
+                    raise ValueError(f"{sku} {key} must be a non-negative number")
+                if not str(rec.get(key + "_source", "")).strip():
+                    raise ValueError(f"{sku} {key} needs a {key}_source")
+                clean[key] = round(float(val), 2)
+                clean[key + "_source"] = rec[key + "_source"]
+        out[sku] = clean
+    return out
+
+
 def build_data(cards) -> dict:
     # App-saved costs fill blank sheet costs BEFORE any money math, so the
     # profit tiles and per-card cost all agree with what the owner entered.
     owner_listings = _owner_listings()
+    sale_costs = _sale_costs()
     app_costs, app_sales, app_sold = _my_numbers()
     for c in cards:
         if _num(c.cost) <= 0 and c.sku.upper() in app_costs:
@@ -580,6 +611,7 @@ def build_data(cards) -> dict:
                 "owner_listing": owner_listings.get(c.sku),
                 "sold_price": _num(c.sold_price) if c.is_sold() else "",
                 "sold_date": c.sold_date, "cert": _cert_for(c),
+                "sale_costs": sale_costs.get(c.sku) if c.is_sold() else None,
                 "my_sales": manual_by_sku.get(c.sku.upper(), []),
                 # A change chip answers "did the market move?". When the value now
                 # comes from sold prices the owner recorded (est_price is set),

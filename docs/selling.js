@@ -234,9 +234,40 @@
   function lotDescription(cards) {
     return "Lot of " + cards.length + " trading cards.\n\nINCLUDED CARDS\n" + cards.map(function(c,i) { return (i+1) + ". " + c.player + " — " + (c.line || [c.year,c.brand,c.set,c.card_number].filter(Boolean).join(" ")) + (c.graded ? " · " + c.grader + " " + c.grade : ""); }).join("\n") + "\n\nPlease review the photos for the condition of each card. You will receive the exact cards pictured.\n\nSELLER CHECKLIST (remove before publishing)\nPhotograph every included card, front and back. Verify identity and condition. Confirm package weight, shipping, price and return settings. Remove any already-listed or sold card from this lot.";
   }
+  // v68: where a sale's money went. Outbound label and fees use a value read
+  // from an eBay email (c.sale_costs) when one is recorded; otherwise the
+  // owner's own buy_policy planning numbers (fee rate, buyer-tax allowance in
+  // the fee basis, $8/$16 label, $2 supplies). Merch is outside eBay's 13.25%
+  // trading-card row, so it uses the "most categories" rate. Never treats a
+  // missing purchase cost as zero: net stays null until the cost is known.
+  var MERCH_FEE_RATE = 0.136;
+  function saleBreakdown(c, policy) {
+    var price = amount(c.sold_price), p = policy || {};
+    if (price === null || held(c)) return null;
+    var rate = /^MERCH-/i.test(c.sku || "") ? MERCH_FEE_RATE : amount(p.fee_rate), per = amount(p.per_order_fee), tax = amount(p.resale_buyer_tax_rate);
+    var thr = amount(p.fee_threshold) || 7500, above = amount(p.fee_rate_above) || 0, sup = amount(p.supplies);
+    if (rate === null || per === null || tax === null || sup === null) return null;
+    var sc = c.sale_costs || {}, realFee = amount(sc.fees), realLabel = amount(sc.label);
+    var base = price * (1 + tax);
+    var fees = realFee !== null ? realFee : round(Math.min(base, thr) * rate + Math.max(0, base - thr) * above + per);
+    var labelEst = amount(price > 500 ? p.outbound_shipping_premium : p.outbound_shipping);
+    var label = realLabel !== null ? realLabel : labelEst;
+    if (label === null) return null;
+    var paid = cost(c), sell = round(fees + label + sup);
+    return {price:price, cost:paid, fees:fees, feesReal:realFee !== null, label:label, labelReal:realLabel !== null, supplies:sup, sellCosts:sell, net:paid === null ? null : round(price - paid - sell)};
+  }
+  function moneySplit(cards, policy) {
+    var sold = cards.filter(function(c) { return !held(c); }), rows = sold.map(function(c) { return saleBreakdown(c, policy); });
+    if (!sold.length || rows.some(function(r) { return !r; })) return null;
+    var sum = function(k) { return round(rows.reduce(function(n,r) { return n + (r[k] || 0); }, 0)); };
+    var unknownCost = rows.filter(function(r) { return r.cost === null; }).length;
+    return {count:rows.length, revenue:sum("price"), paid:sum("cost"), fees:sum("fees"), labels:sum("label"), supplies:sum("supplies"),
+      shipping:round(sum("label") + sum("supplies")), net:unknownCost ? null : sum("net"), unknownCost:unknownCost,
+      realLabels:rows.filter(function(r) { return r.labelReal; }).length, realFees:rows.filter(function(r) { return r.feesReal; }).length};
+  }
   function results(cards) {
     var sold=cards.filter(function(c) { return !held(c); }), known=sold.filter(function(c) { return cost(c) !== null; });
     return {held:cards.filter(held).length, listed:cards.filter(listed).length, sold:sold.length, revenue:round(sold.reduce(function(n,c) { return n + (amount(c.sold_price) || 0); },0)), gross:known.length === sold.length && sold.length ? round(known.reduce(function(n,c) { return n + (amount(c.sold_price) || 0) - cost(c); },0)) : null, knownSoldCosts:known.length, heldCostCount:cards.filter(function(c) { return held(c) && cost(c) !== null; }).length, knownCapital:round(cards.filter(held).reduce(function(n,c) { return n + (cost(c) || 0); },0)), net:sold.length && sold.every(function(c) { return typeof (c.owner_listing || {}).net_profit === "number" && Number.isFinite(c.owner_listing.net_profit); }) ? round(sold.reduce(function(n,c) { return n+c.owner_listing.net_profit; },0)) : null};
   }
-  return {amount:amount,round:round,held:held,listed:listed,reference:reference,cost:cost,today:today,formatDate:formatDate,daysSince:daysSince,protectedCard:protectedCard,batchEligible:batchEligible,groups:groups,soldEvidence:soldEvidence,soldRows:soldRows,listingAge:listingAge,planFor:planFor,premium:premium,lotQuote:lotQuote,normalizeOffer:normalizeOffer,offerDeadline:offerDeadline,offerQuote:offerQuote,parseOfferExchange:parseOfferExchange,exportOfferExchange:exportOfferExchange,lotTitle:lotTitle,lotDescription:lotDescription,results:results};
+  return {amount:amount,round:round,held:held,listed:listed,reference:reference,cost:cost,today:today,formatDate:formatDate,daysSince:daysSince,protectedCard:protectedCard,batchEligible:batchEligible,groups:groups,soldEvidence:soldEvidence,soldRows:soldRows,listingAge:listingAge,planFor:planFor,premium:premium,lotQuote:lotQuote,normalizeOffer:normalizeOffer,offerDeadline:offerDeadline,offerQuote:offerQuote,parseOfferExchange:parseOfferExchange,exportOfferExchange:exportOfferExchange,lotTitle:lotTitle,lotDescription:lotDescription,results:results,saleBreakdown:saleBreakdown,moneySplit:moneySplit};
 }));

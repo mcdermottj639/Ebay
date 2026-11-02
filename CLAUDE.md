@@ -8,7 +8,39 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
-## Lower bottom bar — v67, October 29, 2026 (Claude) — CURRENT RELEASE
+## Net profit + money split — v68, November 2, 2026 (Claude) — CURRENT RELEASE
+Jack (iPhone screenshot of Results, v67) chose: fill in Net profit, fix the bar
+chart, check the numbers.
+- **Chart**: the v64 three-column waterfall (its red "You paid" bar hung from
+  the top) is replaced by one stacked bar + legend: You paid / eBay fees /
+  Shipping + supplies / You kept, each with amount and share. `moneySplitHtml`
+  in app.js; Today's "Sold so far" uses the compact form. Styles: v68 block at
+  the end of vault.css (`.money-bar`, `.ms-*`, `.seg-fee`, `.seg-ship`).
+- **Engine** (`selling.js`): `saleBreakdown(c, policy)` and
+  `moneySplit(cards, policy)`. Policy = `data.radar.policy` (buy_policy.json):
+  fee 13.25% cards / 13.6% merch (eBay "most categories"; Sports Mem is not the
+  trading-card row) on price × (1 + 8% buyer-tax allowance) + $0.40; label =
+  recorded value else $8 ($16 over $500); $2 supplies. A missing purchase cost
+  keeps net null (never zero). Legend marks every estimate "est.".
+- **Data**: new `data/sale_costs.json` — outbound costs read from eBay emails
+  only (label, label_source, fees, fees_source; no buyer/order details).
+  build_web validates it and attaches `sale_costs` to sold cards only.
+  Recorded 2026-11-02: CARD-0021 $7.08, MERCH-0002 $9.66, MERCH-0003 $32.20.
+- **Ledger rows** show "+$X gross" (muted) and "≈$Y net" (green).
+- **Number check (not changed, open for Jack)**: (1) the $263 "You paid"
+  includes $50 for CARD-0026 entered on Jack's phone (cv-mydata, not synced);
+  the repo cost is blank and the private receipt evidence in the handoff says
+  $55.25 landed ($46 + $5.95 ship + $3.30 tax). (2) CARD-0033 Hurts $400 sale
+  is dated 2025-09-10 in my_numbers.json, but the card was first logged from
+  the PSA app 2026-09-10 — likely a year typo. (3) summary.realized_profit in
+  build_web still treats a blank cost as $0 (Results does not use it).
+- Validation: 38 Python + 21 selling + 7 charts Node tests, node --check,
+  catalog, build. Playwright 390 light/dark, 320 light (no device cost), 1280
+  dark: no overflow, no page errors; numbers hand-checked (fees $176.25,
+  shipping+supplies $75.94, net $690.81 with the phone's $50 LeBron cost).
+  Physical iPhone not tested.
+
+## Lower bottom bar — v67, October 29, 2026 (Claude)
 Jack (iPhone screenshot, light theme): "Move bottom bar down". The phone dock
 pill ended ~42pt above the screen edge (8px + the ~34pt home-indicator inset).
 - `.dock` bottom padding is now `max(8px, calc(env(safe-area-inset-bottom) - 14px))`

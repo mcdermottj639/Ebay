@@ -152,3 +152,21 @@ test('saved offers protect lots and lead the review queue without recording a sa
  assert.equal(S.planFor(base,plans.C1,'2030-01-17').label,'Offer deadline passed');
  assert.equal(S.results(cards).sold,0);assert.equal(S.results(cards).revenue,0);
 });
+test('v68 sale breakdown: real label wins, estimates fill gaps, missing cost never becomes zero', () => {
+  const policy={fee_rate:.1325,fee_threshold:7500,fee_rate_above:.0235,per_order_fee:.4,resale_buyer_tax_rate:.08,outbound_shipping:8,outbound_shipping_premium:16,supplies:2};
+  const card={sku:'CARD-0021',sold:true,sold_price:100,cost:'63.00',sale_costs:{label:7.08}};
+  const b=S.saleBreakdown(card,policy);
+  assert.equal(b.fees,14.71); assert.equal(b.label,7.08); assert.equal(b.labelReal,true); assert.equal(b.net,13.21);
+  const merch=S.saleBreakdown({sku:'MERCH-0002',sold:true,sold_price:225,cost:'50',sale_costs:{label:9.66}},policy);
+  assert.equal(merch.fees,33.45); assert.equal(merch.net,129.89);
+  const noCost=S.saleBreakdown({sku:'CARD-0026',sold:true,sold_price:225,cost:''},policy);
+  assert.equal(noCost.net,null); assert.equal(noCost.label,8); assert.equal(noCost.labelReal,false);
+  assert.equal(S.saleBreakdown({sku:'CARD-0099',sold:true,sold_price:600,cost:'1'},policy).label,16);
+  assert.equal(S.saleBreakdown({sku:'CARD-0098',sold:true,sold_price:50,cost:'1',sale_costs:{fees:6}},policy).feesReal,true);
+  assert.equal(S.saleBreakdown(card,{}),null);
+  assert.equal(S.saleBreakdown({...card,sold:false},policy),null);
+  const m=S.moneySplit([card,{sku:'CARD-0026',sold:true,sold_price:225,cost:''},{sku:'X',sold:false,asking_price:5}],policy);
+  assert.equal(m.count,2); assert.equal(m.net,null); assert.equal(m.unknownCost,1); assert.equal(m.realLabels,1); assert.equal(m.revenue,325);
+  assert.equal(S.moneySplit([card],policy).net,13.21);
+  assert.equal(S.moneySplit([],policy),null);
+});

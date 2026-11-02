@@ -108,8 +108,8 @@
       "n": 32
     }
   ],
-  "generated": "Nov 02, 2026 \u00b7 01:20 UTC",
-  "app_version": "v67",
+  "generated": "Nov 02, 2026 \u00b7 05:10 UTC",
+  "app_version": "v68",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -37512,6 +37512,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 6.99,
       "price_series": [
@@ -37635,6 +37636,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.76,
       "price_series": [
@@ -37758,6 +37760,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 3.08,
       "price_series": [
@@ -37881,6 +37884,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.32,
       "price_series": [
@@ -38004,6 +38008,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.75,
       "price_series": [
@@ -38127,6 +38132,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.98,
       "price_series": [
@@ -38250,6 +38256,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.45,
       "price_series": [
@@ -38373,6 +38380,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.39,
       "price_series": [
@@ -38496,6 +38504,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 9.31,
       "price_series": [
@@ -38619,6 +38628,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.75,
       "price_series": [
@@ -38742,6 +38752,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 12.99,
       "price_series": [
@@ -38865,6 +38876,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "67423370",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 9.0,
       "price_series": [
@@ -38993,6 +39005,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 59.99,
       "price_series": [
@@ -39084,6 +39097,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 49.99,
       "price_series": [
@@ -39207,6 +39221,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 68.2,
       "price_series": [
@@ -39330,6 +39345,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 39.99,
       "price_series": [
@@ -39453,6 +39469,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 21.99,
       "price_series": [
@@ -39576,6 +39593,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2024-10-16",
@@ -39730,6 +39748,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "89222827",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 101.0,
       "price_series": [
@@ -39858,6 +39877,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 34.0,
       "price_series": [
@@ -40031,6 +40051,10 @@
       "sold_price": 100.0,
       "sold_date": "2026-10-27",
       "cert": "",
+      "sale_costs": {
+        "label": 7.08,
+        "label_source": "eBay 'Your shipping label is ready' email, 2026-10-27 ET, FedEx Ground Economy"
+      },
       "my_sales": [
         {
           "d": "2025-01-12",
@@ -40129,6 +40153,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "83143720",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2024-09-14",
@@ -40273,6 +40298,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 21.0,
       "price_series": [
@@ -40391,6 +40417,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 53.0,
       "price_series": [
@@ -40509,6 +40536,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 23.95,
       "price_series": [
@@ -40682,6 +40710,7 @@
       "sold_price": 225.0,
       "sold_date": "2026-11-01",
       "cert": "90720092",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2026-06-13",
@@ -40856,6 +40885,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 12.0,
       "price_series": [
@@ -40984,6 +41014,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "67269227",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 69.0,
       "price_series": [
@@ -41137,6 +41168,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2026-09-09",
@@ -41272,6 +41304,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "85776346",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 96.0,
       "price_series": [
@@ -41395,6 +41428,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 25.0,
       "price_series": [
@@ -41548,6 +41582,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "75510176",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2021-09-10",
@@ -41677,6 +41712,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 220.0,
       "price_series": [
@@ -41843,6 +41879,10 @@
       "sold_price": 225.0,
       "sold_date": "2026-10-31",
       "cert": "1W622369",
+      "sale_costs": {
+        "label": 9.66,
+        "label_source": "eBay 'Your shipping label is ready' email, 2026-10-31 ET, FedEx Ground Economy"
+      },
       "my_sales": [],
       "prev_price": 250.0,
       "price_series": [
@@ -41952,6 +41992,10 @@
       "sold_price": 255.0,
       "sold_date": "2026-09-09",
       "cert": "",
+      "sale_costs": {
+        "label": 32.2,
+        "label_source": "eBay 'Your shipping label is ready' email, 2026-09-05 ET, USPS Ground Advantage"
+      },
       "my_sales": [
         {
           "d": "2026-09-09",
@@ -42013,6 +42057,7 @@
       "sold_price": 400.0,
       "sold_date": "2025-09-10",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 338.0,
       "price_series": [
@@ -42152,6 +42197,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 185.0,
       "price_series": [
