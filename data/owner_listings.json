@@ -74,8 +74,8 @@
       "url": "https://www.ebay.com/itm/336866470596",
       "asking_price": 250,
       "currency": "USD",
-      "status": "listed",
-      "confirmed_at": "2026-10-27T20:34:09-04:00",
+      "status": "sold_paid",
+      "confirmed_at": "2026-11-01T14:31:00-05:00",
       "best_offer": true,
       "best_offer_source": "owner_statement",
       "events": [
@@ -87,8 +87,28 @@
           "price": 250,
           "currency": "USD",
           "source": "ebay_listing_confirmation_email"
+        },
+        {
+          "event_id": "336866470596:sold_paid:2026-11-01T14:31:00-05:00",
+          "type": "sold_paid",
+          "occurred_at": "2026-11-01T14:31:00-05:00",
+          "item_id": "336866470596",
+          "price": 225,
+          "currency": "USD",
+          "source": "ebay_sale_confirmation_email",
+          "time_note": "eBay notification time; exact transaction time not stated. Authenticity Guarantee order: ship to authenticator by Nov 04, 2026; payout follows successful authentication."
         }
-      ]
+      ],
+      "sold_price": 225,
+      "sold_date": "2026-11-01",
+      "cost": null,
+      "fees": null,
+      "outbound_shipping": null,
+      "net_profit": null,
+      "sku_resolution": {
+        "source": "title_match_and_owner_listing",
+        "note": "The sale email shows no item ID; its title '2023 Panini Instant LeBron James Victor Wembanyama ...' matches CARD-0026, the only LeBron/Wembanyama item in inventory and the only owner listing with that title (336866470596, which Jack's earlier eBay offer emails for '2023 Panini Instant ...' also name)."
+      }
     },
     "CARD-0029": {
       "item_id": "336866522689",
