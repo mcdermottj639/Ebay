@@ -43,7 +43,7 @@ chart, check the numbers.
 - Validation: 38 Python + 21 selling + 7 charts Node tests, node --check,
   catalog, build. Playwright 390 light/dark, 320 light (no device cost), 1280
   dark: no overflow, no page errors; numbers hand-checked (fees $176.25,
-  shipping+supplies $75.94; net $690.81 before receipt costs, $491.36 after). Asset
+  shipping+supplies $74.94; net $690.81 before receipt costs, $491.36 after). Asset
   markers ?v=68 in index.html/manifest/sw.js SHELL.
   Physical iPhone not tested.
 
