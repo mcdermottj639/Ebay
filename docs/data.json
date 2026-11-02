@@ -104,12 +104,12 @@
     },
     {
       "d": "2026-11-02",
-      "v": 2437.32,
+      "v": 2471.33,
       "n": 32
     }
   ],
-  "generated": "Nov 02, 2026 \u00b7 01:20 UTC",
-  "app_version": "v67",
+  "generated": "Nov 02, 2026 \u00b7 05:14 UTC",
+  "app_version": "v68",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -37410,14 +37410,14 @@
     "autos": 8,
     "graded": 13,
     "priced": 32,
-    "total_cost": 120.0,
-    "total_value": 2437.32,
-    "profit": 264.49,
-    "cost_count": 2,
+    "total_cost": 320.0,
+    "total_value": 2471.33,
+    "profit": 419.5,
+    "cost_count": 4,
     "listed": 4,
     "sold": 5,
     "revenue": 1205.0,
-    "realized_profit": 992.0,
+    "realized_profit": 742.55,
     "by_sport": {
       "Football": 27,
       "Basketball": 2,
@@ -37429,7 +37429,7 @@
       {
         "name": "Football",
         "count": 27,
-        "value": 2007.37
+        "value": 2041.38
       },
       {
         "name": "Basketball",
@@ -37461,7 +37461,7 @@
       {
         "name": "PSA 10",
         "count": 8,
-        "value": 718.49
+        "value": 752.5
       },
       {
         "name": "Raw",
@@ -37512,6 +37512,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 6.99,
       "price_series": [
@@ -37635,6 +37636,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.76,
       "price_series": [
@@ -37758,6 +37760,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 3.08,
       "price_series": [
@@ -37881,6 +37884,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.32,
       "price_series": [
@@ -38004,6 +38008,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.75,
       "price_series": [
@@ -38127,6 +38132,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.98,
       "price_series": [
@@ -38250,6 +38256,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.45,
       "price_series": [
@@ -38373,6 +38380,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.39,
       "price_series": [
@@ -38496,6 +38504,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 9.31,
       "price_series": [
@@ -38619,6 +38628,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 1.75,
       "price_series": [
@@ -38742,6 +38752,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 12.99,
       "price_series": [
@@ -38865,6 +38876,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "67423370",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 9.0,
       "price_series": [
@@ -38993,6 +39005,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 59.99,
       "price_series": [
@@ -39084,6 +39097,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 49.99,
       "price_series": [
@@ -39207,6 +39221,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 68.2,
       "price_series": [
@@ -39330,6 +39345,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 39.99,
       "price_series": [
@@ -39453,6 +39469,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 21.99,
       "price_series": [
@@ -39576,6 +39593,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2024-10-16",
@@ -39712,14 +39730,14 @@
       "serial_run": "",
       "condition": "",
       "authentication": "",
-      "cost": "",
-      "asking_price": "101.00",
+      "cost": "150.0",
+      "asking_price": "117.50",
       "notes": "PSA app estimate 2026-09-10: $101.00 (was $163.67); Disco Prizm; refine with comps; PSA cert 89222827",
-      "est_price": "",
-      "est_basis": "",
+      "est_price": "101.00",
+      "est_basis": "psa",
       "basis_note": "",
       "reviewed_price": false,
-      "price_basis": "psa",
+      "price_basis": "sold",
       "image": "./img/CARD-0019.jpg",
       "line": "2023 Panini Prizm #339 Disco",
       "title": "2023 Panini Prizm CJ Stroud #339 PSA 10 RC Disco Texans",
@@ -39730,8 +39748,20 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "89222827",
-      "my_sales": [],
-      "prev_price": 101.0,
+      "sale_costs": null,
+      "my_sales": [
+        {
+          "d": "2026-08-10",
+          "p": 120.0,
+          "n": ""
+        },
+        {
+          "d": "2026-08-15",
+          "p": 115.0,
+          "n": ""
+        }
+      ],
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -39858,6 +39888,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 34.0,
       "price_series": [
@@ -39968,9 +39999,9 @@
       "serial_run": "",
       "condition": "",
       "authentication": "",
-      "cost": "63.00",
+      "cost": "63.04",
       "asking_price": "168.00",
-      "notes": "PSA app estimate 2026-09-10: $168.00 (was $189.00); on-card auto; Owner sale confirmed by eBay email 2026-10-27: $100 gross, buyer paid, item 336866460070; owner reported cost $63; fees/shipping not yet reconciled.",
+      "notes": "PSA app estimate 2026-09-10: $168.00 (was $189.00); on-card auto; Owner sale confirmed by eBay email 2026-10-27: $100 gross, buyer paid, item 336866460070; owner reported cost $63; fees/shipping not yet reconciled.; Cost from eBay purchase receipt 2025-01-12: $55.00 + $4.28 shipping + $3.76 tax = $63.04 (was owner-reported $63) (Jack: use the receipt, 2026-11-02)",
       "est_price": "",
       "est_basis": "",
       "basis_note": "Only ONE sale of this exact card in two years ($55, Jan 2025) - a thin read. Across all 2019 Prizm Pollard autos eBay's 2yr average is $82.63 and falling 34%; the $216 sales are the rarer Gold Prizm.",
@@ -40031,6 +40062,10 @@
       "sold_price": 100.0,
       "sold_date": "2026-10-27",
       "cert": "",
+      "sale_costs": {
+        "label": 7.08,
+        "label_source": "eBay 'Your shipping label is ready' email, 2026-10-27 ET, FedEx Ground Economy"
+      },
       "my_sales": [
         {
           "d": "2025-01-12",
@@ -40112,7 +40147,7 @@
       "condition": "",
       "authentication": "",
       "cost": "70.0",
-      "asking_price": "152.49",
+      "asking_price": "170.00",
       "notes": "PSA app estimate 2026-09-10: $163.00 (was $349.00); Turn of the Century auto; PSA cert 83143720",
       "est_price": "163.00",
       "est_basis": "psa",
@@ -40129,6 +40164,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "83143720",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2024-09-14",
@@ -40154,6 +40190,11 @@
           "d": "2025-07-24",
           "p": 150.0,
           "n": "eBay sold (Terapeak 2yr): Donruss Elite Turn of the Century Auto Bijan Robinson /249"
+        },
+        {
+          "d": "2026-09-08",
+          "p": 170.0,
+          "n": ""
         }
       ],
       "prev_price": "",
@@ -40273,6 +40314,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 21.0,
       "price_series": [
@@ -40391,6 +40433,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 53.0,
       "price_series": [
@@ -40509,6 +40552,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 23.95,
       "price_series": [
@@ -40624,9 +40668,9 @@
       "serial_run": "",
       "condition": "",
       "authentication": "",
-      "cost": "",
+      "cost": "55.25",
       "asking_price": "196.76",
-      "notes": "PSA app estimate 2026-09-10: $160.00 (was $182.60); dual-player card; PSA cert 90720092; Owner-approved reviewed sold median 2026-10-23; sources: https://www.psacard.com/cert/93137214/psa, https://www.fanaticscollect.com/buy-now/07a69b85-3be7-46db-bd66-8cde4159020a; Owner sale confirmed by eBay email 2026-11-01: $225 gross, buyer paid, item 336866470596; fees/net not yet reconciled. Shipped via Authenticity Guarantee (ship by Nov 04, 2026); authentication and payout unverified.",
+      "notes": "PSA app estimate 2026-09-10: $160.00 (was $182.60); dual-player card; PSA cert 90720092; Owner-approved reviewed sold median 2026-10-23; sources: https://www.psacard.com/cert/93137214/psa, https://www.fanaticscollect.com/buy-now/07a69b85-3be7-46db-bd66-8cde4159020a; Owner sale confirmed by eBay email 2026-11-01: $225 gross, buyer paid, item 336866470596; fees/net not yet reconciled. Shipped via Authenticity Guarantee (ship by Nov 04, 2026); authentication and payout unverified.; Cost from eBay purchase receipt 2024-10-09: $46.00 + $5.95 shipping + $3.30 tax = $55.25 (Jack: use the receipt, 2026-11-02)",
       "est_price": "",
       "est_basis": "",
       "basis_note": "Reviewed Oct 23, 2026: median of 4 exact-card/grade reported sales ($170.00\u2013$284.22); medium confidence. Latest sale 2026-10-08. Shipping/premiums unknown; not guaranteed proceeds.",
@@ -40682,6 +40726,7 @@
       "sold_price": 225.0,
       "sold_date": "2026-11-01",
       "cert": "90720092",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2026-06-13",
@@ -40856,6 +40901,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 12.0,
       "price_series": [
@@ -40984,6 +41030,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "67269227",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 69.0,
       "price_series": [
@@ -41137,6 +41184,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2026-09-09",
@@ -41272,6 +41320,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "85776346",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 96.0,
       "price_series": [
@@ -41395,6 +41444,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 25.0,
       "price_series": [
@@ -41548,6 +41598,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "75510176",
+      "sale_costs": null,
       "my_sales": [
         {
           "d": "2021-09-10",
@@ -41659,7 +41710,7 @@
       "serial_run": "",
       "condition": "Excellent",
       "authentication": "Beckett",
-      "cost": "",
+      "cost": "50.0",
       "asking_price": "220.00",
       "notes": "Framed black shadow box (owner CONFIRMED framed); #23 white Rams jersey; Beckett BAS COA hologram; eBay 336728703040 LIVE at $250 + Best Offer. REPRICED 2026-09-09 from $399 to $220 est_sold: the MERCH-0003 sale (sold $255 vs a $742 asking median = 34%) is our only real merch sold datapoint, and the owner read it as fair-but-maybe-a-low-offer, so we apply a 45% haircut to the asking median ($399 x 0.55) rather than the observed 66%. Floor ~$185 - do NOT accept below. DO NOT revise the live listing UP (the old $399 advice is cancelled); $250 + Best Offer is about right. Comps 2026-08-10: n=21 framed asking, median $399, 25th $234, 75th $445",
       "est_price": "",
@@ -41677,6 +41728,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 220.0,
       "price_series": [
@@ -41843,6 +41895,10 @@
       "sold_price": 225.0,
       "sold_date": "2026-10-31",
       "cert": "1W622369",
+      "sale_costs": {
+        "label": 9.66,
+        "label_source": "eBay 'Your shipping label is ready' email, 2026-10-31 ET, FedEx Ground Economy"
+      },
       "my_sales": [],
       "prev_price": 250.0,
       "price_series": [
@@ -41952,6 +42008,10 @@
       "sold_price": 255.0,
       "sold_date": "2026-09-09",
       "cert": "",
+      "sale_costs": {
+        "label": 32.2,
+        "label_source": "eBay 'Your shipping label is ready' email, 2026-09-05 ET, USPS Ground Advantage"
+      },
       "my_sales": [
         {
           "d": "2026-09-09",
@@ -41995,9 +42055,9 @@
       "serial_run": "",
       "condition": "",
       "authentication": "",
-      "cost": "50.0",
+      "cost": "244.16",
       "asking_price": "338.00",
-      "notes": "PSA app estimate 2026-09-10: $338.00; found in the PSA app 2026-09-10, was missing from the catalog; on-card auto",
+      "notes": "PSA app estimate 2026-09-10: $338.00; found in the PSA app 2026-09-10, was missing from the catalog; on-card auto; Cost from eBay purchase receipt 2025-01-02 (accepted offer, Authenticity Guarantee, listed as #TR-JAH /249): $225.00 + $4.58 shipping + $14.58 tax = $244.16; replaces the $50 entered in the app; any grading cost not included (Jack: use the receipt, 2026-11-02)",
       "est_price": "",
       "est_basis": "",
       "basis_note": "",
@@ -42013,6 +42073,7 @@
       "sold_price": 400.0,
       "sold_date": "2025-09-10",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 338.0,
       "price_series": [
@@ -42152,6 +42213,7 @@
       "sold_price": "",
       "sold_date": "",
       "cert": "",
+      "sale_costs": null,
       "my_sales": [],
       "prev_price": 185.0,
       "price_series": [

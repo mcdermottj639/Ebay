@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "rule": "Outbound selling costs for sold SKUs, only as read from an eBay email or Seller Hub. Never estimates; the app estimates anything missing from data/buy_policy.json and labels it. No buyer names, addresses or order numbers.",
+  "sales": {
+    "CARD-0021": {
+      "label": 7.08,
+      "label_source": "eBay 'Your shipping label is ready' email, 2026-10-27 ET, FedEx Ground Economy"
+    },
+    "MERCH-0002": {
+      "label": 9.66,
+      "label_source": "eBay 'Your shipping label is ready' email, 2026-10-31 ET, FedEx Ground Economy"
+    },
+    "MERCH-0003": {
+      "label": 32.20,
+      "label_source": "eBay 'Your shipping label is ready' email, 2026-09-05 ET, USPS Ground Advantage"
+    }
+  }
+}

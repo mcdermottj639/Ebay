@@ -33,7 +33,7 @@ class OwnerListingsTests(unittest.TestCase):
         self.assertTrue(c['sold'])
         self.assertFalse(c['listed'])
         self.assertEqual(c['sold_price'], 100)
-        self.assertEqual(float(c['cost']), 63)
+        self.assertEqual(float(c['cost']), 63.04)  # eBay purchase receipt (2026-11-02)
         self.assertEqual(c['sold_date'], '2026-10-27')
         self.assertFalse(any(float(s['p']) == 100 for s in c['my_sales']))
         self.assertIsNone(c['owner_listing']['net_profit'])

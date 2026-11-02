@@ -8,7 +8,46 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
-## Lower bottom bar — v67, October 29, 2026 (Claude) — CURRENT RELEASE
+## Net profit + money split — v68, November 2, 2026 (Claude) — CURRENT RELEASE
+Jack (iPhone screenshot of Results, v67) chose: fill in Net profit, fix the bar
+chart, check the numbers.
+- **Chart**: the v64 three-column waterfall (its red "You paid" bar hung from
+  the top) is replaced by one stacked bar + legend: You paid / eBay fees /
+  Shipping + supplies / You kept, each with amount and share. `moneySplitHtml`
+  in app.js; Today's "Sold so far" uses the compact form. Styles: v68 block at
+  the end of vault.css (`.money-bar`, `.ms-*`, `.seg-fee`, `.seg-ship`).
+- **Engine** (`selling.js`): `saleBreakdown(c, policy)` and
+  `moneySplit(cards, policy)`. Policy = `data.radar.policy` (buy_policy.json):
+  fee 13.25% cards / 13.6% merch (eBay "most categories"; Sports Mem is not the
+  trading-card row) on price × (1 + 8% buyer-tax allowance) + $0.40; label =
+  recorded value else $8 ($16 over $500); $2 supplies. A missing purchase cost
+  keeps net null (never zero). Legend marks every estimate "est.".
+- **Data**: new `data/sale_costs.json` — outbound costs read from eBay emails
+  only (label, label_source, fees, fees_source; no buyer/order details).
+  build_web validates it and attaches `sale_costs` to sold cards only.
+  Recorded 2026-11-02: CARD-0021 $7.08, MERCH-0002 $9.66, MERCH-0003 $32.20.
+- **Ledger rows** show "+$X gross" (muted) and "≈$Y net" (green).
+- **Costs from receipts (Jack: "If u have a receipt use the receipt")**: eBay
+  purchase receipts in Gmail replaced owner-entered costs, in inventory.csv
+  (sheet wins) AND my_numbers.json (so no stale $50 lingers):
+  CARD-0021 Pollard $63 → **$63.04** (2025-01-12: 55 + 4.28 ship + 3.76 tax);
+  CARD-0026 LeBron/Wemby $50 → **$55.25** (2024-10-09: 46 + 5.95 + 3.30);
+  CARD-0033 Hurts $50 → **$244.16** (2025-01-02: accepted offer $225 + 4.58 +
+  14.58 tax; listing titled #TR-JAH /249, Authenticity Guarantee — any later
+  grading cost not included; Jack to confirm it is the same card).
+  No single-item receipt found for MERCH-0002/0003 (TikTok Shop orders are
+  mixed boxes), so their owner-stated $50 stays. Results now: paid $462,
+  net ≈$491 (41%). tests/test_owner_listings.py pins $63.04.
+- Still open: summary.realized_profit in build_web treats a blank cost as $0
+  (Results does not use it).
+- Validation: 38 Python + 21 selling + 7 charts Node tests, node --check,
+  catalog, build. Playwright 390 light/dark, 320 light (no device cost), 1280
+  dark: no overflow, no page errors; numbers hand-checked (fees $176.25,
+  shipping+supplies $74.94; net $690.81 before receipt costs, $491.36 after). Asset
+  markers ?v=68 in index.html/manifest/sw.js SHELL.
+  Physical iPhone not tested.
+
+## Lower bottom bar — v67, October 29, 2026 (Claude)
 Jack (iPhone screenshot, light theme): "Move bottom bar down". The phone dock
 pill ended ~42pt above the screen edge (8px + the ~34pt home-indicator inset).
 - `.dock` bottom padding is now `max(8px, calc(env(safe-area-inset-bottom) - 14px))`
@@ -656,11 +695,11 @@ These rules supersede the historical asking-median radar/Great Value notes below
   `?v=N` on vault.css, selling.js, charts.js + app.js in `index.html` (v64+
   file set), the manifest icons, and `CACHE`/SHELL `?v=N` in `sw.js`, run
   `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v67. The live
+  this makes the service worker serve stale CSS/JS. Current: v68. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v67. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v68. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
