@@ -1381,6 +1381,14 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-01 — CARD-0026 LeBron James / Victor Wembanyama sold (eBay bookkeeper,
+  auto).** 2023 Panini Instant #371 PSA 10, eBay 336866470596, sold/paid $225 on
+  2026-11-01 (eBay sale email via dot, re-read by the bookkeeper; notification
+  time 14:31 ET). The email has no item ID: matched by title to the only
+  LeBron/Wembanyama SKU and owner listing (`sku_resolution` note). inventory
+  `sold_price`/`sold_date` set, `listed` cleared; owner_listings.json gains the
+  sold_paid event. Authenticity Guarantee order: ship to authenticator by Nov 4;
+  authentication, label, fees, payout, net and cost are unknown. No UI change, v67.
 - **2026-11-01 — MERCH-0002 helmet sold (Claude, owner request).** Baker Mayfield
   Bucs Flash replica helmet, eBay 336728712522, sold/paid $225 on 2026-10-31
   (eBay sale email, re-read by Claude; event first reported by dot in claudex).
