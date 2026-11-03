@@ -97,6 +97,15 @@
           "currency": "USD",
           "source": "ebay_sale_confirmation_email",
           "time_note": "eBay notification time; exact transaction time not stated. Authenticity Guarantee order: ship to authenticator by Nov 04, 2026; payout follows successful authentication."
+        },
+        {
+          "event_id": "336866470596:shipped_to_authenticator:2026-11-03",
+          "type": "shipped_to_authenticator",
+          "occurred_at": "2026-11-03",
+          "item_id": "336866470596",
+          "currency": "USD",
+          "source": "owner_screenshot_ebay_track_package",
+          "note": "Authenticity Guarantee (Jack's screenshot of eBay Track Package): shipped to authenticator Tue Nov 3, last location Stamford, CT; eBay estimates arrival Nov 13-20. Authentication, payout, label cost and fees still unknown."
         }
       ],
       "sold_price": 225,
@@ -184,6 +193,15 @@
           "currency": "USD",
           "source": "ebay_shipping_label_confirmation_email",
           "note": "Label ready is not carrier acceptance; ship-by Nov 4 per sale email (label email says Nov 5)."
+        },
+        {
+          "event_id": "336728712522:shipped:2026-11-03",
+          "type": "shipped",
+          "occurred_at": "2026-11-03",
+          "item_id": "336728712522",
+          "currency": "USD",
+          "source": "owner_screenshot_ebay_order_details",
+          "note": "eBay order details (Jack's screenshot): 'The carrier confirmed receipt of the package on Nov 3'; estimated delivery shown to buyer Nov 5-12, 2026. Exact scan time not shown. Delivery not yet confirmed."
         }
       ],
       "sold_price": 225,
