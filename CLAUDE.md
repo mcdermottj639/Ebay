@@ -1423,6 +1423,14 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-03 (evening) — eBay emails confirm the shipments (Claude, from dot's
+  events, both emails re-read).** MERCH-0002: eBay "Order shipped / Scanned and on
+  the way" email, notification 18:59 ET, adds an email-sourced `shipped` event.
+  CARD-0026: eBay label email 15:38 ET, FedEx Ground Economy **$7.08**, recorded
+  as a `shipping_label_purchased` event, `outbound_shipping` and in
+  data/sale_costs.json (Results now uses the real label instead of the $8
+  estimate). That email names item 336866470596 for the same order, confirming
+  the title-based SKU match. Delivery, authentication, fees, payout still unknown.
 - **2026-11-03 — both sold items shipped (Claude, from Jack's eBay screenshots).**
   MERCH-0002 Mayfield helmet (336728712522): eBay order details say the carrier
   confirmed receipt Nov 3; buyer's estimated delivery Nov 5-12. CARD-0026
