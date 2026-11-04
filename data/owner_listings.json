@@ -153,10 +153,10 @@
     "CARD-0034": {
       "item_id": "336866528719",
       "url": "https://www.ebay.com/itm/336866528719",
-      "asking_price": 450,
+      "asking_price": 240,
       "currency": "USD",
       "status": "listed",
-      "confirmed_at": "2026-10-27T21:26:13-04:00",
+      "confirmed_at": "2026-11-01T13:22:44-05:00",
       "sku_resolution": {
         "resolved_at": "2026-10-31T02:35:00-04:00",
         "source": "owner_statement",
@@ -171,8 +171,29 @@
           "price": 450,
           "currency": "USD",
           "source": "ebay_listing_confirmation_email"
+        },
+        {
+          "event_id": "336866528719:ask_observed:2026-10-31T20:22:45-04:00",
+          "type": "ask_observed",
+          "occurred_at": "2026-10-31T20:22:45-04:00",
+          "item_id": "336866528719",
+          "price": 175,
+          "currency": "USD",
+          "source": "ebay_offer_notification_email",
+          "note": "Buy It Now $175.00 shown in eBay new-offer email (notification time). Exact revision time unknown; first seen here."
+        },
+        {
+          "event_id": "336866528719:ask_observed:2026-11-01T13:22:44-05:00",
+          "type": "ask_observed",
+          "occurred_at": "2026-11-01T13:22:44-05:00",
+          "item_id": "336866528719",
+          "price": 240,
+          "currency": "USD",
+          "source": "ebay_offer_notification_email",
+          "note": "Buy It Now $240.00 shown in eBay offer-pending reminder (notification time). A 2026-11-01 10:10 EST offer email still showed $175, so the change to $240 happened between those emails. Exact revision time unknown."
         }
-      ]
+      ],
+      "asking_price_note": "Last email-confirmed ask: Buy It Now $240 in the 2026-11-01 13:22 EST eBay offer reminder. Original $450 listing event kept."
     },
     "MERCH-0002": {
       "item_id": "336728712522",
@@ -246,6 +267,30 @@
       "status": "outside_card_inventory",
       "title": "L.A.B. Golf LINK.2.1 Custom Putter 34 inch",
       "reason": "Golf equipment, no matching inventory SKU; excluded from card feed."
+    },
+    {
+      "item_id": "336878002103",
+      "url": "https://www.ebay.com/itm/336878002103",
+      "asking_price": null,
+      "currency": "USD",
+      "occurred_at": "2026-11-03T17:40:30-05:00",
+      "status": "listed_ask_unknown",
+      "title": "2023 Panini Mosaic Sam LaPorta Rookie Scripts Auto RC... (title truncated in email)",
+      "candidate_sku": "CARD-0024",
+      "source": "ebay_listing_confirmation_email",
+      "reason": "Listing-live email gives no asking price and the truncated title hides the grade; candidate CARD-0024 is the only LaPorta in inventory. Needs Jack's ask before it moves to listings."
+    },
+    {
+      "item_id": "336878004176",
+      "url": "https://www.ebay.com/itm/336878004176",
+      "asking_price": null,
+      "currency": "USD",
+      "occurred_at": "2026-11-03T17:42:44-05:00",
+      "status": "listed_ask_unknown",
+      "title": "2018 Panini Donruss Kylian Mbappe #53 PSA 10 GEM MINT... (title truncated in email)",
+      "candidate_sku": "CARD-0028",
+      "source": "ebay_listing_confirmation_email",
+      "reason": "Listing-live email gives no asking price; title matches CARD-0028 (2018 Donruss Mbappe #53 PSA 10). Needs Jack's ask before it moves to listings."
     }
   ]
 }
