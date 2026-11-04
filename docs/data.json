@@ -118,7 +118,7 @@
       "n": 32
     }
   ],
-  "generated": "Nov 04, 2026 \u00b7 01:20 UTC",
+  "generated": "Nov 04, 2026 \u00b7 17:09 UTC",
   "app_version": "v68",
   "targets": [
     {
@@ -38605,7 +38605,7 @@
     "total_value": 2471.33,
     "profit": 419.5,
     "cost_count": 4,
-    "listed": 4,
+    "listed": 6,
     "sold": 5,
     "revenue": 1205.0,
     "realized_profit": 742.55,
@@ -41608,7 +41608,7 @@
       "authentication": "",
       "cost": "",
       "asking_price": "53.00",
-      "notes": "PSA app estimate 2026-09-10: $53.00 (was $105.59); on-card auto",
+      "notes": "PSA app estimate 2026-09-10: $53.00 (was $105.59); on-card auto; eBay listing 336878002103 live 2026-11-03; owner-stated ask $75 (2026-11-04)",
       "est_price": "",
       "est_basis": "",
       "basis_note": "",
@@ -41618,9 +41618,45 @@
       "line": "2023 Panini Mosaic #RS-SL",
       "title": "2023 Panini Mosaic Sam LaPorta #RS-SL PSA 9 AUTO RC Rookie Scripts Auto Lions",
       "status": "priced",
-      "listed": false,
+      "listed": true,
       "sold": false,
-      "owner_listing": null,
+      "owner_listing": {
+        "item_id": "336878002103",
+        "url": "https://www.ebay.com/itm/336878002103",
+        "asking_price": 75,
+        "currency": "USD",
+        "status": "listed",
+        "confirmed_at": "2026-11-03T17:40:30-05:00",
+        "sku_resolution": {
+          "resolved_at": "2026-11-04T12:08:45-05:00",
+          "source": "owner_statement",
+          "note": "Jack named CARD-0024 for eBay 336878002103 in a Claude chat on 2026-11-04 (candidate since the Nov 3 listing-live email)."
+        },
+        "events": [
+          {
+            "event_id": "336878002103:listed:2026-11-03T17:40:30-05:00",
+            "type": "listed",
+            "occurred_at": "2026-11-03T17:40:30-05:00",
+            "item_id": "336878002103",
+            "price": null,
+            "currency": "USD",
+            "source": "ebay_listing_confirmation_email",
+            "note": "Listing-live email (notification time) shows no price."
+          },
+          {
+            "event_id": "336878002103:ask_stated:2026-11-04T12:08:45-05:00",
+            "type": "ask_stated",
+            "occurred_at": "2026-11-04T12:08:45-05:00",
+            "item_id": "336878002103",
+            "price": 75,
+            "currency": "USD",
+            "source": "owner_statement",
+            "note": "Jack stated the ask ($75) to ChatGPT 2026-11-03 20:28 ET, confirmed it in Jarvis 12:03 ET and in a Claude chat 2026-11-04. Not read from an eBay email."
+          }
+        ],
+        "asking_price_source": "owner_statement",
+        "asking_price_note": "Owner-stated ask $75 (Claude chat 2026-11-04). No eBay email has shown the price yet."
+      },
       "sold_price": "",
       "sold_date": "",
       "cert": "",
@@ -42227,7 +42263,7 @@
       "authentication": "",
       "cost": "",
       "asking_price": "69.00",
-      "notes": "PSA app estimate 2026-09-10: $67.00 (was $132.00); PSA cert 67269227; Owner-approved reviewed sold median 2026-10-23; sources: https://www.psacard.com/cert/56728311/psa",
+      "notes": "PSA app estimate 2026-09-10: $67.00 (was $132.00); PSA cert 67269227; Owner-approved reviewed sold median 2026-10-23; sources: https://www.psacard.com/cert/56728311/psa; eBay listing 336878004176 live 2026-11-03; owner-stated ask $100 (2026-11-04)",
       "est_price": "",
       "est_basis": "",
       "basis_note": "Reviewed Oct 23, 2026: median of 5 exact-card/grade reported sales ($56.00\u2013$79.99); medium confidence. Latest sale 2026-10-18. Shipping/premiums unknown; not guaranteed proceeds.",
@@ -42237,9 +42273,45 @@
       "line": "2018 Panini Donruss #53",
       "title": "2018 Panini Donruss Kylian Mbappe #53 PSA 10 PSG",
       "status": "priced",
-      "listed": false,
+      "listed": true,
       "sold": false,
-      "owner_listing": null,
+      "owner_listing": {
+        "item_id": "336878004176",
+        "url": "https://www.ebay.com/itm/336878004176",
+        "asking_price": 100,
+        "currency": "USD",
+        "status": "listed",
+        "confirmed_at": "2026-11-03T17:42:44-05:00",
+        "sku_resolution": {
+          "resolved_at": "2026-11-04T12:08:45-05:00",
+          "source": "owner_statement",
+          "note": "Jack named CARD-0028 for eBay 336878004176 in a Claude chat on 2026-11-04 (candidate since the Nov 3 listing-live email)."
+        },
+        "events": [
+          {
+            "event_id": "336878004176:listed:2026-11-03T17:42:44-05:00",
+            "type": "listed",
+            "occurred_at": "2026-11-03T17:42:44-05:00",
+            "item_id": "336878004176",
+            "price": null,
+            "currency": "USD",
+            "source": "ebay_listing_confirmation_email",
+            "note": "Listing-live email (notification time) shows no price."
+          },
+          {
+            "event_id": "336878004176:ask_stated:2026-11-04T12:08:45-05:00",
+            "type": "ask_stated",
+            "occurred_at": "2026-11-04T12:08:45-05:00",
+            "item_id": "336878004176",
+            "price": 100,
+            "currency": "USD",
+            "source": "owner_statement",
+            "note": "Jack stated the ask ($100) to ChatGPT 2026-11-03 20:28 ET, confirmed it in Jarvis 12:03 ET and in a Claude chat 2026-11-04. Not read from an eBay email."
+          }
+        ],
+        "asking_price_source": "owner_statement",
+        "asking_price_note": "Owner-stated ask $100 (Claude chat 2026-11-04). No eBay email has shown the price yet."
+      },
       "sold_price": "",
       "sold_date": "",
       "cert": "67269227",
