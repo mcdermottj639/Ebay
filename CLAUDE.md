@@ -1423,6 +1423,15 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-04 — LaPorta and Mbappe listings now have their asks (Claude, Jack's
+  chat).** Jack: "Record my eBay asks as owner statements: 336878002103 LaPorta
+  CARD-0024 $75, 336878004176 Mbappe CARD-0028 $100." Both moved from
+  `unresolved_matches` to `listings` (status listed, `asking_price_source`
+  owner_statement, an `ask_stated` event; the Nov 3 listing-live email event kept
+  with price null); inventory `listed=yes`. Jack named the SKUs, which settles the
+  matches; the LaPorta email title was truncated, so the PSA 9 grade comes from
+  inventory, not the listing. No eBay email has shown either price yet. Owner asks
+  stay display-only (never valuation). No UI change, v68.
 - **2026-11-04 — CARD-0034 ask is $240; two new listings wait on their asks (eBay
   bookkeeper, auto).** From dot/ChatGPT's 2026-11-03 19:54 ET handoff, each eBay
   email re-read by the bookkeeper. CARD-0034 Rice/Taylor (336866528719): eBay offer
