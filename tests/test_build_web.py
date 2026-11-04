@@ -41,20 +41,32 @@ if __name__ == '__main__':
 
 
 class SaleCostsTests(unittest.TestCase):
+    """Checks the rules, not today's numbers: every recorded label reaches its
+    sold card unchanged and nothing else carries one. Adding a new label email
+    to data/sale_costs.json must never require editing this test."""
+
     def test_recorded_label_costs_reach_only_sold_cards_and_need_a_source(self):
         import json, tempfile
-        spec = importlib.util.spec_from_file_location("bw68", Path(__file__).resolve().parent.parent / "build_web.py")
+        spec = importlib.util.spec_from_file_location("bw68", ROOT / "build_web.py")
         bw = importlib.util.module_from_spec(spec); spec.loader.exec_module(bw)
         costs = bw._sale_costs()
-        self.assertEqual(costs["CARD-0021"]["label"], 7.08)
-        data = json.loads((Path(__file__).resolve().parent.parent / "docs" / "data.json").read_text())
-        by = {c["sku"]: c for c in data["cards"]}
-        self.assertEqual(by["MERCH-0003"]["sale_costs"]["label"], 32.2)
-        self.assertEqual(by["CARD-0026"]["sale_costs"]["label"], 7.08)
-        self.assertIsNone(by["CARD-0033"]["sale_costs"])  # sold, no label email on file
-        for c in data["cards"]:
-            if not c["sold"]:
-                self.assertIsNone(c.get("sale_costs"))
+        self.assertTrue(costs, "expected at least one recorded sale cost")
+        for sku, rec in costs.items():
+            for key in ("label", "fees"):
+                if key in rec:
+                    self.assertGreaterEqual(rec[key], 0, sku)
+                    self.assertTrue(rec[key + "_source"].strip(), sku)
+        for path in (None, ROOT / "docs" / "data.json"):
+            data = (bw.build_data(bw.catalog.load()) if path is None
+                    else json.loads(path.read_text()))
+            seen = set()
+            for c in data["cards"]:
+                if c["sold"] and c["sku"] in costs:
+                    self.assertEqual(c["sale_costs"], costs[c["sku"]], c["sku"])
+                    seen.add(c["sku"])
+                else:
+                    self.assertIsNone(c.get("sale_costs"), c["sku"])
+            self.assertTrue(seen, "no recorded cost reached a sold card")
         with tempfile.TemporaryDirectory() as d:
             bad = Path(d) / "sale_costs.json"
             bad.write_text(json.dumps({"schema_version": 1, "sales": {"CARD-0001": {"label": 5}}}))

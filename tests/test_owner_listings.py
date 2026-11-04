@@ -24,8 +24,10 @@ class OwnerListingsTests(unittest.TestCase):
             after['owner_listing'] = None
             self.assertEqual(before, after)
         by_sku = {c['sku']: c for c in actual['cards']}
-        self.assertEqual(by_sku['CARD-0032']['owner_listing']['asking_price'], 2500)
-        self.assertNotEqual(float(by_sku['CARD-0032']['asking_price']), 2500)
+        saved = json.loads((ROOT / 'data/owner_listings.json').read_text())
+        ask = saved['listings']['CARD-0032']['asking_price']  # whatever the latest email says
+        self.assertEqual(by_sku['CARD-0032']['owner_listing']['asking_price'], ask)
+        self.assertNotEqual(float(by_sku['CARD-0032']['asking_price']), ask)
 
     def test_owner_sale_is_retired_and_not_inserted_as_comparison(self):
         data = build.build_data(build.catalog.load())
