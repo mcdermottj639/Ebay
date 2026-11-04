@@ -50,7 +50,8 @@ class SaleCostsTests(unittest.TestCase):
         data = json.loads((Path(__file__).resolve().parent.parent / "docs" / "data.json").read_text())
         by = {c["sku"]: c for c in data["cards"]}
         self.assertEqual(by["MERCH-0003"]["sale_costs"]["label"], 32.2)
-        self.assertIsNone(by["CARD-0026"]["sale_costs"])
+        self.assertEqual(by["CARD-0026"]["sale_costs"]["label"], 7.08)
+        self.assertIsNone(by["CARD-0033"]["sale_costs"])  # sold, no label email on file
         for c in data["cards"]:
             if not c["sold"]:
                 self.assertIsNone(c.get("sale_costs"))

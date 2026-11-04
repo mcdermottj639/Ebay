@@ -106,17 +106,27 @@
           "currency": "USD",
           "source": "owner_screenshot_ebay_track_package",
           "note": "Authenticity Guarantee (Jack's screenshot of eBay Track Package): shipped to authenticator Tue Nov 3, last location Stamford, CT; eBay estimates arrival Nov 13-20. Authentication, payout, label cost and fees still unknown."
+        },
+        {
+          "event_id": "336866470596:shipping_label_purchased:2026-11-03T15:38:32-05:00",
+          "type": "shipping_label_purchased",
+          "occurred_at": "2026-11-03T15:38:32-05:00",
+          "item_id": "336866470596",
+          "price": 7.08,
+          "currency": "USD",
+          "source": "ebay_shipping_label_confirmation_email",
+          "note": "FedEx Ground Economy to the Authenticity Guarantee authenticator. The label email names item 336866470596 and the same order as the sale, confirming the title-based SKU match. Sale email said ship by Nov 4; label email says Nov 5."
         }
       ],
       "sold_price": 225,
       "sold_date": "2026-11-01",
       "cost": null,
       "fees": null,
-      "outbound_shipping": null,
+      "outbound_shipping": 7.08,
       "net_profit": null,
       "sku_resolution": {
         "source": "title_match_and_owner_listing",
-        "note": "The sale email shows no item ID; its title '2023 Panini Instant LeBron James Victor Wembanyama ...' matches CARD-0026, the only LeBron/Wembanyama item in inventory and the only owner listing with that title (336866470596, which Jack's earlier eBay offer emails for '2023 Panini Instant ...' also name)."
+        "note": "The sale email shows no item ID; its title '2023 Panini Instant LeBron James Victor Wembanyama ...' matches CARD-0026, the only LeBron/Wembanyama item in inventory and the only owner listing with that title (336866470596, which Jack's earlier eBay offer emails for '2023 Panini Instant ...' also name). Confirmed 2026-11-03: the eBay shipping-label email names item 336866470596 for the same order."
       }
     },
     "CARD-0029": {
@@ -202,6 +212,15 @@
           "currency": "USD",
           "source": "owner_screenshot_ebay_order_details",
           "note": "eBay order details (Jack's screenshot): 'The carrier confirmed receipt of the package on Nov 3'; estimated delivery shown to buyer Nov 5-12, 2026. Exact scan time not shown. Delivery not yet confirmed."
+        },
+        {
+          "event_id": "336728712522:shipped:2026-11-03T18:59:08-05:00",
+          "type": "shipped",
+          "occurred_at": "2026-11-03T18:59:08-05:00",
+          "item_id": "336728712522",
+          "currency": "USD",
+          "source": "ebay_order_shipped_email",
+          "time_note": "eBay notification time ('Order shipped' / 'Scanned and on the way'); confirms the Nov 3 owner-screenshot event above. Delivery not confirmed."
         }
       ],
       "sold_price": 225,
