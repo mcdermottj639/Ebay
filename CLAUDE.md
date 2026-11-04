@@ -1423,6 +1423,16 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-04 — tests no longer pin live bookkeeping numbers (Claude, Jack's request).**
+  Jack asked why he kept being asked for work already done. One cause: PR #101 had
+  to edit `tests/test_build_web.py` because `SaleCostsTests` asserted today's label
+  values (which SKU has a label), so every new label email broke a test and failed
+  the eBay bookkeeper's auto-merge gate. The test now checks the rules (every entry
+  in `data/sale_costs.json` reaches its sold card unchanged, in a fresh build and in
+  the committed `docs/data.json`; nothing else carries one; a source is required).
+  `test_owner_listings` reads CARD-0032's ask from `owner_listings.json` instead of
+  pinning $2500. Rule: bookkeeping data changes must never need a test edit.
+  Bookkeeper task's allowed files now include `data/sale_costs.json`. No app change, v68.
 - **2026-11-03 (evening) — eBay emails confirm the shipments (Claude, from dot's
   events, both emails re-read).** MERCH-0002: eBay "Order shipped / Scanned and on
   the way" email, notification 18:59 ET, adds an email-sourced `shipped` event.
