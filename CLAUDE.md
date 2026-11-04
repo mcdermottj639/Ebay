@@ -1423,6 +1423,17 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-04 — CARD-0034 ask is $240; two new listings wait on their asks (eBay
+  bookkeeper, auto).** From dot/ChatGPT's 2026-11-03 19:54 ET handoff, each eBay
+  email re-read by the bookkeeper. CARD-0034 Rice/Taylor (336866528719): eBay offer
+  emails show Buy It Now $175 (2026-10-31 20:22 EDT and 2026-11-01 10:10 EST) then
+  $240 (2026-11-01 13:22 EST); recorded as append-only `ask_observed` events
+  (notification times, exact revision times unknown), owner ask now $240, original
+  $450 listing event kept. No offer acceptance or sale email seen. Nov 3 listing-live
+  emails for 336878004176 (Mbappe #53 PSA 10, candidate CARD-0028) and 336878002103
+  (LaPorta Rookie Scripts, title truncated, candidate CARD-0024) carry no price, so
+  both sit in `unresolved_matches` (status `listed_ask_unknown`) and inventory
+  `listed` is unchanged until Jack gives the asks. No UI change, v68.
 - **2026-11-04 — tests no longer pin live bookkeeping numbers (Claude, Jack's request).**
   Jack asked why he kept being asked for work already done. One cause: PR #101 had
   to edit `tests/test_build_web.py` because `SaleCostsTests` asserted today's label
