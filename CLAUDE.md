@@ -1423,6 +1423,16 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-03 — both sold items shipped (Claude, from Jack's eBay screenshots).**
+  MERCH-0002 Mayfield helmet (336728712522): eBay order details say the carrier
+  confirmed receipt Nov 3; buyer's estimated delivery Nov 5-12. CARD-0026
+  LeBron/Wembanyama (336866470596): shipped to the Authenticity Guarantee
+  authenticator Nov 3 from Stamford, CT; eBay estimates arrival Nov 13-20.
+  Recorded as append-only `shipped` / `shipped_to_authenticator` events in
+  owner_listings.json (status stays `sold_paid`; the app ignores these event
+  types). No eBay/FedEx shipped email existed when checked (23:49Z), so the
+  source is the owner's screenshots. Delivery, authentication, CARD-0026 label
+  cost, fees and payout are still unknown. No tracking numbers recorded. No UI change, v68.
 - **2026-11-01 — CARD-0026 LeBron James / Victor Wembanyama sold (eBay bookkeeper,
   auto).** 2023 Panini Instant #371 PSA 10, eBay 336866470596, sold/paid $225 on
   2026-11-01 (eBay sale email via dot, re-read by the bookkeeper; notification
