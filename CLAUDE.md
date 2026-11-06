@@ -8,6 +8,17 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Courtyard redemption intake — November 5, 2026 (Claude, data only)
+- Courtyard redemption invoice #321548 (2026-11-04, $9.80 shipment fee split
+  $3.26/$3.27/$3.27) → three cards shipping to Jack, not yet received:
+  - CARD-0035 1972 Topps #200 Roger Staubach RC PSA 4 — cost $103.26, provisional est $150.
+  - CARD-0036 2020 Select Concourse #61 Justin Jefferson Red Die-Cut PSA 10 — cost $103.27,
+    provisional est $100 (Courtyard price; no exact sold comp yet).
+  - CARD-0020 (existing Zenith Stroud PSA 10) — owner confirmed it is the redeemed card;
+    cost filled $53.27, value unchanged.
+- To do on arrival: add PSA cert numbers; refresh both provisional values with exact sold comps.
+- Validation: check_catalog, build_web, 38 Python + 28 Node tests.
+
 ## Net profit + money split — v68, November 2, 2026 (Claude) — CURRENT RELEASE
 LIVE: PR #98 squash-merged as main ef2b97d at Jack's "Merge" (00:39 ET);
 both Pages runs succeeded; live data.json reports v68. Physical iPhone not checked.

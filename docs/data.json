@@ -116,9 +116,14 @@
       "d": "2026-11-04",
       "v": 2471.33,
       "n": 32
+    },
+    {
+      "d": "2026-11-06",
+      "v": 2721.33,
+      "n": 34
     }
   ],
-  "generated": "Nov 04, 2026 \u00b7 17:09 UTC",
+  "generated": "Nov 06, 2026 \u00b7 04:23 UTC",
   "app_version": "v68",
   "targets": [
     {
@@ -38594,23 +38599,23 @@
     }
   },
   "summary": {
-    "total_cards": 37,
+    "total_cards": 39,
     "merch": 1,
-    "physical": 32,
-    "rookies": 27,
+    "physical": 34,
+    "rookies": 29,
     "autos": 8,
-    "graded": 13,
-    "priced": 32,
-    "total_cost": 320.0,
-    "total_value": 2471.33,
-    "profit": 419.5,
-    "cost_count": 4,
+    "graded": 15,
+    "priced": 34,
+    "total_cost": 579.8,
+    "total_value": 2721.33,
+    "profit": 443.7,
+    "cost_count": 7,
     "listed": 6,
     "sold": 5,
     "revenue": 1205.0,
     "realized_profit": 742.55,
     "by_sport": {
-      "Football": 27,
+      "Football": 29,
       "Basketball": 2,
       "Hockey": 1,
       "Soccer": 1,
@@ -38619,8 +38624,8 @@
     "sport_stats": [
       {
         "name": "Football",
-        "count": 27,
-        "value": 2041.38
+        "count": 29,
+        "value": 2291.38
       },
       {
         "name": "Basketball",
@@ -38651,13 +38656,18 @@
       },
       {
         "name": "PSA 10",
-        "count": 8,
-        "value": 752.5
+        "count": 9,
+        "value": 852.5
       },
       {
         "name": "Raw",
         "count": 18,
         "value": 488.88
+      },
+      {
+        "name": "PSA 4",
+        "count": 1,
+        "value": 150.0
       }
     ]
   },
@@ -41061,9 +41071,9 @@
       "serial_run": "",
       "condition": "",
       "authentication": "",
-      "cost": "",
+      "cost": "53.27",
       "asking_price": "34.00",
-      "notes": "PSA app estimate 2026-09-10: $34.00 (was $57.19); 1994 Pacific insert",
+      "notes": "PSA app estimate 2026-09-10: $34.00 (was $57.19); 1994 Pacific insert; Owner confirmed this is the card in Courtyard redemption #321548 (2026-11-04): shipping to Jack, not yet received; cost = $50.00 Courtyard purchase + $3.27 share of $9.80 shipment fee (Jack, 2026-11-05)",
       "est_price": "",
       "est_basis": "",
       "basis_note": "",
@@ -43563,6 +43573,102 @@
           }
         ]
       }
+    },
+    {
+      "sku": "CARD-0035",
+      "item_type": "Card",
+      "is_merch": false,
+      "sport": "Football",
+      "year": "1972",
+      "brand": "Topps",
+      "set": "Topps",
+      "player": "Roger Staubach",
+      "card_number": "200",
+      "parallel": "",
+      "insert": "",
+      "team": "Cowboys",
+      "league": "NFL",
+      "rookie": true,
+      "auto": false,
+      "graded": true,
+      "relic": false,
+      "grader": "PSA",
+      "grade": "4",
+      "serial_run": "",
+      "condition": "",
+      "authentication": "",
+      "cost": "103.26",
+      "asking_price": "150.00",
+      "notes": "Courtyard redemption #321548 (2026-11-04): shipping to Jack, not yet received; cost = $100.00 Courtyard purchase + $3.26 share of $9.80 shipment fee; rookie card; add PSA cert # on arrival",
+      "est_price": "",
+      "est_basis": "",
+      "basis_note": "Provisional 2026-11-05, not an exact sold comp: Card Ladder PSA 4 asks $150-$199 (Fanatics/MySlabs, seen 2026-11-05); refresh with sold comps.",
+      "reviewed_price": false,
+      "price_basis": "est_sold",
+      "image": "",
+      "line": "1972 Topps Topps #200",
+      "title": "1972 Topps Roger Staubach #200 PSA 4 RC Cowboys",
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "owner_listing": null,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "sale_costs": null,
+      "my_sales": [],
+      "prev_price": "",
+      "price_series": [],
+      "market": null,
+      "comps": null
+    },
+    {
+      "sku": "CARD-0036",
+      "item_type": "Card",
+      "is_merch": false,
+      "sport": "Football",
+      "year": "2020",
+      "brand": "Panini",
+      "set": "Select",
+      "player": "Justin Jefferson",
+      "card_number": "61",
+      "parallel": "Red Prizm Die-Cut",
+      "insert": "Concourse",
+      "team": "Vikings",
+      "league": "NFL",
+      "rookie": true,
+      "auto": false,
+      "graded": true,
+      "relic": false,
+      "grader": "PSA",
+      "grade": "10",
+      "serial_run": "",
+      "condition": "",
+      "authentication": "",
+      "cost": "103.27",
+      "asking_price": "100.00",
+      "notes": "Courtyard redemption #321548 (2026-11-04): shipping to Jack, not yet received; cost = $100.00 Courtyard purchase + $3.27 share of $9.80 shipment fee; add PSA cert # on arrival",
+      "est_price": "",
+      "est_basis": "",
+      "basis_note": "Provisional 2026-11-05 = Courtyard purchase price; no exact PSA 10 Red Die-Cut sale found yet. Nearest: #61 Blue Die-Cut PSA 10 sold $70-$112 (Jun-Sep 2024, Sports Card Investor). Refresh with sold comps.",
+      "reviewed_price": false,
+      "price_basis": "est_sold",
+      "image": "",
+      "line": "2020 Panini Select #61 Red Prizm Die-Cut",
+      "title": "2020 Panini Select Justin Jefferson #61 PSA 10 RC Red Prizm Die-Cut Concourse",
+      "status": "priced",
+      "listed": false,
+      "sold": false,
+      "owner_listing": null,
+      "sold_price": "",
+      "sold_date": "",
+      "cert": "",
+      "sale_costs": null,
+      "my_sales": [],
+      "prev_price": "",
+      "price_series": [],
+      "market": null,
+      "comps": null
     }
   ]
 }
