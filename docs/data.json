@@ -121,9 +121,14 @@
       "d": "2026-11-06",
       "v": 2721.33,
       "n": 34
+    },
+    {
+      "d": "2026-11-07",
+      "v": 2721.33,
+      "n": 34
     }
   ],
-  "generated": "Nov 06, 2026 \u00b7 04:23 UTC",
+  "generated": "Nov 07, 2026 \u00b7 00:56 UTC",
   "app_version": "v68",
   "targets": [
     {
@@ -489,9 +494,9 @@
   ],
   "radar": {
     "schema_version": 2,
-    "as_of": "2026-11-04T00:53:11.033265+00:00",
+    "as_of": "2026-11-07T00:56:57.054044+00:00",
     "watch_count": 36,
-    "scanned": 677,
+    "scanned": 678,
     "shown": 0,
     "deals": [],
     "candidates": [
@@ -621,7 +626,7 @@
           ],
           "count": 1,
           "primary_count": 0,
-          "freshest_days": 69.0,
+          "freshest_days": 72.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -1078,8 +1083,8 @@
           "excluded": [],
           "count": 1,
           "primary_count": 1,
-          "freshest_days": 16.0,
-          "freshest_primary_days": 16.0,
+          "freshest_days": 19.0,
+          "freshest_primary_days": 19.0,
           "valuation_basis": "provisional reported sales",
           "range": [
             825,
@@ -23816,12 +23821,12 @@
       {
         "title": "2021 Prizm #282 Cade Cunningham Pink Ice PSA 10",
         "currency": "USD",
-        "shipping": null,
+        "shipping": 6.82,
         "price": 299.99,
         "buying_option": "FIXED_PRICE",
         "ends": "",
         "snipe": false,
-        "url": "https://www.ebay.com/itm/286884810317?_skw=2021+Prizm+Cade+Cunningham+Pink+Ice+282+PSA+10&hash=item42cbaace4d:g:gpgAAeSwgG1o88iK",
+        "url": "https://www.ebay.com/itm/286884810317",
         "image": "https://i.ebayimg.com/images/g/gpgAAeSwgG1o88iK/s-l225.jpg",
         "seller_score": 1039,
         "seller_pct": 100,
@@ -23830,39 +23835,200 @@
         "category": "rookies",
         "sport": "basketball",
         "query": "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
-        "checked_at": "2026-10-31T13:07:58.329246+00:00",
+        "checked_at": "2026-11-07T00:56:57+00:00",
         "page_state": "active",
         "listing_id": "286884810317",
         "hold_days": 90,
         "hold_basis": "Planning scenario; sale time is not established",
+        "observation_history": [
+          {
+            "title": "2021 Prizm #282 Cade Cunningham Pink Ice PSA 10",
+            "currency": "USD",
+            "shipping": null,
+            "price": 299.99,
+            "buying_option": "FIXED_PRICE",
+            "ends": "",
+            "snipe": false,
+            "url": "https://www.ebay.com/itm/286884810317?_skw=2021+Prizm+Cade+Cunningham+Pink+Ice+282+PSA+10&hash=item42cbaace4d:g:gpgAAeSwgG1o88iK",
+            "image": "https://i.ebayimg.com/images/g/gpgAAeSwgG1o88iK/s-l225.jpg",
+            "seller_score": 1039,
+            "seller_pct": 100,
+            "item_title": "2021 Prizm #282 Cade Cunningham Pink Ice PSA 10",
+            "label": "Cade Cunningham Pink Ice PSA 10",
+            "category": "rookies",
+            "sport": "basketball",
+            "query": "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
+            "checked_at": "2026-10-31T13:07:58.329246+00:00",
+            "page_state": "active",
+            "listing_id": "286884810317",
+            "hold_days": 90,
+            "hold_basis": "Planning scenario; sale time is not established"
+          }
+        ],
+        "identity": {
+          "year": 2021,
+          "set": "Prizm",
+          "player": "Cade Cunningham",
+          "number": "282",
+          "parallel": "Pink Ice",
+          "print_run": "none",
+          "autograph": false,
+          "relic": false,
+          "grader": "PSA",
+          "grade": 10
+        },
+        "identity_reviewed": true,
+        "condition_reviewed": false,
+        "sales": [
+          {
+            "identity": {
+              "year": 2021,
+              "set": "Prizm",
+              "player": "Cade Cunningham",
+              "number": "282",
+              "parallel": "Pink Ice",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-08-10",
+            "price": 190,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:267496350106",
+            "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+            "marketplace_url": "https://www.ebay.com/itm/267496350106",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          },
+          {
+            "identity": {
+              "year": 2021,
+              "set": "Prizm",
+              "player": "Cade Cunningham",
+              "number": "282",
+              "parallel": "Pink Ice",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-08-06",
+            "price": 239.95,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:117297906577",
+            "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+            "marketplace_url": "https://www.ebay.com/itm/117297906577",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          },
+          {
+            "identity": {
+              "year": 2021,
+              "set": "Prizm",
+              "player": "Cade Cunningham",
+              "number": "282",
+              "parallel": "Pink Ice",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-08-04",
+            "price": 237.5,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:178370395969",
+            "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+            "marketplace_url": "https://www.ebay.com/itm/178370395969",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          }
+        ],
+        "cert_number": "69672645",
+        "hold_reviewed": false,
+        "warnings": [
+          "Live fixed-price $299.99 plus $6.82 displayed shipping. Actual front slab photo reviewed: PSA 10 Pink Ice #282, cert 69672645. Back and slab condition not fully reviewed; seller warns cases may have scuffs/chips.",
+          "Reopened TheClector individual PSA 10 reports; no newer exact-grade sale found. August 10 accepted-offer report remains secondary; original eBay link redirects to a PSA 9 product catalog. August 6 and 4 records are beyond 90 days. No primary qualification evidence."
+        ],
         "evidence": {
-          "sales": [],
-          "excluded": [],
-          "count": 0,
+          "sales": [
+            {
+              "identity": {
+                "year": 2021,
+                "set": "Prizm",
+                "player": "Cade Cunningham",
+                "number": "282",
+                "parallel": "Pink Ice",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-08-10",
+              "price": 190,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:267496350106",
+              "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+              "marketplace_url": "https://www.ebay.com/itm/267496350106",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+            }
+          ],
+          "excluded": [
+            {
+              "sale_id": "ebay:117297906577",
+              "reason": "outside evidence window"
+            },
+            {
+              "sale_id": "ebay:178370395969",
+              "reason": "outside evidence window"
+            }
+          ],
+          "count": 1,
           "primary_count": 0,
-          "freshest_days": null,
+          "freshest_days": 89.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
-          "range": null,
-          "median": null,
+          "range": [
+            190,
+            190
+          ],
+          "median": 190,
           "conservative_resale": null,
           "confidence": "low"
         },
-        "all_in": null,
+        "all_in": 328.29,
         "economics": null,
         "max_all_in": null,
         "max_offer": null,
         "opening_offer": null,
         "status": "research",
-        "grade_scope": "outside_focus",
+        "grade_scope": "psa10",
         "reasons": [
-          "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
-          "Listing observation is stale or undated",
-          "Exact card identity needs review",
+          "Live fixed-price $299.99 plus $6.82 displayed shipping. Actual front slab photo reviewed: PSA 10 Pink Ice #282, cert 69672645. Back and slab condition not fully reviewed; seller warns cases may have scuffs/chips.",
+          "Reopened TheClector individual PSA 10 reports; no newer exact-grade sale found. August 10 accepted-offer report remains secondary; original eBay link redirects to a PSA 9 product catalog. August 6 and 4 records are beyond 90 days. No primary qualification evidence.",
           "Card/slab condition needs photo review",
-          "Need 3 exact primary sold prices within 90 days, including one within 30 days",
-          "Other grades require a reviewed hold of 30 days or less",
-          "Incoming shipping is unknown"
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
         ],
         "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
       },
@@ -29472,12 +29638,12 @@
       {
         "title": "2021 Donruss OPtic Devonta Smith Auto Red PSA 10 44/75",
         "currency": "USD",
-        "shipping": null,
+        "shipping": 6.82,
         "price": 399,
         "buying_option": "FIXED_PRICE",
         "ends": "",
         "snipe": false,
-        "url": "https://www.ebay.com/itm/235235008323?_skw=2021+DeVonta+Smith+Auto+PSA+10&hash=item36c5195f43:g:OLsAAOSwrcxlGKEv&amdata=enc%3AAQALAAABAOf5zIIojhOf%2BkQK%2Bxzjn7mBUBs0qMeGP%2Bn5KgBUx%2B3juN3UYFgsQ4P1NWfPkhPv2WoiSNQ%2Btu2SNr%2FCykgbRVUZo7WKtrcUPuTxKXG46D8pkQC2nP1b0M%2F3cFmiuIbhfJ6jNgp%2B%2BjaHSQF%2F512ekKsccIEMpoT2wtSfCI6BnaY%2BLfHuQirNQUF9ddbGDsjD9MKTQMaivYiR8FVATuP%2Bq46NWHKvJ5Ug0ZwUHVB1GU7jQwptS6jJGJnZNixoktsNf%2BskaZMHua%2F4O0AxJ75lDezhFxBFGYFNJ6qG2BZI3G00iWT1dnAczH%2FJ%2BPhaNb45HtdpjswUKd51Ux2QUChoki4%3D",
+        "url": "https://www.ebay.com/itm/235235008323",
         "image": "https://i.ebayimg.com/images/g/OLsAAOSwrcxlGKEv/s-l225.jpg",
         "seller_score": 712,
         "seller_pct": 100,
@@ -29486,11 +29652,66 @@
         "category": "autos",
         "sport": "football",
         "query": "2021 DeVonta Smith Auto PSA 10",
-        "checked_at": "2026-10-31T13:07:58.329246+00:00",
+        "checked_at": "2026-11-07T00:56:57+00:00",
         "page_state": "active",
         "listing_id": "235235008323",
         "hold_days": 90,
         "hold_basis": "Planning scenario; sale time is not established",
+        "observation_history": [
+          {
+            "title": "2021 Donruss OPtic Devonta Smith Auto Red PSA 10 44/75",
+            "currency": "USD",
+            "shipping": null,
+            "price": 399,
+            "buying_option": "FIXED_PRICE",
+            "ends": "",
+            "snipe": false,
+            "url": "https://www.ebay.com/itm/235235008323?_skw=2021+DeVonta+Smith+Auto+PSA+10&hash=item36c5195f43:g:OLsAAOSwrcxlGKEv&amdata=enc%3AAQALAAABAOf5zIIojhOf%2BkQK%2Bxzjn7mBUBs0qMeGP%2Bn5KgBUx%2B3juN3UYFgsQ4P1NWfPkhPv2WoiSNQ%2Btu2SNr%2FCykgbRVUZo7WKtrcUPuTxKXG46D8pkQC2nP1b0M%2F3cFmiuIbhfJ6jNgp%2B%2BjaHSQF%2F512ekKsccIEMpoT2wtSfCI6BnaY%2BLfHuQirNQUF9ddbGDsjD9MKTQMaivYiR8FVATuP%2Bq46NWHKvJ5Ug0ZwUHVB1GU7jQwptS6jJGJnZNixoktsNf%2BskaZMHua%2F4O0AxJ75lDezhFxBFGYFNJ6qG2BZI3G00iWT1dnAczH%2FJ%2BPhaNb45HtdpjswUKd51Ux2QUChoki4%3D",
+            "image": "https://i.ebayimg.com/images/g/OLsAAOSwrcxlGKEv/s-l225.jpg",
+            "seller_score": 712,
+            "seller_pct": 100,
+            "item_title": "2021 Donruss OPtic Devonta Smith Auto Red PSA 10 44/75",
+            "label": "DeVonta Smith rookie autos PSA 10",
+            "category": "autos",
+            "sport": "football",
+            "query": "2021 DeVonta Smith Auto PSA 10",
+            "checked_at": "2026-10-31T13:07:58.329246+00:00",
+            "page_state": "active",
+            "listing_id": "235235008323",
+            "hold_days": 90,
+            "hold_basis": "Planning scenario; sale time is not established"
+          }
+        ],
+        "identity": {
+          "year": 2021,
+          "set": "Donruss Optic",
+          "player": "DeVonta Smith",
+          "number": "205",
+          "parallel": "Autograph Red",
+          "print_run": 75,
+          "autograph": true,
+          "relic": false,
+          "grader": "PSA",
+          "grade": 10
+        },
+        "identity_reviewed": false,
+        "condition_reviewed": false,
+        "sales": [],
+        "cert_number": "69673140",
+        "hold_reviewed": false,
+        "warnings": [
+          "Live fixed-price $399 plus $6.82 displayed shipping; seller 712/100%. Actual front slab image reviewed: PSA 10 Autograph-Red #205, cert 69673140. Title says 44/75; back/serial and full condition not reviewed.",
+          "Opened exact Fanatics weekly sale, September 9 2024, $150 including buyer premium; outside 90-day window, excluded from valuation. No recent exact primary sale established."
+        ],
+        "excluded_sale_sources": [
+          {
+            "url": "https://www.fanaticscollect.com/weekly/ac87f3aa-6685-11ef-8d2b-0a4f7292391d/2021-donruss-optic-red-devonta-smith-rookie-auto-75-205-psa-10-gem-mint",
+            "date": "2024-09-09",
+            "source_reported_price": 150,
+            "buyer_premium_included": true,
+            "reason": "outside_90_day_window"
+          }
+        ],
         "evidence": {
           "sales": [],
           "excluded": [],
@@ -29504,21 +29725,19 @@
           "conservative_resale": null,
           "confidence": "low"
         },
-        "all_in": null,
+        "all_in": 434.23,
         "economics": null,
         "max_all_in": null,
         "max_offer": null,
         "opening_offer": null,
         "status": "research",
-        "grade_scope": "outside_focus",
+        "grade_scope": "psa10",
         "reasons": [
-          "Outside PSA 10 focus; other grades need $300 profit AND 50% return after all costs, with a supported hold of 30 days or less",
-          "Listing observation is stale or undated",
+          "Live fixed-price $399 plus $6.82 displayed shipping; seller 712/100%. Actual front slab image reviewed: PSA 10 Autograph-Red #205, cert 69673140. Title says 44/75; back/serial and full condition not reviewed.",
+          "Opened exact Fanatics weekly sale, September 9 2024, $150 including buyer premium; outside 90-day window, excluded from valuation. No recent exact primary sale established.",
           "Exact card identity needs review",
           "Card/slab condition needs photo review",
-          "Need 3 exact primary sold prices within 90 days, including one within 30 days",
-          "Other grades require a reviewed hold of 30 days or less",
-          "Incoming shipping is unknown"
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
         ],
         "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
       },
@@ -36149,6 +36368,161 @@
         "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
       },
       {
+        "listing_id": "306984313927",
+        "url": "https://www.ebay.com/itm/306984313927",
+        "label": "Jayden Daniels Select Silver RC PSA 10",
+        "query": "2024 Panini Select Jayden Daniels Silver Rookie PSA 10",
+        "category": "rookies",
+        "sport": "football",
+        "item_title": "2024 Panini Select Jayden Daniels Silver Prizm #476 PSA 10",
+        "identity": {
+          "year": 2024,
+          "set": "Panini Select",
+          "player": "Jayden Daniels",
+          "number": "476",
+          "parallel": "Silver Prizm",
+          "print_run": "none",
+          "autograph": "none",
+          "relic": "none",
+          "grader": "PSA",
+          "grade": 10
+        },
+        "identity_reviewed": true,
+        "condition_reviewed": true,
+        "condition_notes": "Actual front and back slab images inspected. PSA 10 label and cert 155583327 consistent; no obvious slab break visible at supplied resolution. Not an authenticity guarantee.",
+        "seller_score": 226,
+        "seller_pct": 100,
+        "seller_reviewed": true,
+        "checked_at": "2026-11-04T00:48:59+00:00",
+        "price": 400,
+        "shipping": 6.82,
+        "currency": "USD",
+        "buying_option": "FIXED_PRICE",
+        "page_state": "active",
+        "hold_days": 90,
+        "hold_reviewed": false,
+        "hold_basis": "90-day planning scenario; actual time to sell unknown",
+        "warnings": [
+          "Shipping displayed for browser destination; owner checkout tax/shipping and fee plan unconfirmed. Coupon eligibility not verified or included."
+        ],
+        "sales": [
+          {
+            "sale_id": "ebay:128046292921",
+            "date": "2026-09-01",
+            "price": 160,
+            "currency": "USD",
+            "identity": {
+              "year": 2024,
+              "set": "Panini Select",
+              "player": "Jayden Daniels",
+              "number": "476",
+              "parallel": "Silver Prizm",
+              "print_run": "none",
+              "autograph": "none",
+              "relic": "none",
+              "grader": "PSA",
+              "grade": 10
+            },
+            "exact_match_reviewed": true,
+            "price_type": "sold",
+            "amount_confirmed": true,
+            "source_type": "secondary",
+            "url": "https://www.ebay.com/itm/128046292921",
+            "source_url": "https://www.sportscardspro.com/game/football-cards-2024-panini-select/jayden-daniels-silver-prizm-476",
+            "observed_at": "2026-11-04T00:48:59+00:00",
+            "notes": "Public secondary report; primary item redirects to catalog with different-grade offer. Amount is source-reported, not proof of settlement."
+          },
+          {
+            "sale_id": "ebay:366581663464",
+            "date": "2026-08-08",
+            "price": 215,
+            "currency": "USD",
+            "identity": {
+              "year": 2024,
+              "set": "Panini Select",
+              "player": "Jayden Daniels",
+              "number": "476",
+              "parallel": "Silver Prizm",
+              "print_run": "none",
+              "autograph": "none",
+              "relic": "none",
+              "grader": "PSA",
+              "grade": 10
+            },
+            "exact_match_reviewed": true,
+            "price_type": "sold",
+            "amount_confirmed": true,
+            "source_type": "secondary",
+            "url": "https://www.ebay.com/itm/366581663464",
+            "source_url": "https://www.sportscardspro.com/game/football-cards-2024-panini-select/jayden-daniels-silver-prizm-476",
+            "observed_at": "2026-11-04T00:48:59+00:00",
+            "notes": "Public secondary report; primary item now redirects to catalog. Old indexed asking $250 is not the sale amount. Source-reported, not settlement."
+          }
+        ],
+        "research_notes": "PSA cert 121114134 comp result is #26, not #476; excluded. Listing 168634718885 ended September 8 without confirmed sale; $220 excluded.",
+        "evidence": {
+          "sales": [
+            {
+              "sale_id": "ebay:128046292921",
+              "date": "2026-09-01",
+              "price": 160,
+              "currency": "USD",
+              "identity": {
+                "year": 2024,
+                "set": "Panini Select",
+                "player": "Jayden Daniels",
+                "number": "476",
+                "parallel": "Silver Prizm",
+                "print_run": "none",
+                "autograph": "none",
+                "relic": "none",
+                "grader": "PSA",
+                "grade": 10
+              },
+              "exact_match_reviewed": true,
+              "price_type": "sold",
+              "amount_confirmed": true,
+              "source_type": "secondary",
+              "url": "https://www.ebay.com/itm/128046292921",
+              "source_url": "https://www.sportscardspro.com/game/football-cards-2024-panini-select/jayden-daniels-silver-prizm-476",
+              "observed_at": "2026-11-04T00:48:59+00:00",
+              "notes": "Public secondary report; primary item redirects to catalog with different-grade offer. Amount is source-reported, not proof of settlement."
+            }
+          ],
+          "excluded": [
+            {
+              "sale_id": "ebay:366581663464",
+              "reason": "outside evidence window"
+            }
+          ],
+          "count": 1,
+          "primary_count": 0,
+          "freshest_days": 67.0,
+          "freshest_primary_days": null,
+          "valuation_basis": "provisional reported sales",
+          "range": [
+            160,
+            160
+          ],
+          "median": 160,
+          "conservative_resale": null,
+          "confidence": "low"
+        },
+        "all_in": 435.3,
+        "economics": null,
+        "max_all_in": null,
+        "max_offer": null,
+        "opening_offer": null,
+        "status": "research",
+        "grade_scope": "psa10",
+        "reasons": [
+          "Shipping displayed for browser destination; owner checkout tax/shipping and fee plan unconfirmed. Coupon eligibility not verified or included.",
+          "Listing observation is stale or undated",
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        ],
+        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
+      },
+      {
         "label": "Anthony Richardson \u00b7 Prizm Silver #343 PSA 10",
         "item_title": "Anthony Richardson \u00b7 Prizm Silver #343 PSA 10",
         "listing_id": "335793293894",
@@ -36405,8 +36779,8 @@
           "excluded": [],
           "count": 4,
           "primary_count": 1,
-          "freshest_days": 10.0,
-          "freshest_primary_days": 39.0,
+          "freshest_days": 13.0,
+          "freshest_primary_days": 42.0,
           "valuation_basis": "provisional reported sales",
           "range": [
             43.5,
@@ -36475,9 +36849,9 @@
         "sport": "football",
         "page_state": "active",
         "buying_option": "FIXED_PRICE",
-        "seller_score": 15409,
+        "seller_score": 15413,
         "seller_pct": 100,
-        "checked_at": "2026-10-28T00:50:51.114968+00:00",
+        "checked_at": "2026-11-07T00:56:57+00:00",
         "hold_days": 90,
         "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
         "sales": [
@@ -36558,14 +36932,187 @@
             "amount_confirmed": true,
             "shipping_status": "unknown",
             "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+          },
+          {
+            "identity": {
+              "year": 2020,
+              "set": "Donruss Optic",
+              "player": "Jalen Hurts",
+              "number": "164",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-28",
+            "price": 45,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:940029050423",
+            "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+            "marketplace_url": "https://www.ebay.com/itm/940029050423",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "observed_at": "2026-11-07T00:56:57+00:00",
+            "note": "Source-reported PSA 10 sale, not settlement proof. Original primary listing failed retrieval; remains provisional."
           }
         ],
         "warnings": [
-          "Primary sold pages inaccessible or redirected; these three sale reports are provisional."
+          "Live fixed-price $100 plus $2.27 displayed shipping; seller 15413/100%. Actual slab images not reviewed in this check.",
+          "Four secondary sale reports only; newest October 28 $45 report added after opening source. Primary sale evidence remains unavailable."
         ],
         "query": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10",
+        "observation_history": [
+          {
+            "label": "Jalen Hurts \u00b7 Optic base PSA 10",
+            "item_title": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10",
+            "listing_id": "156974936364",
+            "url": "https://www.ebay.com/itm/156974936364",
+            "price": 100,
+            "shipping": 2.27,
+            "currency": "USD",
+            "identity": {
+              "year": 2020,
+              "set": "Donruss Optic",
+              "player": "Jalen Hurts",
+              "number": "164",
+              "parallel": "base",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "identity_reviewed": true,
+            "condition_reviewed": false,
+            "category": "rookies",
+            "sport": "football",
+            "page_state": "active",
+            "buying_option": "FIXED_PRICE",
+            "seller_score": 15409,
+            "seller_pct": 100,
+            "checked_at": "2026-10-28T00:50:51.114968+00:00",
+            "hold_days": 90,
+            "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+            "sales": [
+              {
+                "identity": {
+                  "year": 2020,
+                  "set": "Donruss Optic",
+                  "player": "Jalen Hurts",
+                  "number": "164",
+                  "parallel": "base",
+                  "print_run": "none",
+                  "autograph": false,
+                  "relic": false,
+                  "grader": "PSA",
+                  "grade": 10
+                },
+                "date": "2026-10-11",
+                "price": 51,
+                "currency": "USD",
+                "price_type": "sold",
+                "sale_id": "ebay:336833836139",
+                "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+                "marketplace_url": "https://www.ebay.com/itm/336833836139",
+                "source_type": "secondary",
+                "exact_match_reviewed": true,
+                "amount_confirmed": true,
+                "shipping_status": "unknown",
+                "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+              },
+              {
+                "identity": {
+                  "year": 2020,
+                  "set": "Donruss Optic",
+                  "player": "Jalen Hurts",
+                  "number": "164",
+                  "parallel": "base",
+                  "print_run": "none",
+                  "autograph": false,
+                  "relic": false,
+                  "grader": "PSA",
+                  "grade": 10
+                },
+                "date": "2026-10-09",
+                "price": 55,
+                "currency": "USD",
+                "price_type": "sold",
+                "sale_id": "ebay:377517477081",
+                "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+                "marketplace_url": "https://www.ebay.com/itm/377517477081",
+                "source_type": "secondary",
+                "exact_match_reviewed": true,
+                "amount_confirmed": true,
+                "shipping_status": "unknown",
+                "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+              },
+              {
+                "identity": {
+                  "year": 2020,
+                  "set": "Donruss Optic",
+                  "player": "Jalen Hurts",
+                  "number": "164",
+                  "parallel": "base",
+                  "print_run": "none",
+                  "autograph": false,
+                  "relic": false,
+                  "grader": "PSA",
+                  "grade": 10
+                },
+                "date": "2026-09-29",
+                "price": 45.01,
+                "currency": "USD",
+                "price_type": "sold",
+                "sale_id": "ebay:800143726606",
+                "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+                "marketplace_url": "https://www.ebay.com/itm/800143726606",
+                "source_type": "secondary",
+                "exact_match_reviewed": true,
+                "amount_confirmed": true,
+                "shipping_status": "unknown",
+                "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+              }
+            ],
+            "warnings": [
+              "Primary sold pages inaccessible or redirected; these three sale reports are provisional."
+            ],
+            "query": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10"
+          }
+        ],
         "evidence": {
           "sales": [
+            {
+              "identity": {
+                "year": 2020,
+                "set": "Donruss Optic",
+                "player": "Jalen Hurts",
+                "number": "164",
+                "parallel": "base",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-28",
+              "price": 45,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:940029050423",
+              "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+              "marketplace_url": "https://www.ebay.com/itm/940029050423",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "observed_at": "2026-11-07T00:56:57+00:00",
+              "note": "Source-reported PSA 10 sale, not settlement proof. Original primary listing failed retrieval; remains provisional."
+            },
             {
               "identity": {
                 "year": 2020,
@@ -36646,33 +37193,33 @@
             }
           ],
           "excluded": [],
-          "count": 3,
+          "count": 4,
           "primary_count": 0,
-          "freshest_days": 24.0,
+          "freshest_days": 10.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
-            45.01,
+            45,
             55
           ],
-          "median": 51,
-          "conservative_resale": 45.01,
+          "median": 48.004999999999995,
+          "conservative_resale": 43.2,
           "confidence": "low"
         },
         "all_in": 109.43,
         "economics": {
-          "resale": 45.01,
+          "resale": 43.2,
           "acquisition": 109.43,
-          "selling_fee": 6.84,
-          "promotion_reserve": 0.97,
+          "selling_fee": 6.58,
+          "promotion_reserve": 0.93,
           "outbound_shipping": 8,
           "supplies": 2,
           "contingency": 10,
           "labor_allowance": 25.0,
           "capital_allowance": 3.24,
-          "cash_margin": -82.23,
-          "adjusted_profit": -120.47,
-          "roi": -1.1,
+          "cash_margin": -83.74,
+          "adjusted_profit": -121.98,
+          "roi": -1.11,
           "minimum_profit": 100,
           "minimum_roi": 0.3,
           "passes": false
@@ -36680,13 +37227,13 @@
         "max_all_in": 0.0,
         "max_offer": 0.0,
         "opening_offer": 0,
-        "stress_profit": -128.27,
+        "stress_profit": -129.55,
         "status": "pass",
         "grade_scope": "psa10",
         "reasons": [
           "Fails net-profit and/or return hurdle at this asking price",
-          "Primary sold pages inaccessible or redirected; these three sale reports are provisional.",
-          "Listing observation is stale or undated",
+          "Live fixed-price $100 plus $2.27 displayed shipping; seller 15413/100%. Actual slab images not reviewed in this check.",
+          "Four secondary sale reports only; newest October 28 $45 report added after opening source. Primary sale evidence remains unavailable.",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days"
         ],
@@ -36895,7 +37442,7 @@
           "excluded": [],
           "count": 3,
           "primary_count": 0,
-          "freshest_days": 14.0,
+          "freshest_days": 17.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -36938,6 +37485,285 @@
           "Listing observation is stale or undated",
           "Exact card identity needs review",
           "Card/slab condition needs photo review",
+          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
+        ],
+        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
+      },
+      {
+        "label": "Marvin Harrison Jr \u00b7 Color Blast PSA 10",
+        "item_title": "2024 Panini Phoenix Color Blast Marvin Harrison Jr PSA 10",
+        "listing_id": "137895683561",
+        "url": "https://www.ebay.com/itm/137895683561",
+        "price": 330,
+        "shipping": 6.82,
+        "currency": "USD",
+        "identity": {
+          "year": 2024,
+          "set": "Panini Phoenix",
+          "player": "Marvin Harrison Jr",
+          "number": "CB-MHJ",
+          "parallel": "Color Blast",
+          "print_run": "none",
+          "autograph": false,
+          "relic": false,
+          "grader": "PSA",
+          "grade": 10
+        },
+        "identity_reviewed": false,
+        "condition_reviewed": false,
+        "category": "inserts",
+        "sport": "football",
+        "page_state": "active",
+        "buying_option": "FIXED_PRICE",
+        "seller_score": 32,
+        "seller_pct": 100,
+        "checked_at": "2026-11-07T00:56:57+00:00",
+        "hold_days": 90,
+        "hold_reviewed": false,
+        "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+        "cert_number": "124188422",
+        "query": "2024 Panini Phoenix Marvin Harrison Jr Color Blast PSA 10",
+        "discovery_source": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+        "sales": [
+          {
+            "identity": {
+              "year": 2024,
+              "set": "Panini Phoenix",
+              "player": "Marvin Harrison Jr",
+              "number": "CB-MHJ",
+              "parallel": "Color Blast",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-11-04",
+            "price": 340,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:960127271966",
+            "url": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+            "marketplace_url": "https://www.ebay.com/itm/960127271966",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "observed_at": "2026-11-07T00:56:57+00:00",
+            "note": "Alt source-reported PSA 10 auction result, not payment settlement. Primary link redirects to product catalog /p/15081061547 showing unrelated CGC 10 offer; no primary verification.",
+            "sale_format": "auction"
+          },
+          {
+            "identity": {
+              "year": 2024,
+              "set": "Panini Phoenix",
+              "player": "Marvin Harrison Jr",
+              "number": "CB-MHJ",
+              "parallel": "Color Blast",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-11-01",
+            "price": 356,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:900038322398",
+            "url": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+            "marketplace_url": "https://www.ebay.com/itm/900038322398",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "observed_at": "2026-11-07T00:56:57+00:00",
+            "note": "Alt source-reported PSA 10 auction result, not payment settlement. Primary link redirects to product catalog /p/15081061547 showing unrelated CGC 10 offer; no primary verification.",
+            "sale_format": "auction"
+          },
+          {
+            "identity": {
+              "year": 2024,
+              "set": "Panini Phoenix",
+              "player": "Marvin Harrison Jr",
+              "number": "CB-MHJ",
+              "parallel": "Color Blast",
+              "print_run": "none",
+              "autograph": false,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "date": "2026-10-26",
+            "price": 352,
+            "currency": "USD",
+            "price_type": "sold",
+            "sale_id": "ebay:128148853404",
+            "url": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+            "marketplace_url": "https://www.ebay.com/itm/128148853404",
+            "source_type": "secondary",
+            "exact_match_reviewed": true,
+            "amount_confirmed": true,
+            "shipping_status": "unknown",
+            "observed_at": "2026-11-07T00:56:57+00:00",
+            "note": "Alt source-reported PSA 10 auction result, not payment settlement. Primary link redirects to product catalog /p/15081061547 showing unrelated CGC 10 offer; no primary verification.",
+            "sale_format": "auction"
+          }
+        ],
+        "warnings": [
+          "Live fixed-price $330 plus $6.82 displayed shipping. Seller elcardsman has 32 feedback, below 100 minimum; 86 sold is not feedback count.",
+          "Actual single front slab photo viewed: PSA 10 Color Blast #CBMHJ, cert 124188422. Listing title says #CB-2; back unavailable, number alias and full condition not confirmed.",
+          "Alt three PSA 10 auction-sale reports are secondary only. All three original eBay sale links now redirect to a catalog showing a different CGC 10 offer. No primary sold prices established.",
+          "October 14 $399 Best Offer display excluded: accepted amount unconfirmed. July 2 Fanatics $390 sale is outside 90 days. Fee plan, checkout tax and final shipping remain assumptions."
+        ],
+        "excluded_sale_sources": [
+          {
+            "url": "https://www.fanaticscollect.com/buy-now/bbcaf0e5-5f63-46d7-9799-fea638c0695c/2024-panini-phoenix-color-blast-marvin-harrison-jr-rookie-cb-mhj-psa-10-gem-mint",
+            "date": "2026-07-02",
+            "source_reported_price": 390,
+            "reason": "outside_90_day_window"
+          },
+          {
+            "url": "https://www.ebay.com/itm/237122599587",
+            "date": "2026-10-14",
+            "displayed_price": 399,
+            "reason": "unknown_accepted_best_offer_amount"
+          }
+        ],
+        "evidence": {
+          "sales": [
+            {
+              "identity": {
+                "year": 2024,
+                "set": "Panini Phoenix",
+                "player": "Marvin Harrison Jr",
+                "number": "CB-MHJ",
+                "parallel": "Color Blast",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-11-04",
+              "price": 340,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:960127271966",
+              "url": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+              "marketplace_url": "https://www.ebay.com/itm/960127271966",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "observed_at": "2026-11-07T00:56:57+00:00",
+              "note": "Alt source-reported PSA 10 auction result, not payment settlement. Primary link redirects to product catalog /p/15081061547 showing unrelated CGC 10 offer; no primary verification.",
+              "sale_format": "auction"
+            },
+            {
+              "identity": {
+                "year": 2024,
+                "set": "Panini Phoenix",
+                "player": "Marvin Harrison Jr",
+                "number": "CB-MHJ",
+                "parallel": "Color Blast",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-11-01",
+              "price": 356,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:900038322398",
+              "url": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+              "marketplace_url": "https://www.ebay.com/itm/900038322398",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "observed_at": "2026-11-07T00:56:57+00:00",
+              "note": "Alt source-reported PSA 10 auction result, not payment settlement. Primary link redirects to product catalog /p/15081061547 showing unrelated CGC 10 offer; no primary verification.",
+              "sale_format": "auction"
+            },
+            {
+              "identity": {
+                "year": 2024,
+                "set": "Panini Phoenix",
+                "player": "Marvin Harrison Jr",
+                "number": "CB-MHJ",
+                "parallel": "Color Blast",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-26",
+              "price": 352,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:128148853404",
+              "url": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+              "marketplace_url": "https://www.ebay.com/itm/128148853404",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "observed_at": "2026-11-07T00:56:57+00:00",
+              "note": "Alt source-reported PSA 10 auction result, not payment settlement. Primary link redirects to product catalog /p/15081061547 showing unrelated CGC 10 offer; no primary verification.",
+              "sale_format": "auction"
+            }
+          ],
+          "excluded": [],
+          "count": 3,
+          "primary_count": 0,
+          "freshest_days": 3.0,
+          "freshest_primary_days": null,
+          "valuation_basis": "provisional reported sales",
+          "range": [
+            340,
+            356
+          ],
+          "median": 352,
+          "conservative_resale": 316.8,
+          "confidence": "low"
+        },
+        "all_in": 360.4,
+        "economics": {
+          "resale": 316.8,
+          "acquisition": 360.4,
+          "selling_fee": 45.73,
+          "promotion_reserve": 6.84,
+          "outbound_shipping": 8,
+          "supplies": 2,
+          "contingency": 10,
+          "labor_allowance": 25.0,
+          "capital_allowance": 10.66,
+          "cash_margin": -106.17,
+          "adjusted_profit": -151.84,
+          "roi": -0.42,
+          "minimum_profit": 100,
+          "minimum_roi": 0.3,
+          "passes": false
+        },
+        "max_all_in": 115.79,
+        "max_offer": 101.39,
+        "opening_offer": 86,
+        "stress_profit": -198.64,
+        "status": "pass",
+        "grade_scope": "psa10",
+        "reasons": [
+          "Fails net-profit and/or return hurdle at this asking price",
+          "Live fixed-price $330 plus $6.82 displayed shipping. Seller elcardsman has 32 feedback, below 100 minimum; 86 sold is not feedback count.",
+          "Actual single front slab photo viewed: PSA 10 Color Blast #CBMHJ, cert 124188422. Listing title says #CB-2; back unavailable, number alias and full condition not confirmed.",
+          "Alt three PSA 10 auction-sale reports are secondary only. All three original eBay sale links now redirect to a catalog showing a different CGC 10 offer. No primary sold prices established.",
+          "October 14 $399 Best Offer display excluded: accepted amount unconfirmed. July 2 Fanatics $390 sale is outside 90 days. Fee plan, checkout tax and final shipping remain assumptions.",
+          "Exact card identity needs review",
+          "Card/slab condition needs photo review",
+          "Seller track record is missing or below screening minimum",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days"
         ],
         "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
@@ -37145,7 +37971,7 @@
           "excluded": [],
           "count": 3,
           "primary_count": 0,
-          "freshest_days": 6.0,
+          "freshest_days": 9.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -37343,7 +38169,7 @@
           "excluded": [],
           "count": 2,
           "primary_count": 0,
-          "freshest_days": 29.0,
+          "freshest_days": 32.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -37381,199 +38207,7 @@
         "reasons": [
           "Fails net-profit and/or return hurdle at this asking price",
           "Shipping displayed for browser destination; owner checkout tax/shipping and fee plan unconfirmed. Coupon eligibility not verified or included.",
-          "Need 3 exact primary sold prices within 90 days, including one within 30 days"
-        ],
-        "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
-      },
-      {
-        "listing_id": "306984313927",
-        "url": "https://www.ebay.com/itm/306984313927",
-        "label": "Jayden Daniels Select Silver RC PSA 10",
-        "query": "2024 Panini Select Jayden Daniels Silver Rookie PSA 10",
-        "category": "rookies",
-        "sport": "football",
-        "item_title": "2024 Panini Select Jayden Daniels Silver Prizm #476 PSA 10",
-        "identity": {
-          "year": 2024,
-          "set": "Panini Select",
-          "player": "Jayden Daniels",
-          "number": "476",
-          "parallel": "Silver Prizm",
-          "print_run": "none",
-          "autograph": "none",
-          "relic": "none",
-          "grader": "PSA",
-          "grade": 10
-        },
-        "identity_reviewed": true,
-        "condition_reviewed": true,
-        "condition_notes": "Actual front and back slab images inspected. PSA 10 label and cert 155583327 consistent; no obvious slab break visible at supplied resolution. Not an authenticity guarantee.",
-        "seller_score": 226,
-        "seller_pct": 100,
-        "seller_reviewed": true,
-        "checked_at": "2026-11-04T00:48:59+00:00",
-        "price": 400,
-        "shipping": 6.82,
-        "currency": "USD",
-        "buying_option": "FIXED_PRICE",
-        "page_state": "active",
-        "hold_days": 90,
-        "hold_reviewed": false,
-        "hold_basis": "90-day planning scenario; actual time to sell unknown",
-        "warnings": [
-          "Shipping displayed for browser destination; owner checkout tax/shipping and fee plan unconfirmed. Coupon eligibility not verified or included."
-        ],
-        "sales": [
-          {
-            "sale_id": "ebay:128046292921",
-            "date": "2026-09-01",
-            "price": 160,
-            "currency": "USD",
-            "identity": {
-              "year": 2024,
-              "set": "Panini Select",
-              "player": "Jayden Daniels",
-              "number": "476",
-              "parallel": "Silver Prizm",
-              "print_run": "none",
-              "autograph": "none",
-              "relic": "none",
-              "grader": "PSA",
-              "grade": 10
-            },
-            "exact_match_reviewed": true,
-            "price_type": "sold",
-            "amount_confirmed": true,
-            "source_type": "secondary",
-            "url": "https://www.ebay.com/itm/128046292921",
-            "source_url": "https://www.sportscardspro.com/game/football-cards-2024-panini-select/jayden-daniels-silver-prizm-476",
-            "observed_at": "2026-11-04T00:48:59+00:00",
-            "notes": "Public secondary report; primary item redirects to catalog with different-grade offer. Amount is source-reported, not proof of settlement."
-          },
-          {
-            "sale_id": "ebay:366581663464",
-            "date": "2026-08-08",
-            "price": 215,
-            "currency": "USD",
-            "identity": {
-              "year": 2024,
-              "set": "Panini Select",
-              "player": "Jayden Daniels",
-              "number": "476",
-              "parallel": "Silver Prizm",
-              "print_run": "none",
-              "autograph": "none",
-              "relic": "none",
-              "grader": "PSA",
-              "grade": 10
-            },
-            "exact_match_reviewed": true,
-            "price_type": "sold",
-            "amount_confirmed": true,
-            "source_type": "secondary",
-            "url": "https://www.ebay.com/itm/366581663464",
-            "source_url": "https://www.sportscardspro.com/game/football-cards-2024-panini-select/jayden-daniels-silver-prizm-476",
-            "observed_at": "2026-11-04T00:48:59+00:00",
-            "notes": "Public secondary report; primary item now redirects to catalog. Old indexed asking $250 is not the sale amount. Source-reported, not settlement."
-          }
-        ],
-        "research_notes": "PSA cert 121114134 comp result is #26, not #476; excluded. Listing 168634718885 ended September 8 without confirmed sale; $220 excluded.",
-        "evidence": {
-          "sales": [
-            {
-              "sale_id": "ebay:128046292921",
-              "date": "2026-09-01",
-              "price": 160,
-              "currency": "USD",
-              "identity": {
-                "year": 2024,
-                "set": "Panini Select",
-                "player": "Jayden Daniels",
-                "number": "476",
-                "parallel": "Silver Prizm",
-                "print_run": "none",
-                "autograph": "none",
-                "relic": "none",
-                "grader": "PSA",
-                "grade": 10
-              },
-              "exact_match_reviewed": true,
-              "price_type": "sold",
-              "amount_confirmed": true,
-              "source_type": "secondary",
-              "url": "https://www.ebay.com/itm/128046292921",
-              "source_url": "https://www.sportscardspro.com/game/football-cards-2024-panini-select/jayden-daniels-silver-prizm-476",
-              "observed_at": "2026-11-04T00:48:59+00:00",
-              "notes": "Public secondary report; primary item redirects to catalog with different-grade offer. Amount is source-reported, not proof of settlement."
-            },
-            {
-              "sale_id": "ebay:366581663464",
-              "date": "2026-08-08",
-              "price": 215,
-              "currency": "USD",
-              "identity": {
-                "year": 2024,
-                "set": "Panini Select",
-                "player": "Jayden Daniels",
-                "number": "476",
-                "parallel": "Silver Prizm",
-                "print_run": "none",
-                "autograph": "none",
-                "relic": "none",
-                "grader": "PSA",
-                "grade": 10
-              },
-              "exact_match_reviewed": true,
-              "price_type": "sold",
-              "amount_confirmed": true,
-              "source_type": "secondary",
-              "url": "https://www.ebay.com/itm/366581663464",
-              "source_url": "https://www.sportscardspro.com/game/football-cards-2024-panini-select/jayden-daniels-silver-prizm-476",
-              "observed_at": "2026-11-04T00:48:59+00:00",
-              "notes": "Public secondary report; primary item now redirects to catalog. Old indexed asking $250 is not the sale amount. Source-reported, not settlement."
-            }
-          ],
-          "excluded": [],
-          "count": 2,
-          "primary_count": 0,
-          "freshest_days": 64.0,
-          "freshest_primary_days": null,
-          "valuation_basis": "provisional reported sales",
-          "range": [
-            160,
-            215
-          ],
-          "median": 187.5,
-          "conservative_resale": 160,
-          "confidence": "low"
-        },
-        "all_in": 435.3,
-        "economics": {
-          "resale": 160,
-          "acquisition": 435.3,
-          "selling_fee": 23.3,
-          "promotion_reserve": 3.46,
-          "outbound_shipping": 8,
-          "supplies": 2,
-          "contingency": 10,
-          "labor_allowance": 25.0,
-          "capital_allowance": 12.88,
-          "cash_margin": -312.05,
-          "adjusted_profit": -359.93,
-          "roi": -0.83,
-          "minimum_profit": 100,
-          "minimum_roi": 0.3,
-          "passes": false
-        },
-        "max_all_in": 0.0,
-        "max_offer": 0.0,
-        "opening_offer": 0,
-        "stress_profit": -388.56,
-        "status": "pass",
-        "grade_scope": "psa10",
-        "reasons": [
-          "Fails net-profit and/or return hurdle at this asking price",
-          "Shipping displayed for browser destination; owner checkout tax/shipping and fee plan unconfirmed. Coupon eligibility not verified or included.",
+          "Listing observation is stale or undated",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days"
         ],
         "ceiling_label": "Provisional scenario only \u2014 not a buy recommendation"
@@ -37602,18 +38236,60 @@
         "condition_reviewed": false,
         "category": "autos",
         "sport": "football",
-        "page_state": "sold",
+        "page_state": "mismatch",
         "buying_option": "FIXED_PRICE",
         "seller_score": 2738,
         "seller_pct": 100,
-        "checked_at": "2026-10-28T00:50:51.114968+00:00",
+        "checked_at": "2026-11-07T00:56:57+00:00",
         "hold_days": 90,
         "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
         "sales": [],
         "warnings": [
-          "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review."
+          "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review.",
+          "November 6 ET recheck redirects to https://www.ebay.com/p/20071299487 with a different offer. Original listing is not verified available. Retained $275 and $1.36 are historical October 28 observations, not a current buy price; prior sold-state observation preserved."
         ],
         "query": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10",
+        "observation_history": [
+          {
+            "label": "Bijan Robinson \u00b7 rookie auto /199 PSA 10",
+            "item_title": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10",
+            "listing_id": "188957642860",
+            "url": "https://www.ebay.com/itm/188957642860",
+            "price": 275,
+            "shipping": 1.36,
+            "currency": "USD",
+            "identity": {
+              "year": 2023,
+              "set": "Select Rookie Signatures",
+              "player": "Bijan Robinson",
+              "number": "RSI-4",
+              "parallel": "Silver",
+              "print_run": 199,
+              "autograph": true,
+              "relic": false,
+              "grader": "PSA",
+              "grade": 10
+            },
+            "identity_reviewed": true,
+            "condition_reviewed": false,
+            "category": "autos",
+            "sport": "football",
+            "page_state": "sold",
+            "buying_option": "FIXED_PRICE",
+            "seller_score": 2738,
+            "seller_pct": 100,
+            "checked_at": "2026-10-28T00:50:51.114968+00:00",
+            "hold_days": 90,
+            "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+            "sales": [],
+            "warnings": [
+              "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review."
+            ],
+            "query": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10"
+          }
+        ],
+        "current_listing_price": null,
+        "current_shipping": null,
         "evidence": {
           "sales": [],
           "excluded": [],
@@ -37636,7 +38312,7 @@
         "grade_scope": "psa10",
         "reasons": [
           "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review.",
-          "Listing observation is stale or undated",
+          "November 6 ET recheck redirects to https://www.ebay.com/p/20071299487 with a different offer. Original listing is not verified available. Retained $275 and $1.36 are historical October 28 observations, not a current buy price; prior sold-state observation preserved.",
           "Listing is sold/ended or current availability is unverified",
           "Card/slab condition needs photo review",
           "Need 3 exact primary sold prices within 90 days, including one within 30 days"
@@ -37800,7 +38476,7 @@
           ],
           "count": 1,
           "primary_count": 0,
-          "freshest_days": 86.0,
+          "freshest_days": 89.0,
           "freshest_primary_days": null,
           "valuation_basis": "provisional reported sales",
           "range": [
@@ -38040,8 +38716,8 @@
     ],
     "coverage": {
       "mode": "reviewed public research",
-      "notes": "November 3 ET: 12 PSA 10 families researched across five categories (two Downtown/Kaboom); two live listings with slab photos reviewed. Product Research checked first but inaccessible; public sold search also required sign-in. Four secondary sale reports added, zero primary sales, no qualifying buys. Partial search, not a full market scan. Prior 675 observations preserved with original dates, including 659 unreviewed October 31 Browse results; those are not fresh public checks.",
-      "researched_at": "2026-11-04T00:48:59+00:00",
+      "notes": "November 6 ET: 12 PSA 10-focused families attempted (10 watchlist, two new alert families; three Downtown/Kaboom). Six live listing links checked; four saved observations refreshed with history, one provisional PSA 10 lead added; Herbert alert rejected as autograph-grade 10 only. Four new secondary sale reports, zero qualifying primary sales. Product Research checked first but sign-in blocked; public sold fallback also blocked. No qualifying buys. Partial coverage; 673 other observations retain original dates and grades.",
+      "researched_at": "2026-11-07T00:56:57+00:00",
       "queries_run": [
         "Cade Pink Ice PSA 10",
         "Jalen Hurts Optic PSA 10",
@@ -38078,7 +38754,19 @@
         "2023 Mosaic CJ Stroud Stained Glass PSA 10",
         "1988 Fleer Michael Jordan 17 PSA 10",
         "2023 Donruss Downtown CJ Stroud PSA 10",
-        "2024 Donruss Downtown Jayden Daniels PSA 10"
+        "2024 Donruss Downtown Jayden Daniels PSA 10",
+        "2020 Prizm Anthony Edwards Silver 258 PSA 10",
+        "2024 Donruss Downtown Caleb Williams PSA 10",
+        "Panini Donruss Downtown Patrick Mahomes PSA 10",
+        "Panini Kaboom Patrick Mahomes PSA 10",
+        "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
+        "2020 Donruss Optic Jalen Hurts 164 PSA 10",
+        "2023 Select Bijan Robinson Auto PSA 10",
+        "2021 DeVonta Smith Auto PSA 10",
+        "2018 Topps Chrome Shohei Ohtani 150 PSA 10",
+        "2017 Topps Chrome Aaron Judge 169 PSA 10",
+        "2024 Panini Phoenix Marvin Harrison Jr Color Blast PSA 10",
+        "2020 Justin Herbert rookie auto PSA 10"
       ],
       "api_queries": 0,
       "api_errors": [],
@@ -38088,8 +38776,8 @@
         "credentials_present": false,
         "browse": "credentials_unavailable",
         "sold_history": "not_tested",
-        "checked_at": "2026-11-04T00:48:59+00:00",
-        "note": "Read-only connection check left snapshot unchanged. This runner only; October 31 snapshot records 36 successful Browse searches in another run."
+        "checked_at": "2026-11-07T00:56:57+00:00",
+        "note": "Read-only connection check left snapshot unchanged. This runner only; no API discovery run and no sold-history permission inferred."
       },
       "run_log": [
         {
@@ -38519,6 +39207,222 @@
             "Jayden Daniels Downtown PSA 10"
           ],
           "note": "No qualifying buys. Null means no eligible executable listing verified in this partial search, not no market supply. Unknown hold remains 90-day planning. No policy/application/collection/feed changes."
+        },
+        {
+          "researched_at": "2026-11-07T00:56:57+00:00",
+          "mode": "public discovery and marketplace alert review; evidence-only evaluation",
+          "selection_basis": "10 watchlist families: unresearched Anthony Edwards and first three unresearched Downtown/Kaboom, then six oldest public-review targets. Two slots reserved for new Alt/eBay alert families. Remaining unresearched Josh Allen/Jayden Daniels Kaboom deferred by three-family Downtown/Kaboom cap.",
+          "queries_attempted": [
+            "2020 Prizm Anthony Edwards Silver 258 PSA 10",
+            "2024 Donruss Downtown Caleb Williams PSA 10",
+            "Panini Donruss Downtown Patrick Mahomes PSA 10",
+            "Panini Kaboom Patrick Mahomes PSA 10",
+            "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
+            "2020 Donruss Optic Jalen Hurts 164 PSA 10",
+            "2023 Select Bijan Robinson Auto PSA 10",
+            "2021 DeVonta Smith Auto PSA 10",
+            "2018 Topps Chrome Shohei Ohtani 150 PSA 10",
+            "2017 Topps Chrome Aaron Judge 169 PSA 10",
+            "2024 Panini Phoenix Marvin Harrison Jr Color Blast PSA 10",
+            "2020 Justin Herbert rookie auto PSA 10"
+          ],
+          "targets_attempted": [
+            {
+              "label": "Anthony Edwards Silver PSA 10",
+              "query": "2020 Prizm Anthony Edwards Silver 258 PSA 10",
+              "category": "rookies",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/326292788759"
+              ],
+              "coverage": "indexed public primary page; live availability not verified",
+              "outcome": "Opened indexed #258 PSA 10 page: $1500 + $12, seller 3926/100%. Above $1000 research-only boundary; live availability not verified."
+            },
+            {
+              "label": "Caleb Williams Downtown PSA 10",
+              "query": "2024 Donruss Downtown Caleb Williams PSA 10",
+              "category": "downtown_kaboom",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/227134724232"
+              ],
+              "coverage": "indexed public primary page; live availability not verified",
+              "outcome": "Opened indexed #21 PSA 10 page: $4000; search index had $5000. Above $1000; conflicting cached prices not treated as live."
+            },
+            {
+              "label": "Patrick Mahomes Downtown PSA 10",
+              "query": "Panini Donruss Downtown Patrick Mahomes PSA 10",
+              "category": "downtown_kaboom",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/116631283429"
+              ],
+              "coverage": "indexed public primary page; live availability not verified",
+              "outcome": "Opened indexed 2022 DTPM PSA 10 $1815 + $5.99 page, out of stock. Not available and displayed ask is not sold evidence."
+            },
+            {
+              "label": "Patrick Mahomes Kaboom PSA 10",
+              "query": "Panini Kaboom Patrick Mahomes PSA 10",
+              "category": "downtown_kaboom",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/sch/i.html?_nkw=kaboom+patrick+mahomes&_sop=12"
+              ],
+              "coverage": "indexed public primary page; live availability not verified",
+              "outcome": "Opened indexed results returned for PSA 10 query: PSA 10 asks $6000/$7500 (2024), $9999.99 (2023). BGS crossover/oversized results excluded. No eligible within-budget listing verified."
+            },
+            {
+              "label": "Cade Cunningham Pink Ice PSA 10",
+              "query": "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
+              "category": "rookies",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/286884810317"
+              ],
+              "coverage": "live listing and public comp fallback",
+              "outcome": "Live $299.99 + $6.82; front photo viewed, full condition incomplete. Reopened secondary sold records with original August dates; primary link redirects to PSA 9 catalog. No qualifying primary evidence."
+            },
+            {
+              "label": "Jalen Hurts Optic PSA 10",
+              "query": "2020 Donruss Optic Jalen Hurts 164 PSA 10",
+              "category": "rookies",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/156974936364"
+              ],
+              "coverage": "live listing and public comp fallback",
+              "outcome": "Live $100 + $2.27; seller 15413/100%. Added secondary October 28 $45 sale report. Primary sale unavailable; economics below floors."
+            },
+            {
+              "label": "Bijan Robinson Select rookie autos PSA 10",
+              "query": "2023 Select Bijan Robinson Auto PSA 10",
+              "category": "autos",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/188957642860"
+              ],
+              "coverage": "live listing and public comp fallback",
+              "outcome": "Original listing redirects to product catalog with different offer. Prior sold observation and historical price retained. No available listing confirmed."
+            },
+            {
+              "label": "DeVonta Smith rookie autos PSA 10",
+              "query": "2021 DeVonta Smith Auto PSA 10",
+              "category": "autos",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/235235008323"
+              ],
+              "coverage": "live listing and public comp fallback",
+              "outcome": "Live $399 + $6.82; seller 712/100%. Front PSA 10 photo viewed, back/serial and full condition incomplete. Exact Fanatics 2024 sale stale; recent resale unknown."
+            },
+            {
+              "label": "Shohei Ohtani Topps Chrome PSA 10",
+              "query": "2018 Topps Chrome Shohei Ohtani 150 PSA 10",
+              "category": "established",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/198676743777"
+              ],
+              "coverage": "indexed public primary page; live availability not verified",
+              "outcome": "Opened indexed #150 PSA 10 page: $1800, seller 6707/99.8%. Displayed international shipping not a US quote. Above $1000; live availability unverified."
+            },
+            {
+              "label": "Aaron Judge Topps Chrome PSA 10",
+              "query": "2017 Topps Chrome Aaron Judge 169 PSA 10",
+              "category": "established",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/307203766389"
+              ],
+              "coverage": "indexed public primary page; live availability not verified",
+              "outcome": "Opened indexed #169 PSA 10 page: seller-ended October 8, $525 + $5.99 displayed. Unavailable; displayed ask not sold price."
+            },
+            {
+              "label": "Marvin Harrison Jr \u00b7 Color Blast PSA 10",
+              "query": "2024 Panini Phoenix Marvin Harrison Jr Color Blast PSA 10",
+              "category": "inserts",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+                "https://www.ebay.com/itm/137895683561"
+              ],
+              "coverage": "new Alt alert; live listing, front image and secondary sale reports",
+              "outcome": "Seller 32 feedback fails minimum; title/card-number alias and full condition unresolved. Three original sale links redirect; secondary provisional only."
+            },
+            {
+              "label": "Justin Herbert rookie autograph PSA 10 alert",
+              "query": "2020 Justin Herbert rookie auto PSA 10",
+              "category": "autos",
+              "checked_at": "2026-11-07T00:56:57+00:00",
+              "source_urls": [
+                "https://www.ebay.com/itm/920108966837"
+              ],
+              "coverage": "new eBay alert; live listing and actual slab front image",
+              "outcome": "Live $270 + $15, seller hayha90 has no feedback, joined November 2026. PSA/DNA slab cert 84703352 says AUTO GRADE GEM MT 10, not PSA card grade 10. Card grade unconfirmed; rejected before comp valuation, no candidate or intake."
+            }
+          ],
+          "target_count": 36,
+          "families_attempted": 12,
+          "watchlist_families_attempted": 10,
+          "alert_families_attempted": 2,
+          "category_counts": {
+            "rookies": 3,
+            "autos": 3,
+            "inserts": 1,
+            "established": 2,
+            "downtown_kaboom": 3
+          },
+          "product_research": {
+            "checked_at": "2026-11-07T00:56:57+00:00",
+            "url": "https://www.ebay.com/sh/research",
+            "status": "inaccessible_sign_in_required",
+            "checked_before_public_sold": true,
+            "usable_comp_records": 0,
+            "note": "Direct browser check reached sign-in. No authenticated Product Research comp results or accepted-offer amounts obtained. Public sold fallback attempted only afterward."
+          },
+          "public_sold_fallback": {
+            "status": "sign_in_required",
+            "url": "https://www.ebay.com/sch/i.html?_nkw=2024+Phoenix+Marvin+Harrison+Color+Blast+PSA+10&LH_Sold=1&LH_Complete=1",
+            "note": "Sign-in wall after Product Research check; used individual public pages and secondary reports. No public sold result set obtained."
+          },
+          "observations_added": 1,
+          "observations_rechecked": 4,
+          "prior_observations_unchanged": 673,
+          "primary_sale_records_added": 0,
+          "secondary_sale_records_added": 4,
+          "live_listing_checks": 6,
+          "complete_market_coverage": false,
+          "failures": [
+            "Production Browse credentials unavailable in this runner; read-only check left snapshot unchanged.",
+            "Product Research and public sold search require sign-in.",
+            "Three Alt sale links and Cade August 10 link redirect to product catalogs; new Hurts primary sale failed retrieval.",
+            "Bijan original listing redirects to catalog; unavailable at original offer."
+          ],
+          "null_results": [
+            "Anthony Edwards Silver PSA 10",
+            "Caleb Williams Downtown PSA 10",
+            "Patrick Mahomes Downtown PSA 10",
+            "Patrick Mahomes Kaboom PSA 10",
+            "Bijan Robinson Select rookie autos PSA 10",
+            "Shohei Ohtani Topps Chrome PSA 10",
+            "Aaron Judge Topps Chrome PSA 10",
+            "Justin Herbert rookie autograph PSA 10 alert"
+          ],
+          "alert_review": {
+            "window": "after 2026-11-03 through this run; overlapping catch-up, not every message new",
+            "matching_messages": 24,
+            "relevant_alert_bodies_read": 11,
+            "provider_counts": {
+              "Alt": 6,
+              "eBay": 5
+            },
+            "other_marketplaces": "Fanatics Collect, MySlabs, Goldin, PWCC and COMC sender search returned zero messages in window.",
+            "coverage": "Visible email lead previews only; subject counts such as 221/190/195/71 are not listings reviewed. Two new families advanced to live review, not all alert matches. No private email bodies, message IDs or tracking URLs published.",
+            "excluded_preview": "Alt JSN 2023 Prizm Draft Picks Color Blast PSA 10 $1219.99 preview exceeds $1000 research-only boundary; not opened or promoted as a live opportunity.",
+            "qualified_for_jarvis": 0,
+            "automatic_intake": false
+          },
+          "note": "No qualifying buys. Partial search, not a full market scan. Original grades and sale dates preserved; unknown hold remains 90-day planning. Fee plan, checkout tax/shipping remain assumptions. No policy/application/collection/comparison feed changes; no transactions or seller contact."
         }
       ]
     },
@@ -38580,12 +39484,12 @@
       }
     },
     "diagnostics": {
-      "psa10_observations": 9,
+      "psa10_observations": 12,
       "qualified_grade_exceptions": 0,
-      "outside_grade_focus": 668,
+      "outside_grade_focus": 666,
       "sales_supported": 0,
-      "missing_sales_evidence": 677,
-      "condition_review_needed": 674,
+      "missing_sales_evidence": 678,
+      "condition_review_needed": 675,
       "priced_scenarios": 6,
       "profit_screen_pass": 0
     },
@@ -38593,7 +39497,7 @@
     "price_max": 500,
     "summary": {
       "qualified": 0,
-      "research": 666,
+      "research": 667,
       "pass": 6,
       "excluded": 5
     }
