@@ -1,6 +1,6 @@
 {
-  "researched_at": "2026-11-04T00:48:59+00:00",
-  "coverage_notes": "November 3 ET: 12 PSA 10 families researched across five categories (two Downtown/Kaboom); two live listings with slab photos reviewed. Product Research checked first but inaccessible; public sold search also required sign-in. Four secondary sale reports added, zero primary sales, no qualifying buys. Partial search, not a full market scan. Prior 675 observations preserved with original dates, including 659 unreviewed October 31 Browse results; those are not fresh public checks.",
+  "researched_at": "2026-11-07T00:56:57+00:00",
+  "coverage_notes": "November 6 ET: 12 PSA 10-focused families attempted (10 watchlist, two new alert families; three Downtown/Kaboom). Six live listing links checked; four saved observations refreshed with history, one provisional PSA 10 lead added; Herbert alert rejected as autograph-grade 10 only. Four new secondary sale reports, zero qualifying primary sales. Product Research checked first but sign-in blocked; public sold fallback also blocked. No qualifying buys. Partial coverage; 673 other observations retain original dates and grades.",
   "queries_run": [
     "Cade Pink Ice PSA 10",
     "Jalen Hurts Optic PSA 10",
@@ -37,11 +37,23 @@
     "2023 Mosaic CJ Stroud Stained Glass PSA 10",
     "1988 Fleer Michael Jordan 17 PSA 10",
     "2023 Donruss Downtown CJ Stroud PSA 10",
-    "2024 Donruss Downtown Jayden Daniels PSA 10"
+    "2024 Donruss Downtown Jayden Daniels PSA 10",
+    "2020 Prizm Anthony Edwards Silver 258 PSA 10",
+    "2024 Donruss Downtown Caleb Williams PSA 10",
+    "Panini Donruss Downtown Patrick Mahomes PSA 10",
+    "Panini Kaboom Patrick Mahomes PSA 10",
+    "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
+    "2020 Donruss Optic Jalen Hurts 164 PSA 10",
+    "2023 Select Bijan Robinson Auto PSA 10",
+    "2021 DeVonta Smith Auto PSA 10",
+    "2018 Topps Chrome Shohei Ohtani 150 PSA 10",
+    "2017 Topps Chrome Aaron Judge 169 PSA 10",
+    "2024 Panini Phoenix Marvin Harrison Jr Color Blast PSA 10",
+    "2020 Justin Herbert rookie auto PSA 10"
   ],
   "candidates": [
     {
-      "label": "Jalen Hurts · Optic base PSA 10",
+      "label": "Jalen Hurts \u00b7 Optic base PSA 10",
       "item_title": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10",
       "listing_id": "156974936364",
       "url": "https://www.ebay.com/itm/156974936364",
@@ -66,9 +78,9 @@
       "sport": "football",
       "page_state": "active",
       "buying_option": "FIXED_PRICE",
-      "seller_score": 15409,
+      "seller_score": 15413,
       "seller_pct": 100,
-      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "checked_at": "2026-11-07T00:56:57+00:00",
       "hold_days": 90,
       "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
       "sales": [
@@ -149,15 +161,161 @@
           "amount_confirmed": true,
           "shipping_status": "unknown",
           "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+        },
+        {
+          "identity": {
+            "year": 2020,
+            "set": "Donruss Optic",
+            "player": "Jalen Hurts",
+            "number": "164",
+            "parallel": "base",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-10-28",
+          "price": 45,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:940029050423",
+          "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+          "marketplace_url": "https://www.ebay.com/itm/940029050423",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "observed_at": "2026-11-07T00:56:57+00:00",
+          "note": "Source-reported PSA 10 sale, not settlement proof. Original primary listing failed retrieval; remains provisional."
         }
       ],
       "warnings": [
-        "Primary sold pages inaccessible or redirected; these three sale reports are provisional."
+        "Live fixed-price $100 plus $2.27 displayed shipping; seller 15413/100%. Actual slab images not reviewed in this check.",
+        "Four secondary sale reports only; newest October 28 $45 report added after opening source. Primary sale evidence remains unavailable."
       ],
-      "query": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10"
+      "query": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10",
+      "observation_history": [
+        {
+          "label": "Jalen Hurts \u00b7 Optic base PSA 10",
+          "item_title": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10",
+          "listing_id": "156974936364",
+          "url": "https://www.ebay.com/itm/156974936364",
+          "price": 100,
+          "shipping": 2.27,
+          "currency": "USD",
+          "identity": {
+            "year": 2020,
+            "set": "Donruss Optic",
+            "player": "Jalen Hurts",
+            "number": "164",
+            "parallel": "base",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "identity_reviewed": true,
+          "condition_reviewed": false,
+          "category": "rookies",
+          "sport": "football",
+          "page_state": "active",
+          "buying_option": "FIXED_PRICE",
+          "seller_score": 15409,
+          "seller_pct": 100,
+          "checked_at": "2026-10-28T00:50:51.114968+00:00",
+          "hold_days": 90,
+          "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+          "sales": [
+            {
+              "identity": {
+                "year": 2020,
+                "set": "Donruss Optic",
+                "player": "Jalen Hurts",
+                "number": "164",
+                "parallel": "base",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-11",
+              "price": 51,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:336833836139",
+              "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+              "marketplace_url": "https://www.ebay.com/itm/336833836139",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+            },
+            {
+              "identity": {
+                "year": 2020,
+                "set": "Donruss Optic",
+                "player": "Jalen Hurts",
+                "number": "164",
+                "parallel": "base",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-10-09",
+              "price": 55,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:377517477081",
+              "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+              "marketplace_url": "https://www.ebay.com/itm/377517477081",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+            },
+            {
+              "identity": {
+                "year": 2020,
+                "set": "Donruss Optic",
+                "player": "Jalen Hurts",
+                "number": "164",
+                "parallel": "base",
+                "print_run": "none",
+                "autograph": false,
+                "relic": false,
+                "grader": "PSA",
+                "grade": 10
+              },
+              "date": "2026-09-29",
+              "price": 45.01,
+              "currency": "USD",
+              "price_type": "sold",
+              "sale_id": "ebay:800143726606",
+              "url": "https://www.sportscardspro.com/game/football-cards-2020-panini-donruss-optic/jalen-hurts-164",
+              "marketplace_url": "https://www.ebay.com/itm/800143726606",
+              "source_type": "secondary",
+              "exact_match_reviewed": true,
+              "amount_confirmed": true,
+              "shipping_status": "unknown",
+              "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+            }
+          ],
+          "warnings": [
+            "Primary sold pages inaccessible or redirected; these three sale reports are provisional."
+          ],
+          "query": "2020 Panini Donruss Optic Jalen Hurts #164 PSA 10"
+        }
+      ]
     },
     {
-      "label": "C.J. Stroud · Stained Glass PSA 9",
+      "label": "C.J. Stroud \u00b7 Stained Glass PSA 9",
       "item_title": "2023 PANINI MOSAIC STAINED GLASS #SG22 CJ STROUD ROOKIE RC PSA 9",
       "listing_id": "298443886169",
       "url": "https://www.ebay.com/itm/298443886169",
@@ -247,7 +405,7 @@
       "query": "2023 PANINI MOSAIC STAINED GLASS #SG22 CJ STROUD ROOKIE RC PSA 9"
     },
     {
-      "label": "Anthony Edwards · Silver PSA 9",
+      "label": "Anthony Edwards \u00b7 Silver PSA 9",
       "item_title": "2020 Anthony Edwards Prizm Silver RC PSA 9",
       "listing_id": "318891302316",
       "url": "https://www.ebay.com/itm/318891302316",
@@ -287,7 +445,7 @@
       ]
     },
     {
-      "label": "Justin Jefferson · Genesis PSA 9",
+      "label": "Justin Jefferson \u00b7 Genesis PSA 9",
       "item_title": "2020 Panini Mosaic Justin Jefferson #209 Genesis RC PSA 9",
       "listing_id": "198435397977",
       "url": "https://www.ebay.com/itm/198435397977",
@@ -324,7 +482,7 @@
       "query": "2020 Panini Mosaic Justin Jefferson #209 Genesis RC PSA 9"
     },
     {
-      "label": "Bijan Robinson · rookie auto /199 PSA 10",
+      "label": "Bijan Robinson \u00b7 rookie auto /199 PSA 10",
       "item_title": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10",
       "listing_id": "188957642860",
       "url": "https://www.ebay.com/itm/188957642860",
@@ -347,21 +505,63 @@
       "condition_reviewed": false,
       "category": "autos",
       "sport": "football",
-      "page_state": "sold",
+      "page_state": "mismatch",
       "buying_option": "FIXED_PRICE",
       "seller_score": 2738,
       "seller_pct": 100,
-      "checked_at": "2026-10-28T00:50:51.114968+00:00",
+      "checked_at": "2026-11-07T00:56:57+00:00",
       "hold_days": 90,
       "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
       "sales": [],
       "warnings": [
-        "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review."
+        "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review.",
+        "November 6 ET recheck redirects to https://www.ebay.com/p/20071299487 with a different offer. Original listing is not verified available. Retained $275 and $1.36 are historical October 28 observations, not a current buy price; prior sold-state observation preserved."
       ],
-      "query": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10"
+      "query": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10",
+      "observation_history": [
+        {
+          "label": "Bijan Robinson \u00b7 rookie auto /199 PSA 10",
+          "item_title": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10",
+          "listing_id": "188957642860",
+          "url": "https://www.ebay.com/itm/188957642860",
+          "price": 275,
+          "shipping": 1.36,
+          "currency": "USD",
+          "identity": {
+            "year": 2023,
+            "set": "Select Rookie Signatures",
+            "player": "Bijan Robinson",
+            "number": "RSI-4",
+            "parallel": "Silver",
+            "print_run": 199,
+            "autograph": true,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "identity_reviewed": true,
+          "condition_reviewed": false,
+          "category": "autos",
+          "sport": "football",
+          "page_state": "sold",
+          "buying_option": "FIXED_PRICE",
+          "seller_score": 2738,
+          "seller_pct": 100,
+          "checked_at": "2026-10-28T00:50:51.114968+00:00",
+          "hold_days": 90,
+          "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+          "sales": [],
+          "warnings": [
+            "Opened listing reports sold September 25. Search snippet still looked active. $275 display is not verified accepted sale amount; card-number alias RSI-BRO needs slab/back review."
+          ],
+          "query": "2023 Select Bijan Robinson RSI-4 Silver Prizm /199 Auto PSA 10"
+        }
+      ],
+      "current_listing_price": null,
+      "current_shipping": null
     },
     {
-      "label": "Brock Purdy · Mirror Teal /50 PSA 9",
+      "label": "Brock Purdy \u00b7 Mirror Teal /50 PSA 9",
       "item_title": "2022 Panini Certified Brock Purdy Rookie Autograph Mirror Teal 41 /50 PSA 9",
       "listing_id": "175896794065",
       "url": "https://www.ebay.com/itm/175896794065",
@@ -398,7 +598,7 @@
       "query": "2022 Panini Certified Brock Purdy Rookie Autograph Mirror Teal 41 /50 PSA 9"
     },
     {
-      "label": "Shohei Ohtani · Chrome rookie PSA 10",
+      "label": "Shohei Ohtani \u00b7 Chrome rookie PSA 10",
       "item_title": "2018 Topps Chrome Shohei Ohtani Rookie Card PSA 10 Gem Mint card #150",
       "listing_id": "257803071066",
       "url": "https://www.ebay.com/itm/257803071066",
@@ -435,7 +635,7 @@
       "query": "2018 Topps Chrome Shohei Ohtani Rookie Card PSA 10 Gem Mint card #150"
     },
     {
-      "label": "Cade Cunningham · Pink Ice PSA 10",
+      "label": "Cade Cunningham \u00b7 Pink Ice PSA 10",
       "item_title": "2021 Panini Prizm Pink Ice Cade Cunningham ROOKIE #282 PSA 10 GEM MINT",
       "listing_id": "fanatics:69c876a3-16e6-4e74-bafe-52159e662170",
       "url": "https://www.fanaticscollect.com/buy-now/69c876a3-16e6-4e74-bafe-52159e662170/2021-panini-prizm-pink-ice-cade-cunningham-rookie-282-psa-10-gem-mint",
@@ -552,7 +752,7 @@
       "query": "2021 Panini Prizm Pink Ice Cade Cunningham ROOKIE #282 PSA 10 GEM MINT"
     },
     {
-      "label": "Cade search · wrong grade excluded",
+      "label": "Cade search \u00b7 wrong grade excluded",
       "item_title": "2021 PANINI PRIZM PINK ICE #282 CADE CUNNINGHAM ROOKIE RC PSA 9",
       "listing_id": "epid:12056503365",
       "url": "https://www.ebay.com/p/12056503365",
@@ -589,7 +789,7 @@
       "query": "2021 PANINI PRIZM PINK ICE #282 CADE CUNNINGHAM ROOKIE RC PSA 9"
     },
     {
-      "label": "Amon-Ra St. Brown · Prizm Silver Auto PSA 9",
+      "label": "Amon-Ra St. Brown \u00b7 Prizm Silver Auto PSA 9",
       "item_title": "2021 Panini Prizm Amon Ra St Brown Silver Auto PSA 9",
       "listing_id": "820142772410",
       "url": "https://www.ebay.com/itm/820142772410",
@@ -624,7 +824,7 @@
       "query": "Amon-Ra St Brown rookie autos PSA 9"
     },
     {
-      "label": "DeVonta Smith · Select White rookie auto /35",
+      "label": "DeVonta Smith \u00b7 Select White rookie auto /35",
       "item_title": "2021 Panini Select Rookie Signatures DeVonta Smith #RS-10 White Prizm /35",
       "listing_id": "227495991287",
       "url": "https://www.ebay.com/p/25056187880",
@@ -661,7 +861,7 @@
       "query": "DeVonta Smith rookie autos PSA 10"
     },
     {
-      "label": "Aaron Judge · Chrome grade mismatch",
+      "label": "Aaron Judge \u00b7 Chrome grade mismatch",
       "item_title": "2017 Topps Chrome Aaron Judge #169 PSA 9 product offer",
       "listing_id": "840035056494",
       "url": "https://www.ebay.com/p/19065174031",
@@ -698,7 +898,7 @@
       "query": "Aaron Judge Topps Chrome PSA 10"
     },
     {
-      "label": "Michael Jordan · Fleer #17 PSA 9",
+      "label": "Michael Jordan \u00b7 Fleer #17 PSA 9",
       "item_title": "1988 Fleer Michael Jordan #17 PSA 9 MINT Chicago Bulls Basketball",
       "listing_id": "800658746039",
       "url": "https://www.ebay.com/itm/800658746039",
@@ -763,8 +963,8 @@
       "query": "Michael Jordan Fleer PSA 9"
     },
     {
-      "label": "Anthony Richardson · Prizm Silver #343 PSA 10",
-      "item_title": "Anthony Richardson · Prizm Silver #343 PSA 10",
+      "label": "Anthony Richardson \u00b7 Prizm Silver #343 PSA 10",
+      "item_title": "Anthony Richardson \u00b7 Prizm Silver #343 PSA 10",
       "listing_id": "335793293894",
       "url": "https://www.ebay.com/itm/335793293894",
       "price": 95,
@@ -792,7 +992,7 @@
       "seller_pct": 100,
       "checked_at": "2026-10-30T23:20:18+00:00",
       "observation_method": "live public browser; Buy It Now and shipping displayed",
-      "query": "Anthony Richardson · Prizm Silver #343 PSA 10",
+      "query": "Anthony Richardson \u00b7 Prizm Silver #343 PSA 10",
       "hold_days": 90,
       "hold_reviewed": false,
       "hold_basis": "90-day planning scenario; listing-to-sale time not established",
@@ -912,8 +1112,8 @@
       }
     },
     {
-      "label": "Marvin Harrison Jr. · Prizm Silver #375 PSA 10",
-      "item_title": "Marvin Harrison Jr. · Prizm Silver #375 PSA 10",
+      "label": "Marvin Harrison Jr. \u00b7 Prizm Silver #375 PSA 10",
+      "item_title": "Marvin Harrison Jr. \u00b7 Prizm Silver #375 PSA 10",
       "listing_id": "388849255858",
       "url": "https://www.ebay.com/itm/388849255858",
       "price": 159.99,
@@ -941,7 +1141,7 @@
       "seller_pct": 100,
       "checked_at": "2026-10-30T23:20:18+00:00",
       "observation_method": "live public browser; Buy It Now and shipping displayed",
-      "query": "Marvin Harrison Jr. · Prizm Silver #375 PSA 10",
+      "query": "Marvin Harrison Jr. \u00b7 Prizm Silver #375 PSA 10",
       "hold_days": 90,
       "hold_reviewed": false,
       "hold_basis": "90-day planning scenario; listing-to-sale time not established",
@@ -1032,8 +1232,8 @@
       ]
     },
     {
-      "label": "Jayden Daniels · Prizm #347 PSA 10",
-      "item_title": "Jayden Daniels · Prizm #347 PSA 10",
+      "label": "Jayden Daniels \u00b7 Prizm #347 PSA 10",
+      "item_title": "Jayden Daniels \u00b7 Prizm #347 PSA 10",
       "listing_id": "297127091469",
       "url": "https://www.ebay.com/itm/297127091469",
       "price": 189,
@@ -1061,7 +1261,7 @@
       "seller_pct": 99.9,
       "checked_at": "2026-10-30T23:20:18+00:00",
       "observation_method": "live public browser; Buy It Now and shipping displayed",
-      "query": "Jayden Daniels · Prizm #347 PSA 10",
+      "query": "Jayden Daniels \u00b7 Prizm #347 PSA 10",
       "hold_days": 90,
       "hold_reviewed": false,
       "hold_basis": "90-day planning scenario; listing-to-sale time not established",
@@ -1911,7 +2111,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2023 Panini Prizm Rookie CJ Stroud #339 Red White & Blue RC PSA 10 Graded Card📈",
+      "title": "2023 Panini Prizm Rookie CJ Stroud #339 Red White & Blue RC PSA 10 Graded Card\ud83d\udcc8",
       "currency": "USD",
       "shipping": 4.25,
       "price": 149,
@@ -1922,7 +2122,7 @@
       "image": "https://i.ebayimg.com/images/g/7bIAAeSwVUlqzRLd/s-l225.jpg",
       "seller_score": 4636,
       "seller_pct": 100,
-      "item_title": "2023 Panini Prizm Rookie CJ Stroud #339 Red White & Blue RC PSA 10 Graded Card📈",
+      "item_title": "2023 Panini Prizm Rookie CJ Stroud #339 Red White & Blue RC PSA 10 Graded Card\ud83d\udcc8",
       "label": "CJ Stroud Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -2026,7 +2226,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2023 Panini Prizm Rookie CJ Stroud #339 Green Prizm RC PSA 10 Graded Card 🔥📈",
+      "title": "2023 Panini Prizm Rookie CJ Stroud #339 Green Prizm RC PSA 10 Graded Card \ud83d\udd25\ud83d\udcc8",
       "currency": "USD",
       "shipping": null,
       "price": 85,
@@ -2037,7 +2237,7 @@
       "image": "https://i.ebayimg.com/images/g/MwoAAeSwZe5q3pEf/s-l225.jpg",
       "seller_score": 1542,
       "seller_pct": 100,
-      "item_title": "2023 Panini Prizm Rookie CJ Stroud #339 Green Prizm RC PSA 10 Graded Card 🔥📈",
+      "item_title": "2023 Panini Prizm Rookie CJ Stroud #339 Green Prizm RC PSA 10 Graded Card \ud83d\udd25\ud83d\udcc8",
       "label": "CJ Stroud Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -3222,7 +3422,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2024 Prizm Caleb Williams Fireworks #25 Rookie RC Bears PSA 10 GEM MINT 💎💎",
+      "title": "2024 Prizm Caleb Williams Fireworks #25 Rookie RC Bears PSA 10 GEM MINT \ud83d\udc8e\ud83d\udc8e",
       "currency": "USD",
       "shipping": 0,
       "price": 129.95,
@@ -3233,7 +3433,7 @@
       "image": "https://i.ebayimg.com/images/g/HuEAAeSwmgVq2j8w/s-l225.jpg",
       "seller_score": 3543,
       "seller_pct": 100,
-      "item_title": "2024 Prizm Caleb Williams Fireworks #25 Rookie RC Bears PSA 10 GEM MINT 💎💎",
+      "item_title": "2024 Prizm Caleb Williams Fireworks #25 Rookie RC Bears PSA 10 GEM MINT \ud83d\udc8e\ud83d\udc8e",
       "label": "Caleb Williams Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -3337,7 +3537,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "🔥 PSA 10 2024 Caleb Williams 301 Panini Prizm Rooke Gem Mint RC 🐻",
+      "title": "\ud83d\udd25 PSA 10 2024 Caleb Williams 301 Panini Prizm Rooke Gem Mint RC \ud83d\udc3b",
       "currency": "USD",
       "shipping": null,
       "price": 525.01,
@@ -3348,7 +3548,7 @@
       "image": "https://i.ebayimg.com/images/g/F3UAAeSwGONqn69O/s-l225.jpg",
       "seller_score": 6294,
       "seller_pct": 99.9,
-      "item_title": "🔥 PSA 10 2024 Caleb Williams 301 Panini Prizm Rooke Gem Mint RC 🐻",
+      "item_title": "\ud83d\udd25 PSA 10 2024 Caleb Williams 301 Panini Prizm Rooke Gem Mint RC \ud83d\udc3b",
       "label": "Caleb Williams Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -3360,7 +3560,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "🔥PSA 10 2024 Prizm Caleb Williams #301 Green Wave RC POP/250",
+      "title": "\ud83d\udd25PSA 10 2024 Prizm Caleb Williams #301 Green Wave RC POP/250",
       "currency": "USD",
       "shipping": null,
       "price": 800.01,
@@ -3371,7 +3571,7 @@
       "image": "https://i.ebayimg.com/images/g/39UAAeSwEDNq3N3~/s-l225.jpg",
       "seller_score": 6294,
       "seller_pct": 99.9,
-      "item_title": "🔥PSA 10 2024 Prizm Caleb Williams #301 Green Wave RC POP/250",
+      "item_title": "\ud83d\udd25PSA 10 2024 Prizm Caleb Williams #301 Green Wave RC POP/250",
       "label": "Caleb Williams Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -3429,7 +3629,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2024 Panini Prizm Caleb Williams Neon Green Pulsar Rookie #301 — PSA 10 GEM MINT",
+      "title": "2024 Panini Prizm Caleb Williams Neon Green Pulsar Rookie #301 \u2014 PSA 10 GEM MINT",
       "currency": "USD",
       "shipping": 0,
       "price": 449.99,
@@ -3440,7 +3640,7 @@
       "image": "https://i.ebayimg.com/images/g/iCcAAeSwdKVq2jUr/s-l225.jpg",
       "seller_score": 19,
       "seller_pct": 100,
-      "item_title": "2024 Panini Prizm Caleb Williams Neon Green Pulsar Rookie #301 — PSA 10 GEM MINT",
+      "item_title": "2024 Panini Prizm Caleb Williams Neon Green Pulsar Rookie #301 \u2014 PSA 10 GEM MINT",
       "label": "Caleb Williams Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -3498,7 +3698,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Caleb Williams 2024 Panini Prizm Disco Prizm PSA 10 RC Rookie Card Chicago🔥🔥🔥",
+      "title": "Caleb Williams 2024 Panini Prizm Disco Prizm PSA 10 RC Rookie Card Chicago\ud83d\udd25\ud83d\udd25\ud83d\udd25",
       "currency": "USD",
       "shipping": 6.99,
       "price": 549,
@@ -3509,7 +3709,7 @@
       "image": "https://i.ebayimg.com/images/g/0UkAAeSw0S1qtlxW/s-l225.jpg",
       "seller_score": 590,
       "seller_pct": 100,
-      "item_title": "Caleb Williams 2024 Panini Prizm Disco Prizm PSA 10 RC Rookie Card Chicago🔥🔥🔥",
+      "item_title": "Caleb Williams 2024 Panini Prizm Disco Prizm PSA 10 RC Rookie Card Chicago\ud83d\udd25\ud83d\udd25\ud83d\udd25",
       "label": "Caleb Williams Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -3797,7 +3997,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2024 Caleb Williams Prizm Green Prizmatic Rookie PSA 10 🔥🔥🔥🔥🔥",
+      "title": "2024 Caleb Williams Prizm Green Prizmatic Rookie PSA 10 \ud83d\udd25\ud83d\udd25\ud83d\udd25\ud83d\udd25\ud83d\udd25",
       "currency": "USD",
       "shipping": 6.49,
       "price": 149.99,
@@ -3808,7 +4008,7 @@
       "image": "https://i.ebayimg.com/images/g/n8sAAeSw87lqx6rr/s-l225.jpg",
       "seller_score": 2089,
       "seller_pct": 99.9,
-      "item_title": "2024 Caleb Williams Prizm Green Prizmatic Rookie PSA 10 🔥🔥🔥🔥🔥",
+      "item_title": "2024 Caleb Williams Prizm Green Prizmatic Rookie PSA 10 \ud83d\udd25\ud83d\udd25\ud83d\udd25\ud83d\udd25\ud83d\udd25",
       "label": "Caleb Williams Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -3820,7 +4020,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2024 Panini Prizm - Fireworks Caleb Williams #25 (RC) PSA 10 🔥🔥",
+      "title": "2024 Panini Prizm - Fireworks Caleb Williams #25 (RC) PSA 10 \ud83d\udd25\ud83d\udd25",
       "currency": "USD",
       "shipping": null,
       "price": 110,
@@ -3831,7 +4031,7 @@
       "image": "https://i.ebayimg.com/images/g/7EsAAeSw03Nq28dC/s-l225.jpg",
       "seller_score": 4080,
       "seller_pct": 100,
-      "item_title": "2024 Panini Prizm - Fireworks Caleb Williams #25 (RC) PSA 10 🔥🔥",
+      "item_title": "2024 Panini Prizm - Fireworks Caleb Williams #25 (RC) PSA 10 \ud83d\udd25\ud83d\udd25",
       "label": "Caleb Williams Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -4418,7 +4618,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2024 Panini Prizm - Silver- Marvin Harrison Jr. (RC) No. 375 PSA 10 🔥",
+      "title": "2024 Panini Prizm - Silver- Marvin Harrison Jr. (RC) No. 375 PSA 10 \ud83d\udd25",
       "currency": "USD",
       "shipping": null,
       "price": 160,
@@ -4429,7 +4629,7 @@
       "image": "https://i.ebayimg.com/images/g/B14AAeSwH~5o4LSX/s-l225.jpg",
       "seller_score": 389,
       "seller_pct": 99.5,
-      "item_title": "2024 Panini Prizm - Silver- Marvin Harrison Jr. (RC) No. 375 PSA 10 🔥",
+      "item_title": "2024 Panini Prizm - Silver- Marvin Harrison Jr. (RC) No. 375 PSA 10 \ud83d\udd25",
       "label": "Marvin Harrison Jr Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -4533,7 +4733,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2024 Panini Prizm Marvin Harrison Jr. RC Lazer Rookie #375 Cardinals PSA 10 🔥",
+      "title": "2024 Panini Prizm Marvin Harrison Jr. RC Lazer Rookie #375 Cardinals PSA 10 \ud83d\udd25",
       "currency": "USD",
       "shipping": 6.99,
       "price": 59.99,
@@ -4544,7 +4744,7 @@
       "image": "https://i.ebayimg.com/images/g/OHwAAeSw9h1qZZFK/s-l225.jpg",
       "seller_score": 1040,
       "seller_pct": 100,
-      "item_title": "2024 Panini Prizm Marvin Harrison Jr. RC Lazer Rookie #375 Cardinals PSA 10 🔥",
+      "item_title": "2024 Panini Prizm Marvin Harrison Jr. RC Lazer Rookie #375 Cardinals PSA 10 \ud83d\udd25",
       "label": "Marvin Harrison Jr Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -4579,7 +4779,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "🔥2024 Panini Prizm Marvin Harrison Jr. Prizm Flashback #4 RC PSA 10 GEM MINT AZ",
+      "title": "\ud83d\udd252024 Panini Prizm Marvin Harrison Jr. Prizm Flashback #4 RC PSA 10 GEM MINT AZ",
       "currency": "USD",
       "shipping": 5.99,
       "price": 109.99,
@@ -4590,7 +4790,7 @@
       "image": "https://i.ebayimg.com/images/g/tksAAeSwmKhqhuSi/s-l225.jpg",
       "seller_score": 480,
       "seller_pct": 100,
-      "item_title": "🔥2024 Panini Prizm Marvin Harrison Jr. Prizm Flashback #4 RC PSA 10 GEM MINT AZ",
+      "item_title": "\ud83d\udd252024 Panini Prizm Marvin Harrison Jr. Prizm Flashback #4 RC PSA 10 GEM MINT AZ",
       "label": "Marvin Harrison Jr Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -4786,7 +4986,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Anthony Richardson 2023 Panini Prizm Portals Silver Holo RC PSA 10 #PO5 💥💥",
+      "title": "Anthony Richardson 2023 Panini Prizm Portals Silver Holo RC PSA 10 #PO5 \ud83d\udca5\ud83d\udca5",
       "currency": "USD",
       "shipping": 6.25,
       "price": 29.95,
@@ -4797,7 +4997,7 @@
       "image": "https://i.ebayimg.com/images/g/2iAAAOSwUGxnY0z3/s-l225.jpg",
       "seller_score": 26674,
       "seller_pct": 99.8,
-      "item_title": "Anthony Richardson 2023 Panini Prizm Portals Silver Holo RC PSA 10 #PO5 💥💥",
+      "item_title": "Anthony Richardson 2023 Panini Prizm Portals Silver Holo RC PSA 10 #PO5 \ud83d\udca5\ud83d\udca5",
       "label": "Anthony Richardson Prizm Silver RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -5062,7 +5262,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2023 Panini Prizm ANTHONY RICHARDSON - Silver Prizm #343 Rookie - PSA 10 💎Colts",
+      "title": "2023 Panini Prizm ANTHONY RICHARDSON - Silver Prizm #343 Rookie - PSA 10 \ud83d\udc8eColts",
       "currency": "USD",
       "shipping": 0,
       "price": 329.18,
@@ -5073,7 +5273,7 @@
       "image": "https://i.ebayimg.com/images/g/aKwAAOSwOrBnGWLP/s-l225.jpg",
       "seller_score": 352,
       "seller_pct": 100,
-      "item_title": "2023 Panini Prizm ANTHONY RICHARDSON - Silver Prizm #343 Rookie - PSA 10 💎Colts",
+      "item_title": "2023 Panini Prizm ANTHONY RICHARDSON - Silver Prizm #343 Rookie - PSA 10 \ud83d\udc8eColts",
       "label": "Anthony Richardson Prizm Silver RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -5706,7 +5906,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2018 Panini Prizm Josh Allen Rookie Year Instant Impact PSA 10 Bills 💎",
+      "title": "2018 Panini Prizm Josh Allen Rookie Year Instant Impact PSA 10 Bills \ud83d\udc8e",
       "currency": "USD",
       "shipping": null,
       "price": 399.99,
@@ -5717,7 +5917,7 @@
       "image": "https://i.ebayimg.com/images/g/5PoAAeSwnyhqsBqy/s-l225.jpg",
       "seller_score": 130,
       "seller_pct": 100,
-      "item_title": "2018 Panini Prizm Josh Allen Rookie Year Instant Impact PSA 10 Bills 💎",
+      "item_title": "2018 Panini Prizm Josh Allen Rookie Year Instant Impact PSA 10 Bills \ud83d\udc8e",
       "label": "Josh Allen Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -5752,7 +5952,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Josh Allen 2018 Prizm #205 Base Rookie PSA 10 Gem Buffalo Bills MVP 💎🔥💎",
+      "title": "Josh Allen 2018 Prizm #205 Base Rookie PSA 10 Gem Buffalo Bills MVP \ud83d\udc8e\ud83d\udd25\ud83d\udc8e",
       "currency": "USD",
       "shipping": 12.99,
       "price": 849.99,
@@ -5763,7 +5963,7 @@
       "image": "https://i.ebayimg.com/images/g/Rv4AAeSwj2VqzmE1/s-l225.jpg",
       "seller_score": 537,
       "seller_pct": 100,
-      "item_title": "Josh Allen 2018 Prizm #205 Base Rookie PSA 10 Gem Buffalo Bills MVP 💎🔥💎",
+      "item_title": "Josh Allen 2018 Prizm #205 Base Rookie PSA 10 Gem Buffalo Bills MVP \ud83d\udc8e\ud83d\udd25\ud83d\udc8e",
       "label": "Josh Allen Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -5867,7 +6067,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2018 PANINI PRIZM ROOKIE INTRODUCTION SILVER JOSH ALLEN PSA 10 🔥🔥🔥",
+      "title": "2018 PANINI PRIZM ROOKIE INTRODUCTION SILVER JOSH ALLEN PSA 10 \ud83d\udd25\ud83d\udd25\ud83d\udd25",
       "currency": "USD",
       "shipping": 9.99,
       "price": 749.99,
@@ -5878,7 +6078,7 @@
       "image": "https://i.ebayimg.com/images/g/pEcAAeSwisJp22ti/s-l225.jpg",
       "seller_score": 471,
       "seller_pct": 100,
-      "item_title": "2018 PANINI PRIZM ROOKIE INTRODUCTION SILVER JOSH ALLEN PSA 10 🔥🔥🔥",
+      "item_title": "2018 PANINI PRIZM ROOKIE INTRODUCTION SILVER JOSH ALLEN PSA 10 \ud83d\udd25\ud83d\udd25\ud83d\udd25",
       "label": "Josh Allen Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -6281,7 +6481,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2023 Panini Prizm - Bijan Robinson #305 Purple Ice Prizm /225 (RC) PSA 10 💎",
+      "title": "2023 Panini Prizm - Bijan Robinson #305 Purple Ice Prizm /225 (RC) PSA 10 \ud83d\udc8e",
       "currency": "USD",
       "shipping": null,
       "price": 207,
@@ -6292,7 +6492,7 @@
       "image": "https://i.ebayimg.com/images/g/bQoAAeSwTRVq0KCu/s-l225.jpg",
       "seller_score": 1120,
       "seller_pct": 100,
-      "item_title": "2023 Panini Prizm - Bijan Robinson #305 Purple Ice Prizm /225 (RC) PSA 10 💎",
+      "item_title": "2023 Panini Prizm - Bijan Robinson #305 Purple Ice Prizm /225 (RC) PSA 10 \ud83d\udc8e",
       "label": "Bijan Robinson Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -6304,7 +6504,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2023 Panini Prizm Bijan Robinson #305 Pink Prizm Autographs RC 💎 PSA 10 Falcons",
+      "title": "2023 Panini Prizm Bijan Robinson #305 Pink Prizm Autographs RC \ud83d\udc8e PSA 10 Falcons",
       "currency": "USD",
       "shipping": null,
       "price": 485,
@@ -6315,7 +6515,7 @@
       "image": "https://i.ebayimg.com/images/g/iDIAAeSwz6ppzA~z/s-l225.jpg",
       "seller_score": 244,
       "seller_pct": 100,
-      "item_title": "2023 Panini Prizm Bijan Robinson #305 Pink Prizm Autographs RC 💎 PSA 10 Falcons",
+      "item_title": "2023 Panini Prizm Bijan Robinson #305 Pink Prizm Autographs RC \ud83d\udc8e PSA 10 Falcons",
       "label": "Bijan Robinson Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -6350,7 +6550,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Panini 2023 Prizm Rookies Bijan Robinson #305 Green Wave Prizm RC PSA 10 🔥🔥",
+      "title": "Panini 2023 Prizm Rookies Bijan Robinson #305 Green Wave Prizm RC PSA 10 \ud83d\udd25\ud83d\udd25",
       "currency": "USD",
       "shipping": null,
       "price": 112,
@@ -6361,7 +6561,7 @@
       "image": "https://i.ebayimg.com/images/g/Xk0AAeSwWAZqxa95/s-l225.jpg",
       "seller_score": 85,
       "seller_pct": 100,
-      "item_title": "Panini 2023 Prizm Rookies Bijan Robinson #305 Green Wave Prizm RC PSA 10 🔥🔥",
+      "item_title": "Panini 2023 Prizm Rookies Bijan Robinson #305 Green Wave Prizm RC PSA 10 \ud83d\udd25\ud83d\udd25",
       "label": "Bijan Robinson Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -6580,7 +6780,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2023 Prizm Bijan Robinson Purple #305 Rookie RC PSA 10 GEM MT🏈#/125🔥Falcons",
+      "title": "2023 Prizm Bijan Robinson Purple #305 Rookie RC PSA 10 GEM MT\ud83c\udfc8#/125\ud83d\udd25Falcons",
       "currency": "USD",
       "shipping": 4.99,
       "price": 289.99,
@@ -6591,7 +6791,7 @@
       "image": "https://i.ebayimg.com/images/g/i-8AAeSwSEpqvFgC/s-l225.jpg",
       "seller_score": 2379,
       "seller_pct": 100,
-      "item_title": "2023 Prizm Bijan Robinson Purple #305 Rookie RC PSA 10 GEM MT🏈#/125🔥Falcons",
+      "item_title": "2023 Prizm Bijan Robinson Purple #305 Rookie RC PSA 10 GEM MT\ud83c\udfc8#/125\ud83d\udd25Falcons",
       "label": "Bijan Robinson Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -6810,7 +7010,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2023 Donruss Optic -Bijan Robinson Rated Rookie Shield Prizm /32 #206 PSA 10🔥🔥",
+      "title": "2023 Donruss Optic -Bijan Robinson Rated Rookie Shield Prizm /32 #206 PSA 10\ud83d\udd25\ud83d\udd25",
       "currency": "USD",
       "shipping": null,
       "price": 469.99,
@@ -6821,7 +7021,7 @@
       "image": "https://i.ebayimg.com/images/g/Og4AAeSwH5Bqzasa/s-l225.jpg",
       "seller_score": 1145,
       "seller_pct": 100,
-      "item_title": "2023 Donruss Optic -Bijan Robinson Rated Rookie Shield Prizm /32 #206 PSA 10🔥🔥",
+      "item_title": "2023 Donruss Optic -Bijan Robinson Rated Rookie Shield Prizm /32 #206 PSA 10\ud83d\udd25\ud83d\udd25",
       "label": "Bijan Robinson Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -6833,7 +7033,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Bijan Robinson ROOKIE PSA 10🔥2023 Donruss #305🔥Optic Preview Pink Prizm RC",
+      "title": "Bijan Robinson ROOKIE PSA 10\ud83d\udd252023 Donruss #305\ud83d\udd25Optic Preview Pink Prizm RC",
       "currency": "USD",
       "shipping": 9.82,
       "price": 79.99,
@@ -6844,7 +7044,7 @@
       "image": "https://i.ebayimg.com/images/g/~UkAAeSw4~Bqqwoc/s-l225.jpg",
       "seller_score": 599,
       "seller_pct": 100,
-      "item_title": "Bijan Robinson ROOKIE PSA 10🔥2023 Donruss #305🔥Optic Preview Pink Prizm RC",
+      "item_title": "Bijan Robinson ROOKIE PSA 10\ud83d\udd252023 Donruss #305\ud83d\udd25Optic Preview Pink Prizm RC",
       "label": "Bijan Robinson Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -6925,7 +7125,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2023 Panini Prizm - RC Bijan Robinson #305 Silver Prizm Autographs PSA 10 📈",
+      "title": "2023 Panini Prizm - RC Bijan Robinson #305 Silver Prizm Autographs PSA 10 \ud83d\udcc8",
       "currency": "",
       "shipping": null,
       "price": null,
@@ -6936,7 +7136,7 @@
       "image": "https://i.ebayimg.com/images/g/DTIAAeSwDAJq4PgL/s-l225.jpg",
       "seller_score": 520,
       "seller_pct": 100,
-      "item_title": "2023 Panini Prizm - RC Bijan Robinson #305 Silver Prizm Autographs PSA 10 📈",
+      "item_title": "2023 Panini Prizm - RC Bijan Robinson #305 Silver Prizm Autographs PSA 10 \ud83d\udcc8",
       "label": "Bijan Robinson Prizm RC PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -8742,7 +8942,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2023 Donruss ANTHONY RICHARDSON Rookie Downtown! (RC) PSA 10 🔥📈💎",
+      "title": "2023 Donruss ANTHONY RICHARDSON Rookie Downtown! (RC) PSA 10 \ud83d\udd25\ud83d\udcc8\ud83d\udc8e",
       "currency": "USD",
       "shipping": null,
       "price": 569.75,
@@ -8753,7 +8953,7 @@
       "image": "https://i.ebayimg.com/images/g/R4YAAeSwd4BpT5vZ/s-l225.jpg",
       "seller_score": 721,
       "seller_pct": 99.8,
-      "item_title": "2023 Donruss ANTHONY RICHARDSON Rookie Downtown! (RC) PSA 10 🔥📈💎",
+      "item_title": "2023 Donruss ANTHONY RICHARDSON Rookie Downtown! (RC) PSA 10 \ud83d\udd25\ud83d\udcc8\ud83d\udc8e",
       "label": "Anthony Richardson Downtown PSA 10",
       "category": "downtown_kaboom",
       "sport": "football",
@@ -9087,7 +9287,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2025 Panini Donruss DOWNTOWN SSP #8 Patrick Mahomes II PSA 10 🏈 *Last Licensed",
+      "title": "2025 Panini Donruss DOWNTOWN SSP #8 Patrick Mahomes II PSA 10 \ud83c\udfc8 *Last Licensed",
       "currency": "USD",
       "shipping": null,
       "price": 1899.99,
@@ -9098,7 +9298,7 @@
       "image": "https://i.ebayimg.com/images/g/KtwAAeSwCFxqxQhC/s-l225.jpg",
       "seller_score": 1129,
       "seller_pct": 100,
-      "item_title": "2025 Panini Donruss DOWNTOWN SSP #8 Patrick Mahomes II PSA 10 🏈 *Last Licensed",
+      "item_title": "2025 Panini Donruss DOWNTOWN SSP #8 Patrick Mahomes II PSA 10 \ud83c\udfc8 *Last Licensed",
       "label": "Patrick Mahomes Downtown PSA 10",
       "category": "downtown_kaboom",
       "sport": "football",
@@ -9271,7 +9471,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2025 Panini Donruss Downtown Patrick Mahomes 🔥 SSP Case hit GEM MINT PSA 10",
+      "title": "2025 Panini Donruss Downtown Patrick Mahomes \ud83d\udd25 SSP Case hit GEM MINT PSA 10",
       "currency": "USD",
       "shipping": null,
       "price": 2295,
@@ -9282,7 +9482,7 @@
       "image": "https://i.ebayimg.com/images/g/n1sAAeSw9aBpeF9B/s-l225.jpg",
       "seller_score": 644,
       "seller_pct": 100,
-      "item_title": "2025 Panini Donruss Downtown Patrick Mahomes 🔥 SSP Case hit GEM MINT PSA 10",
+      "item_title": "2025 Panini Donruss Downtown Patrick Mahomes \ud83d\udd25 SSP Case hit GEM MINT PSA 10",
       "label": "Patrick Mahomes Downtown PSA 10",
       "category": "downtown_kaboom",
       "sport": "football",
@@ -9340,7 +9540,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "🔥 2025 Donruss #8 Patrick Mahomes II Downtown! PSA 10 🔥",
+      "title": "\ud83d\udd25 2025 Donruss #8 Patrick Mahomes II Downtown! PSA 10 \ud83d\udd25",
       "currency": "USD",
       "shipping": 6.99,
       "price": 2300,
@@ -9351,7 +9551,7 @@
       "image": "https://i.ebayimg.com/images/g/2ukAAeSwM6Bqjce7/s-l225.jpg",
       "seller_score": 3596,
       "seller_pct": 99.8,
-      "item_title": "🔥 2025 Donruss #8 Patrick Mahomes II Downtown! PSA 10 🔥",
+      "item_title": "\ud83d\udd25 2025 Donruss #8 Patrick Mahomes II Downtown! PSA 10 \ud83d\udd25",
       "label": "Patrick Mahomes Downtown PSA 10",
       "category": "downtown_kaboom",
       "sport": "football",
@@ -9823,7 +10023,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Paul Skenes - 2023 Bowman 1st Draft Chrome #BDC-14 (RC) - REFRACTOR - 💎PSA 10💎",
+      "title": "Paul Skenes - 2023 Bowman 1st Draft Chrome #BDC-14 (RC) - REFRACTOR - \ud83d\udc8ePSA 10\ud83d\udc8e",
       "currency": "USD",
       "shipping": 9.99,
       "price": 359,
@@ -9834,7 +10034,7 @@
       "image": "https://i.ebayimg.com/images/g/XE8AAeSwhAZqm35b/s-l225.jpg",
       "seller_score": 711,
       "seller_pct": 100,
-      "item_title": "Paul Skenes - 2023 Bowman 1st Draft Chrome #BDC-14 (RC) - REFRACTOR - 💎PSA 10💎",
+      "item_title": "Paul Skenes - 2023 Bowman 1st Draft Chrome #BDC-14 (RC) - REFRACTOR - \ud83d\udc8ePSA 10\ud83d\udc8e",
       "label": "Paul Skenes Bowman Chrome 1st PSA 10",
       "category": "rookies",
       "sport": "baseball",
@@ -10030,7 +10230,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Paul Skenes 1st Bowman Chrome Refractor PSA 10: 💎 2023 Topps Bowman Draft 🔥",
+      "title": "Paul Skenes 1st Bowman Chrome Refractor PSA 10: \ud83d\udc8e 2023 Topps Bowman Draft \ud83d\udd25",
       "currency": "USD",
       "shipping": null,
       "price": 399.99,
@@ -10041,7 +10241,7 @@
       "image": "https://i.ebayimg.com/images/g/tXIAAeSw2lNqqf0w/s-l225.jpg",
       "seller_score": 242,
       "seller_pct": 100,
-      "item_title": "Paul Skenes 1st Bowman Chrome Refractor PSA 10: 💎 2023 Topps Bowman Draft 🔥",
+      "item_title": "Paul Skenes 1st Bowman Chrome Refractor PSA 10: \ud83d\udc8e 2023 Topps Bowman Draft \ud83d\udd25",
       "label": "Paul Skenes Bowman Chrome 1st PSA 10",
       "category": "rookies",
       "sport": "baseball",
@@ -10421,7 +10621,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Topps 2023 Bowman Draft Chrome Paul Skenes #BDC-14 Aqua Wave /125 PSA 10 🌊💎",
+      "title": "Topps 2023 Bowman Draft Chrome Paul Skenes #BDC-14 Aqua Wave /125 PSA 10 \ud83c\udf0a\ud83d\udc8e",
       "currency": "USD",
       "shipping": 5,
       "price": 899.99,
@@ -10432,7 +10632,7 @@
       "image": "https://i.ebayimg.com/images/g/GNgAAeSwcHtq4VjK/s-l225.jpg",
       "seller_score": 219,
       "seller_pct": 100,
-      "item_title": "Topps 2023 Bowman Draft Chrome Paul Skenes #BDC-14 Aqua Wave /125 PSA 10 🌊💎",
+      "item_title": "Topps 2023 Bowman Draft Chrome Paul Skenes #BDC-14 Aqua Wave /125 PSA 10 \ud83c\udf0a\ud83d\udc8e",
       "label": "Paul Skenes Bowman Chrome 1st PSA 10",
       "category": "rookies",
       "sport": "baseball",
@@ -10975,12 +11175,12 @@
     {
       "title": "2021 Prizm #282 Cade Cunningham Pink Ice PSA 10",
       "currency": "USD",
-      "shipping": null,
+      "shipping": 6.82,
       "price": 299.99,
       "buying_option": "FIXED_PRICE",
       "ends": "",
       "snipe": false,
-      "url": "https://www.ebay.com/itm/286884810317?_skw=2021+Prizm+Cade+Cunningham+Pink+Ice+282+PSA+10&hash=item42cbaace4d:g:gpgAAeSwgG1o88iK",
+      "url": "https://www.ebay.com/itm/286884810317",
       "image": "https://i.ebayimg.com/images/g/gpgAAeSwgG1o88iK/s-l225.jpg",
       "seller_score": 1039,
       "seller_pct": 100,
@@ -10989,11 +11189,136 @@
       "category": "rookies",
       "sport": "basketball",
       "query": "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
-      "checked_at": "2026-10-31T13:07:58.329246+00:00",
+      "checked_at": "2026-11-07T00:56:57+00:00",
       "page_state": "active",
       "listing_id": "286884810317",
       "hold_days": 90,
-      "hold_basis": "Planning scenario; sale time is not established"
+      "hold_basis": "Planning scenario; sale time is not established",
+      "observation_history": [
+        {
+          "title": "2021 Prizm #282 Cade Cunningham Pink Ice PSA 10",
+          "currency": "USD",
+          "shipping": null,
+          "price": 299.99,
+          "buying_option": "FIXED_PRICE",
+          "ends": "",
+          "snipe": false,
+          "url": "https://www.ebay.com/itm/286884810317?_skw=2021+Prizm+Cade+Cunningham+Pink+Ice+282+PSA+10&hash=item42cbaace4d:g:gpgAAeSwgG1o88iK",
+          "image": "https://i.ebayimg.com/images/g/gpgAAeSwgG1o88iK/s-l225.jpg",
+          "seller_score": 1039,
+          "seller_pct": 100,
+          "item_title": "2021 Prizm #282 Cade Cunningham Pink Ice PSA 10",
+          "label": "Cade Cunningham Pink Ice PSA 10",
+          "category": "rookies",
+          "sport": "basketball",
+          "query": "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
+          "checked_at": "2026-10-31T13:07:58.329246+00:00",
+          "page_state": "active",
+          "listing_id": "286884810317",
+          "hold_days": 90,
+          "hold_basis": "Planning scenario; sale time is not established"
+        }
+      ],
+      "identity": {
+        "year": 2021,
+        "set": "Prizm",
+        "player": "Cade Cunningham",
+        "number": "282",
+        "parallel": "Pink Ice",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 10
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "sales": [
+        {
+          "identity": {
+            "year": 2021,
+            "set": "Prizm",
+            "player": "Cade Cunningham",
+            "number": "282",
+            "parallel": "Pink Ice",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-08-10",
+          "price": 190,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:267496350106",
+          "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+          "marketplace_url": "https://www.ebay.com/itm/267496350106",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+        },
+        {
+          "identity": {
+            "year": 2021,
+            "set": "Prizm",
+            "player": "Cade Cunningham",
+            "number": "282",
+            "parallel": "Pink Ice",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-08-06",
+          "price": 239.95,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:117297906577",
+          "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+          "marketplace_url": "https://www.ebay.com/itm/117297906577",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+        },
+        {
+          "identity": {
+            "year": 2021,
+            "set": "Prizm",
+            "player": "Cade Cunningham",
+            "number": "282",
+            "parallel": "Pink Ice",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-08-04",
+          "price": 237.5,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:178370395969",
+          "url": "https://theclector.com/cards/basketball/nba/panini/2021/prizm/base-prizms-pink-ice/cade-cunningham-34063/2129395",
+          "marketplace_url": "https://www.ebay.com/itm/178370395969",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "note": "Source-reported amount; primary sale/accepted price not independently confirmed"
+        }
+      ],
+      "cert_number": "69672645",
+      "hold_reviewed": false,
+      "warnings": [
+        "Live fixed-price $299.99 plus $6.82 displayed shipping. Actual front slab photo reviewed: PSA 10 Pink Ice #282, cert 69672645. Back and slab condition not fully reviewed; seller warns cases may have scuffs/chips.",
+        "Reopened TheClector individual PSA 10 reports; no newer exact-grade sale found. August 10 accepted-offer report remains secondary; original eBay link redirects to a PSA 9 product catalog. August 6 and 4 records are beyond 90 days. No primary qualification evidence."
+      ]
     },
     {
       "title": "2021-22 Panini Prizm Cade Cunningham RC #282 Pink Ice PSA 10 Pistons",
@@ -11364,7 +11689,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "♨Jalen Hurts 2020 Panini Donruss Optic SILVER HOLO Rated Rookie Card #164 PSA 10",
+      "title": "\u2668Jalen Hurts 2020 Panini Donruss Optic SILVER HOLO Rated Rookie Card #164 PSA 10",
       "currency": "USD",
       "shipping": 5.89,
       "price": 199,
@@ -11375,7 +11700,7 @@
       "image": "https://i.ebayimg.com/images/g/UYsAAeSwT-Zqz3Dr/s-l225.jpg",
       "seller_score": 2230,
       "seller_pct": 99.6,
-      "item_title": "♨Jalen Hurts 2020 Panini Donruss Optic SILVER HOLO Rated Rookie Card #164 PSA 10",
+      "item_title": "\u2668Jalen Hurts 2020 Panini Donruss Optic SILVER HOLO Rated Rookie Card #164 PSA 10",
       "label": "Jalen Hurts Optic PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -11479,7 +11804,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "PSA 10 💎 | 2020 Panini Donruss Optic Rated Rookies Jalen Hurts #164 Blue Scope",
+      "title": "PSA 10 \ud83d\udc8e | 2020 Panini Donruss Optic Rated Rookies Jalen Hurts #164 Blue Scope",
       "currency": "USD",
       "shipping": null,
       "price": 105,
@@ -11490,7 +11815,7 @@
       "image": "https://i.ebayimg.com/images/g/jmAAAeSwbkRqyuop/s-l225.jpg",
       "seller_score": 382,
       "seller_pct": 100,
-      "item_title": "PSA 10 💎 | 2020 Panini Donruss Optic Rated Rookies Jalen Hurts #164 Blue Scope",
+      "item_title": "PSA 10 \ud83d\udc8e | 2020 Panini Donruss Optic Rated Rookies Jalen Hurts #164 Blue Scope",
       "label": "Jalen Hurts Optic PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -11571,7 +11896,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "PSA 10 2020 Panini Donruss Optic Jalen Hurts #164 Holo Prizm RC ROOKIE PSA 10 💎",
+      "title": "PSA 10 2020 Panini Donruss Optic Jalen Hurts #164 Holo Prizm RC ROOKIE PSA 10 \ud83d\udc8e",
       "currency": "USD",
       "shipping": 0,
       "price": 179.95,
@@ -11582,7 +11907,7 @@
       "image": "https://i.ebayimg.com/images/g/11gAAeSwJuVqTGuv/s-l225.jpg",
       "seller_score": 3543,
       "seller_pct": 100,
-      "item_title": "PSA 10 2020 Panini Donruss Optic Jalen Hurts #164 Holo Prizm RC ROOKIE PSA 10 💎",
+      "item_title": "PSA 10 2020 Panini Donruss Optic Jalen Hurts #164 Holo Prizm RC ROOKIE PSA 10 \ud83d\udc8e",
       "label": "Jalen Hurts Optic PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -12031,7 +12356,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Panini 2020 Donruss Optic Jalen Hurts #164 Rated Rookie PSA 10 Eagles PSA 10 💎",
+      "title": "Panini 2020 Donruss Optic Jalen Hurts #164 Rated Rookie PSA 10 Eagles PSA 10 \ud83d\udc8e",
       "currency": "USD",
       "shipping": null,
       "price": 80,
@@ -12042,7 +12367,7 @@
       "image": "https://i.ebayimg.com/images/g/OiUAAeSwM0NqqAL6/s-l225.jpg",
       "seller_score": 2715,
       "seller_pct": 100,
-      "item_title": "Panini 2020 Donruss Optic Jalen Hurts #164 Rated Rookie PSA 10 Eagles PSA 10 💎",
+      "item_title": "Panini 2020 Donruss Optic Jalen Hurts #164 Rated Rookie PSA 10 Eagles PSA 10 \ud83d\udc8e",
       "label": "Jalen Hurts Optic PSA 10",
       "category": "rookies",
       "sport": "football",
@@ -12100,7 +12425,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "BROCK PURDY 2022 PANINI CERTIFIED 181 RC MIRROR TEAL /50 PSA 10🔥POP2 NON AUTO",
+      "title": "BROCK PURDY 2022 PANINI CERTIFIED 181 RC MIRROR TEAL /50 PSA 10\ud83d\udd25POP2 NON AUTO",
       "currency": "USD",
       "shipping": 5.99,
       "price": 674.99,
@@ -12111,7 +12436,7 @@
       "image": "https://i.ebayimg.com/images/g/0t0AAeSwl4NoMPlU/s-l225.jpg",
       "seller_score": 1492,
       "seller_pct": 100,
-      "item_title": "BROCK PURDY 2022 PANINI CERTIFIED 181 RC MIRROR TEAL /50 PSA 10🔥POP2 NON AUTO",
+      "item_title": "BROCK PURDY 2022 PANINI CERTIFIED 181 RC MIRROR TEAL /50 PSA 10\ud83d\udd25POP2 NON AUTO",
       "label": "Brock Purdy Certified numbered autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -12192,7 +12517,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "🔥2021 Panini Donruss Optic Amon-Ra St Brown SSP Bronze Auto PSA 10 RC🔥 Lions",
+      "title": "\ud83d\udd252021 Panini Donruss Optic Amon-Ra St Brown SSP Bronze Auto PSA 10 RC\ud83d\udd25 Lions",
       "currency": "USD",
       "shipping": 10.99,
       "price": 579.99,
@@ -12203,7 +12528,7 @@
       "image": "https://i.ebayimg.com/images/g/NVcAAeSwDAJq3~eT/s-l225.jpg",
       "seller_score": 204,
       "seller_pct": 100,
-      "item_title": "🔥2021 Panini Donruss Optic Amon-Ra St Brown SSP Bronze Auto PSA 10 RC🔥 Lions",
+      "item_title": "\ud83d\udd252021 Panini Donruss Optic Amon-Ra St Brown SSP Bronze Auto PSA 10 RC\ud83d\udd25 Lions",
       "label": "Amon-Ra St Brown rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -12238,7 +12563,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2021 Optic Amon Ra St Brown Auto RC /150 🔥PSA 10 Rated Rookie POP 30!",
+      "title": "2021 Optic Amon Ra St Brown Auto RC /150 \ud83d\udd25PSA 10 Rated Rookie POP 30!",
       "currency": "USD",
       "shipping": null,
       "price": 261.2,
@@ -12249,7 +12574,7 @@
       "image": "https://i.ebayimg.com/images/g/fOUAAeSwxqFq258B/s-l225.jpg",
       "seller_score": 16,
       "seller_pct": 100,
-      "item_title": "2021 Optic Amon Ra St Brown Auto RC /150 🔥PSA 10 Rated Rookie POP 30!",
+      "item_title": "2021 Optic Amon Ra St Brown Auto RC /150 \ud83d\udd25PSA 10 Rated Rookie POP 30!",
       "label": "Amon-Ra St Brown rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -12261,7 +12586,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "💎2021 Panini Donruss AMON-RA ST BROWN Rated Rookie Auto #284 PSA 10 RC 💎Lions",
+      "title": "\ud83d\udc8e2021 Panini Donruss AMON-RA ST BROWN Rated Rookie Auto #284 PSA 10 RC \ud83d\udc8eLions",
       "currency": "USD",
       "shipping": 10.99,
       "price": 1279.99,
@@ -12272,7 +12597,7 @@
       "image": "https://i.ebayimg.com/images/g/OLgAAeSwI7Zqwwp8/s-l225.jpg",
       "seller_score": 204,
       "seller_pct": 100,
-      "item_title": "💎2021 Panini Donruss AMON-RA ST BROWN Rated Rookie Auto #284 PSA 10 RC 💎Lions",
+      "item_title": "\ud83d\udc8e2021 Panini Donruss AMON-RA ST BROWN Rated Rookie Auto #284 PSA 10 RC \ud83d\udc8eLions",
       "label": "Amon-Ra St Brown rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -12330,7 +12655,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "🔥2021 Origins Amon-Ra St. Brown RC On Card Auto PSA 8 10 🦁",
+      "title": "\ud83d\udd252021 Origins Amon-Ra St. Brown RC On Card Auto PSA 8 10 \ud83e\udd81",
       "currency": "USD",
       "shipping": 9.99,
       "price": 124.99,
@@ -12341,7 +12666,7 @@
       "image": "https://i.ebayimg.com/images/g/67AAAeSwkOJqrLMV/s-l225.jpg",
       "seller_score": 1871,
       "seller_pct": 100,
-      "item_title": "🔥2021 Origins Amon-Ra St. Brown RC On Card Auto PSA 8 10 🦁",
+      "item_title": "\ud83d\udd252021 Origins Amon-Ra St. Brown RC On Card Auto PSA 8 10 \ud83e\udd81",
       "label": "Amon-Ra St Brown rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -12560,7 +12885,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "🏈GEM 2021 Panini Mosaic Amon-Ra St Brown Rookie Scripts Auto RC Lions PSA 10",
+      "title": "\ud83c\udfc8GEM 2021 Panini Mosaic Amon-Ra St Brown Rookie Scripts Auto RC Lions PSA 10",
       "currency": "USD",
       "shipping": 3.95,
       "price": 250,
@@ -12571,7 +12896,7 @@
       "image": "https://i.ebayimg.com/images/g/jr0AAOSwbGdmqs7~/s-l225.jpg",
       "seller_score": 3291,
       "seller_pct": 100,
-      "item_title": "🏈GEM 2021 Panini Mosaic Amon-Ra St Brown Rookie Scripts Auto RC Lions PSA 10",
+      "item_title": "\ud83c\udfc8GEM 2021 Panini Mosaic Amon-Ra St Brown Rookie Scripts Auto RC Lions PSA 10",
       "label": "Amon-Ra St Brown rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -12583,7 +12908,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2021 LEAF ROOKIE /30 AUTO AMON-RA ST BROWN DNA CERTIFIED PSA MINT 9 AUTO 10 RC ⭐",
+      "title": "2021 LEAF ROOKIE /30 AUTO AMON-RA ST BROWN DNA CERTIFIED PSA MINT 9 AUTO 10 RC \u2b50",
       "currency": "USD",
       "shipping": 5.99,
       "price": 112.49,
@@ -12594,7 +12919,7 @@
       "image": "https://i.ebayimg.com/images/g/xC0AAeSw4NdqUnOu/s-l225.jpg",
       "seller_score": 3984,
       "seller_pct": 100,
-      "item_title": "2021 LEAF ROOKIE /30 AUTO AMON-RA ST BROWN DNA CERTIFIED PSA MINT 9 AUTO 10 RC ⭐",
+      "item_title": "2021 LEAF ROOKIE /30 AUTO AMON-RA ST BROWN DNA CERTIFIED PSA MINT 9 AUTO 10 RC \u2b50",
       "label": "Amon-Ra St Brown rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -12721,7 +13046,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Amon-Ra St. Brown Rookie Auto PSA 9/10 - 2021 Sage Premier Draft ‘Black’- Lions",
+      "title": "Amon-Ra St. Brown Rookie Auto PSA 9/10 - 2021 Sage Premier Draft \u2018Black\u2019- Lions",
       "currency": "USD",
       "shipping": 5.99,
       "price": 139,
@@ -12732,7 +13057,7 @@
       "image": "https://i.ebayimg.com/images/g/YhcAAeSwvxlpQYFy/s-l225.jpg",
       "seller_score": 12069,
       "seller_pct": 100,
-      "item_title": "Amon-Ra St. Brown Rookie Auto PSA 9/10 - 2021 Sage Premier Draft ‘Black’- Lions",
+      "item_title": "Amon-Ra St. Brown Rookie Auto PSA 9/10 - 2021 Sage Premier Draft \u2018Black\u2019- Lions",
       "label": "Amon-Ra St Brown rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -12928,7 +13253,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Amon-Ra St. Brown Rookie Auto PSA 9/10 -2021 Leaf Draft XRC ‘Blue’ -Lions, USC",
+      "title": "Amon-Ra St. Brown Rookie Auto PSA 9/10 -2021 Leaf Draft XRC \u2018Blue\u2019 -Lions, USC",
       "currency": "USD",
       "shipping": 5.99,
       "price": 138,
@@ -12939,7 +13264,7 @@
       "image": "https://i.ebayimg.com/images/g/q0gAAeSwAANptuuq/s-l225.jpg",
       "seller_score": 12069,
       "seller_pct": 100,
-      "item_title": "Amon-Ra St. Brown Rookie Auto PSA 9/10 -2021 Leaf Draft XRC ‘Blue’ -Lions, USC",
+      "item_title": "Amon-Ra St. Brown Rookie Auto PSA 9/10 -2021 Leaf Draft XRC \u2018Blue\u2019 -Lions, USC",
       "label": "Amon-Ra St Brown rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -13158,7 +13483,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Amon-Ra St. Brown Rookie Auto PSA 9/10- 2021 Leaf Metal Draft ‘Blue Wave’ /30",
+      "title": "Amon-Ra St. Brown Rookie Auto PSA 9/10- 2021 Leaf Metal Draft \u2018Blue Wave\u2019 /30",
       "currency": "USD",
       "shipping": 5.99,
       "price": 139,
@@ -13169,7 +13494,7 @@
       "image": "https://i.ebayimg.com/images/g/v4cAAeSwLWJpQYJ7/s-l225.jpg",
       "seller_score": 12069,
       "seller_pct": 100,
-      "item_title": "Amon-Ra St. Brown Rookie Auto PSA 9/10- 2021 Leaf Metal Draft ‘Blue Wave’ /30",
+      "item_title": "Amon-Ra St. Brown Rookie Auto PSA 9/10- 2021 Leaf Metal Draft \u2018Blue Wave\u2019 /30",
       "label": "Amon-Ra St Brown rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -13436,12 +13761,12 @@
     {
       "title": "2021 Donruss OPtic Devonta Smith Auto Red PSA 10 44/75",
       "currency": "USD",
-      "shipping": null,
+      "shipping": 6.82,
       "price": 399,
       "buying_option": "FIXED_PRICE",
       "ends": "",
       "snipe": false,
-      "url": "https://www.ebay.com/itm/235235008323?_skw=2021+DeVonta+Smith+Auto+PSA+10&hash=item36c5195f43:g:OLsAAOSwrcxlGKEv&amdata=enc%3AAQALAAABAOf5zIIojhOf%2BkQK%2Bxzjn7mBUBs0qMeGP%2Bn5KgBUx%2B3juN3UYFgsQ4P1NWfPkhPv2WoiSNQ%2Btu2SNr%2FCykgbRVUZo7WKtrcUPuTxKXG46D8pkQC2nP1b0M%2F3cFmiuIbhfJ6jNgp%2B%2BjaHSQF%2F512ekKsccIEMpoT2wtSfCI6BnaY%2BLfHuQirNQUF9ddbGDsjD9MKTQMaivYiR8FVATuP%2Bq46NWHKvJ5Ug0ZwUHVB1GU7jQwptS6jJGJnZNixoktsNf%2BskaZMHua%2F4O0AxJ75lDezhFxBFGYFNJ6qG2BZI3G00iWT1dnAczH%2FJ%2BPhaNb45HtdpjswUKd51Ux2QUChoki4%3D",
+      "url": "https://www.ebay.com/itm/235235008323",
       "image": "https://i.ebayimg.com/images/g/OLsAAOSwrcxlGKEv/s-l225.jpg",
       "seller_score": 712,
       "seller_pct": 100,
@@ -13450,11 +13775,66 @@
       "category": "autos",
       "sport": "football",
       "query": "2021 DeVonta Smith Auto PSA 10",
-      "checked_at": "2026-10-31T13:07:58.329246+00:00",
+      "checked_at": "2026-11-07T00:56:57+00:00",
       "page_state": "active",
       "listing_id": "235235008323",
       "hold_days": 90,
-      "hold_basis": "Planning scenario; sale time is not established"
+      "hold_basis": "Planning scenario; sale time is not established",
+      "observation_history": [
+        {
+          "title": "2021 Donruss OPtic Devonta Smith Auto Red PSA 10 44/75",
+          "currency": "USD",
+          "shipping": null,
+          "price": 399,
+          "buying_option": "FIXED_PRICE",
+          "ends": "",
+          "snipe": false,
+          "url": "https://www.ebay.com/itm/235235008323?_skw=2021+DeVonta+Smith+Auto+PSA+10&hash=item36c5195f43:g:OLsAAOSwrcxlGKEv&amdata=enc%3AAQALAAABAOf5zIIojhOf%2BkQK%2Bxzjn7mBUBs0qMeGP%2Bn5KgBUx%2B3juN3UYFgsQ4P1NWfPkhPv2WoiSNQ%2Btu2SNr%2FCykgbRVUZo7WKtrcUPuTxKXG46D8pkQC2nP1b0M%2F3cFmiuIbhfJ6jNgp%2B%2BjaHSQF%2F512ekKsccIEMpoT2wtSfCI6BnaY%2BLfHuQirNQUF9ddbGDsjD9MKTQMaivYiR8FVATuP%2Bq46NWHKvJ5Ug0ZwUHVB1GU7jQwptS6jJGJnZNixoktsNf%2BskaZMHua%2F4O0AxJ75lDezhFxBFGYFNJ6qG2BZI3G00iWT1dnAczH%2FJ%2BPhaNb45HtdpjswUKd51Ux2QUChoki4%3D",
+          "image": "https://i.ebayimg.com/images/g/OLsAAOSwrcxlGKEv/s-l225.jpg",
+          "seller_score": 712,
+          "seller_pct": 100,
+          "item_title": "2021 Donruss OPtic Devonta Smith Auto Red PSA 10 44/75",
+          "label": "DeVonta Smith rookie autos PSA 10",
+          "category": "autos",
+          "sport": "football",
+          "query": "2021 DeVonta Smith Auto PSA 10",
+          "checked_at": "2026-10-31T13:07:58.329246+00:00",
+          "page_state": "active",
+          "listing_id": "235235008323",
+          "hold_days": 90,
+          "hold_basis": "Planning scenario; sale time is not established"
+        }
+      ],
+      "identity": {
+        "year": 2021,
+        "set": "Donruss Optic",
+        "player": "DeVonta Smith",
+        "number": "205",
+        "parallel": "Autograph Red",
+        "print_run": 75,
+        "autograph": true,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 10
+      },
+      "identity_reviewed": false,
+      "condition_reviewed": false,
+      "sales": [],
+      "cert_number": "69673140",
+      "hold_reviewed": false,
+      "warnings": [
+        "Live fixed-price $399 plus $6.82 displayed shipping; seller 712/100%. Actual front slab image reviewed: PSA 10 Autograph-Red #205, cert 69673140. Title says 44/75; back/serial and full condition not reviewed.",
+        "Opened exact Fanatics weekly sale, September 9 2024, $150 including buyer premium; outside 90-day window, excluded from valuation. No recent exact primary sale established."
+      ],
+      "excluded_sale_sources": [
+        {
+          "url": "https://www.fanaticscollect.com/weekly/ac87f3aa-6685-11ef-8d2b-0a4f7292391d/2021-donruss-optic-red-devonta-smith-rookie-auto-75-205-psa-10-gem-mint",
+          "date": "2024-09-09",
+          "source_reported_price": 150,
+          "buyer_premium_included": true,
+          "reason": "outside_90_day_window"
+        }
+      ]
     },
     {
       "title": "2021 NT Collegiate #42 Devonta Smith /99 College Material RC PSA Auth Auto 10!!",
@@ -13549,7 +13929,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "🔥6/10🔥 2021 Illusions Rookie Endorsements Auto Purple Devonta Smith PSA 9 RE-5",
+      "title": "\ud83d\udd256/10\ud83d\udd25 2021 Illusions Rookie Endorsements Auto Purple Devonta Smith PSA 9 RE-5",
       "currency": "USD",
       "shipping": 6.79,
       "price": 149.99,
@@ -13560,7 +13940,7 @@
       "image": "https://i.ebayimg.com/images/g/xIgAAeSwiTNqnKR3/s-l225.jpg",
       "seller_score": 926,
       "seller_pct": 100,
-      "item_title": "🔥6/10🔥 2021 Illusions Rookie Endorsements Auto Purple Devonta Smith PSA 9 RE-5",
+      "item_title": "\ud83d\udd256/10\ud83d\udd25 2021 Illusions Rookie Endorsements Auto Purple Devonta Smith PSA 9 RE-5",
       "label": "DeVonta Smith rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -13710,7 +14090,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2021 Panini Instant — DeVonta Smith — ROOKIE — 💎 MINT PSA 10, AUTO 10 - pop 1",
+      "title": "2021 Panini Instant \u2014 DeVonta Smith \u2014 ROOKIE \u2014 \ud83d\udc8e MINT PSA 10, AUTO 10 - pop 1",
       "currency": "USD",
       "shipping": 0,
       "price": 500,
@@ -13721,7 +14101,7 @@
       "image": "https://i.ebayimg.com/images/g/VekAAOSw-wdjnkwP/s-l225.jpg",
       "seller_score": 2454,
       "seller_pct": 99.7,
-      "item_title": "2021 Panini Instant — DeVonta Smith — ROOKIE — 💎 MINT PSA 10, AUTO 10 - pop 1",
+      "item_title": "2021 Panini Instant \u2014 DeVonta Smith \u2014 ROOKIE \u2014 \ud83d\udc8e MINT PSA 10, AUTO 10 - pop 1",
       "label": "DeVonta Smith rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -13802,7 +14182,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2021 Panini Zenith DeVonta Smith Rookies Auto RC #5/25 Eagles PSA 8/10 AUTO🔥📈",
+      "title": "2021 Panini Zenith DeVonta Smith Rookies Auto RC #5/25 Eagles PSA 8/10 AUTO\ud83d\udd25\ud83d\udcc8",
       "currency": "USD",
       "shipping": null,
       "price": 110,
@@ -13813,7 +14193,7 @@
       "image": "https://i.ebayimg.com/images/g/vWkAAeSwVf1qiJ5h/s-l225.jpg",
       "seller_score": 1045,
       "seller_pct": 100,
-      "item_title": "2021 Panini Zenith DeVonta Smith Rookies Auto RC #5/25 Eagles PSA 8/10 AUTO🔥📈",
+      "item_title": "2021 Panini Zenith DeVonta Smith Rookies Auto RC #5/25 Eagles PSA 8/10 AUTO\ud83d\udd25\ud83d\udcc8",
       "label": "DeVonta Smith rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -14032,7 +14412,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2021 Panini Instant(9/12/21) — DeVonta Smith —ROOKIE —MINT PSA 9, AUTO 10 — 9/10",
+      "title": "2021 Panini Instant(9/12/21) \u2014 DeVonta Smith \u2014ROOKIE \u2014MINT PSA 9, AUTO 10 \u2014 9/10",
       "currency": "USD",
       "shipping": 5,
       "price": 500,
@@ -14043,7 +14423,7 @@
       "image": "https://i.ebayimg.com/images/g/y78AAOSw2eBjnl-A/s-l225.jpg",
       "seller_score": 2454,
       "seller_pct": 99.7,
-      "item_title": "2021 Panini Instant(9/12/21) — DeVonta Smith —ROOKIE —MINT PSA 9, AUTO 10 — 9/10",
+      "item_title": "2021 Panini Instant(9/12/21) \u2014 DeVonta Smith \u2014ROOKIE \u2014MINT PSA 9, AUTO 10 \u2014 9/10",
       "label": "DeVonta Smith rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -14078,7 +14458,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "💥DEVONTA SMITH AUTO ROOKIE 2021💥LEAF METAL DRAFT AUTO💥PSA 9/10💥RC LE #/7🔥🔥",
+      "title": "\ud83d\udca5DEVONTA SMITH AUTO ROOKIE 2021\ud83d\udca5LEAF METAL DRAFT AUTO\ud83d\udca5PSA 9/10\ud83d\udca5RC LE #/7\ud83d\udd25\ud83d\udd25",
       "currency": "USD",
       "shipping": 4,
       "price": 395,
@@ -14089,7 +14469,7 @@
       "image": "https://i.ebayimg.com/images/g/v4AAAOSwfR1j4Fqv/s-l225.jpg",
       "seller_score": 1489,
       "seller_pct": 100,
-      "item_title": "💥DEVONTA SMITH AUTO ROOKIE 2021💥LEAF METAL DRAFT AUTO💥PSA 9/10💥RC LE #/7🔥🔥",
+      "item_title": "\ud83d\udca5DEVONTA SMITH AUTO ROOKIE 2021\ud83d\udca5LEAF METAL DRAFT AUTO\ud83d\udca5PSA 9/10\ud83d\udca5RC LE #/7\ud83d\udd25\ud83d\udd25",
       "label": "DeVonta Smith rookie autos PSA 10",
       "category": "autos",
       "sport": "football",
@@ -15136,7 +15516,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "Topps Chrome 2018 Shohei Ohtani #150 White Jersey PSA 10 Rookie Angels MLB RC🔥",
+      "title": "Topps Chrome 2018 Shohei Ohtani #150 White Jersey PSA 10 Rookie Angels MLB RC\ud83d\udd25",
       "currency": "USD",
       "shipping": null,
       "price": 1550,
@@ -15147,7 +15527,7 @@
       "image": "https://i.ebayimg.com/images/g/gWsAAeSwEydq4NwK/s-l225.jpg",
       "seller_score": 93,
       "seller_pct": 100,
-      "item_title": "Topps Chrome 2018 Shohei Ohtani #150 White Jersey PSA 10 Rookie Angels MLB RC🔥",
+      "item_title": "Topps Chrome 2018 Shohei Ohtani #150 White Jersey PSA 10 Rookie Angels MLB RC\ud83d\udd25",
       "label": "Shohei Ohtani Topps Chrome PSA 10",
       "category": "established",
       "sport": "baseball",
@@ -16056,7 +16436,7 @@
       "hold_basis": "Planning scenario; sale time is not established"
     },
     {
-      "title": "2017 Topps Chrome Aaron Judge #169 Rookie PSA 10 Yankees🔥",
+      "title": "2017 Topps Chrome Aaron Judge #169 Rookie PSA 10 Yankees\ud83d\udd25",
       "currency": "USD",
       "shipping": 20,
       "price": 499.99,
@@ -16067,7 +16447,7 @@
       "image": "https://i.ebayimg.com/images/g/JJIAAeSw32NqrDnh/s-l225.jpg",
       "seller_score": 652,
       "seller_pct": 100,
-      "item_title": "2017 Topps Chrome Aaron Judge #169 Rookie PSA 10 Yankees🔥",
+      "item_title": "2017 Topps Chrome Aaron Judge #169 Rookie PSA 10 Yankees\ud83d\udd25",
       "label": "Aaron Judge Topps Chrome PSA 10",
       "category": "established",
       "sport": "baseball",
@@ -16495,6 +16875,148 @@
         }
       ],
       "research_notes": "Regular Silver #305 and Rookie Variation Silver #305 are not interchangeable. SportsCardsPro variation page returned 403. No exact primary sale record verified."
+    },
+    {
+      "label": "Marvin Harrison Jr \u00b7 Color Blast PSA 10",
+      "item_title": "2024 Panini Phoenix Color Blast Marvin Harrison Jr PSA 10",
+      "listing_id": "137895683561",
+      "url": "https://www.ebay.com/itm/137895683561",
+      "price": 330,
+      "shipping": 6.82,
+      "currency": "USD",
+      "identity": {
+        "year": 2024,
+        "set": "Panini Phoenix",
+        "player": "Marvin Harrison Jr",
+        "number": "CB-MHJ",
+        "parallel": "Color Blast",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 10
+      },
+      "identity_reviewed": false,
+      "condition_reviewed": false,
+      "category": "inserts",
+      "sport": "football",
+      "page_state": "active",
+      "buying_option": "FIXED_PRICE",
+      "seller_score": 32,
+      "seller_pct": 100,
+      "checked_at": "2026-11-07T00:56:57+00:00",
+      "hold_days": 90,
+      "hold_reviewed": false,
+      "hold_basis": "90-day planning scenario; listing-to-sale time is not established",
+      "cert_number": "124188422",
+      "query": "2024 Panini Phoenix Marvin Harrison Jr Color Blast PSA 10",
+      "discovery_source": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+      "sales": [
+        {
+          "identity": {
+            "year": 2024,
+            "set": "Panini Phoenix",
+            "player": "Marvin Harrison Jr",
+            "number": "CB-MHJ",
+            "parallel": "Color Blast",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-11-04",
+          "price": 340,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:960127271966",
+          "url": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+          "marketplace_url": "https://www.ebay.com/itm/960127271966",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "observed_at": "2026-11-07T00:56:57+00:00",
+          "note": "Alt source-reported PSA 10 auction result, not payment settlement. Primary link redirects to product catalog /p/15081061547 showing unrelated CGC 10 offer; no primary verification.",
+          "sale_format": "auction"
+        },
+        {
+          "identity": {
+            "year": 2024,
+            "set": "Panini Phoenix",
+            "player": "Marvin Harrison Jr",
+            "number": "CB-MHJ",
+            "parallel": "Color Blast",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-11-01",
+          "price": 356,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:900038322398",
+          "url": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+          "marketplace_url": "https://www.ebay.com/itm/900038322398",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "observed_at": "2026-11-07T00:56:57+00:00",
+          "note": "Alt source-reported PSA 10 auction result, not payment settlement. Primary link redirects to product catalog /p/15081061547 showing unrelated CGC 10 offer; no primary verification.",
+          "sale_format": "auction"
+        },
+        {
+          "identity": {
+            "year": 2024,
+            "set": "Panini Phoenix",
+            "player": "Marvin Harrison Jr",
+            "number": "CB-MHJ",
+            "parallel": "Color Blast",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-10-26",
+          "price": 352,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "ebay:128148853404",
+          "url": "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+          "marketplace_url": "https://www.ebay.com/itm/128148853404",
+          "source_type": "secondary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "observed_at": "2026-11-07T00:56:57+00:00",
+          "note": "Alt source-reported PSA 10 auction result, not payment settlement. Primary link redirects to product catalog /p/15081061547 showing unrelated CGC 10 offer; no primary verification.",
+          "sale_format": "auction"
+        }
+      ],
+      "warnings": [
+        "Live fixed-price $330 plus $6.82 displayed shipping. Seller elcardsman has 32 feedback, below 100 minimum; 86 sold is not feedback count.",
+        "Actual single front slab photo viewed: PSA 10 Color Blast #CBMHJ, cert 124188422. Listing title says #CB-2; back unavailable, number alias and full condition not confirmed.",
+        "Alt three PSA 10 auction-sale reports are secondary only. All three original eBay sale links now redirect to a catalog showing a different CGC 10 offer. No primary sold prices established.",
+        "October 14 $399 Best Offer display excluded: accepted amount unconfirmed. July 2 Fanatics $390 sale is outside 90 days. Fee plan, checkout tax and final shipping remain assumptions."
+      ],
+      "excluded_sale_sources": [
+        {
+          "url": "https://www.fanaticscollect.com/buy-now/bbcaf0e5-5f63-46d7-9799-fea638c0695c/2024-panini-phoenix-color-blast-marvin-harrison-jr-rookie-cb-mhj-psa-10-gem-mint",
+          "date": "2026-07-02",
+          "source_reported_price": 390,
+          "reason": "outside_90_day_window"
+        },
+        {
+          "url": "https://www.ebay.com/itm/237122599587",
+          "date": "2026-10-14",
+          "displayed_price": 399,
+          "reason": "unknown_accepted_best_offer_amount"
+        }
+      ]
     }
   ],
   "api_access": {
@@ -16502,8 +17024,8 @@
     "credentials_present": false,
     "browse": "credentials_unavailable",
     "sold_history": "not_tested",
-    "checked_at": "2026-11-04T00:48:59+00:00",
-    "note": "Read-only connection check left snapshot unchanged. This runner only; October 31 snapshot records 36 successful Browse searches in another run."
+    "checked_at": "2026-11-07T00:56:57+00:00",
+    "note": "Read-only connection check left snapshot unchanged. This runner only; no API discovery run and no sold-history permission inferred."
   },
   "run_log": [
     {
@@ -16933,14 +17455,230 @@
         "Jayden Daniels Downtown PSA 10"
       ],
       "note": "No qualifying buys. Null means no eligible executable listing verified in this partial search, not no market supply. Unknown hold remains 90-day planning. No policy/application/collection/feed changes."
+    },
+    {
+      "researched_at": "2026-11-07T00:56:57+00:00",
+      "mode": "public discovery and marketplace alert review; evidence-only evaluation",
+      "selection_basis": "10 watchlist families: unresearched Anthony Edwards and first three unresearched Downtown/Kaboom, then six oldest public-review targets. Two slots reserved for new Alt/eBay alert families. Remaining unresearched Josh Allen/Jayden Daniels Kaboom deferred by three-family Downtown/Kaboom cap.",
+      "queries_attempted": [
+        "2020 Prizm Anthony Edwards Silver 258 PSA 10",
+        "2024 Donruss Downtown Caleb Williams PSA 10",
+        "Panini Donruss Downtown Patrick Mahomes PSA 10",
+        "Panini Kaboom Patrick Mahomes PSA 10",
+        "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
+        "2020 Donruss Optic Jalen Hurts 164 PSA 10",
+        "2023 Select Bijan Robinson Auto PSA 10",
+        "2021 DeVonta Smith Auto PSA 10",
+        "2018 Topps Chrome Shohei Ohtani 150 PSA 10",
+        "2017 Topps Chrome Aaron Judge 169 PSA 10",
+        "2024 Panini Phoenix Marvin Harrison Jr Color Blast PSA 10",
+        "2020 Justin Herbert rookie auto PSA 10"
+      ],
+      "targets_attempted": [
+        {
+          "label": "Anthony Edwards Silver PSA 10",
+          "query": "2020 Prizm Anthony Edwards Silver 258 PSA 10",
+          "category": "rookies",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/326292788759"
+          ],
+          "coverage": "indexed public primary page; live availability not verified",
+          "outcome": "Opened indexed #258 PSA 10 page: $1500 + $12, seller 3926/100%. Above $1000 research-only boundary; live availability not verified."
+        },
+        {
+          "label": "Caleb Williams Downtown PSA 10",
+          "query": "2024 Donruss Downtown Caleb Williams PSA 10",
+          "category": "downtown_kaboom",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/227134724232"
+          ],
+          "coverage": "indexed public primary page; live availability not verified",
+          "outcome": "Opened indexed #21 PSA 10 page: $4000; search index had $5000. Above $1000; conflicting cached prices not treated as live."
+        },
+        {
+          "label": "Patrick Mahomes Downtown PSA 10",
+          "query": "Panini Donruss Downtown Patrick Mahomes PSA 10",
+          "category": "downtown_kaboom",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/116631283429"
+          ],
+          "coverage": "indexed public primary page; live availability not verified",
+          "outcome": "Opened indexed 2022 DTPM PSA 10 $1815 + $5.99 page, out of stock. Not available and displayed ask is not sold evidence."
+        },
+        {
+          "label": "Patrick Mahomes Kaboom PSA 10",
+          "query": "Panini Kaboom Patrick Mahomes PSA 10",
+          "category": "downtown_kaboom",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/sch/i.html?_nkw=kaboom+patrick+mahomes&_sop=12"
+          ],
+          "coverage": "indexed public primary page; live availability not verified",
+          "outcome": "Opened indexed results returned for PSA 10 query: PSA 10 asks $6000/$7500 (2024), $9999.99 (2023). BGS crossover/oversized results excluded. No eligible within-budget listing verified."
+        },
+        {
+          "label": "Cade Cunningham Pink Ice PSA 10",
+          "query": "2021 Prizm Cade Cunningham Pink Ice 282 PSA 10",
+          "category": "rookies",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/286884810317"
+          ],
+          "coverage": "live listing and public comp fallback",
+          "outcome": "Live $299.99 + $6.82; front photo viewed, full condition incomplete. Reopened secondary sold records with original August dates; primary link redirects to PSA 9 catalog. No qualifying primary evidence."
+        },
+        {
+          "label": "Jalen Hurts Optic PSA 10",
+          "query": "2020 Donruss Optic Jalen Hurts 164 PSA 10",
+          "category": "rookies",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/156974936364"
+          ],
+          "coverage": "live listing and public comp fallback",
+          "outcome": "Live $100 + $2.27; seller 15413/100%. Added secondary October 28 $45 sale report. Primary sale unavailable; economics below floors."
+        },
+        {
+          "label": "Bijan Robinson Select rookie autos PSA 10",
+          "query": "2023 Select Bijan Robinson Auto PSA 10",
+          "category": "autos",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/188957642860"
+          ],
+          "coverage": "live listing and public comp fallback",
+          "outcome": "Original listing redirects to product catalog with different offer. Prior sold observation and historical price retained. No available listing confirmed."
+        },
+        {
+          "label": "DeVonta Smith rookie autos PSA 10",
+          "query": "2021 DeVonta Smith Auto PSA 10",
+          "category": "autos",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/235235008323"
+          ],
+          "coverage": "live listing and public comp fallback",
+          "outcome": "Live $399 + $6.82; seller 712/100%. Front PSA 10 photo viewed, back/serial and full condition incomplete. Exact Fanatics 2024 sale stale; recent resale unknown."
+        },
+        {
+          "label": "Shohei Ohtani Topps Chrome PSA 10",
+          "query": "2018 Topps Chrome Shohei Ohtani 150 PSA 10",
+          "category": "established",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/198676743777"
+          ],
+          "coverage": "indexed public primary page; live availability not verified",
+          "outcome": "Opened indexed #150 PSA 10 page: $1800, seller 6707/99.8%. Displayed international shipping not a US quote. Above $1000; live availability unverified."
+        },
+        {
+          "label": "Aaron Judge Topps Chrome PSA 10",
+          "query": "2017 Topps Chrome Aaron Judge 169 PSA 10",
+          "category": "established",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/307203766389"
+          ],
+          "coverage": "indexed public primary page; live availability not verified",
+          "outcome": "Opened indexed #169 PSA 10 page: seller-ended October 8, $525 + $5.99 displayed. Unavailable; displayed ask not sold price."
+        },
+        {
+          "label": "Marvin Harrison Jr \u00b7 Color Blast PSA 10",
+          "query": "2024 Panini Phoenix Marvin Harrison Jr Color Blast PSA 10",
+          "category": "inserts",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://alt.xyz/itm/90a60ed1-829f-4ec1-bee5-c4390abf8e98/external",
+            "https://www.ebay.com/itm/137895683561"
+          ],
+          "coverage": "new Alt alert; live listing, front image and secondary sale reports",
+          "outcome": "Seller 32 feedback fails minimum; title/card-number alias and full condition unresolved. Three original sale links redirect; secondary provisional only."
+        },
+        {
+          "label": "Justin Herbert rookie autograph PSA 10 alert",
+          "query": "2020 Justin Herbert rookie auto PSA 10",
+          "category": "autos",
+          "checked_at": "2026-11-07T00:56:57+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/920108966837"
+          ],
+          "coverage": "new eBay alert; live listing and actual slab front image",
+          "outcome": "Live $270 + $15, seller hayha90 has no feedback, joined November 2026. PSA/DNA slab cert 84703352 says AUTO GRADE GEM MT 10, not PSA card grade 10. Card grade unconfirmed; rejected before comp valuation, no candidate or intake."
+        }
+      ],
+      "target_count": 36,
+      "families_attempted": 12,
+      "watchlist_families_attempted": 10,
+      "alert_families_attempted": 2,
+      "category_counts": {
+        "rookies": 3,
+        "autos": 3,
+        "inserts": 1,
+        "established": 2,
+        "downtown_kaboom": 3
+      },
+      "product_research": {
+        "checked_at": "2026-11-07T00:56:57+00:00",
+        "url": "https://www.ebay.com/sh/research",
+        "status": "inaccessible_sign_in_required",
+        "checked_before_public_sold": true,
+        "usable_comp_records": 0,
+        "note": "Direct browser check reached sign-in. No authenticated Product Research comp results or accepted-offer amounts obtained. Public sold fallback attempted only afterward."
+      },
+      "public_sold_fallback": {
+        "status": "sign_in_required",
+        "url": "https://www.ebay.com/sch/i.html?_nkw=2024+Phoenix+Marvin+Harrison+Color+Blast+PSA+10&LH_Sold=1&LH_Complete=1",
+        "note": "Sign-in wall after Product Research check; used individual public pages and secondary reports. No public sold result set obtained."
+      },
+      "observations_added": 1,
+      "observations_rechecked": 4,
+      "prior_observations_unchanged": 673,
+      "primary_sale_records_added": 0,
+      "secondary_sale_records_added": 4,
+      "live_listing_checks": 6,
+      "complete_market_coverage": false,
+      "failures": [
+        "Production Browse credentials unavailable in this runner; read-only check left snapshot unchanged.",
+        "Product Research and public sold search require sign-in.",
+        "Three Alt sale links and Cade August 10 link redirect to product catalogs; new Hurts primary sale failed retrieval.",
+        "Bijan original listing redirects to catalog; unavailable at original offer."
+      ],
+      "null_results": [
+        "Anthony Edwards Silver PSA 10",
+        "Caleb Williams Downtown PSA 10",
+        "Patrick Mahomes Downtown PSA 10",
+        "Patrick Mahomes Kaboom PSA 10",
+        "Bijan Robinson Select rookie autos PSA 10",
+        "Shohei Ohtani Topps Chrome PSA 10",
+        "Aaron Judge Topps Chrome PSA 10",
+        "Justin Herbert rookie autograph PSA 10 alert"
+      ],
+      "alert_review": {
+        "window": "after 2026-11-03 through this run; overlapping catch-up, not every message new",
+        "matching_messages": 24,
+        "relevant_alert_bodies_read": 11,
+        "provider_counts": {
+          "Alt": 6,
+          "eBay": 5
+        },
+        "other_marketplaces": "Fanatics Collect, MySlabs, Goldin, PWCC and COMC sender search returned zero messages in window.",
+        "coverage": "Visible email lead previews only; subject counts such as 221/190/195/71 are not listings reviewed. Two new families advanced to live review, not all alert matches. No private email bodies, message IDs or tracking URLs published.",
+        "excluded_preview": "Alt JSN 2023 Prizm Draft Picks Color Blast PSA 10 $1219.99 preview exceeds $1000 research-only boundary; not opened or promoted as a live opportunity.",
+        "qualified_for_jarvis": 0,
+        "automatic_intake": false
+      },
+      "note": "No qualifying buys. Partial search, not a full market scan. Original grades and sale dates preserved; unknown hold remains 90-day planning. Fee plan, checkout tax/shipping remain assumptions. No policy/application/collection/comparison feed changes; no transactions or seller contact."
     }
   ],
   "product_research_access": {
-    "checked_at": "2026-11-04T00:46:00+00:00",
+    "checked_at": "2026-11-07T00:56:57+00:00",
     "url": "https://www.ebay.com/sh/research",
     "status": "inaccessible_sign_in_required",
     "checked_before_public_sold": true,
     "usable_comp_records": 0,
-    "note": "Direct browser navigation reached eBay sign-in; site guidance blocks sign-in from this cloud browser. No authentication or Product Research comp results obtained."
+    "note": "Direct browser check reached sign-in. No authenticated Product Research comp results or accepted-offer amounts obtained. Public sold fallback attempted only afterward."
   }
 }
