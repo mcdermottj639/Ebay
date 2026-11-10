@@ -48,10 +48,12 @@ review. Use the offers to help with planning as well as other info."
   "Respond on eBay" link) shows at the top of Today's Next moves, on the Sell plan
   card and on the On eBay listing card. Ended offers show as "Best offer so far".
   Nothing accepts, counters, declines or messages anyone.
-- **Feed**: the scheduled task "Card Vault offer relay" reads eBay offer emails and
-  books `offer_received` events through a data-only `book/` PR (same gates as the
-  eBay bookkeeper). First four booked by hand from Gmail on Nov 9: CARD-0034 $100
-  (Oct 31) and $160 (Nov 1), CARD-0024 $60 (Nov 4), CARD-0029 $220 (Nov 9, live).
+- **Feed (NOT automated yet, Nov 9)**: no scheduled task books offers. The eBay
+  bookkeeper still skips offers, and creating the planned "Card Vault offer relay"
+  task (Gmail offer emails -> data-only `book/` PR adding `offer_received` events)
+  was blocked by a permission check in Jack's chat. Until it exists, offers are
+  booked by a Claude chat. First four booked by hand from Gmail on Nov 9: CARD-0034
+  $100 (Oct 31) and $160 (Nov 1), CARD-0024 $60 (Nov 4), CARD-0029 $220 (Nov 9, live).
 - Validation: check_catalog, build_web, 39 Python + 29 Node tests, node --check on
   docs/*.js. Playwright at 390x844 dark and 320x690 light (clock set to Nov 9
   11:30 PM ET): plan renders on Today, Sell and On eBay, scrollWidth == innerWidth,
