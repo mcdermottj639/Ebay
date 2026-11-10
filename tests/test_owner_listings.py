@@ -40,6 +40,23 @@ class OwnerListingsTests(unittest.TestCase):
         self.assertFalse(any(float(s['p']) == 100 for s in c['my_sales']))
         self.assertIsNone(c['owner_listing']['net_profit'])
 
+    def test_offer_events_carry_amount_and_timing_only(self):
+        saved = json.loads((ROOT / 'data/owner_listings.json').read_text())
+        offers = [e for r in saved['listings'].values() for e in r['events'] if e['type'] == 'offer_received']
+        self.assertTrue(offers)
+        for mode in ('buyer', 'price'):
+            data = copy.deepcopy(saved)
+            event = next(e for e in data['listings']['CARD-0029']['events'] if e['type'] == 'offer_received')
+            if mode == 'buyer':
+                event['buyer'] = 'someone'
+            else:
+                event['price'] = 0
+            with tempfile.TemporaryDirectory() as td:
+                Path(td, 'owner_listings.json').write_text(json.dumps(data))
+                with patch.object(build, 'DATA', Path(td)):
+                    with self.assertRaises(ValueError):
+                        build._owner_listings()
+
     def test_duplicate_events_and_external_urls_fail_closed(self):
         saved = json.loads((ROOT / 'data/owner_listings.json').read_text())
         for mode in ('duplicate', 'url'):

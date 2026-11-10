@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v68";
+  var APP_VERSION = "v69";
   var state = { tab: "today", data: null, bucket: "All",
                 q: "", sort: "val-desc", sellMode: "plan", buyMode: "radar", planFilter: "all", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryTier: "all", inventoryLayout: "grid",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
@@ -628,6 +628,24 @@
     for (var i = 0; i < Math.min(n, 5); i++) { var a = (i * 72 + 30) * Math.PI / 180, r = 9 + i * 2.5; blips += '<circle class="blip" cx="' + (23 + Math.cos(a) * r).toFixed(1) + '" cy="' + (23 + Math.sin(a) * r).toFixed(1) + '" r="3"/>'; }
     return '<svg class="radar-mini" viewBox="0 0 46 46" aria-hidden="true" focusable="false"><circle cx="23" cy="23" r="21"/><circle cx="23" cy="23" r="13"/><circle cx="23" cy="23" r="5"/><path d="M23 23 39 9"/>' + blips + "</svg>";
   }
+  // v69: plans built from eBay offer emails. Public data carries only the amount
+  // and timing; the buyer never appears. Review-only: nothing acts on eBay.
+  function offerWhen(ms) { try { return new Intl.DateTimeFormat("en-US", {timeZone:"America/New_York", weekday:"short", month:"short", day:"numeric", hour:"numeric", minute:"2-digit"}).format(new Date(ms)) + " ET"; } catch (e) { return "time unknown"; } }
+  function builtPlanBlock(c, withName) {
+    var plan = Selling.builtPlan(c, defaultOfferAssumptions()), o = c.owner_listing || {};
+    if (!plan) return "";
+    if (plan.kind === "history") return '<p class="section-note bp-history">Best offer so far <b>' + displayPrice(plan.best.amount) + "</b> on " + esc(offerWhen(plan.best.at)) + " (ended)" + (plan.count > 1 ? " · " + plan.count + " offers by email" : "") + ".</p>";
+    var tile = function (title, q, on, extra) { return q ? '<div class="bp-tile' + (on ? " on" : "") + '"><span>' + esc(title) + "</span><b>" + (q.proceeds == null ? "—" : money(q.proceeds)) + "</b><small>" + (q.proceeds == null ? "net unknown" : "you keep" + (q.profit == null ? " · cost unknown" : " · profit " + money(q.profit))) + (extra ? "<br>" + esc(extra) : "") + "</small></div>" : ""; };
+    var more = plan.counterQuote && plan.offerQuote && plan.counterQuote.proceeds != null && plan.offerQuote.proceeds != null ? "+" + money(plan.counterQuote.proceeds - plan.offerQuote.proceeds) + " if they take it" : "";
+    return '<div class="built-plan">' + (withName ? '<h3 class="bp-name">' + esc(c.player) + ' <small>' + esc(subline(c)) + "</small></h3>" : "") +
+      '<div class="bp-head"><span class="signal amber">eBay offer ' + displayPrice(plan.offer.amount) + '</span><b>' + esc(plan.label) + "</b></div>" +
+      '<p class="bp-expiry">' + (plan.offer.expiryKnown ? "Expires about " + esc(offerWhen(plan.offer.expires)) : "Expiry not confirmed. Check eBay") + (plan.offer.expiresNote ? " · eBay email: " + esc(plan.offer.expiresNote) : "") + "</p>" +
+      '<div class="bp-tiles">' + tile("Accept " + displayPrice(plan.offer.amount), plan.offerQuote, plan.recommendation === "accept") + tile(plan.counter == null ? "" : "Counter " + displayPrice(plan.counter), plan.counter == null ? null : plan.counterQuote, plan.recommendation === "counter", more) + "</div>" +
+      '<ul class="bp-why">' + plan.reasons.map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") + "</ul>" +
+      '<details class="bp-note"><summary>How this plan is built</summary><p>At or above the saved value leans accept. Below it leans a counter halfway to your ask, never under the saved value. Net uses your saved selling-cost rates, not eBay’s final invoice. A counter replaces the buyer’s offer on eBay. Offers come from your eBay emails; the buyer is never stored.</p></details>' +
+      (o.url ? '<div class="button-row"><a class="button small" href="' + safeBuyLink(o.url) + '" target="_blank" rel="noopener">Respond on eBay' + icon("external") + "</a></div>" : "") + "</div>";
+  }
+  function liveOfferCards() { return heldCards().filter(function (c) { return !!Selling.liveOffer(c); }); }
   function nextMoves() {
     var batch = eligibleCards(), listed = heldCards().filter(Selling.listed);
     var asks = listed.reduce(function (n, c) { return n + (Selling.amount((c.owner_listing || {}).asking_price) || 0); }, 0);
@@ -635,6 +653,7 @@
     var due = premium.filter(function (x) { return x.plan.key === "due" || x.plan.key === "offer"; }).length, buys = qualifiedBuys().length, targets = (state.data.targets || []).length;
     var sec = el('<section class="moves-section" aria-label="Next moves"></section>');
     sec.appendChild(sectionHead("Next moves"));
+    liveOfferCards().slice(0, 3).forEach(function (c) { sec.appendChild(el('<article class="bp-card">' + builtPlanBlock(c, true) + "</article>")); });
     var grid = el('<div class="action-grid"></div>');
     var fan = "";
     for (var i = 0; i < Math.min(5, batch.length); i++) fan += '<i style="--i:' + i + '"></i>';
@@ -832,9 +851,9 @@
   }
   function premiumRow(item) {
     var c = item.card, p = item.plan, o = c.owner_listing || {}, ask = Selling.listed(c) ? Selling.amount(o.asking_price) : null;
-    var offer = (workspace.plans[c.sku] || {}).offer, offerAmt = offer ? Selling.amount(offer.amount) : null;
+    var offer = (workspace.plans[c.sku] || {}).offer, emailOffer = offer ? null : Selling.liveOffer(c), offerAmt = offer ? Selling.amount(offer.amount) : emailOffer ? emailOffer.amount : null;
     var ml = miniLadder(c, ask);
-    var row = el('<article class="review-card"><span class="review-photo">' + slab(c, "sm") + '</span><div class="review-top"><h3>' + esc(c.player) + '</h3><span class="row-money"><b>' + displayPrice(offerAmt != null ? offerAmt : Selling.reference(c)) + "</b><small>" + esc(offerAmt != null ? "Private offer" : referenceLabel(c)) + '</small></span></div><p class="card-spec">' + esc(subline(c)) + '</p><div class="review-meta"><span class="signal ' + p.tone + '">' + esc(p.label) + "</span>" + (ask != null ? '<span class="signal green">Ask ' + money0(ask) + "</span>" : "") + "</div>" + (ml ? '<div class="review-viz">' + ml + "</div>" : "") + '<p class="review-reason">' + esc(p.reason) + '</p><div class="review-buttons"><button class="button small" type="button">Plan this card</button><button class="text-button" type="button" data-details>Card details</button></div></article>');
+    var row = el('<article class="review-card"><span class="review-photo">' + slab(c, "sm") + '</span><div class="review-top"><h3>' + esc(c.player) + '</h3><span class="row-money"><b>' + displayPrice(offerAmt != null ? offerAmt : Selling.reference(c)) + "</b><small>" + esc(offerAmt != null ? (emailOffer ? "eBay offer" : "Private offer") : referenceLabel(c)) + '</small></span></div><p class="card-spec">' + esc(subline(c)) + '</p><div class="review-meta"><span class="signal ' + p.tone + '">' + esc(p.label) + "</span>" + (ask != null ? '<span class="signal green">Ask ' + money0(ask) + "</span>" : "") + "</div>" + (ml ? '<div class="review-viz">' + ml + "</div>" : "") + '<p class="review-reason">' + esc(p.reason) + '</p>' + (offer ? "" : builtPlanBlock(c)) + '<div class="review-buttons"><button class="button small" type="button">Plan this card</button><button class="text-button" type="button" data-details>Card details</button></div></article>');
     row.querySelector(".button").onclick = function () { openSellPlan(c); };
     row.querySelector("[data-details]").onclick = function () { openModal(c); };
     return row;
@@ -844,7 +863,7 @@
     var prem = ask != null && ref ? (ask - ref) / ref : null;
     var p = el('<article class="listing-card">' + thumb(c) + '<div><span class="signal green">' + (age === null ? "Listed" : "Listed " + age + (age === 1 ? " day" : " days")) + "</span><h3>" + esc(c.player) + '</h3><p class="card-spec">' + esc(subline(c)) + '</p></div><div class="listing-prices"><div><span>Your ask</span><b>' + displayPrice(ask) + "</b></div><div><span>Saved value</span><b>" + displayPrice(ref) + "</b></div></div>" +
       (prem != null ? '<div class="premium"><div class="premium-line"><span>' + (prem >= 0 ? "Saved value is " + Math.round(ref / ask * 100) + "% of your ask" : "Your ask is below the saved value") + "</span><b>" + (prem >= 0 ? "+" : "−") + Math.abs(Math.round(prem * 100)) + "%</b></div>" + Charts.meter(Math.min(ref, ask), Math.max(ref, ask), { label: "Saved value versus your ask" }) + "</div>" : "") +
-      '<p class="section-note">' + (o.confirmed_at ? "Last confirmed " + esc(savedDate(o.confirmed_at)) + ". " : "") + 'Check eBay for offers and watchers.</p><div class="button-row"><button class="button small" type="button">Price plan</button>' + (o.url ? '<a class="button secondary small" href="' + safeBuyLink(o.url) + '" target="_blank" rel="noopener">Open listing' + icon("external") + "</a>" : "") + "</div></article>");
+      (builtPlanBlock(c) || "") + '<p class="section-note">' + (o.confirmed_at ? "Last confirmed " + esc(savedDate(o.confirmed_at)) + ". " : "") + 'Offers from your eBay emails show here.</p><div class="button-row"><button class="button small" type="button">Price plan</button>' + (o.url ? '<a class="button secondary small" href="' + safeBuyLink(o.url) + '" target="_blank" rel="noopener">Open listing' + icon("external") + "</a>" : "") + "</div></article>");
     p.querySelector("button").onclick = function () { openSellPlan(c); };
     return p;
   }
