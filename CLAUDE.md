@@ -1473,6 +1473,18 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-10 — five cards added from Jack's eBay My Collection screenshots (Claude,
+  data only).** CARD-0037 Cooper DeJean 2024 Gold Standard #133 rookie auto /299 ($49),
+  CARD-0038 Ladd McConkey 2024 Score #328 Rookie Signatures ($15), CARD-0039 Freeney /
+  Saturday 2024 Gold Standard Double Standard #DS-INDY dual auto ($25; parallel/serial not
+  visible, base is /99), CARD-0040 Kyle Hamilton 2022 XR #RSA-KH swatch auto /199 ($12.50),
+  CARD-0041 Rashee Rice 2023 One #309 Precision RPA Blue /75 ($75). Values are the
+  figures eBay My Collection showed (basis `est_sold`, `basis_note` says provisional,
+  not a reviewed sold comp); costs, exact serial numbers and photos not given. The other
+  seven cards in the screenshots were already cataloged (CARD-0013/0014/0015/0016/0017/
+  0022/0029). eBay's figures for four of those sit far below ours and were NOT applied:
+  CARD-0013 $7.50 vs $59.99, CARD-0015 $9.49 vs $61.59, CARD-0016 $5 vs $39.99,
+  CARD-0017 $9 vs $17.59. No UI change, v69.
 - **2026-11-04 — LaPorta and Mbappe listings now have their asks (Claude, Jack's
   chat).** Jack: "Record my eBay asks as owner statements: 336878002103 LaPorta
   CARD-0024 $75, 336878004176 Mbappe CARD-0028 $100." Both moved from
