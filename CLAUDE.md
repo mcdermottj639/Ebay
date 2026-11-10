@@ -52,7 +52,7 @@ review. Use the offers to help with planning as well as other info."
   books `offer_received` events through a data-only `book/` PR (same gates as the
   eBay bookkeeper). First four booked by hand from Gmail on Nov 9: CARD-0034 $100
   (Oct 31) and $160 (Nov 1), CARD-0024 $60 (Nov 4), CARD-0029 $220 (Nov 9, live).
-- Validation: check_catalog, build_web, 40 Python + 29 Node tests, node --check on
+- Validation: check_catalog, build_web, 39 Python + 29 Node tests, node --check on
   docs/*.js. Playwright at 390x844 dark and 320x690 light (clock set to Nov 9
   11:30 PM ET): plan renders on Today, Sell and On eBay, scrollWidth == innerWidth,
   no page errors (only the sandbox's blocked Google Fonts request). Physical iPhone
