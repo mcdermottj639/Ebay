@@ -74,6 +74,50 @@
     events.sort(function (a,b) { return String(a.occurred_at).localeCompare(String(b.occurred_at)); });
     return events.length ? daysSince(events[0].occurred_at, now) : null;
   }
+  // v69: offers read from the owner's eBay emails (owner_listing.events, type
+  // "offer_received": amount and timing only, never the buyer). The app builds
+  // the plan from them so the owner reviews instead of typing.
+  function nowMs(now) { return now === undefined || now === null ? Date.now() : typeof now === "number" ? now : new Date(now).getTime(); }
+  function emailOffers(c, now) {
+    var o = c.owner_listing || {}, t = nowMs(now), open = listed(c) && o.status === "listed";
+    return (o.events || []).filter(function (e) { return e && e.type === "offer_received" && amount(e.price) > 0 && instant(e.occurred_at) !== null; }).map(function (e) {
+      var at = instant(e.occurred_at), exp = e.expires_at ? instant(e.expires_at) : null;
+      return {amount:amount(e.price), at:at, receivedAt:e.occurred_at, expiresAt:exp === null ? null : e.expires_at, expires:exp === null ? at + 48 * 3600000 : exp, expiryKnown:exp !== null, expiresNote:String(e.expires_note || ""), live:open && Number.isFinite(t) && (exp === null ? at + 48 * 3600000 : exp) > t && at <= t};
+    }).sort(function (a, b) { return b.at - a.at; });
+  }
+  function liveOffer(c, now) {
+    var rows = emailOffers(c, now).filter(function (r) { return r.live; });
+    return rows.length ? rows.sort(function (a, b) { return b.amount - a.amount || b.at - a.at; })[0] : null;
+  }
+  function bestOffer(c, now) {
+    var rows = emailOffers(c, now);
+    return rows.length ? rows.slice().sort(function (a, b) { return b.amount - a.amount || b.at - a.at; })[0] : null;
+  }
+  function round5(n) { return Math.round(n / 5) * 5; }
+  // Starting rules, stated on the card: at or above the saved sold-based value
+  // leans accept; below it leans counter at the midpoint to the ask (never under
+  // the saved value); no saved value means review. Notes, never a marketplace action.
+  function builtPlan(c, assumptions, now) {
+    var live = liveOffer(c, now), best = bestOffer(c, now);
+    if (!held(c) || !best) return null;
+    var o = c.owner_listing || {}, ask = listed(c) ? amount(o.asking_price) : null, ref = reference(c), age = listingAge(c, now), ev = soldEvidence(c, now);
+    var quote = function (price) { if (price === null) return null; var q = lotQuote([c], Object.assign({}, assumptions || {}, {price:price})); return {price:price, proceeds:q.proceeds, profit:q.profit}; };
+    if (!live) return {kind:"history", best:best, count:emailOffers(c, now).length, ask:ask, reference:ref, bestQuote:quote(best.amount)};
+    var a = live.amount, counter = ask !== null && ask > a ? round5((a + ask) / 2) : null;
+    if (counter !== null && ref !== null && counter < ref) counter = Math.ceil(ref / 5) * 5;
+    if (counter !== null && (counter <= a || counter >= ask)) counter = null;
+    var rec = ref === null || ref <= 0 ? "review" : a >= ref ? "accept" : counter !== null ? "counter" : "hold";
+    var reasons = [];
+    if (ref !== null && ref > 0) reasons.push("Offer is " + Math.round(a / ref * 100) + "% of the saved value ($" + round(ref) + ")");
+    else reasons.push("No saved value for this card yet, so check sold comps first");
+    if (ask !== null && ask > 0) reasons.push(Math.round(a / ask * 100) + "% of your $" + round(ask) + " ask");
+    if (age !== null) reasons.push("Listed " + age + " day" + (age === 1 ? "" : "s"));
+    reasons.push(ev.count + " recorded sale" + (ev.count === 1 ? "" : "s") + " in 90 days");
+    var earlier = emailOffers(c, now).filter(function (r) { return r !== live && r.at < live.at; }).sort(function (x, y) { return y.amount - x.amount; })[0];
+    if (earlier) reasons.push("Best earlier offer $" + round(earlier.amount));
+    return {kind:"offer", offer:live, recommendation:rec, label:{accept:"Consider accepting", counter:"Consider a counter", hold:"Hold your price", review:"Review before deciding"}[rec],
+      counter:counter, ask:ask, reference:ref, offerQuote:quote(a), counterQuote:quote(counter), reasons:reasons};
+  }
   function planFor(c, saved, now) {
     var p = saved || {}, ref = reference(c), evidence = soldEvidence(c, now), age = listingAge(c, now);
     var due = p.reviewDate && daysSince(p.reviewDate, now) !== null;
@@ -83,6 +127,8 @@
       var deadline = offerDeadline(p.offer, now);
       return {key:"offer",label:deadline.key === "expired" ? "Offer deadline passed" : "Review private offer",tone:"amber",reason:deadline.label + ". Confirm the live offer before deciding; this plan takes no marketplace action.",score:1200+(ref || 0),evidence:evidence,age:age,deadline:deadline};
     }
+    var emailOffer = liveOffer(c, now);
+    if (emailOffer) return {key:"offer",label:"eBay offer $" + round(emailOffer.amount),tone:"amber",reason:"A plan is built from this offer. Review it, then respond on eBay; nothing here acts for you.",score:1200+(ref || 0),evidence:evidence,age:age,email:true};
     if (due) return {key:"due",label:"Review due",tone:"amber",reason:"Your planned review date has arrived.",score:1000+(ref || 0),evidence:evidence,age:age};
     if (met) return {key:"target",label:"Check your target",tone:"green",reason:"The saved reference meets your target. Verify exact sold comps before acting.",score:800+(ref || 0),evidence:evidence,age:age};
     if (p.action === "hold") return {key:"hold",label:"Holding for your price",tone:"muted",reason:p.reviewDate ? "Next review " + p.reviewDate + "." : "Set a review date to keep this on your radar.",score:100+(ref || 0),evidence:evidence,age:age};
@@ -269,5 +315,5 @@
     var sold=cards.filter(function(c) { return !held(c); }), known=sold.filter(function(c) { return cost(c) !== null; });
     return {held:cards.filter(held).length, listed:cards.filter(listed).length, sold:sold.length, revenue:round(sold.reduce(function(n,c) { return n + (amount(c.sold_price) || 0); },0)), gross:known.length === sold.length && sold.length ? round(known.reduce(function(n,c) { return n + (amount(c.sold_price) || 0) - cost(c); },0)) : null, knownSoldCosts:known.length, heldCostCount:cards.filter(function(c) { return held(c) && cost(c) !== null; }).length, knownCapital:round(cards.filter(held).reduce(function(n,c) { return n + (cost(c) || 0); },0)), net:sold.length && sold.every(function(c) { return typeof (c.owner_listing || {}).net_profit === "number" && Number.isFinite(c.owner_listing.net_profit); }) ? round(sold.reduce(function(n,c) { return n+c.owner_listing.net_profit; },0)) : null};
   }
-  return {amount:amount,round:round,held:held,listed:listed,reference:reference,cost:cost,today:today,formatDate:formatDate,daysSince:daysSince,protectedCard:protectedCard,batchEligible:batchEligible,groups:groups,soldEvidence:soldEvidence,soldRows:soldRows,listingAge:listingAge,planFor:planFor,premium:premium,lotQuote:lotQuote,normalizeOffer:normalizeOffer,offerDeadline:offerDeadline,offerQuote:offerQuote,parseOfferExchange:parseOfferExchange,exportOfferExchange:exportOfferExchange,lotTitle:lotTitle,lotDescription:lotDescription,results:results,saleBreakdown:saleBreakdown,moneySplit:moneySplit};
+  return {amount:amount,round:round,held:held,listed:listed,reference:reference,cost:cost,today:today,formatDate:formatDate,daysSince:daysSince,protectedCard:protectedCard,batchEligible:batchEligible,groups:groups,soldEvidence:soldEvidence,soldRows:soldRows,listingAge:listingAge,planFor:planFor,premium:premium,emailOffers:emailOffers,liveOffer:liveOffer,bestOffer:bestOffer,builtPlan:builtPlan,lotQuote:lotQuote,normalizeOffer:normalizeOffer,offerDeadline:offerDeadline,offerQuote:offerQuote,parseOfferExchange:parseOfferExchange,exportOfferExchange:exportOfferExchange,lotTitle:lotTitle,lotDescription:lotDescription,results:results,saleBreakdown:saleBreakdown,moneySplit:moneySplit};
 }));

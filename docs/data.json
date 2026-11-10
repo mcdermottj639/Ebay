@@ -126,10 +126,15 @@
       "d": "2026-11-07",
       "v": 2753.85,
       "n": 34
+    },
+    {
+      "d": "2026-11-10",
+      "v": 2753.85,
+      "n": 34
     }
   ],
-  "generated": "Nov 07, 2026 \u00b7 14:14 UTC",
-  "app_version": "v68",
+  "generated": "Nov 10, 2026 \u00b7 04:06 UTC",
+  "app_version": "v69",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -50500,7 +50505,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 3.08,
+      "prev_price": 2.63,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -50628,7 +50633,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 1.32,
+      "prev_price": 1.75,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -51012,7 +51017,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 1.45,
+      "prev_price": 1.4,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -52009,7 +52014,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 68.2,
+      "prev_price": 61.59,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -52265,7 +52270,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 21.99,
+      "prev_price": 17.59,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -53279,6 +53284,15 @@
             "currency": "USD",
             "source": "owner_statement",
             "note": "Jack stated the ask ($75) to ChatGPT 2026-11-03 20:28 ET, confirmed it in Jarvis 12:03 ET and in a Claude chat 2026-11-04. Not read from an eBay email."
+          },
+          {
+            "event_id": "336878002103:offer_received:2026-11-04T13:32:36-05:00",
+            "type": "offer_received",
+            "occurred_at": "2026-11-04T13:32:36-05:00",
+            "item_id": "336878002103",
+            "price": 60,
+            "currency": "USD",
+            "source": "ebay_offer_notification_email"
           }
         ],
         "asking_price_source": "owner_statement",
@@ -53653,7 +53667,7 @@
           "n": "eBay sold (Terapeak 90d): 2023-24 Panini Instant LeBron James, Victor Wembanyama #371"
         }
       ],
-      "prev_price": 196.76,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -54074,6 +54088,17 @@
             "price": 300,
             "currency": "USD",
             "source": "ebay_listing_confirmation_email"
+          },
+          {
+            "event_id": "336866522689:offer_received:2026-11-09T15:02:39-05:00",
+            "type": "offer_received",
+            "occurred_at": "2026-11-09T15:02:39-05:00",
+            "item_id": "336866522689",
+            "price": 220,
+            "currency": "USD",
+            "source": "ebay_offer_notification_email",
+            "expires_at": "2026-11-10T15:02:00-05:00",
+            "expires_note": "Tue, Nov 10 12:02 PM, no time zone shown"
           }
         ]
       },
@@ -54829,7 +54854,7 @@
         "label_source": "eBay 'Your shipping label is ready' email, 2026-10-31 ET, FedEx Ground Economy"
       },
       "my_sales": [],
-      "prev_price": 250.0,
+      "prev_price": "",
       "price_series": [
         {
           "d": "2026-07-15",
@@ -55143,6 +55168,25 @@
             "currency": "USD",
             "source": "ebay_offer_notification_email",
             "note": "Buy It Now $240.00 shown in eBay offer-pending reminder (notification time). A 2026-11-01 10:10 EST offer email still showed $175, so the change to $240 happened between those emails. Exact revision time unknown."
+          },
+          {
+            "event_id": "336866528719:offer_received:2026-10-31T20:22:45-04:00",
+            "type": "offer_received",
+            "occurred_at": "2026-10-31T20:22:45-04:00",
+            "item_id": "336866528719",
+            "price": 100,
+            "currency": "USD",
+            "source": "ebay_offer_notification_email",
+            "expires_note": "Sun, Nov 01 04:22 PM, no time zone shown"
+          },
+          {
+            "event_id": "336866528719:offer_received:2026-11-01T10:10:01-05:00",
+            "type": "offer_received",
+            "occurred_at": "2026-11-01T10:10:01-05:00",
+            "item_id": "336866528719",
+            "price": 160,
+            "currency": "USD",
+            "source": "ebay_offer_notification_email"
           }
         ],
         "asking_price_note": "Last email-confirmed ask: Buy It Now $240 in the 2026-11-01 13:22 EST eBay offer reminder. Original $450 listing event kept."
@@ -55224,7 +55268,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 193.6,
       "price_series": [
         {
           "d": "2026-11-07",
@@ -55312,7 +55356,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": "",
+      "prev_price": 100.0,
       "price_series": [
         {
           "d": "2026-11-07",

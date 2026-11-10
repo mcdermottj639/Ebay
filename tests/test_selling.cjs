@@ -170,3 +170,34 @@ test('v68 sale breakdown: real label wins, estimates fill gaps, missing cost nev
   assert.equal(S.moneySplit([card],policy).net,13.21);
   assert.equal(S.moneySplit([],policy),null);
 });
+
+test('v69 email offers: live offer builds a reviewable plan; expired or sold never does', () => {
+  const A={shipping:8,supplies:2,feeRate:13.25,orderFee:.4,promotion:2,buyerTax:8,feeThreshold:7500,feeRateAbove:2.35};
+  const ev=(at,price,extra)=>({type:'offer_received',occurred_at:at,price,...extra});
+  const card={...base,sku:'C9',asking_price:'215',cost:'50',listed:true,owner_listing:{status:'listed',asking_price:300,events:[
+    {type:'listed',occurred_at:'2026-10-27T21:19:38-04:00'},ev('2026-11-01T10:00:00-05:00',150),ev('2026-11-09T15:02:39-05:00',220,{expires_at:'2026-11-10T15:02:00-05:00'})]}};
+  const now=Date.parse('2026-11-09T23:00:00-05:00');
+  assert.equal(S.liveOffer(card,now).amount,220);
+  const plan=S.builtPlan(card,A,now);
+  assert.equal(plan.kind,'offer'); assert.equal(plan.recommendation,'accept'); assert.equal(plan.counter,260);
+  assert.equal(plan.offerQuote.proceeds,173.72); assert.equal(plan.offerQuote.profit,123.72);
+  assert.equal(plan.counterQuote.proceeds,207.19);
+  assert.ok(plan.reasons.includes('Best earlier offer $150'));
+  assert.equal(S.planFor(card,{},now).key,'offer');
+  // below the saved value leans counter, never under the saved value
+  const low=S.builtPlan({...card,asking_price:'280'},A,now); assert.equal(low.recommendation,'counter'); assert.equal(low.counter,280);
+  // no saved value: review; unknown cost never becomes profit
+  const blank=S.builtPlan({...card,asking_price:'',cost:''},A,now); assert.equal(blank.recommendation,'review'); assert.equal(blank.offerQuote.profit,null);
+  // after expiry it is history only and the plan key falls back
+  const later=Date.parse('2026-11-10T15:03:00-05:00');
+  assert.equal(S.liveOffer(card,later),null); assert.equal(S.builtPlan(card,A,later).kind,'history'); assert.equal(S.builtPlan(card,A,later).best.amount,220);
+  assert.equal(S.planFor(card,{},later).key,'listed');
+  // no stated expiry: treated as live for 48 hours only
+  const noexp={...card,owner_listing:{status:'listed',asking_price:300,events:[ev('2026-11-09T15:00:00-05:00',200)]}};
+  assert.equal(S.liveOffer(noexp,Date.parse('2026-11-11T14:00:00-05:00')).amount,200); assert.equal(S.liveOffer(noexp,Date.parse('2026-11-11T16:00:00-05:00')),null);
+  // sold or ended listings never show a live offer; a saved private offer still wins
+  assert.equal(S.liveOffer({...card,sold:true},now),null);
+  assert.equal(S.liveOffer({...card,owner_listing:{...card.owner_listing,status:'ended'}},now),null);
+  assert.equal(S.planFor(card,{offer:{amount:230}},now).label,'Review private offer');
+  assert.equal(S.builtPlan({...base,listed:true},A,now),null);
+});

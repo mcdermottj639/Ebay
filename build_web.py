@@ -437,6 +437,12 @@ def _owner_listings():
         if rec.get("status") not in ("listed", "sold_paid", "ended", "cancelled", "refunded"):
             raise ValueError("Unknown owner listing status")
         for event in rec.get("events", []):
+            if event.get("type") == "offer_received":
+                # Public data: amount and timing only. Never the buyer or an order.
+                allowed = {"event_id", "type", "occurred_at", "item_id", "price",
+                           "currency", "source", "expires_at", "expires_note"}
+                if set(event) - allowed or _num(event.get("price")) <= 0:
+                    raise ValueError("Offer events carry amount and timing only")
             key = event.get("event_id")
             if not key or key in event_ids:
                 raise ValueError("Missing or duplicate owner listing event")

@@ -19,7 +19,46 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - To do on arrival: add PSA cert numbers; refresh both provisional values with exact sold comps.
 - Validation: check_catalog, build_web, 38 Python + 28 Node tests.
 
-## Net profit + money split — v68, November 2, 2026 (Claude) — CURRENT RELEASE
+## Email offers + built plans — v69, November 9, 2026 (Claude) — CURRENT RELEASE
+Jack (chat, Nov 9): "Offer info on cards we have listed on eBay needs to be getting
+to card vault when it's passed from emails", chose **"Show in app"** for offers, then
+"I don't like me having to build the plans in the app I want them built so I can
+review. Use the offers to help with planning as well as other info."
+- **Data**: `data/owner_listings.json` listing events gain type `offer_received`
+  {event_id `<item>:offer_received:<occurred_at>`, occurred_at (email notification
+  time, ET offset), item_id, price, currency, source `ebay_offer_notification_email`,
+  optional `expires_at` (ISO with offset, only when it can be worked out) and
+  `expires_note` (the email's own wording)}. `build_web._owner_listings` fails closed
+  on any other key or a non-positive price.
+- **Privacy rule, superseded for emailed offers (Jack's choice, Nov 9)**: the offer
+  AMOUNT and TIMING are public data now, like asks and costs. Still never anywhere:
+  the buyer's name/handle/feedback, order or message details, Gmail IDs. The v65
+  private offer-plan import (device-only `cv-selling-v1`) is unchanged and, when a
+  card has one saved, it wins over the email offer.
+- **Engine (`docs/selling.js`)**: `emailOffers`, `liveOffer` (listed + not expired;
+  no `expires_at` = live 48 h from the email), `bestOffer`, `builtPlan(card,
+  assumptions, now)`. Starting rules, shown on the card: offer >= saved value ->
+  "Consider accepting"; below -> "Consider a counter" at the midpoint to the ask
+  rounded to $5, never under the saved value; no saved value -> "Review before
+  deciding"; no room to counter -> "Hold your price". Net/profit reuse `lotQuote`
+  with the saved selling-cost rates; unknown cost never becomes profit. `planFor`
+  returns key `offer` (label "eBay offer $N") for a live email offer.
+- **UI (`docs/app.js`, `.built-plan`/`.bp-*` in vault.css)**: the built plan (offer,
+  expiry, Accept vs Counter net tiles, reasons, folded "How this plan is built",
+  "Respond on eBay" link) shows at the top of Today's Next moves, on the Sell plan
+  card and on the On eBay listing card. Ended offers show as "Best offer so far".
+  Nothing accepts, counters, declines or messages anyone.
+- **Feed**: the scheduled task "Card Vault offer relay" reads eBay offer emails and
+  books `offer_received` events through a data-only `book/` PR (same gates as the
+  eBay bookkeeper). First four booked by hand from Gmail on Nov 9: CARD-0034 $100
+  (Oct 31) and $160 (Nov 1), CARD-0024 $60 (Nov 4), CARD-0029 $220 (Nov 9, live).
+- Validation: check_catalog, build_web, 40 Python + 29 Node tests, node --check on
+  docs/*.js. Playwright at 390x844 dark and 320x690 light (clock set to Nov 9
+  11:30 PM ET): plan renders on Today, Sell and On eBay, scrollWidth == innerWidth,
+  no page errors (only the sandbox's blocked Google Fonts request). Physical iPhone
+  not tested.
+
+## Net profit + money split — v68, November 2, 2026 (Claude)
 LIVE: PR #98 squash-merged as main ef2b97d at Jack's "Merge" (00:39 ET);
 both Pages runs succeeded; live data.json reports v68. Physical iPhone not checked.
 Jack (iPhone screenshot of Results, v67) chose: fill in Net profit, fix the bar
@@ -709,11 +748,11 @@ These rules supersede the historical asking-median radar/Great Value notes below
   `?v=N` on vault.css, selling.js, charts.js + app.js in `index.html` (v64+
   file set), the manifest icons, and `CACHE`/SHELL `?v=N` in `sw.js`, run
   `node --check docs/app.js`, rebuild, then ship to main. Skipping
-  this makes the service worker serve stale CSS/JS. Current: v68. The live
+  this makes the service worker serve stale CSS/JS. Current: v69. The live
   version also shows as a tag in the top bar (`.ver` / `#verpill`, driven by
   `APP_VERSION` in app.js) so the owner can verify the loaded build at a glance
   — keep `APP_VERSION` in lockstep with the `?v=N` bump on every frontend ship.
-  Current: v68. **`sw.js` is network-first for HTML navigations + data.json
+  Current: v69. **`sw.js` is network-first for HTML navigations + data.json
   (v23):** the shell used to be pure cache-first, so after a ship the app kept
   loading the OLD `index.html` (→ old `?v=N` CSS/JS) until the SW fully cycled —
   a fix could be live yet still look broken on the owner's screen. Now
