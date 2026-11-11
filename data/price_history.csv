@@ -472,3 +472,4 @@ date,sku,price,basis,median,count,source,applied,kind
 2026-11-07,CARD-0034,185.00,est_sold,500.00,1,active,no,market
 2026-11-07,CARD-0035,193.60,est_sold,220.00,11,active,yes,market
 2026-11-07,CARD-0036,100.00,est_sold,20.99,22,active,no,market
+2026-11-10,CARD-0031,29.99,sold,29.99,7,reviewed PSA reported sales; owner-approved,yes,correction

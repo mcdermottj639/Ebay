@@ -134,11 +134,11 @@
     },
     {
       "d": "2026-11-11",
-      "v": 2884.25,
+      "v": 2889.24,
       "n": 39
     }
   ],
-  "generated": "Nov 11, 2026 \u00b7 00:14 UTC",
+  "generated": "Nov 11, 2026 \u00b7 03:50 UTC",
   "app_version": "v69",
   "targets": [
     {
@@ -62084,7 +62084,7 @@
     "graded": 15,
     "priced": 39,
     "total_cost": 629.8,
-    "total_value": 2884.25,
+    "total_value": 2889.24,
     "profit": 1291.2,
     "cost_count": 8,
     "listed": 6,
@@ -62102,7 +62102,7 @@
       {
         "name": "Football",
         "count": 34,
-        "value": 2454.3
+        "value": 2459.29
       },
       {
         "name": "Basketball",
@@ -62134,7 +62134,7 @@
       {
         "name": "PSA 10",
         "count": 9,
-        "value": 832.5
+        "value": 837.49
       },
       {
         "name": "Raw",
@@ -66299,11 +66299,11 @@
       "condition": "",
       "authentication": "",
       "cost": "",
-      "asking_price": "25.00",
-      "notes": "PSA app estimate 2026-09-10: $23.00 (was $37.39); Owner-approved reviewed sold median 2026-10-23; sources: https://www.psacard.com/cert/90768139/psa, https://www.fanaticscollect.com/buy-now/47a37d2b-a316-45cf-a16f-36f8c114e62e",
+      "asking_price": "29.99",
+      "notes": "PSA app estimate 2026-09-10: $23.00 (was $37.39); Owner-approved reviewed sold median 2026-10-23; sources: https://www.psacard.com/cert/90768139/psa, https://www.fanaticscollect.com/buy-now/47a37d2b-a316-45cf-a16f-36f8c114e62e; Owner-approved reviewed sold median 2026-11-10 ($25.00 -> $29.99, 7 PSA-reported sales 10/6-11/9)",
       "est_price": "",
       "est_basis": "",
-      "basis_note": "Reviewed Oct 23, 2026: median of 5 exact-card/grade reported sales ($20.00\u2013$30.00); medium confidence. Latest sale 2026-10-15. Shipping/premiums unknown; not guaranteed proceeds.",
+      "basis_note": "Reviewed Nov 10, 2026: median of 7 exact-card/grade reported sales ($20.00\u2013$35.00, Oct 6\u2013Nov 9, 2026); medium confidence. Three Best Offer sales excluded. Source-reported sales, not settled payouts; shipping/premiums unknown.",
       "reviewed_price": true,
       "price_basis": "sold",
       "image": "",
@@ -66318,7 +66318,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 25.0,
+      "prev_price": 29.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -66373,11 +66373,16 @@
         {
           "d": "2026-11-07",
           "p": 25.0
+        },
+        {
+          "d": "2026-11-10",
+          "p": 29.99,
+          "c": 1
         }
       ],
       "market": {
-        "median": 41.25,
-        "count": 24
+        "median": 29.99,
+        "count": 7
       },
       "comps": {
         "as_of": "2026-11-07",
@@ -66404,11 +66409,6 @@
             "t": "2023 Donruss #339 C.J. Stroud Texans RC Rookie QB Graded PSA 10",
             "p": 36.99,
             "u": "https://www.ebay.com/itm/206678005593?_skw=2023+Panini+Donruss+CJ+Stroud+%23339+PSA+10+RC+Texans&hash=item301ef81759:g:~HwAAeSwQ~xq7L9q"
-          },
-          {
-            "t": "2023 Donruss CJ Stroud RC #339 Pink Optic Preview PSA 10 GEM MT TEXANS ROY",
-            "p": 65.0,
-            "u": "https://www.ebay.com/itm/158189738146?_skw=2023+Panini+Donruss+CJ+Stroud+%23339+PSA+10+RC+Texans&hash=item24d4d7d8a2:g:MrQAAeSw87Bqf8oF"
           }
         ]
       }
