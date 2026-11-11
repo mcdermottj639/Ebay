@@ -158,6 +158,17 @@
           "source": "ebay_offer_notification_email",
           "expires_at": "2026-11-10T15:02:00-05:00",
           "expires_note": "Tue, Nov 10 12:02 PM, no time zone shown"
+        },
+        {
+          "event_id": "336866522689:offer_received:2026-11-10T21:56:33-05:00",
+          "type": "offer_received",
+          "occurred_at": "2026-11-10T21:56:33-05:00",
+          "item_id": "336866522689",
+          "price": 235,
+          "currency": "USD",
+          "source": "ebay_offer_notification_email",
+          "expires_at": "2026-11-11T21:56:00-05:00",
+          "expires_note": "Wed, Nov 11 06:56 PM, no time zone shown"
         }
       ]
     },

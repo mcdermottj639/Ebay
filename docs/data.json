@@ -138,7 +138,7 @@
       "n": 39
     }
   ],
-  "generated": "Nov 11, 2026 \u00b7 13:02 UTC",
+  "generated": "Nov 11, 2026 \u00b7 17:46 UTC",
   "app_version": "v71",
   "targets": [
     {
@@ -62083,10 +62083,10 @@
     "autos": 13,
     "graded": 15,
     "priced": 39,
-    "total_cost": 629.8,
+    "total_cost": 654.8,
     "total_value": 2889.24,
-    "profit": 1291.2,
-    "cost_count": 8,
+    "profit": 1451.2,
+    "cost_count": 9,
     "listed": 6,
     "sold": 5,
     "revenue": 1205.0,
@@ -66042,6 +66042,17 @@
             "source": "ebay_offer_notification_email",
             "expires_at": "2026-11-10T15:02:00-05:00",
             "expires_note": "Tue, Nov 10 12:02 PM, no time zone shown"
+          },
+          {
+            "event_id": "336866522689:offer_received:2026-11-10T21:56:33-05:00",
+            "type": "offer_received",
+            "occurred_at": "2026-11-10T21:56:33-05:00",
+            "item_id": "336866522689",
+            "price": 235,
+            "currency": "USD",
+            "source": "ebay_offer_notification_email",
+            "expires_at": "2026-11-11T21:56:00-05:00",
+            "expires_note": "Wed, Nov 11 06:56 PM, no time zone shown"
           }
         ]
       },
@@ -67056,7 +67067,7 @@
       "serial_run": "25",
       "condition": "Near mint or better",
       "authentication": "",
-      "cost": "",
+      "cost": "25.0",
       "asking_price": "185.00",
       "notes": "Dual auto, serial 18/25 (base Prime Pairings /25; Platinum is the 1/1). Added 2026-10-31 from owner's eBay listing screenshot. eBay 336866528719 LIVE at $450 (listing email 2026-10-27). eBay offer emails later show Buy It Now $175 (2026-10-31) then $240 (2026-11-01 13:22 EST). Owner cost not yet given. On-card vs sticker autographs not yet confirmed.",
       "est_price": "",
