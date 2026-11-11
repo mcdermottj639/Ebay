@@ -8,6 +8,31 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Buying and listing progression — v70, November 11, 2026 (ChatGPT/Codex) — CURRENT RELEASE
+- Cross-app research, sources, design rules and the continuation sequence live in
+  [`UX_REVIEW.md`](UX_REVIEW.md). Next app: Portfolio Dashboard, then Caddie HQ,
+  then Jarvis. Read current Claudex handoffs and latest main before future work.
+- `docs/buying.js`: read-only PSA 10 / exceptional-profit presentation,
+  freshness demotion, family matching, cash-vs-adjusted money, filters and prefs.
+  Preserve Python evaluator decisions and source rows; a search photo is not
+  exact identity evidence. No threshold or owner-data change in this release.
+- Buy Radar/Targets: compact photos/numbers, full source/economics review,
+  search/category/sport filters, remembered views and device-local Track.
+  Unverified target examples are labeled; unknown profit remains unknown.
+- Individual BIN + Best Offer drafts follow selling plans with the owner's
+  price prefilled; estimates reuse `Selling.lotQuote`. Drafts save inside
+  `cv-selling-v1`, count in the badge and sort first. Existing listed/sold cards
+  cannot enter the new-listing path. No listing, offer or purchase is submitted.
+- `cv-buy-v1` stores buying prefs/shortlist; `cv-journey-v1` session state keeps
+  navigation/search/scroll context. Browser Back closes sheets; refreshed card
+  links retain a parent route. Old owner/offer/lot stores remain intact.
+- Card details distinguish gross profit and saved asking snapshots. Release
+  assets/cache and inline build include the new helper at v70.
+- Checks: 39 Python + 36 Node tests (seven buying tests), JS syntax, catalog,
+  regenerated-data preservation, 320/390px + desktop dark/light browser flows.
+  Physical iPhone/Steam Deck not tested. Publication/live evidence is recorded
+  in the shared handoff, separately from these implementation checks.
+
 ## Courtyard redemption intake — November 5, 2026 (Claude, data only)
 - Courtyard redemption invoice #321548 (2026-11-04, $9.80 shipment fee split
   $3.26/$3.27/$3.27) → three cards shipping to Jack, not yet received:
@@ -19,7 +44,7 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
 - To do on arrival: add PSA cert numbers; refresh both provisional values with exact sold comps.
 - Validation: check_catalog, build_web, 38 Python + 28 Node tests.
 
-## Email offers + built plans — v69, November 9, 2026 (Claude) — CURRENT RELEASE
+## Email offers + built plans — v69, November 9, 2026 (Claude)
 Jack (chat, Nov 9): "Offer info on cards we have listed on eBay needs to be getting
 to card vault when it's passed from emails", chose **"Show in app"** for offers, then
 "I don't like me having to build the plans in the app I want them built so I can

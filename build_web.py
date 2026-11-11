@@ -653,7 +653,7 @@ def main() -> int:
     # Self-contained preview: inline the same CSS + JS + data into one file.
     # v64: one stylesheet (vault.css) and three scripts, in index.html order.
     css = (DOCS / "vault.css").read_text(encoding="utf-8") if (DOCS / "vault.css").exists() else ""
-    scripts = [DOCS / "selling.js", DOCS / "charts.js", DOCS / "app.js"]
+    scripts = [DOCS / "selling.js", DOCS / "charts.js", DOCS / "buying.js", DOCS / "app.js"]
     appjs = "\n".join(f.read_text(encoding="utf-8") for f in scripts) if all(f.exists() for f in scripts) else ""
     if css and appjs:
         # A <title> makes the file publishable as an Artifact (a hosted page the

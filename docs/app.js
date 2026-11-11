@@ -4,10 +4,34 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v69";
+  var APP_VERSION = "v70";
+  var buyPrefs;
+  try { buyPrefs = Buying.prefs(JSON.parse(localStorage.getItem("cv-buy-v1") || "{}")); } catch (e) { buyPrefs = Buying.prefs(); }
+  function saveBuyPrefs() { try { localStorage.setItem("cv-buy-v1", JSON.stringify(buyPrefs)); } catch (e) {} }
   var state = { tab: "today", data: null, bucket: "All",
-                q: "", sort: "val-desc", sellMode: "plan", buyMode: "radar", planFilter: "all", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryTier: "all", inventoryLayout: "grid",
+                q: "", sort: "val-desc", sellMode: "plan", buyMode: buyPrefs.mode, planFilter: "all", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryTier: "all", inventoryLayout: "grid",
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
+
+  // Remember navigation only; cards, costs and decisions keep their existing stores.
+  var journey={positions:{}}, restoringView=false;
+  try { var j=JSON.parse(sessionStorage.getItem('cv-journey-v1')||'{}'); if(j&&typeof j==='object')journey=j; } catch(e){}
+  if(!journey.positions||typeof journey.positions!=='object')journey.positions={};
+  function viewKey(){return state.tab+(state.tab==='radar'?':'+state.buyMode:state.tab==='sell'?':'+state.sellMode:'');}
+  function rememberView(){
+    if(!state.data||restoringView)return;
+    journey.positions[viewKey()]=window.scrollY||0;
+    journey.tab=state.tab;journey.q=state.q;journey.sellMode=state.sellMode;journey.planFilter=state.planFilter;journey.sellSearch=state.sellSearch||'';
+    try{sessionStorage.setItem('cv-journey-v1',JSON.stringify(journey));}catch(e){}
+  }
+  function beginDialog(){
+    if(document.getElementById('modalWrap').classList.contains('open'))return;
+    rememberView();
+    if(history.pushState)history.pushState({cvDialog:true},'',location.hash);
+  }
+  function dismissDialog(){
+    document.getElementById('modalWrap').classList.remove('open');document.body.classList.remove('sheet-open');
+    if(modalFocus&&document.contains(modalFocus))modalFocus.focus({preventScroll:true});
+  }
 
   // ---------- helpers ----------
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
@@ -874,7 +898,7 @@
     var exchange = el('<div class="offer-exchange-entry"><span>Got an offer plan from Jarvis or your assistant?</span><button class="button secondary small" type="button">Import offer plan</button></div>');
     exchange.querySelector("button").onclick = openOfferImport;
     wrap.appendChild(exchange);
-    wrap.appendChild(segment([["plan", "Plans", items.length], ["lots", "Lots", batch.length], ["listings", "On eBay", listed.length], ["drafts", "Drafts", workspace.lots.length]], mode, function (x) { state.sellMode = x; render(); }));
+    wrap.appendChild(segment([["plan", "Plans", items.length], ["lots", "Lots", batch.length], ["listings", "On eBay", listed.length], ["drafts", "Drafts", workspace.lots.length+state.data.cards.filter(function(c){return !c.sold&&!Selling.listed(c)&&(workspace.plans[c.sku]||{}).listingDraft;}).length]], mode, function (x) { rememberView(); state.sellMode = x; render(true); }));
     if (mode === "lots") { wrap.appendChild(lotBuilder()); return wrap; }
     if (mode === "drafts") { wrap.appendChild(savedLotDrafts()); return wrap; }
     if (mode === "listings") {
@@ -909,7 +933,8 @@
       shown.forEach(function (x) { list.appendChild(premiumRow(x)); });
       if (!shown.length) list.appendChild(emptyPanel("Nothing in this view", "Try another filter or search."));
     }
-    search.querySelector("input").oninput = update;
+    search.querySelector("input").value=state.sellSearch||"";
+    search.querySelector("input").oninput = function(){state.sellSearch=this.value;update();};
     wrap.appendChild(chips); wrap.appendChild(search); wrap.appendChild(key); wrap.appendChild(list);
     drawChips(); update();
     return wrap;
@@ -918,8 +943,8 @@
   // ---------- Buy ----------
   function viewBuy() {
     var w = el('<div class="view buy-view"></div>'), buys = qualifiedBuys().length, targets = (state.data.targets || []).length;
-    w.appendChild(pageHead("Buy", "Only cards that clear your profit rules count as buys. Targets are what the radar watches."));
-    w.appendChild(segment([["radar", "Buy radar", buys], ["targets", "Targets", targets]], state.buyMode || "radar", function (x) { state.buyMode = x; render(); }));
+    w.appendChild(pageHead("Buy", "Find a card. Check the numbers. Track the ones worth your time."));
+    w.appendChild(segment([["radar", "Buy radar", buys], ["targets", "Targets", targets]], state.buyMode || "radar", function (x) { rememberView(); state.buyMode = buyPrefs.mode = x; saveBuyPrefs(); render(true); }));
     w.appendChild(state.buyMode === "targets" ? viewTargets() : viewRadar());
     return w;
   }
@@ -1113,7 +1138,7 @@
     else { lab = "Saved value"; big = ref ? displayPrice(ref) : "—"; sub = ref ? basisText(c, ms) : "No value yet. Check Product Research."; }
     var base = c.sold ? num(c.sold_price) : ref, profit = cost != null && base ? base - cost : null;
     var t1 = '<div class="stat-tile"><span class="st-k">You paid</span>' + (cost != null ? '<span class="st-v">' + money0(cost) + "</span>" + (base ? Charts.meter(Math.min(cost, base), base, { label: "Cost as a share of value" }) + '<span class="st-n">' + Math.round(cost / base * 100) + "% of value</span>" : "") : '<button class="mhadd" id="mhAddCost" type="button">+ Add</button><span class="st-n">Unlocks profit</span>') + "</div>";
-    var t2 = '<div class="stat-tile"><span class="st-k">' + (c.sold ? "Profit" : "Profit if sold") + '</span><span class="st-v ' + (profit == null ? "" : profit >= 0 ? "up" : "down") + '">' + (profit == null ? "—" : (profit >= 0 ? "+" : "−") + money0(Math.abs(profit))) + '</span><span class="st-n">' + (profit == null ? "Needs your cost" : cost ? Math.round(profit / cost * 100) + "% on cost" : "Before fees") + "</span></div>";
+    var t2 = '<div class="stat-tile"><span class="st-k">' + "Gross profit" + '</span><span class="st-v ' + (profit == null ? "" : profit >= 0 ? "up" : "down") + '">' + (profit == null ? "—" : (profit >= 0 ? "+" : "−") + money0(Math.abs(profit))) + '</span><span class="st-n">' + (profit == null ? "Needs your cost" : "Before fees & shipping") + "</span></div>";
     var ev = Selling.soldEvidence(c);
     var t3 = ask != null
       ? '<div class="stat-tile"><span class="st-k">Your eBay ask</span><span class="st-v">' + money0(ask) + "</span>" + (ref ? Charts.meter(Math.min(ref, ask), Math.max(ref, ask), { label: "Saved value versus your ask" }) + '<span class="st-n">' + (ask >= ref ? "+" : "−") + Math.abs(Math.round((ask - ref) / ref * 100)) + "% vs value</span>" : "") + "</div>"
@@ -1131,7 +1156,8 @@
     return '<div class="comp-research"><span class="research-eyebrow">Check the market</span><a class="research-primary" href="' + esc(terapeakUrl(query || "")) + '" target="_blank" rel="noopener"><span class="step">1</span>Terapeak / Product Research' + icon("external") + '</a><details class="research-fallback"><summary><span class="step">2</span>eBay sold results, the fallback</summary><p>Use this if Product Research is unavailable or has no exact matches.</p><a href="' + esc(soldUrl) + '" target="_blank" rel="noopener">Open eBay sold results</a></details><small>Match the year, set, parallel and grade. Product Research opens in your eBay seller account.</small></div>';
   }
   function openModal(c) {
-    modalFocus = document.activeElement;
+    beginDialog();
+    if(!document.getElementById('modalWrap').classList.contains('open'))modalFocus = document.activeElement;
     var m = document.getElementById("modal");
     m.className = "modal card-detail-modal";
     m.removeAttribute("aria-labelledby");
@@ -1170,10 +1196,16 @@
     wireMyNumbers(m, c);
     var sellPlanButton = m.querySelector("#cardSellPlan");
     if (sellPlanButton) sellPlanButton.onclick = function () { openSellPlan(c); };
-    var listEbay = m.querySelector("#mListEbay");
-    listEbay.onclick = function () { copyText(c.title); window.open("https://www.ebay.com/sl/sell", "_blank", "noopener"); flashBtn(listEbay, "Title copied"); };
+    var listSection=m.querySelector('.listbar');
+    if(c.sold){listSection.remove();}
+    else if(Selling.listed(c)){
+      listSection.innerHTML='<h3>Already on eBay</h3><p class="section-note">Review the current listing and your price plan.</p>'+(c.owner_listing&&c.owner_listing.url?'<a class="button secondary" target="_blank" rel="noopener" href="'+safeBuyLink(c.owner_listing.url)+'">Open existing listing ↗</a>':'');
+    }else{
+      var listEbay=m.querySelector('#mListEbay');listEbay.textContent='Prepare listing';listEbay.onclick=function(){openSingleDraft(c);};
+      listSection.querySelector('.lbfoot').textContent='Review title, description and net profit. Buy It Now + Best Offer only.';
+    }
     var listClaude = m.querySelector("#mListClaude");
-    listClaude.onclick = function () { var q = listPrompt(c); copyText(q); window.open("https://claude.ai/new?q=" + encodeURIComponent(q), "_blank", "noopener"); flashBtn(listClaude, "Prompt copied"); };
+    if(listClaude)listClaude.onclick = function () { var q = listPrompt(c); copyText(q); window.open("https://claude.ai/new?q=" + encodeURIComponent(q), "_blank", "noopener"); flashBtn(listClaude, "Prompt copied"); };
     var share = m.querySelector("#mShare");
     share.onclick = function () {
       var url = location.href.split("#")[0] + "#sku=" + encodeURIComponent(c.sku);
@@ -1182,7 +1214,7 @@
       else if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, done);
       else done();
     };
-    if (history.replaceState) history.replaceState(null, "", "#sku=" + encodeURIComponent(c.sku));
+    if (history.replaceState) history.replaceState({cvDialog:true}, "", "#sku=" + encodeURIComponent(c.sku));
     document.getElementById("modalWrap").classList.add("open");
     document.body.classList.add("sheet-open");
     m.scrollTop = 0;
@@ -1226,17 +1258,21 @@
       }
     });
     document.addEventListener("error", function (e) {
+      if (e.target.tagName === "IMG" && e.target.closest(".buy-photo")) { e.target.remove(); }
       if (e.target.tagName === "IMG" && e.target.closest(".thumb")) { e.target.style.display = "none"; e.target.closest(".thumb").classList.add("photo-missing"); }
     }, true);
     syncThemeIcon();
   }
-  function render() {
+  function render(restore) {
+    restoringView=true;
     var v = document.getElementById("view");
     v.innerHTML = "";
     v.appendChild(({ today: viewToday, sell: viewSell, collection: viewCollection, value: viewResults, radar: viewBuy, about: viewAbout }[state.tab] || viewToday)());
     document.body.dataset.page = state.tab;
     pinTicker();
-    window.scrollTo(0, 0);
+    var position=restore?Number(journey.positions[viewKey()])||0:0;
+    window.scrollTo(0,position);
+    requestAnimationFrame(function(){window.scrollTo(0,position);restoringView=false;});
     hydrate(v);
     countUp(v);
   }
@@ -1264,10 +1300,10 @@
     navigator.clipboard.writeText(text).then(function(){if(button)flashBtn(button,label||'Copied');else toast('Copied');},function(){toast('Could not copy. Select the draft text instead.');});
   }
   function displayPrice(n) { return n==null?'—':n<100?money(n):money0(n); }
-  function goSell(mode) {state.sellMode=mode||'plan';setTab('sell');}
+  function goSell(mode) {rememberView();state.sellMode=mode||'plan';setTab('sell',true);}
   function eligibleCards() {var reserved={};workspace.lots.forEach(function(l){(l.skus||[]).forEach(function(sku){reserved[sku]=true;});});return state.data.cards.filter(function(c){return !reserved[c.sku]&&Selling.batchEligible(c,workspace.limit,workspace.includeSpecial,workspace.plans[c.sku]);});}
   function validSelection() {return eligibleCards().filter(function(c){return selectedLot[c.sku];});}
-  function qualifiedBuys() {return ((state.data.radar||{}).candidates||[]).filter(function(c){var age=Date.now()-Date.parse(c.checked_at||'');return c.status==='qualified'&&age>=0&&age<=48*3600000&&(c.grade_scope==='exception'||(String((c.identity||{}).grader).toUpperCase()==='PSA'&&String((c.identity||{}).grade)==='10'));});}
+  function qualifiedBuys() { return Buying.rows((state.data.radar||{}).candidates).filter(function(c){return c.status==='qualified';}); }
   function savedDate(d) {return Selling.formatDate(d);}
   function referenceLabel(c) {return c.reviewed_price?'Reviewed value':c.price_basis==='asking'?'Asking-price value':c.price_basis==='psa'?'PSA value':'Saved value';}
   function emptyPanel(title,body){return el('<div class="empty-panel"><span class="empty-symbol">'+icon('check')+'</span><h3>'+esc(title)+'</h3><p>'+esc(body)+'</p></div>');}
@@ -1282,6 +1318,7 @@
     wrap.appendChild(list);if(!groups.length)wrap.appendChild(emptyPanel('No cards fit this cutoff','Raise the reference limit, or use an individual selling plan.'));wrap.appendChild(summary);summary.querySelector('button').onclick=function(){openLotDraft(validSelection());};sync();return wrap;
   }
   function showWorkspaceModal(html) {
+    beginDialog();
     if(!document.getElementById('modalWrap').classList.contains('open'))modalFocus=document.activeElement;var m=document.getElementById('modal');m.className='modal workspace-modal';m.innerHTML='<button class="close" id="mClose" type="button" aria-label="Close dialog">×</button>'+html;m.scrollTop=0;m.setAttribute('aria-labelledby','workspaceTitle');m.querySelector('#mClose').onclick=closeModal;document.getElementById('modalWrap').classList.add('open');document.body.classList.add('sheet-open');m.querySelector('#mClose').focus();return m;
   }
   // v63 price ladder: every number the owner is weighing, on one axis.
@@ -1407,9 +1444,28 @@
       error.textContent='';if(!validate())return;if(!Selling.held(c)){error.textContent='This card is recorded sold. Recheck its status before saving an offer.';return;}
       var next=Object.assign({},p,{action:m.querySelector('#planAction').value,target:m.querySelector('#planTarget').value,reviewDate:m.querySelector('#planDate').value,note:m.querySelector('#planNote').value.trim()});
       try{if(m.querySelector('#offerEnabled').checked)next.offer=readOffer();else delete next.offer;}catch(e){error.textContent=e.message;return;}
-      var old=workspace.plans[c.sku];workspace.plans[c.sku]=next;if(saveWorkspace()){closeModal();render();toast('Selling plan saved on this device');}else{if(old===undefined)delete workspace.plans[c.sku];else workspace.plans[c.sku]=old;}
+      var old=workspace.plans[c.sku];workspace.plans[c.sku]=next;if(saveWorkspace()){if(next.action==='list'&&!Selling.listed(c)){openSingleDraft(c);}else{closeModal();render(true);}toast('Selling plan saved on this device');}else{if(old===undefined)delete workspace.plans[c.sku];else workspace.plans[c.sku]=old;}
     };
     updateOffer();
+  }
+  function openSingleDraft(c) {
+    if(c.sold||Selling.listed(c)){toast('Use the existing listing or sale record for this card.');return;}
+    var p=workspace.plans[c.sku]||{},d=p.listingDraft||{},form=Object.assign(defaultOfferAssumptions(),d.form||{});
+    form.price=d.form&&d.form.price!=null?d.form.price:p.target||'';
+    var facts=[c.player,[c.year,c.brand,c.set,c.card_number?'#'+c.card_number:'',c.parallel,c.insert].filter(Boolean).join(' '),c.graded?c.grader+' '+c.grade:c.condition,c.serial_run?'Numbered /'+c.serial_run:'',c.cert?'Certificate '+c.cert:''].filter(Boolean).join('\n');
+    var description=d.description||facts+'\n\nPlease review the front and back photos for condition and included items.';
+    var m=showWorkspaceModal('<div class="cv-kicker">Buy It Now + Best Offer</div><h2 id="workspaceTitle">Prepare '+esc(c.player)+'</h2><p class="section-note">'+esc(c.sku)+' · Saved value '+displayPrice(Selling.reference(c))+'. Choose your asking price below.</p><div class="form-grid"><label class="full">Listing title<input id="singleTitle" maxlength="80" required value="'+esc((d.title||c.title).slice(0,80))+'"></label><label>Asking price ($)<input id="singlePrice" data-single="price" type="number" min="0.01" step="0.01" inputmode="decimal" value="'+esc(form.price)+'"></label><label>Shipping you pay ($)<input data-single="shipping" type="number" min="0" step="0.01" inputmode="decimal" value="'+esc(form.shipping)+'"></label></div><div id="singleQuote" class="quote-panel" aria-live="polite"></div><details class="cost-assumptions"><summary>Fees, supplies & assumptions</summary><div class="form-grid">'+[['supplies','Packaging ($)'],['feeRate','Base selling fee (%)'],['orderFee','Per-order fee ($)'],['promotion','Promotion reserve (%)'],['buyerTax','Buyer tax allowance (%)'],['feeThreshold','Fee tier threshold ($)'],['feeRateAbove','Fee above threshold (%)']].map(function(f){return '<label>'+f[1]+'<input data-single="'+f[0]+'" type="number" min="0" '+(/Rate|promotion|buyerTax/.test(f[0])?'max="99.99" ':'')+'step="0.01" value="'+esc(form[f[0]])+'"></label>';}).join('')+'</div><p class="section-note">Planning estimates from your saved policy. Free shipping to the buyer. No promotion is enabled. Before income tax.</p></details><details class="draft-description"><summary>Description & photo checklist</summary><label class="field">Listing description<textarea id="singleDescription" rows="6" maxlength="5000">'+esc(description)+'</textarea></label><p class="section-note">Add your own front/back and slab-label photos. Confirm the grade, parallel, serial and condition. Remove anything inaccurate before listing.</p><button class="text-button" type="button" id="singleCopyDescription">Copy description</button></details>'+compResearchLinks(c.title,ebaySearchUrl(c,true))+'<p id="singleError" class="warning-text" role="alert"></p><div class="button-row"><button class="button" type="button" id="singleSave">Save draft</button><button class="button secondary" type="button" id="singleCopyTitle">Copy title</button></div><a class="ebay-draft-link" href="https://www.ebay.com/sl/sell" target="_blank" rel="noopener">Continue on eBay ↗</a><p class="section-note">Draft saved on this device only. On eBay, choose Buy It Now and allow Best Offer. Nothing is posted and your inventory status stays unchanged.</p>');
+    function update(){m.querySelectorAll('[data-single]').forEach(function(i){form[i.dataset.single]=i.value;});var q=Selling.lotQuote([c],form);m.querySelector('#singleQuote').innerHTML='<div><span>Est. net proceeds</span><strong>'+displayPrice(q.proceeds)+'</strong><small>After fees, shipping & supplies</small></div><div><span>Est. cash profit</span><strong class="'+(q.profit<0?'neg':'')+'">'+(q.profit==null?'—':signedBuyMoney(q.profit))+'</strong><small>'+(q.costCount?'Recorded cost '+money(q.knownCost):'Purchase cost needed')+'</small></div>';}
+    m.querySelectorAll('[data-single]').forEach(function(i){i.oninput=update;});
+    m.querySelector('#singleCopyTitle').onclick=function(){copyAndReport(m.querySelector('#singleTitle').value,this);};
+    m.querySelector('#singleCopyDescription').onclick=function(){copyAndReport(m.querySelector('#singleDescription').value,this);};
+    m.querySelector('#singleSave').onclick=function(){
+      var invalid=Array.from(m.querySelectorAll('input,textarea')).find(function(i){return !i.checkValidity();});
+      if(invalid){var details=invalid.closest('details');if(details)details.open=true;invalid.reportValidity();return;}
+      if(!m.querySelector('#singleTitle').value.trim()){m.querySelector('#singleError').textContent='Add a listing title.';return;}
+      var old=workspace.plans[c.sku];workspace.plans[c.sku]=Object.assign({},p,{listingDraft:{title:m.querySelector('#singleTitle').value.trim(),description:m.querySelector('#singleDescription').value,form:Object.assign({},form),updated:new Date().toISOString()}});
+      if(saveWorkspace()){p=workspace.plans[c.sku];render(true);flashBtn(this,'Draft saved ✓');toast('Draft saved on this device. Continue on eBay when ready.');}else{workspace.plans[c.sku]=old;}
+    };update();
   }
   function openLotDraft(cards,existing) {
     if(cards.length<2){toast('Select at least two eligible cards to build a lot.');return;}
@@ -1424,20 +1480,22 @@
     var wrap=el('<div class="saved-lots"></div>');wrap.appendChild(sectionHead('Your lot drafts','Saved on this device. Nothing has been listed automatically.','Build another',function(){goSell('lots');}));
     workspace.lots.forEach(function(d){var cards=state.data.cards.filter(function(c){return d.skus.indexOf(c.sku)>=0&&Selling.batchEligible(c,workspace.limit,workspace.includeSpecial,workspace.plans[c.sku]);}),changed=cards.length!==d.skus.length,row=el('<article class="cv-panel saved-lot"><span class="signal '+(changed?'amber':'green')+'">'+(changed?'Recheck selection':'Draft')+'</span><h3>'+esc(d.title)+'</h3><p>'+d.skus.length+' selected cards, updated '+esc(savedDate(d.updated))+'</p>'+(changed?'<p class="warning-text">Some cards are sold, listed, or outside the current lot rules. Rebuild this draft before using it.</p>':'')+'<div class="button-row"><button class="button small" data-open'+(changed?' disabled':'')+'>Continue draft</button><button class="text-button" data-remove>Remove draft</button></div></article>');row.querySelector('[data-open]').onclick=function(){openLotDraft(cards,d);};row.querySelector('[data-remove]').onclick=function(){var old=workspace.lots.slice();workspace.lots=workspace.lots.filter(function(x){return x.id!==d.id;});if(saveWorkspace()){render();toast('Draft removed; your cards are unchanged');}else workspace.lots=old;};wrap.appendChild(row);});
     if(!workspace.lots.length)wrap.appendChild(emptyPanel('Your next lot starts here','Choose a related group of lower-value cards, then save its title, checklist and selling-cost scenario.'));
-    var single=el('<details class="single-drafts"><summary>Individual card listing drafts</summary></details>');single.appendChild(viewDrafts());wrap.appendChild(single);return wrap;
+    var single=el('<details class="single-drafts" open><summary>Individual card listing drafts</summary></details>');single.appendChild(viewDrafts());wrap.appendChild(single);return wrap;
   }
 
 
 
-  function setTab(tab) {
-    var openSheet=document.getElementById('modalWrap');if(openSheet&&openSheet.classList.contains('open'))closeModal();
-    if(tab==='targets'){state.buyMode='targets';tab='radar';}
+  function setTab(tab, skipRemember) {
+    if(!skipRemember)rememberView();
+    var openSheet=document.getElementById('modalWrap');if(openSheet&&openSheet.classList.contains('open')){dismissDialog();}
+    if(tab==='buy')tab='radar';
+    if(tab==='targets'){state.buyMode=buyPrefs.mode='targets';saveBuyPrefs();tab='radar';}
     if(tab==='drafts'){state.sellMode='drafts';tab='sell';}
     if(tab==='salesmap'){state.sellMode='plan';tab='sell';}
     state.tab=tab;
     document.querySelectorAll('.nav button').forEach(function(b){var on=b.dataset.tab===tab;b.classList.toggle('on',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
     if(history.replaceState)history.replaceState(null,'','#tab='+tab);
-    render();
+    render(true);
   }
 
   function badges(c) {
@@ -1637,7 +1695,7 @@
   function profitResearchRow(c) {
     var e = c.economics, ev = c.evidence || {}, specs = c.identity || {};
     var resale = e ? e.resale : ev.conservative_resale;
-    var priced = radarHasNumber(resale), hasProfit = e && radarHasNumber(e.adjusted_profit);
+    var priced = radarHasNumber(resale), hasProfit = e && radarHasNumber(e.cash_margin);
     var supported = ev.confidence === 'medium';
     var status = {qualified:c.grade_scope === 'exception' ? '★ RARE EXCEPTION' : '✓ BUY CANDIDATE', research:'RESEARCH ONLY', pass:'✕ DO NOT BUY', excluded:'— REJECTED'}[c.status] || 'RESEARCH ONLY';
     var player = specs.player || c.label;
@@ -1648,10 +1706,10 @@
     var askLabel = c.buying_option === 'AUCTION' ? 'Current bid' : unavailable ? 'Past listing' : c.page_state === 'mismatch' ? 'Wrong-grade ask' : 'Listed for';
     var buyNote = c.buying_option === 'AUCTION' ? 'Auction · price can rise' : unavailable ? 'No longer available' : c.page_state === 'mismatch' ? 'Not the target card' : radarHasNumber(c.all_in) ? 'Est. total ' + money0(c.all_in) : 'Shipping / tax unknown';
     var resaleNote = priced ? (supported ? 'Based on sold comps' : 'Low-confidence estimate') : 'Need sold comps';
-    var profitText = hasProfit ? (e.adjusted_profit >= 0 ? '+' : '−') + money0(Math.abs(e.adjusted_profit)) : '—';
-    var profitTone = hasProfit ? (e.adjusted_profit < 0 ? 'loss' : c.status === 'qualified' ? 'gain' : 'pending') : 'pending';
-    var profitLabel = hasProfit && e.adjusted_profit < 0 ? 'Loss incl. time & risk' : 'Profit after all costs';
-    var profitNote = hasProfit ? 'Cash result: ' + (e.cash_margin >= 0 ? '+' : '−') + money0(Math.abs(e.cash_margin)) : unavailable || c.page_state === 'mismatch' ? 'No eligible listing' : priced ? 'Purchase costs unknown' : 'Resale estimate needed';
+    var profitText = hasProfit ? signedBuyMoney(e.cash_margin) : '—';
+    var profitTone = hasProfit ? (e.cash_margin < 0 ? 'loss' : c.status === 'qualified' ? 'gain' : 'pending') : 'pending';
+    var profitLabel = 'Est. cash profit';
+    var profitNote = hasProfit ? 'After time / risk / holding: ' + signedBuyMoney(e.adjusted_profit) : unavailable || c.page_state === 'mismatch' ? 'No eligible listing' : priced ? 'Purchase costs unknown' : 'Resale estimate needed';
     var shortReason = c.status === 'qualified' ? 'Clears your buying rules' : c.status === 'pass' ? 'Too expensive at this price' : c.page_state === 'mismatch' ? 'Wrong card or grade' : unavailable ? 'Unavailable' : c.buying_option === 'AUCTION' ? 'Auction · wait for final price' : c.all_in > 1000 ? 'Above your buying budget' : !priced ? 'Wait for sold comparisons' : 'Verify before buying';
     if (c.status === 'research' && c.page_state === 'unverified') shortReason = 'Availability needs a recheck';
     var soldRows = (ev.sales || []).map(function(s) {
@@ -1669,7 +1727,7 @@
       '<p class="muted">We do not have enough sold-price evidence to estimate resale and profit. Asking prices and unverified guide values are not resale estimates.</p>';
     return '<article class="pr-card pr-decision pr-decision-' + esc(c.status) + '">' +
       '<div class="pr-cardhead"><span class="pr-status pr-' + esc(c.status) + '">' + status + '</span><span class="pr-grade">' + esc(grade) + '</span></div>' +
-      '<div class="pr-identity"><div class="pr-monogram" aria-hidden="true">' + esc(initials) + '</div><div><h3>' + esc(player) + '</h3><p class="pr-spec">' + esc(specLine || c.item_title) + (specs.autograph ? ' · AUTO' : '') + '</p></div></div>' +
+      '<div class="pr-identity">' + buyPhoto(c) + '<div><h3>' + esc(player) + '</h3><p class="pr-spec">' + esc(specLine || c.item_title) + (specs.autograph ? ' · AUTO' : '') + '</p></div></div>' +
       '<div class="pr-priceflow"><div class="pr-pricebox"><span>' + askLabel + '</span><strong>' + radarDisplayPrice(c.price,true) + '</strong><small>' + buyNote + '</small></div><span class="pr-flowarrow" aria-hidden="true">→</span>' +
       '<div class="pr-pricebox pr-resale ' + (!priced ? 'pr-unknown' : '') + '"><span>Expected resale</span><strong>' + (priced ? '~' : '') + radarDisplayPrice(resale) + '</strong><small>' + resaleNote + '</small></div></div>' +
       '<div class="pr-profit pr-profit-' + profitTone + '"><div><span>' + profitLabel + '</span><small>' + profitNote + '</small></div><strong>' + profitText + '</strong></div>' +
@@ -1683,45 +1741,82 @@
       '<p class="muted">Observed ' + esc(c.checked_at || 'unknown') + '. Recheck availability, checkout tax and shipping. Source-reported sales are not proof of settlement.</p>' + compResearchLinks(c.query||c.item_title||c.label,dealSearchUrl(c,true)) + '</details>' +
       '<a class="pr-listing" target="_blank" rel="noopener" href="' + safeBuyLink(c.url) + '">' + (unavailable || c.page_state === 'mismatch' ? 'View original source' : 'View listing') + ' <span aria-hidden="true">↗</span></a></article>';
   }
-  function viewProfitRadar(radar) {
-    var wrap = el('<div class="view profit-radar"></div>');
-    var rows = (radar.candidates || []).map(function(c) {
-      if (c.status !== 'qualified') return c;
-      var age = Date.now() - Date.parse(c.checked_at || '');
-      if (isFinite(age) && age >= 0 && age <= 48*3600000) return c;
-      return Object.assign({}, c, {status:'research', grade_scope:c.grade_scope === 'exception' ? 'outside_focus' : c.grade_scope, reasons:['Listing observation expired; recheck before acting'].concat(c.reasons || [])});
+  function signedBuyMoney(n) { return radarHasNumber(n) ? (n < 0 ? '−' : '+') + money(Math.abs(n)) : '—'; }
+  function buyPhoto(c, example) {
+    var src=Buying.image(c), name=(c.identity||{}).player||c.label||'Card';
+    return '<div class="buy-photo'+(example?' buy-example':'')+'"><span aria-hidden="true">'+esc(name.split(/\s+/).slice(0,2).map(function(w){return w[0];}).join(''))+'<small>No photo</small></span>'+(src?'<img src="'+esc(src)+'" alt="'+esc(example?'Example listing for '+name:name+' listing photo')+'" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</div>';
+  }
+  function buyStatus(c) {
+    return {qualified:c.grade_scope==='exception'?'Exceptional profit':'Buy candidate',research:'Needs research',pass:'Does not clear rules',excluded:'Unavailable / rejected'}[c.status]||'Needs research';
+  }
+  function buyCard(c) {
+    var m=Buying.metrics(c), i=c.identity||{}, ev=c.evidence||{}, tracked=buyPrefs.tracked.indexOf(Buying.key(c))>=0;
+    var spec=[i.year,i.set,i.number?'#'+i.number:'',i.parallel&&i.parallel!=='base'?i.parallel:'',i.print_run&&i.print_run!=='none'?'/'+i.print_run:''].filter(Boolean).join(' · ');
+    var ask=c.buying_option==='AUCTION'?'Current bid':['sold','ended'].indexOf(c.page_state)>=0?'Past ask':c.page_state==='mismatch'?'Wrong-card ask':'Listed for';
+    var reason=(c.reasons||[])[0]||'Clears your buying rules';
+    return '<article class="buy-card" data-buy-key="'+esc(Buying.key(c))+'"><div class="buy-cardtop">'+buyPhoto(c)+'<div class="buy-cardidentity"><span class="pr-status pr-'+esc(c.status)+'">'+buyStatus(c)+'</span><h3>'+esc(i.player||c.label)+'</h3><p>'+esc(spec||c.item_title)+'</p><small>'+esc((i.grader||'Grade')+' '+(i.grade||'unconfirmed'))+' · '+(Buying.fresh(c)?'Checked '+esc(savedDate(c.checked_at)):'Recheck listing')+'</small></div></div>'+
+      '<div class="buy-numbers"><div><span>'+ask+'</span><b>'+radarDisplayPrice(m.ask,true)+'</b></div><div><span>Est. total cost</span><b>'+radarDisplayPrice(m.total,true)+'</b></div><div><span>Resale estimate</span><b>'+radarDisplayPrice(m.resale,true)+'</b></div></div>'+
+      '<div class="buy-profit"><div><span>Est. cash profit</span><small>After fees & shipping</small></div><strong class="'+(m.cash<0?'down-text':m.cash!=null?'up-text':'')+'">'+signedBuyMoney(m.cash)+'</strong></div>'+
+      '<div class="buy-secondary"><span>After time, risk & holding</span><b>'+signedBuyMoney(m.adjusted)+'</b></div>'+
+      '<p class="buy-evidence">'+(ev.primary_count||0)+' primary comps · '+(m.resale==null?'Resale not established':ev.confidence==='medium'?'Sold-backed estimate':'Provisional estimate')+'</p>'+
+      '<p class="buy-reason" title="'+esc(reason)+'">'+esc(reason)+'</p><div class="buy-actions"><button class="button" data-review type="button">Review card</button><button class="button secondary" data-track type="button" aria-pressed="'+tracked+'">'+(tracked?'Tracked ✓':'Track')+'</button></div></article>';
+  }
+  function bindBuyCards(container, rows, afterTrack) {
+    container.querySelectorAll('[data-buy-key]').forEach(function(node){
+      var c=rows.filter(function(x){return Buying.key(x)===node.dataset.buyKey;})[0]; if(!c)return;
+      node.querySelector('[data-review]').onclick=function(){openBuyReview(c);};
+      node.querySelector('[data-track]').onclick=function(){
+        var k=Buying.key(c), index=buyPrefs.tracked.indexOf(k);
+        if(index>=0)buyPrefs.tracked.splice(index,1);else buyPrefs.tracked.push(k);
+        saveBuyPrefs();this.textContent=index>=0?'Track':'Tracked ✓';this.setAttribute('aria-pressed',String(index<0));
+        toast(index>=0?'Removed from your shortlist.':'Tracked on this device. No purchase or inventory change.');
+        if(afterTrack)afterTrack();
+      };
     });
-    var allRows = rows;
-    rows = allRows.filter(function(c){return c.grade_scope === 'exception' || (c.grade_scope !== 'outside_focus' && String((c.identity || {}).grader).toUpperCase() === 'PSA' && String((c.identity || {}).grade) === '10');});
-    rows.sort(function(a,b){var rank=function(c){return c.status==='qualified'?0:c.status==='excluded'?3:c.economics?1:2;};return rank(a)-rank(b);});
-    var counts = {}, policy = radar.policy || {}, coverage = radar.coverage || {};
+  }
+  function openBuyReview(c) {
+    var m=showWorkspaceModal('<h2 id="workspaceTitle">Review card</h2><p class="section-note">Verify the exact card and sources before deciding.</p>'+profitResearchRow(c));
+    m.classList.add('buy-review');m.querySelector('.pr-detail').open=true;
+  }
+  function openTargetResearch(t) {
+    rememberView();journey.positions['radar:radar']=0;buyPrefs.targetQuery=t.query;buyPrefs.status='all';buyPrefs.category='all';buyPrefs.q='';buyPrefs.mode=state.buyMode='radar';saveBuyPrefs();render();
+  }
+  function viewProfitRadar(radar) {
+    var wrap=el('<div class="view profit-radar buy-workspace"></div>'),allRows=radar.candidates||[],rows=Buying.rows(allRows),counts={},policy=radar.policy||{},coverage=radar.coverage||{};
     ['qualified','research','pass','excluded'].forEach(function(k){counts[k]=rows.filter(function(c){return c.status===k;}).length;});
-    wrap.appendChild(el('<div class="pr-overview"><div class="pr-overviewtop"><div><span class="pr-kicker">PSA 10 buy radar</span><h2>' + counts.qualified + ' ready to buy</h2></div><span class="pr-partial">Partial scan</span></div><div class="pr-counts">' +
-      [['research','Research'],['pass','Pass'],['excluded','Excluded']].map(function(x){return '<div><i class="pr-dot pr-dot-' + x[0] + '" aria-hidden="true"></i><b>' + counts[x[0]] + '</b><span>' + x[1] + '</span></div>';}).join('') +
-      '</div><div class="pr-overviewfoot">' + rows.length + ' cards in view, ' + radar.watch_count + ' PSA 10 targets</div></div>'));
+    var targets=state.data.targets||[],target=targets.filter(function(t){return t.query===buyPrefs.targetQuery;})[0];
+    wrap.appendChild(el('<div class="buy-summary"><div><b>'+counts.qualified+'</b><span>verified buys</span></div><div><b>'+targets.length+'</b><span>search targets</span></div><span class="pr-partial">Partial scan</span></div>'));
     var diagnostic = radar.diagnostics || {};
     var rules = '<details class="pr-policy"><summary>Buying rules & scan details</summary><p><b>PSA 10s first.</b> Other grades only appear if fully verified with at least $300 adjusted profit AND 50% return, and a supported hold of 30 days or less. Otherwise they stay out of this view.</p><p>Both minimums must pass after all fees, costs, time and holding allowances.</p><div class="pr-tier">';
     (policy.hold_tiers || []).forEach(function(t,i){var prev=i?policy.hold_tiers[i-1].through_days+1:1;rules+='<div><span>'+prev+'–'+t.through_days+' days</span><b>'+money0(t.profit)+' AND '+Math.round(t.roi*100)+'% return</b></div>';});
     rules += '</div><p>Normal total buy budget: $500. $500–$1,000 needs individual review; above $1,000 is research only. Unknown hold: 90 days. Shorter holds need supporting evidence. Over 120 days: research only.</p><p class="muted">' + esc(policy.assumptions || '') + '</p><a target="_blank" rel="noopener" href="' + safeBuyLink(policy.fee_source) + '">eBay fee schedule ↗</a>' +
       '<p class="muted">' + esc(coverage.mode || 'Research snapshot') + ' · evaluated ' + esc((radar.as_of || '').slice(0,16).replace('T',' ')) + ' UTC. ' + esc(coverage.notes || 'Partial scan.') + '</p>';
-    rules += '<p>' + (allRows.length-rows.length) + ' other-grade observations are hidden. Original evidence is preserved.</p>';
+    rules += '<p>' + (allRows.length-rows.length) + ' observations outside this PSA 10 view are hidden, including unverified grades. Original evidence is preserved.</p>';
     if(typeof diagnostic.sales_supported==='number') rules += '<p>' + diagnostic.sales_supported + ' of ' + radar.scanned + ' observations have the required primary sold records. ' + diagnostic.priced_scenarios + ' have a resale scenario.</p>';
     if((coverage.api_access||{}).browse==='credentials_unavailable') rules += '<p class="muted">This run used public pages. Live eBay API access was unavailable in this research runner.</p>';
-    rules += '</details>'; wrap.appendChild(el(rules));
-    var stale = rows.some(function(c){var age=Date.now()-Date.parse(c.checked_at||'');return !isFinite(age)||age<0||age>48*3600000;});
-    if(stale) wrap.appendChild(el('<div class="pr-warning">Older prices — recheck listings before buying.</div>'));
-    var toolbar = el('<div class="pr-toolbar"><label>Show<select id="profitStatus"><option value="qualified">Buy opportunities '+counts.qualified+'</option><option value="research">Research only '+counts.research+'</option><option value="rejected">Rejected '+(counts.pass+counts.excluded)+'</option><option value="all">All checked '+rows.length+'</option></select></label><label>Type<select id="profitCategory"><option value="all">All cards</option>'+Object.keys(BUY_CATEGORIES).map(function(k){return '<option value="'+k+'">'+BUY_CATEGORIES[k]+'</option>';}).join('')+'</select></label></div>');
-    wrap.appendChild(toolbar);
-    var viewLabel=el('<p class="pr-viewlabel"></p>');wrap.appendChild(viewLabel);
-    var list=el('<div class="pr-grid"></div>');wrap.appendChild(list);
+    rules += '</details>';
+
+    if(target){var focus=el('<div class="buy-focus"><span>Target: <b>'+esc(target.label)+'</b></span><button type="button" class="text-button">Back to targets</button></div>');focus.querySelector('button').onclick=function(){rememberView();state.buyMode=buyPrefs.mode='targets';saveBuyPrefs();render(true);};wrap.appendChild(focus);}
+    var toolbar=el('<div class="buy-toolbar"><label class="search"><input type="search" aria-label="Search Buy Radar" placeholder="Find a player, set or listing…" value="'+esc(buyPrefs.q)+'"></label><div class="buy-filterrow"><select aria-label="Radar view"><option value="qualified">Buy ('+counts.qualified+')</option><option value="research">Research ('+counts.research+')</option><option value="tracked">Tracked</option><option value="rejected">Rejected ('+(counts.pass+counts.excluded)+')</option><option value="all">All ('+rows.length+')</option></select><select aria-label="Radar sort"><option value="recent">Newest</option><option value="profit">Profit ↓</option><option value="cost">Cost ↑</option></select></div><details class="buy-morefilters"><summary>Category filter</summary><select aria-label="Radar category"><option value="all">All categories</option>'+Object.keys(BUY_CATEGORIES).map(function(k){return '<option value="'+k+'">'+BUY_CATEGORIES[k]+'</option>';}).join('')+'</select></details></div>');
+    toolbar.querySelector('[aria-label="Radar view"]').value=buyPrefs.status;toolbar.querySelector('[aria-label="Radar sort"]').value=buyPrefs.sort;toolbar.querySelector('[aria-label="Radar category"]').value=buyPrefs.category;
+    toolbar.querySelector('details').open=buyPrefs.category!=='all';wrap.appendChild(toolbar);
+    var label=el('<div class="buy-resultbar"><p role="status" aria-live="polite"></p><button type="button" class="text-button">Reset</button></div>');wrap.appendChild(label);
+    var list=el('<div class="buy-grid"></div>');wrap.appendChild(list);
+    var more=el('<button class="button secondary buy-load" type="button">Show more cards</button>');wrap.appendChild(more);
+    wrap.appendChild(el(rules));
+    var limit=12;
     function update(){
-      var status=toolbar.querySelector('#profitStatus').value,category=toolbar.querySelector('#profitCategory').value;
-      var shown=rows.filter(function(c){return(status==='all'||c.status===status||(status==='rejected'&&(c.status==='pass'||c.status==='excluded')))&&(category==='all'||c.category===category);});
-      viewLabel.textContent={qualified:'BUY OPPORTUNITIES',research:'RESEARCH ONLY · NOT READY TO BUY',rejected:'REJECTED · DO NOT BUY',all:'RESEARCH LOG · INCLUDES REJECTED CARDS'}[status] || '';
-      list.innerHTML=shown.length?shown.map(profitResearchRow).join(''):status==='qualified'?'<div class="pr-empty"><span aria-hidden="true">⌕</span><h3>No verified buys yet</h3><p>Only cards meeting your profit rules appear here.</p></div>':'<div class="card"><p>No cards in this view yet.</p></div>';
+      var shown=Buying.select(rows,buyPrefs,buyPrefs.tracked,target),status=buyPrefs.status;
+      label.querySelector('p').textContent=shown.length+' '+(status==='qualified'?'buy opportunities':status==='tracked'?'tracked · this device':'cards · research log')+(shown.length>limit?' · showing '+limit:'');
+      list.innerHTML=shown.length?shown.slice(0,limit).map(buyCard).join(''):'<div class="pr-empty"><h3>'+(status==='qualified'?'No verified buys yet':status==='tracked'?'Your shortlist starts here':'No matching cards')+'</h3><p>'+(status==='qualified'?'The evidence and profit rules must both pass.':status==='tracked'?'Tap Track on a research card to keep it here.':'Try another search or reset your filters.')+'</p><div class="buy-emptyactions"><button class="button" type="button" data-research>Browse research</button><button class="button secondary" type="button" data-targets>Explore targets</button></div></div>';
+      more.hidden=shown.length<=limit;more.textContent='Show '+Math.min(12,Math.max(0,shown.length-limit))+' more cards';
+      bindBuyCards(list,shown,function(){if(buyPrefs.status==='tracked')update();});
+      var research=list.querySelector('[data-research]');if(research)research.onclick=function(){buyPrefs.status='research';buyPrefs.q='';buyPrefs.category='all';toolbar.querySelector('input').value='';toolbar.querySelector('[aria-label="Radar view"]').value='research';toolbar.querySelector('[aria-label="Radar category"]').value='all';saveBuyPrefs();update();};
+      var next=list.querySelector('[data-targets]');if(next)next.onclick=function(){state.buyMode=buyPrefs.mode='targets';saveBuyPrefs();render();};
     }
-    toolbar.querySelectorAll('select').forEach(function(s){s.onchange=update;});update();
-    return wrap;
+    label.querySelector('button').onclick=function(){buyPrefs.status='qualified';buyPrefs.category='all';buyPrefs.q='';buyPrefs.sort='recent';buyPrefs.targetQuery='';saveBuyPrefs();render();};
+    [['Search Buy Radar','q'],['Radar view','status'],['Radar sort','sort'],['Radar category','category']].forEach(function(pair){var control=toolbar.querySelector('[aria-label="'+pair[0]+'"]');control[control.tagName==='INPUT'?'oninput':'onchange']=function(){buyPrefs[pair[1]]=this.value;limit=12;saveBuyPrefs();update();};});
+    more.onclick=function(){limit+=12;update();};update();return wrap;
   }
 
   function viewRadar() {
@@ -1916,7 +2011,7 @@
   function dealSearchUrl(d, soldOnly) {
     var q = d.query || d.item_title || d.label;
     return "https://www.ebay.com/sch/i.html?_nkw=" + encodeURIComponent(q) +
-      (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "");
+      (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "&LH_BIN=1");
   }
 
   // "Currently on eBay" box — the cheapest live listings radar.py captured.
@@ -1970,32 +2065,48 @@
     document.getElementById("modalWrap").classList.add("open");
   }
 
+  function openTargetSamples(t) {
+    var rows=((state.data.radar||{}).candidates||[]).filter(function(c){return Buying.forTarget(c,t);}).sort(function(a,b){return(Date.parse(b.checked_at)||0)-(Date.parse(a.checked_at)||0);});
+    var m=showWorkspaceModal('<h2 id="workspaceTitle">'+esc(t.label)+'</h2><p class="section-note">'+rows.length+' saved search observations. These have not passed exact-card, grade and sold-comp review.</p>'+compResearchLinks(t.query,dealSearchUrl(t,true))+'<div class="target-samples"></div><a class="button secondary" href="'+dealSearchUrl(t,false)+'" target="_blank" rel="noopener">Find current Buy It Now listings ↗</a>');
+    var list=m.querySelector('.target-samples');
+    rows.slice(0,6).forEach(function(c){list.appendChild(el('<article class="target-sample"><h3>'+esc(c.item_title||c.label)+'</h3><p>Observed ask '+radarDisplayPrice(c.price,true)+' · '+esc(savedDate(c.checked_at))+'</p><small>Identity / card grade unverified. Recheck availability.</small><a target="_blank" rel="noopener" href="'+safeBuyLink(c.url)+'">Review source listing ↗</a></article>'));});
+    if(!rows.length)list.appendChild(emptyPanel('No saved matches yet','Start with Product Research, then check current listings.'));
+    if(rows.length>6)list.appendChild(el('<p class="section-note">Showing the six newest saved examples. Use current listings for a fresh search.</p>'));
+  }
   function viewTargets() {
-    var targets=state.data.targets||[],wrap=el('<div class="view profit-radar target-view"></div>');
-    var cats={rookies:['◆','Rookies'],autos:['✎','Autographs'],inserts:['✦','Chase inserts'],established:['★','Stars & legends'],downtown_kaboom:['◈','Downtown / Kaboom']};
-    wrap.appendChild(el('<div class="pr-overview"><div class="pr-overviewtop"><div><span class="pr-kicker">PSA 10 targets</span><h2>Find the next flip</h2></div><span class="tg-total">'+targets.length+'<small>targets</small></span></div><div class="tg-budget"><div><span>Core search</span><b>$100–$400</b></div><div><span>Total buy budget</span><b>$500</b></div></div></div>'));
-    var chips=el('<div class="tg-categories" aria-label="Target categories"><button class="active" data-cat="all" aria-pressed="true"><span>◎</span><b>All cards</b><small>'+targets.length+'</small></button>'+Object.keys(cats).map(function(k){return '<button data-cat="'+k+'" aria-pressed="false"><span>'+cats[k][0]+'</span><b>'+cats[k][1]+'</b><small>'+targets.filter(function(t){return t.category===k;}).length+'</small></button>';}).join('')+'</div>');wrap.appendChild(chips);
-    var controls=el('<div class="tg-controls"><input type="search" aria-label="Find a target" placeholder="Find a player or set…"><select aria-label="Target sport"><option value="all">All sports</option><option value="football">Football</option><option value="basketball">Basketball</option><option value="baseball">Baseball</option></select></div>');wrap.appendChild(controls);
-    var count=el('<p class="pr-viewlabel"></p>');wrap.appendChild(count);var grid=el('<div class="tg-grid"></div>');wrap.appendChild(grid);var selected='all';
-    function update(){var q=controls.querySelector('input').value.toLowerCase().trim(),sport=controls.querySelector('select').value;var rows=targets.filter(function(t){return(selected==='all'||t.category===selected)&&(sport==='all'||t.sport===sport)&&((t.label+' '+t.query).toLowerCase().indexOf(q)>=0);});count.textContent=rows.length+' search targets. These are not buy recommendations.';
-      grid.innerHTML=rows.length?rows.map(function(t){var cat=cats[t.category]||['◆','Card'],label=t.label.replace(/ PSA 10/g,'');return '<article class="tg-card tg-'+esc(t.category)+'"><div class="tg-top"><span class="tg-symbol" aria-hidden="true">'+cat[0]+'</span><span class="tg-grade">PSA 10</span></div><h3>'+esc(label)+'</h3><div class="tg-meta"><span>'+esc(t.sport)+'</span><span>'+cat[1]+'</span></div><a class="pr-listing" target="_blank" rel="noopener" href="'+dealSearchUrl(t,false)+'">Find listings <span>↗</span></a><details><summary>Search details</summary><p>'+esc(t.query)+'</p><p>Search ceiling '+money0(t.price_max)+'. This is a search filter, not a buy price. Buy price requires exact sold comparisons and your profit minimums.</p>'+compResearchLinks(t.query||t.label,dealSearchUrl(t,true))+'</details></article>';}).join(''):'<div class="pr-empty"><h3>No matching targets</h3><p>Try another player, sport or category.</p></div>';}
-    chips.querySelectorAll('button').forEach(function(btn){btn.onclick=function(){selected=btn.getAttribute('data-cat');chips.querySelectorAll('button').forEach(function(x){var active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});update();};});controls.querySelector('input').oninput=update;controls.querySelector('select').onchange=update;update();return wrap;
+    var targets=state.data.targets||[],rawRows=(state.data.radar||{}).candidates||[],rows=Buying.rows(rawRows),wrap=el('<div class="view target-workspace"></div>');
+    var policy=(state.data.radar||{}).policy||{};
+    wrap.appendChild(el('<div class="buy-summary"><div><b>'+targets.length+'</b><span>PSA 10 targets</span></div><div><b>'+money0(policy.default_max_all_in||500)+'</b><span>normal total budget</span></div></div>'));
+    var controls=el('<div class="buy-toolbar"><label class="search"><input type="search" aria-label="Find a target" placeholder="Find a player or set…" value="'+esc(buyPrefs.targetSearch)+'"></label><div class="buy-filterrow"><select aria-label="Target category"><option value="all">All categories</option>'+Object.keys(BUY_CATEGORIES).map(function(k){return '<option value="'+k+'">'+BUY_CATEGORIES[k]+'</option>';}).join('')+'</select><select aria-label="Target sport"><option value="all">All sports</option><option value="football">Football</option><option value="basketball">Basketball</option><option value="baseball">Baseball</option></select></div></div>');
+    controls.querySelector('[aria-label="Target category"]').value=buyPrefs.targetCategory;controls.querySelector('[aria-label="Target sport"]').value=buyPrefs.targetSport;wrap.appendChild(controls);
+    var count=el('<div class="buy-resultbar"><p role="status" aria-live="polite"></p><button type="button" class="text-button">Reset</button></div>');wrap.appendChild(count);
+    var grid=el('<div class="target-grid"></div>');wrap.appendChild(grid);
+    function update(){
+      var q=buyPrefs.targetSearch.toLowerCase().trim();
+      var shown=targets.filter(function(t){return(buyPrefs.targetCategory==='all'||t.category===buyPrefs.targetCategory)&&(buyPrefs.targetSport==='all'||t.sport===buyPrefs.targetSport)&&q.split(/\s+/).every(function(w){return(t.label+' '+t.query).toLowerCase().indexOf(w)>=0;});});
+      count.querySelector('p').textContent=shown.length+' targets · discovery, not buy recommendations';
+      grid.innerHTML=shown.length?shown.map(function(t){
+        var matches=rows.filter(function(c){return Buying.forTarget(c,t);}),samples=rawRows.filter(function(c){return Buying.forTarget(c,t);}),photo=rawRows.filter(function(c){return Buying.forTarget(c,t)&&Buying.image(c)&&c.page_state!=='mismatch'&&/PSA\s*10/i.test(c.item_title||'')&&!/AUTO(?:GRAPH)?\s*(?:GRADE\s*)?10/i.test(c.item_title||'');}).sort(function(a,b){return(Date.parse(b.checked_at)||0)-(Date.parse(a.checked_at)||0);})[0];
+        return '<article class="target-card" data-target="'+esc(t.query)+'"><div class="target-top">'+buyPhoto(photo||{label:t.label},true)+'<div><span class="pr-grade">PSA 10</span><h3>'+esc(t.label.replace(/ PSA 10/g,''))+'</h3><p>'+esc(t.sport)+' · '+esc(BUY_CATEGORIES[t.category]||'Cards')+'</p><small>'+(photo?'Search sample · identity unverified':'Listing photo not available')+'</small></div></div><div class="target-coverage"><b>'+matches.length+'</b> PSA 10 research rows<span>'+samples.length+' saved search samples · identity & comps need review</span></div><div class="buy-actions"><button class="button" data-target-review type="button">Review research</button><a class="button secondary" target="_blank" rel="noopener" href="'+dealSearchUrl(t,false)+'">Find listings ↗</a></div><details class="target-details"><summary>Sold comps & search details</summary><p>'+esc(t.query)+'</p><p>Search ceiling '+money0(t.price_max)+'. This is a discovery filter, not a safe buy price.</p>'+compResearchLinks(t.query||t.label,dealSearchUrl(t,true))+'</details></article>';
+      }).join(''):'<div class="pr-empty"><h3>No matching targets</h3><p>Try another player, sport or category.</p></div>';
+      grid.querySelectorAll('[data-target-review]').forEach(function(b){b.onclick=function(){var query=this.closest('[data-target]').dataset.target;var t=targets.filter(function(x){return x.query===query;})[0];if(t){var reviewed=rows.filter(function(c){return Buying.forTarget(c,t);});if(reviewed.length)openTargetResearch(t);else openTargetSamples(t);}};});
+    }
+    [['Find a target','targetSearch'],['Target category','targetCategory'],['Target sport','targetSport']].forEach(function(pair){var control=controls.querySelector('[aria-label="'+pair[0]+'"]');control[control.tagName==='INPUT'?'oninput':'onchange']=function(){buyPrefs[pair[1]]=this.value;saveBuyPrefs();update();};});
+    count.querySelector('button').onclick=function(){buyPrefs.targetSearch='';buyPrefs.targetCategory='all';buyPrefs.targetSport='all';saveBuyPrefs();render();};update();return wrap;
   }
 
   function viewDrafts() {
     var wrap = el('<div class="view"></div>');
     wrap.appendChild(el('<div class="eyebrow">eBay listing titles</div>'));
-    wrap.appendChild(el('<p class="muted" style="font-size:13px;margin:0 2px 12px">Optimized, ready to paste. Tap Copy to grab a title.</p>'));
+    wrap.appendChild(el('<p class="muted" style="font-size:13px;margin:0 2px 12px">Continue a saved draft, or prepare an individual listing. Prices are yours to set.</p>'));
     var list = el('<div class="list drafts"></div>');
-    state.data.cards.forEach(function (c) {
-      var d = el('<div class="draft"><div class="t">' + esc(c.title) + "</div>" +
-        '<div class="foot"><span class="len">' + c.title.length + "/80 chars</span>" +
-        '<button class="copybtn">Copy</button></div></div>');
+    state.data.cards.filter(function(c){return !c.sold&&!Selling.listed(c);}).sort(function(a,b){return Number(!!(workspace.plans[b.sku]||{}).listingDraft)-Number(!!(workspace.plans[a.sku]||{}).listingDraft);}).forEach(function (c) {
+      var saved=(workspace.plans[c.sku]||{}).listingDraft;
+      var d = el('<div class="draft"><div class="t">' + esc(saved?saved.title:c.title) + "</div>" +
+        '<div class="foot"><span class="len">' + ((workspace.plans[c.sku]||{}).listingDraft?'Saved draft · this device':c.title.length + '/80 chars') + "</span>" +
+        '<button class="copybtn">'+(saved?'Continue draft':'Prepare listing')+'</button></div></div>');
       var btn = d.querySelector(".copybtn");
-      btn.onclick = function () {
-        var done = function () { btn.textContent = "Copied"; btn.classList.add("done"); setTimeout(function () { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1400); };
-        if (navigator.clipboard) navigator.clipboard.writeText(c.title).then(done, done); else done();
-      };
+      btn.onclick = function () { openSingleDraft(c); };
       list.appendChild(d);
     });
     wrap.appendChild(list);
@@ -2015,7 +2126,7 @@
                   : '<span class="comp">' + inner + "</span>";
     }).join("");
     return '<div class="compsbox"><div class="lab">' +
-      (sold ? "Recent eBay sales" : "On eBay now") + "</div>" + rows +
+      (sold ? "Saved eBay sales" : "Saved eBay listings") + "</div>" + rows +
       '<div class="cfoot">' + (sold ? "Real sold prices" : "Asking prices") + (c.comps.broad ? " from a broad search" : "") +
       (c.comps.as_of ? ", as of " + esc(savedDate(c.comps.as_of)) : "") + "." +
       (sold ? "" : " Asking prices are not sales.") + "</div></div>";
@@ -2076,7 +2187,7 @@
 
   function ebaySearchUrl(c, soldOnly) {
     return "https://www.ebay.com/sch/i.html?_nkw=" + encodeURIComponent(c.title) +
-      (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "");
+      (soldOnly ? "&LH_Sold=1&LH_Complete=1" : "&LH_BIN=1");
   }
 
   // Terapeak product research (eBay Seller Hub) pre-searched for this card —
@@ -2096,9 +2207,9 @@
              c.serial_run ? "/" + c.serial_run : "", c.team].filter(Boolean).join(" ");
     return "Help me create and post an eBay listing for this sports card.\n\n" +
       "Card: " + d + "\nSuggested title: " + c.title +
-      (num(c.asking_price) > 0 ? "\nMy asking price: " + money0(c.asking_price) : "") +
+      (num(c.asking_price) > 0 ? "\nSaved reference value (not my listing price): " + money0(c.asking_price) : "") +
       "\n\nPlease give me an optimized 80-character title, eBay item specifics, and a short " +
-      "description I can paste — then remind me to add photos before publishing.";
+      "description I can paste. Buy It Now with Best Offer only, no auctions. Verify exact sold comps and net profit, then remind me to add photos before publishing.";
   }
 
   // "What it's going for" box for the modal — the typical asking price, the
@@ -2141,7 +2252,7 @@
       soldRow +
       '<div class="mkrow"><span>Usually going for</span><b class="tnum">~' + money0(m.median) +
         (m.count ? ' <small>· ' + m.count + " listed</small>" : "") + "</b></div>" +
-      (range ? '<div class="mkrow"><span>Live range now</span><b class="tnum">' + range + "</b></div>" : "") +
+      (range ? '<div class="mkrow"><span>Saved asking range</span><b class="tnum">' + range + "</b></div>" : "") +
       '<div class="mkrow"><span>' + (c.sold ? "Was valued at" : "Saved value") +
         '</span><b class="tnum">' + money0(cur) + "</b></div>" +
       (num(c.est_price) > 0 && num(c.est_price) !== cur
@@ -2426,13 +2537,14 @@
   }
 
   function closeModal() {
-    document.getElementById("modalWrap").classList.remove("open");
-    document.body.classList.remove("sheet-open");
-    if(modalFocus && document.contains(modalFocus))modalFocus.focus();
-    if (history.replaceState) history.replaceState(null, "", "#tab="+state.tab);
+    var wasOpen=document.getElementById("modalWrap").classList.contains("open");
+    dismissDialog();
+    if(wasOpen&&history.state&&history.state.cvDialog){history.back();return;}
+    if(history.replaceState)history.replaceState(null,"","#tab="+state.tab);
   }
-  function openFromHash() {
-    var m = location.hash.match(/^#sku=(.+)$/);
+
+  function openFromHash(hash) {
+    var m = (typeof hash==='string'?hash:location.hash).match(/^#sku=(.+)$/);
     if (!m || !state.data) return;
     var sku;try{sku=decodeURIComponent(m[1]);}catch(e){return;}
     var card = state.data.cards.filter(function (c) { return c.sku === sku; })[0];
@@ -2509,14 +2621,21 @@
     try{var prefs=JSON.parse(localStorage.getItem("cv-view-v60")||"{}");["sort","inventoryStatus","inventorySport","inventoryType"].forEach(function(k){if(typeof prefs[k]==="string")state[k]=prefs[k];});if(prefs.v===64&&(prefs.inventoryLayout==="list"||prefs.inventoryLayout==="grid"))state.inventoryLayout=prefs.inventoryLayout;}catch(e){}
     if(!SORTS.some(function(s){return s[0]===state.sort;}))state.sort="val-desc";
     if(state.inventoryStatus==="unlisted")state.inventoryStatus="all";
-    var wanted=initialHash.match(/^#tab=(today|sell|collection|radar|value|about)$/);
-    setTab(wanted?wanted[1]:"today");
-    if(initialHash.indexOf("#sku=")===0&&history.replaceState)history.replaceState(null,"",initialHash);
+    if(typeof journey.q==='string')state.q=journey.q;
+    if(['plan','lots','listings','drafts'].indexOf(journey.sellMode)>=0)state.sellMode=journey.sellMode;
+    if(typeof journey.planFilter==='string')state.planFilter=journey.planFilter;
+    state.sellSearch=typeof journey.sellSearch==='string'?journey.sellSearch:'';
+    var wanted=initialHash.match(/^#tab=(today|sell|collection|radar|buy|targets|value|about)$/);
+    var cardRoute=initialHash.indexOf('#sku=')===0;
+    var baseTab=cardRoute&&['today','sell','collection','radar','value'].indexOf(journey.tab)>=0?journey.tab:cardRoute?'collection':'today';
+    restoringView=true;setTab(wanted?wanted[1]:baseTab);
     measureNav();
     window.addEventListener("resize", measureNav);
     window.addEventListener("orientationchange", measureNav);
-    openFromHash();               // shared link straight to a card
-    window.addEventListener("hashchange", function(){var t=location.hash.match(/^#tab=(today|sell|collection|radar|value|about)$/);if(t)setTab(t[1]);else openFromHash();});
+    openFromHash(initialHash);    // shared card link keeps a real parent for Back
+    window.addEventListener("popstate",function(){if(!(history.state&&history.state.cvDialog))dismissDialog();});
+    window.addEventListener("pagehide",rememberView);
+    window.addEventListener("hashchange", function(){var t=location.hash.match(/^#tab=(today|sell|collection|radar|buy|targets|value|about)$/);if(t){if(t[1]!==state.tab)setTab(t[1]);}else openFromHash();});
     checkVersion(data.app_version);
     // A phone app is resumed far more often than cold-started, and a ship that
     // lands while it sits in the background would otherwise go unnoticed until
