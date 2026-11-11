@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v70";
+  var APP_VERSION = "v71";
   var buyPrefs;
   try { buyPrefs = Buying.prefs(JSON.parse(localStorage.getItem("cv-buy-v1") || "{}")); } catch (e) { buyPrefs = Buying.prefs(); }
   function saveBuyPrefs() { try { localStorage.setItem("cv-buy-v1", JSON.stringify(buyPrefs)); } catch (e) {} }
@@ -13,7 +13,7 @@
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
 
   // Remember navigation only; cards, costs and decisions keep their existing stores.
-  var journey={positions:{}}, restoringView=false;
+  var journey={positions:{}}, restoringView=false, dialogClosing=false;
   try { var j=JSON.parse(sessionStorage.getItem('cv-journey-v1')||'{}'); if(j&&typeof j==='object')journey=j; } catch(e){}
   if(!journey.positions||typeof journey.positions!=='object')journey.positions={};
   function viewKey(){return state.tab+(state.tab==='radar'?':'+state.buyMode:state.tab==='sell'?':'+state.sellMode:'');}
@@ -29,6 +29,7 @@
     if(history.pushState)history.pushState({cvDialog:true},'',location.hash);
   }
   function dismissDialog(){
+    dialogClosing=false;
     document.getElementById('modalWrap').classList.remove('open');document.body.classList.remove('sheet-open');
     if(modalFocus&&document.contains(modalFocus))modalFocus.focus({preventScroll:true});
   }
@@ -2537,9 +2538,12 @@
   }
 
   function closeModal() {
+    if(dialogClosing)return;
     var wasOpen=document.getElementById("modalWrap").classList.contains("open");
+    // Keep the backdrop until Back completes so a quick second tap cannot
+    // open another card that the pending popstate would immediately dismiss.
+    if(wasOpen&&history.state&&history.state.cvDialog){dialogClosing=true;history.back();return;}
     dismissDialog();
-    if(wasOpen&&history.state&&history.state.cvDialog){history.back();return;}
     if(history.replaceState)history.replaceState(null,"","#tab="+state.tab);
   }
 

@@ -8,7 +8,7 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
-## Buying and listing progression — v70, November 11, 2026 (ChatGPT/Codex) — CURRENT RELEASE
+## Buying and listing progression — v71, November 11, 2026 (ChatGPT/Codex) — CURRENT RELEASE
 - Cross-app research, sources, design rules and the continuation sequence live in
   [`UX_REVIEW.md`](UX_REVIEW.md). Next app: Portfolio Dashboard, then Caddie HQ,
   then Jarvis. Read current Claudex handoffs and latest main before future work.
@@ -27,7 +27,11 @@ listing, deal-finding). Python 3, standard-library-first, no framework.
   navigation/search/scroll context. Browser Back closes sheets; refreshed card
   links retain a parent route. Old owner/offer/lot stores remain intact.
 - Card details distinguish gross profit and saved asking snapshots. Release
-  assets/cache and inline build include the new helper at v70.
+  assets/cache and inline build include the new helper at v71.
+- v70 was deployed and live-checked first. v71 keeps the closing backdrop until
+  browser Back completes, preventing a rapid next-card tap from being dismissed
+  by the previous close. Reproduced and verified the rapid card-switch sequence
+  and refreshed-detail Back behavior in the browser.
 - Checks: 39 Python + 36 Node tests (seven buying tests), JS syntax, catalog,
   regenerated-data preservation, 320/390px + desktop dark/light browser flows.
   Physical iPhone/Steam Deck not tested. Publication/live evidence is recorded

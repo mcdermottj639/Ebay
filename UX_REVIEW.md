@@ -13,7 +13,7 @@ steps and less scrolling, with every useful detail still accessible.
 | App | Status for this review | Main journey |
 | --- | --- | --- |
 | Sports Hub | Prior chat verified v369, including 437 tests and live navigation checks; preserve that baseline | Today → game → Matchup Lab → evidence/model comparison → Back |
-| Card Vault / eBay | v70 implementation and checks below; publication evidence belongs in the current shared handoff | Target → saved research → exact comps/costs → track; owned card → plan → listing draft → results |
+| Card Vault / eBay | v71 implementation and checks below; publication evidence belongs in the current shared handoff | Target → saved research → exact comps/costs → track; owned card → plan → listing draft → results |
 | Portfolio Dashboard | NEXT; start from latest main and its current handoff | Holding → what changed → research → account-specific decision |
 | Caddie HQ | After Portfolio Dashboard | Course → prep → hole guide → score → recap |
 | Jarvis | Last | Needs attention → evidence → complete / dismiss / revisit |
@@ -70,7 +70,7 @@ except the explicitly identified carried-forward Apple Sports reference.
 8. Keep controls comfortable for phone and Steam Deck; check text wrapping,
    focus, keyboard operation, overlays, bottom navigation and dark/light themes.
 
-## Card Vault v70 implementation
+## Card Vault v70 / v71 implementation
 
 - Buy Radar now uses compact photo cards: ask, estimated total purchase cost,
   resale estimate, cash profit after selling costs, and the separate adjusted
@@ -96,13 +96,18 @@ except the explicitly identified carried-forward Apple Sports reference.
   lot drafts, private offers, Today, Inventory and Results remain accessible.
 - Card details now explicitly label the before-fee figure **Gross profit** and
   call the stored comparison listings/range **saved**, avoiding false freshness.
-- Release files and offline shell move together to v70, including `buying.js`
+- Release files and offline shell move together to v71, including `buying.js`
   in the cached shell and standalone build.
+
+v70 was deployed and live-checked. That check caught a rapid Close → next card
+race; v71 keeps the backdrop until Back completes. The reproduced sequence and
+refreshed-card Back check both pass with the fix.
 
 ### Verification and limits
 
 - [Phone layout evidence](research/card-vault-v70-mobile.png): 390px target view
-  and 320px research view. These are browser frames, not physical phones.
+  and 320px research view. The v70 layout is unchanged in v71. These are browser
+  frames, not physical phones.
 - Automated: 39 Python and 36 Node tests; JS syntax; catalog validation; rebuilt
   data; diff/whitespace checks. Seven new helper tests cover freshness, grade
   exceptions, unknown values, target matching, tracking, sorting and preferences.
