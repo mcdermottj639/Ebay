@@ -48,10 +48,13 @@ review. Use the offers to help with planning as well as other info."
   "Respond on eBay" link) shows at the top of Today's Next moves, on the Sell plan
   card and on the On eBay listing card. Ended offers show as "Best offer so far".
   Nothing accepts, counters, declines or messages anyone.
-- **Feed**: the scheduled task "Card Vault offer relay" reads eBay offer emails and
-  books `offer_received` events through a data-only `book/` PR (same gates as the
-  eBay bookkeeper). First four booked by hand from Gmail on Nov 9: CARD-0034 $100
-  (Oct 31) and $160 (Nov 1), CARD-0024 $60 (Nov 4), CARD-0029 $220 (Nov 9, live).
+- **Feed (automated since Nov 10, 2026)**: the scheduled task "Card Vault offer relay"
+  (created Nov 10 at Jack's tap, 4 runs a day: 7:43 AM, 12:43, 5:43, 10:43 PM ET)
+  reads eBay offer emails and books `offer_received` events through a data-only
+  `book/` PR (same gates as the eBay bookkeeper). Nov 9–10 it did not exist yet
+  (creation was refused by a permission check), so the first four were booked by
+  hand from Gmail on Nov 9: CARD-0034 $100 (Oct 31) and $160 (Nov 1), CARD-0024
+  $60 (Nov 4), CARD-0029 $220 (Nov 9).
 - Validation: check_catalog, build_web, 39 Python + 29 Node tests, node --check on
   docs/*.js. Playwright at 390x844 dark and 320x690 light (clock set to Nov 9
   11:30 PM ET): plan renders on Today, Sell and On eBay, scrollWidth == innerWidth,
@@ -1473,6 +1476,17 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-10 (night) — CARD-0031 CJ Stroud #339 PSA 10 re-anchored $25 → $29.99
+  (Claude, Jack's tap "Reprice CARD-0031").** Median of 7 exact-card/grade reported
+  sales, $20–$35, Oct 6–Nov 9 (five retained October sales plus PSA-reported Nov 9
+  FixedPrice $35 and $29.99; three Best Offers excluded), medium confidence, from
+  ChatGPT/Codex's Nov 10 comparison feed. `price_history.csv` gets a `correction`
+  row (no false momentum). The Pink Optic Preview listing (158189738146, $65, a
+  different parallel) was removed from CARD-0031's group in `comps_snapshot.json`;
+  the weekly reprice can pull it back in, since nothing in the matcher changed.
+  CARD-0031 stays in `SKIP_SKUS`. Not listed on eBay, so no ask to change. Same day
+  the "Card Vault offer relay" scheduled task was created (see the v69 Feed line);
+  PR #110 (which said the feed was not automated) was closed as out of date. v69.
 - **2026-11-10 — five cards added from Jack's eBay My Collection screenshots (Claude,
   data only).** CARD-0037 Cooper DeJean 2024 Gold Standard #133 rookie auto /299 ($49),
   CARD-0038 Ladd McConkey 2024 Score #328 Rookie Signatures ($15), CARD-0039 Freeney /
