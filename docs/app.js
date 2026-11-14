@@ -4,12 +4,12 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v71";
+  var APP_VERSION = "v72";
   var buyPrefs;
   try { buyPrefs = Buying.prefs(JSON.parse(localStorage.getItem("cv-buy-v1") || "{}")); } catch (e) { buyPrefs = Buying.prefs(); }
   function saveBuyPrefs() { try { localStorage.setItem("cv-buy-v1", JSON.stringify(buyPrefs)); } catch (e) {} }
   var state = { tab: "today", data: null, bucket: "All",
-                q: "", sort: "val-desc", sellMode: "plan", buyMode: buyPrefs.mode, planFilter: "all", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryTier: "all", inventoryLayout: "grid",
+                q: "", sort: "val-desc", sellMode: "plan", buyMode: buyPrefs.mode, planFilter: "all", inventoryStatus: "all", inventorySport: "all", inventoryType: "all", inventoryTier: "all", inventoryLayout: "grid", valuePeriod: "1M", inventoryMovement: "all", inventoryFilters: false,
                 radarFilter: { type: "all", sport: "all", graded: "all", grade: "all" } };
 
   // Remember navigation only; cards, costs and decisions keep their existing stores.
@@ -31,7 +31,9 @@
   function dismissDialog(){
     dialogClosing=false;
     document.getElementById('modalWrap').classList.remove('open');document.body.classList.remove('sheet-open');
+    if(state.data&&state.renderedValuePeriod!==state.valuePeriod)render(true);
     if(modalFocus&&document.contains(modalFocus))modalFocus.focus({preventScroll:true});
+    else {var restored=modalFocus&&modalFocus.dataset&&modalFocus.dataset.sku?Array.from(document.querySelectorAll('#view [data-sku]')).filter(function(n){return n.dataset.sku===modalFocus.dataset.sku;})[0]:null;var fallback=restored||document.querySelector('#view .period-control button[aria-pressed="true"]')||document.querySelector('.dock button.on');if(fallback)fallback.focus({preventScroll:true});}
   }
 
   // ---------- helpers ----------
@@ -270,6 +272,7 @@
   // pixel width (hydrate) so their text stays legible on any screen.
   // =====================================================================
   var Charts = window.CardVaultCharts;
+  var Movement = window.CardVaultMovement;
   var reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   var TIERS = { t1: { label: "$100+", cls: "tier-1" }, t2: { label: "$25–$99", cls: "tier-2" }, t3: { label: "Under $25", cls: "tier-3" } };
   var BASIS = { real: { label: "Sold prices", cls: "conf-1" }, psa: { label: "PSA", cls: "conf-2" }, est: { label: "Estimated", cls: "conf-3" }, ask: { label: "Asking", cls: "conf-4" } };
@@ -348,9 +351,9 @@
   }
   function moverCards() {
     return heldCards().filter(function (c) {
-      return num(c.prev_price) > 0 && num(c.asking_price) > 0 && Math.abs(num(c.asking_price) - num(c.prev_price)) / num(c.prev_price) >= 0.005;
+      var m=cardMovement(c);return m.available&&m.direction!=="flat";
     }).sort(function (a, b) {
-      return Math.abs(num(b.asking_price) / num(b.prev_price) - 1) - Math.abs(num(a.asking_price) / num(a.prev_price) - 1);
+      return Math.abs(cardMovement(b).pct)-Math.abs(cardMovement(a).pct);
     });
   }
   function historyPoints() {
@@ -429,7 +432,7 @@
     };
     s.onblur = hide;
   }
-  function twinTable(hist, valueHead, summary) {
+  function twinTable(hist, valueHead, summary, formatter) {
     var d = el('<details class="twin"><summary></summary><table class="twin-table"><thead><tr><th>Date</th><th></th></tr></thead><tbody></tbody></table></details>');
     d.querySelector("summary").textContent = summary || "See the numbers";
     d.querySelectorAll("th")[1].textContent = valueHead || "Vault value";
@@ -437,7 +440,7 @@
     hist.slice().reverse().forEach(function (p) {
       var tr = document.createElement("tr"), a = document.createElement("td"), b = document.createElement("td");
       a.textContent = savedDate(p.d) + (p.c ? " (re-priced)" : "");
-      b.textContent = money0(p.v);
+      b.textContent = (formatter || money0)(p.v);
       tr.appendChild(a); tr.appendChild(b); tb.appendChild(tr);
     });
     return d;
@@ -495,21 +498,124 @@
     var plate = kind === "graded" && !photoSlab ? '<span class="slab-plate"><span class="sp-l"><span>' + esc([c.year, c.set || c.brand].filter(Boolean).join(" ")) + "</span><small>" + esc(c.player || "") + '</small></span><span class="sp-r"><small>' + esc([c.grader, gradeWord(c.grade)].filter(Boolean).join(" ")) + "</small><b>" + esc(c.grade || "") + "</b></span></span>" : "";
     return '<span class="slab slab-' + kind + (photoSlab ? " photo-slab" : "") + " slab-" + (size || "md") + " " + tierKey(c) + (chase ? " chase" : "") + '">' + plate + '<span class="slab-window">' + thumb(c) + "</span></span>";
   }
+  // The same selected period follows the collection, its movers and a card.
+  // These are dated SAVED values; source resets and missing history are not returns.
+  function cardMovement(c) { return Movement.card(c, state.valuePeriod); }
+  function movePct(n) { return n == null ? "—" : (n > 0 ? "+" : n < 0 ? "−" : "") + (n && Math.abs(n) < 0.01 ? "<0.01" : Math.abs(n).toFixed(n && Math.abs(n) < 0.1 ? 2 : 1)) + "%"; }
+  function moveMoney(n) { return n == null ? "—" : (n > 0 ? "+" : n < 0 ? "−" : "") + money(Math.abs(n)); }
+  function moveArrow(m) { return m.direction === "up" ? "↗ " : m.direction === "down" ? "↘ " : ""; }
+  function movementGap(m) {
+    return ({ source_changed: "New price source", value_mismatch: "History needs update", rebased: "Value reset", no_history: "History needed", insufficient_history: "More history needed", unpriced: "Value needed", sold: "Sold" })[m.status] || "More history needed";
+  }
+  function periodControls(change, label) {
+    var wrap = el('<div class="period-control" role="group" aria-label="' + esc(label || "Value history period") + '"></div>');
+    Movement.PERIODS.forEach(function (p) {
+      var b = el('<button type="button" data-period="' + p.key + '" aria-pressed="' + (state.valuePeriod === p.key) + '" title="' + (p.days ? p.days + " days ending at the latest saved observation" : "Available history since the last price-source reset") + '">' + esc(p.label) + '</button>');
+      b.onclick = function () { state.valuePeriod = p.key; saveViewPrefs(); change(); };
+      wrap.appendChild(b);
+    });
+    return wrap;
+  }
+  function refreshPeriodView() {
+    rememberView(); render(true);
+    var b = document.querySelector('.period-control [data-period="' + state.valuePeriod + '"]');
+    if (b) b.focus({ preventScroll: true });
+  }
+  function moveStamp(m) { return m.asOf ? (m.stale ? "Older · " : "") + (m.approximate || state.valuePeriod === "ALL" ? savedDate(m.baselineDate) + "–" : "Through ") + savedDate(m.asOf) : "No dated comparison"; }
+  function movementHtml(m, withChart) {
+    if (!m.available) return '<span class="value-trend unavailable"><b>—</b><small>' + esc(movementGap(m)) + '</small></span>';
+    return '<span class="value-trend ' + m.direction + '"><b>' + moveArrow(m) + movePct(m.pct) + '</b><small>' + moveMoney(m.delta) + ' · ' + esc(state.valuePeriod === "ALL" ? "since " + savedDate(m.baselineDate) : (m.approximate ? "≈" : "") + state.valuePeriod) + '</small>' +
+      (withChart ? Charts.sparkline(m.points, 116, 30, { area: true, time: true, direction: m.direction }) : "") + '</span>';
+  }
+  function setMovementFilter(key) {
+    state.inventoryMovement = key;
+    if(state.tab!=="collection") { state.q = ""; state.bucket = "All";
+      state.inventoryStatus = "all"; state.inventoryType = "all"; state.inventorySport = "all"; state.inventoryTier = "all"; }
+    saveViewPrefs();
+    if (state.tab === "collection") { rememberView(); render(true); }
+    else setTab("collection");
+  }
+  function movementOverview() {
+    var held = heldCards(), p = Movement.portfolio(held, state.valuePeriod), total = sumRef(held);
+    var dir = p.pct > 0 ? "up" : p.pct < 0 ? "down" : "flat";
+    var photos = held.filter(function (c) { return !!c.image; }).sort(function (a, b) { return (Selling.reference(b) || 0) - (Selling.reference(a) || 0); }).slice(0, 3);
+    var sec = el('<section class="value-overview" aria-label="Collection value movement"><div class="value-overview-top"><button class="vault-total" type="button" aria-label="Open collection value breakdown"><span class="eyebrow">YOUR COLLECTION</span><strong>' + money0(total) + '</strong><span>' + held.length + ' items · saved value ' + icon("chevron") + '</span></button><div class="vault-photo-stack" aria-label="Featured cards"></div></div><div class="value-overview-chart"><div class="movement-heading"><div><span class="movement-title">Saved value change</span><div class="movement-result ' + dir + '"><strong>' + (p.available ? movePct(p.pct) : "—") + '</strong><span>' + (p.available ? moveMoney(p.delta) : "Needs comparable history") + '</span></div></div><div class="period-slot"></div></div></div><div class="movement-foot"></div></section>');
+    sec.querySelector('.vault-total').onclick = openVaultBreakdown;
+    photos.forEach(function (c) {
+      var b = el('<button type="button" data-sku="' + esc(c.sku) + '" aria-label="Open ' + esc(c.player) + ' card">' + thumb(c) + '</button>');
+      b.onclick = function () { openModal(c); }; sec.querySelector('.vault-photo-stack').appendChild(b);
+    });
+    sec.querySelector('.period-slot').appendChild(periodControls(refreshPeriodView));
+    var chart = sec.querySelector('.value-overview-chart');
+    sec.querySelector('.movement-title').textContent='Comparable value change';
+    chart.appendChild(areaSlot(p.points, { h: 132, label: "Comparable holdings saved value, " + state.valuePeriod, cls: "movement-chart " + dir, empty: "Choose a shorter period while more history builds.", padL: 42 }));
+    chart.appendChild(el('<p class="movement-coverage">' + (p.available ? money(p.trackedValue) + ' tracked · ' : '') + p.eligible + ' of ' + held.length + ' items' + (p.available ? '<br>' + (p.stale ? 'Older · ' : '') + (p.approximate ? '≈' + esc(state.valuePeriod) + ' · ' : '') + esc(savedDate(p.observedFrom)) + '–' + esc(savedDate(p.asOf)) : '') + '</p>'));
+    var foot = sec.querySelector('.movement-foot'), filters = el('<div class="movement-filters" role="group" aria-label="Filter by value movement"></div>');
+    [["all", "All", held.length], ["up", "Rising", p.risers.length], ["down", "Falling", p.fallers.length], ["flat", "Unchanged", p.flat.length], ["unavailable", "Needs history", p.unavailable.length]].forEach(function (v) {
+      var selected = state.tab === "collection" && state.inventoryMovement === v[0];
+      var b = el('<button type="button" class="movement-filter ' + v[0] + (selected ? ' selected' : '') + '" aria-pressed="' + selected + '" aria-label="Show ' + esc(v[1]) + ' inventory"><b>' + v[2] + '</b><span>' + v[1] + '</span></button>');
+      b.onclick = function () { setMovementFilter(v[0]); }; filters.appendChild(b);
+    });
+    foot.appendChild(filters);
+    var details = el('<details class="movement-method"><summary>How changes are measured</summary><p>Periods end at the latest dated saved value, not a live quote. Each card shows its observation date. The collection line uses the same comparable items and dates, excluding added or sold items, source changes and price corrections. Missing history is never a 0% return.</p><p>' + (p.available ? esc(p.eligible + ' items, ' + money(p.trackedValue) + ' in tracked value. Dates: ' + savedDate(p.observedFrom) + '–' + savedDate(p.observedTo) + '.') : 'No common comparable window for this period.') + ' Saved values can be carried forward between checks. These changes are before selling costs and are not investment returns.</p></details>');
+    if (p.points.length) details.appendChild(twinTable(p.points, "Tracked saved value", "See dated values", money));
+    foot.appendChild(details);
+    return sec;
+  }
+  function movementLeaders() {
+    var p = Movement.portfolio(heldCards(), state.valuePeriod);
+    var sec = el('<section class="movement-leaders" aria-label="Rising and falling cards"></section>');
+    [["up", "Top riser", p.risers[0]], ["down", "Top faller", p.fallers[0]]].forEach(function (v) {
+      var e = v[2];
+      if (!e) { sec.appendChild(el('<div class="leader-card quiet"><span class="leader-label">' + v[1] + ' · ' + esc(state.valuePeriod) + '</span><b>No ' + (v[0] === 'up' ? 'rising' : 'falling') + ' values recorded</b><small>For the available comparison window</small></div>')); return; }
+      var c = e.card, m = e.movement;
+      var b = el('<button class="leader-card ' + v[0] + '" type="button" aria-label="Open ' + esc(c.player) + ', ' + movePct(m.pct) + ' saved value change"><span class="leader-label">' + v[1] + ' · ' + esc(state.valuePeriod) + '</span><span class="leader-main">' + thumb(c) + '<span><b>' + esc(c.player) + '</b><strong>' + moveArrow(m) + movePct(m.pct) + '</strong><small>' + moveMoney(m.delta) + ' · ' + displayPrice(Selling.reference(c)) + ' value</small></span></span><span class="leader-chart">' + Charts.sparkline(m.points, 180, 30, { area: true, time: true, direction: m.direction }) + '<small>' + esc(moveStamp(m)) + '</small></span></button>');
+      b.dataset.sku=c.sku;b.onclick = function () { openModal(c); }; sec.appendChild(b);
+    });
+    return sec;
+  }
+  function cardMovementPanel(c) {
+    var section = el('<section class="dsec card-movement" aria-label="Card value history"></section>');
+    function draw() {
+      var m = cardMovement(c);
+      var summary = document.querySelector('#modal .vb-value');
+      if(summary){var old=summary.querySelector('.chg');if(old)old.remove();summary.insertAdjacentHTML('beforeend',changeChip(c));}
+      section.innerHTML = '<div class="card-movement-head"><h3>Value movement</h3></div><div class="card-movement-value ' + m.direction + '"><strong>' + (m.available ? moveArrow(m) + movePct(m.pct) : '—') + '</strong><span>' + (m.available ? moveMoney(m.delta) + ' · ' + esc(moveStamp(m)) : esc(movementGap(m))) + '</span></div>';
+      section.querySelector('.card-movement-head').appendChild(periodControls(function () { draw(); }, "Card history period"));
+      if (m.available) {
+        section.appendChild(areaSlot(m.points.map(function (p) { return { d: p.d, v: p.p }; }), { h: 190, label: c.player + ' saved value history', cls: 'movement-chart ' + m.direction, fmt: money, tickFmt: function (v) { return Math.abs(v) < 10 ? money(v) : money0(v); } }));
+        section.appendChild(el('<p class="chart-note">' + esc(m.sourceLabel) + ' · ' + esc(savedDate(m.baselineDate)) + '–' + esc(savedDate(m.currentDate)) + (m.approximate ? '. Uses the last saved value before the period began.' : '.') + (m.carriedForward ? ' The latest check kept the saved value.' : '') + ' Before selling costs.</p>'));
+        section.appendChild(twinTable(m.points.map(function (p) { return { d: p.d, v: p.p }; }), "Saved value", "See the dated values", money));
+      } else {
+        section.appendChild(el('<p class="movement-empty">' + esc(m.reason || 'A comparable dated value is needed before a percentage can be shown.') + '</p>'));
+        if (state.valuePeriod !== 'ALL') {
+          var all = Movement.card(c, 'ALL');
+          if (all.available) { var more = el('<button class="button secondary small" type="button">See available history</button>'); more.onclick = function () { state.valuePeriod = 'ALL'; saveViewPrefs(); draw(); }; section.appendChild(more); }
+        }
+      }
+      var raw = series(c).map(function (p) { return { d: p.d, v: p.p, c: p.c }; });
+      if (raw.length && (!m.available || m.resetDate)) {
+        var history = el('<details class="earlier-values"><summary>Earlier values & source changes</summary><p class="chart-note">' + (overlaid(c) ? 'These earlier estimates use a different source from the current value. They are not included in returns.' : 'Hollow points mark price corrections. Earlier sources and reset points are excluded from the movement above.') + '</p></details>');
+        if (raw.length > 1) history.appendChild(areaSlot(raw, { h: 170, label: 'Earlier saved values including source changes' }));
+        history.appendChild(twinTable(raw, 'Earlier saved value', 'See earlier records', money));
+        history.addEventListener('toggle', function () { if (history.open) hydrate(history); });
+        section.appendChild(history);
+      }
+      hydrate(section);
+      var focused = section.querySelector('[data-period="' + state.valuePeriod + '"]');
+      if (document.contains(section) && focused) focused.focus({ preventScroll: true });
+    }
+    draw(); return section;
+  }
   function slabTile(c) {
-    var ref = Selling.reference(c), o = c.owner_listing || {}, listed = Selling.listed(c), sp = Charts.sparkline(trendSeries(c), 76, 20);
-    var b = el('<button class="slab-tile" type="button" aria-label="' + esc((c.player || "Card") + ", " + (ref == null ? "no saved value" : displayPrice(ref))) + '"><span class="slab-stage">' + slab(c) + "</span>" +
-      '<span class="tile-meta"><span class="tile-name">' + esc(c.player) + '</span><span class="tile-set">' + esc(subline(c)) + "</span>" +
-      '<span class="tile-money"><b>' + displayPrice(ref) + "</b>" + changeChip(c) + "</span>" + (sp ? '<span class="tile-spark">' + sp + "</span>" : "") +
-      (listed ? '<span class="tile-flag"><i class="live-dot" aria-hidden="true"></i>On eBay' + (o.asking_price ? " at " + money0(o.asking_price) : "") + "</span>" : "") +
-      "</span></button>");
-    b.onclick = function () { openModal(c); };
-    return b;
+    var ref = Selling.reference(c), o = c.owner_listing || {}, listed = Selling.listed(c), m = cardMovement(c);
+    var b = el('<button class="slab-tile movement-tile" type="button" data-sku="' + esc(c.sku) + '" aria-label="' + esc((c.player || "Card") + ", " + (ref == null ? "no saved value" : displayPrice(ref)) + ', ' + (m.available ? movePct(m.pct) + ' in ' + state.valuePeriod : movementGap(m))) + '"><span class="slab-stage">' + slab(c) + (!c.image ? '<span class="photo-needed">Photo needed</span>' : '') + '</span><span class="tile-meta"><span class="tile-name">' + esc(c.player) + '</span><span class="tile-set">' + esc(subline(c)) + '</span><span class="tile-grade">' + esc(c.graded ? c.grader + ' ' + c.grade : c.is_merch ? 'Memorabilia' : 'Raw') + (c.serial_run ? ' · /' + esc(c.serial_run) : '') + '</span><span class="tile-money"><b>' + displayPrice(ref) + '</b></span>' + movementHtml(m, true) + '<span class="value-observed">' + esc(m.available ? moveStamp(m) : basisText(c, mySold(c))) + '</span>' + (listed ? '<span class="tile-flag">On eBay' + (o.asking_price ? ' · ' + money0(o.asking_price) : '') + '</span>' : '') + '</span></button>');
+    b.onclick = function () { openModal(c); }; return b;
   }
   function cardRow(c) {
-    var ref = Selling.reference(c), sp = Charts.sparkline(trendSeries(c), 56, 18);
-    var b = el('<button class="card-row" type="button">' + slab(c, "sm") + '<span class="row-main"><b>' + esc(c.player) + "</b><small>" + esc(subline(c)) + "</small>" + badges(c) + '</span><span class="row-money"><b>' + displayPrice(ref) + "</b>" + changeChip(c) + (sp || "") + "</span></button>");
-    b.onclick = function () { openModal(c); };
-    return b;
+    var ref = Selling.reference(c), m = cardMovement(c);
+    var b = el('<button class="card-row movement-row" type="button" data-sku="' + esc(c.sku) + '">' + slab(c, "sm") + '<span class="row-main"><b>' + esc(c.player) + '</b><small>' + esc(subline(c)) + '</small>' + badges(c) + '<span class="value-observed">' + esc(m.available ? moveStamp(m) : basisText(c, mySold(c))) + '</span></span><span class="row-money"><b>' + displayPrice(ref) + '</b>' + movementHtml(m, true) + '</span></button>');
+    b.onclick = function () { openModal(c); }; return b;
   }
 
   // ---------- page pieces ----------
@@ -534,10 +640,12 @@
   }
   function goInventory(filter) {
     state.inventoryType = "all"; state.inventoryStatus = "all"; state.inventoryTier = "all"; state.inventorySport = "all";
+    state.inventoryMovement = "all";
     state.q = ""; state.bucket = "All";
     if (filter === "listed") state.inventoryStatus = "listed";
     else if (filter === "t1" || filter === "t2" || filter === "t3") state.inventoryTier = filter;
     else if (filter && filter !== "all") state.inventoryType = filter;
+    saveViewPrefs();
     setTab("collection");
   }
 
@@ -602,7 +710,7 @@
       }
     });
     ev.sort(function (a, b) { return b.d.localeCompare(a.d); });
-    return moverCards().slice(0, 4).map(function (c) { return { d: "", k: "Moved", cls: "k-moved", c: c, text: money0(c.asking_price), chip: true }; }).concat(ev).slice(0, 12);
+    return moverCards().slice(0, 4).map(function (c) { var m=cardMovement(c);return { d: m.asOf, k: "Value", cls: "k-moved", c: c, text: displayPrice(Selling.reference(c)), chip: true }; }).concat(ev).slice(0, 12);
   }
   function ticker() {
     var events = tapeEvents();
@@ -612,7 +720,7 @@
     function items(hiddenSet) {
       return reel.map(function (e, i) {
         var hidden = hiddenSet || i >= events.length;
-        return '<button class="tick" type="button" data-sku="' + esc(e.c.sku) + '"' + (hidden ? ' tabindex="-1" aria-hidden="true"' : "") + '><span class="tick-k ' + e.cls + '">' + esc(e.k) + "</span>" + esc(shortName(e.c)) + " <b>" + e.text + "</b>" + (e.chip ? changeChip(e.c) : e.d ? "<small>" + esc(savedDate(e.d)) + "</small>" : "") + "</button>";
+        return '<button class="tick" type="button" data-sku="' + esc(e.c.sku) + '"' + (hidden ? ' tabindex="-1" aria-hidden="true"' : "") + '><span class="tick-k ' + e.cls + '">' + esc(e.k) + "</span>" + esc(shortName(e.c)) + " <b>" + e.text + "</b>" + (e.chip ? changeChip(e.c) : "") + (e.d ? "<small>" + esc(savedDate(e.d)) + "</small>" : "") + "</button>";
       }).join("");
     }
     var sec = el('<section class="ticker" aria-label="Latest activity"><span class="ticker-label">' + icon("pulse") + 'Latest</span><div class="ticker-track"><div class="ticker-run"><div class="ticker-set">' + items(false) + '</div><div class="ticker-set" aria-hidden="true">' + items(true) + "</div></div></div></section>");
@@ -774,7 +882,7 @@
   }
   function viewToday() {
     var w = el('<div class="view today"></div>');
-    [vaultHero(), nextMoves(), showcase(), moneyMap(), soldStrip()].forEach(function (x) { if (x) w.appendChild(x); });
+    [movementOverview(), nextMoves(), movementLeaders(), showcase(), moneyMap(), soldStrip()].forEach(function (x) { if (x) w.appendChild(x); });
     w.appendChild(el('<p class="fineprint">Values are saved references from recorded sold prices, PSA and eBay listings. They are estimates, not live quotes, and your eBay asks stay separate from them.</p>'));
     return w;
   }
@@ -783,17 +891,22 @@
   function viewCollection() {
     var held = heldCards(), total = sumRef(held);
     var w = el('<div class="view inventory"></div>');
-    w.appendChild(pageHead("Inventory", held.length + " items worth " + money0(total) + " in saved values."));
+    w.appendChild(movementOverview());
+    w.appendChild(movementLeaders());
+    var filterBox = el('<details class="inventory-filters"' + (state.inventoryFilters ? ' open' : '') + '><summary>Filters <span>grade, sport, price & listing</span></summary><div class="inventory-filter-body"></div></details>');
+    filterBox.addEventListener('toggle', function () { state.inventoryFilters = filterBox.open; saveViewPrefs(); });
+    var filterBody = filterBox.querySelector('.inventory-filter-body');
     var tb = el('<div class="tier-bar">' + Charts.stackedBar(tierSegments(held), { interactive: true, label: "Value by price tier" }) + "</div>");
-    w.appendChild(tb);
+    filterBody.appendChild(tb);
     var cardsN = held.filter(function (c) { return !c.is_merch; }).length;
-    w.appendChild(segment([["All", "All", held.length], ["Cards", "Cards", cardsN], ["Merch", "Merch", held.length - cardsN]], state.bucket, function (x) { state.bucket = x; render(); }));
+    filterBody.appendChild(segment([["All", "All", held.length], ["Cards", "Cards", cardsN], ["Merch", "Merch", held.length - cardsN]], state.bucket, function (x) { state.bucket = x; saveViewPrefs(); rememberView(); render(true); }));
     var sports = Array.from(new Set(held.map(function (c) { return c.sport; }).filter(Boolean))).sort();
     var tools = el('<div class="inv-tools"><label class="search">' + icon("search") + '<input type="search" aria-label="Search inventory" placeholder="Player, set, team or number" value="' + esc(state.q) + '"></label><select aria-label="Sort inventory">' + SORTS.map(function (s) { return '<option value="' + s[0] + '"' + (state.sort === s[0] ? " selected" : "") + ">" + s[1] + "</option>"; }).join("") + '</select><div class="layout-toggle" role="group" aria-label="Layout"><button type="button" aria-label="Card grid" aria-pressed="' + (state.inventoryLayout !== "list") + '" class="' + (state.inventoryLayout !== "list" ? "on" : "") + '">' + icon("grid") + '</button><button type="button" aria-label="List" aria-pressed="' + (state.inventoryLayout === "list") + '" class="' + (state.inventoryLayout === "list" ? "on" : "") + '">' + icon("list") + "</button></div></div>");
     w.appendChild(tools);
     var CHIPS = [["all", "All"], ["graded", "Graded"], ["raw", "Raw"], ["auto", "Autos"], ["numbered", "Numbered"], ["rookie", "Rookies"], ["listed", "On eBay"], ["lot", "Lot ready"], ["missing", "No cost yet"]].concat(sports.map(function (s) { return ["sport:" + s, s]; }));
     var chipRow = el('<div class="chip-row" role="group" aria-label="Filter inventory"></div>');
-    w.appendChild(chipRow);
+    filterBody.appendChild(chipRow);
+    w.appendChild(filterBox);
     var count = el('<p class="inv-count" aria-live="polite"></p>'), results = el("<div></div>");
     w.appendChild(count); w.appendChild(results);
     function chipOn(k) {
@@ -822,11 +935,12 @@
       tb.querySelectorAll(".legend-item").forEach(function (b) { var on = state.inventoryTier === b.getAttribute("data-key"); b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); });
     }
     tb.querySelectorAll(".legend-item").forEach(function (b) {
-      b.onclick = function () { var k = b.getAttribute("data-key"); state.inventoryTier = state.inventoryTier === k ? "all" : k; drawTier(); drawChips(); update(); };
+      b.onclick = function () { var k = b.getAttribute("data-key"); state.inventoryTier = state.inventoryTier === k ? "all" : k; saveViewPrefs(); drawTier(); drawChips(); update(); };
     });
     function matches(c) {
-      var st = state.inventoryStatus, ty = state.inventoryType;
+      var st = state.inventoryStatus, ty = state.inventoryType, move = cardMovement(c);
       return (state.bucket === "Merch" ? c.is_merch : state.bucket === "Cards" ? !c.is_merch : true) && matchQuery(c) &&
+        (state.inventoryMovement === "all" || move.direction === state.inventoryMovement) &&
         (state.inventorySport === "all" || c.sport === state.inventorySport) &&
         (state.inventoryTier === "all" || ((Selling.reference(c) || 0) > 0 && tierKey(c) === state.inventoryTier)) &&
         (st === "all" || st === "listed" && Selling.listed(c) || st === "unlisted" && !Selling.listed(c) || st === "lot" && Selling.batchEligible(c, workspace.limit, workspace.includeSpecial, workspace.plans[c.sku]) || st === "missing" && Selling.cost(c) === null) &&
@@ -835,11 +949,11 @@
     function update() {
       var shown = held.filter(matches);
       results.innerHTML = "";
-      count.innerHTML = "<b>" + shown.length + "</b> " + (shown.length === 1 ? "item" : "items") + (state.q ? " matching “" + esc(state.q) + "”" : "") + ", " + money0(sumRef(shown)) + " in saved values";
+      count.innerHTML = "<b>" + shown.length + "</b> " + (shown.length === 1 ? "item" : "items") + (state.q ? " matching “" + esc(state.q) + "”" : "") + " · " + money0(sumRef(shown)) + " saved value · " + esc(state.valuePeriod === "ALL" ? "available history" : state.valuePeriod + " changes");
       if (!shown.length) {
         var empty = emptyPanel("No matching cards", "Clear the filters or try another player, team or set.");
         var clear = el('<button class="button secondary" type="button">Clear filters</button>');
-        clear.onclick = function () { state.q = ""; state.inventoryStatus = "all"; state.inventorySport = "all"; state.inventoryType = "all"; state.inventoryTier = "all"; render(); };
+        clear.onclick = function () { state.q = ""; state.bucket = "All"; state.inventoryMovement = "all"; state.inventoryStatus = "all"; state.inventorySport = "all"; state.inventoryType = "all"; state.inventoryTier = "all"; saveViewPrefs(); render(); };
         empty.appendChild(clear); results.appendChild(empty); return;
       }
       var list = sortCards(shown, state.sort);
@@ -858,7 +972,7 @@
     drawChips(); drawTier(); update();
     return w;
   }
-  function saveViewPrefs() { try { localStorage.setItem("cv-view-v60", JSON.stringify({ v: 64, sort: state.sort, inventoryLayout: state.inventoryLayout, inventoryStatus: state.inventoryStatus, inventorySport: state.inventorySport, inventoryType: state.inventoryType })); } catch (e) {} }
+  function saveViewPrefs() { try { localStorage.setItem("cv-view-v60", JSON.stringify({ v: 72, sort: state.sort, inventoryLayout: state.inventoryLayout, inventoryStatus: state.inventoryStatus, inventorySport: state.inventorySport, inventoryType: state.inventoryType, inventoryTier: state.inventoryTier, inventoryMovement: state.inventoryMovement, valuePeriod: state.valuePeriod, inventoryFilters: state.inventoryFilters, bucket: state.bucket })); } catch (e) {} }
 
   // ---------- Sell ----------
   function miniLadder(c, ask) {
@@ -1049,9 +1163,10 @@
   function moversPanel() {
     var movers = moverCards().slice(0, 6);
     if (!movers.length) return null;
-    var p = el('<section class="panel"><h3>Value moves</h3><p class="section-note">Largest changes from each card’s previous saved value.</p></section>');
+    var p = el('<section class="panel"><h3>Value moves · ' + esc(state.valuePeriod) + '</h3><p class="section-note">Latest dated saved-value changes for the selected period.</p></section>');
     movers.forEach(function (c) {
-      var row = el('<button class="mover-row" type="button">' + thumb(c) + '<span class="mv-name"><b>' + esc(c.player) + "</b><small>" + esc(subline(c)) + "</small></span><span>" + Charts.sparkline(trendSeries(c), 76, 26, { area: true }) + '</span><span class="mv-val"><b>' + money0(c.asking_price) + "</b>" + changeChip(c) + "<small>was " + money0(c.prev_price) + "</small></span></button>");
+      var m=cardMovement(c);
+      var row = el('<button class="mover-row" type="button">' + thumb(c) + '<span class="mv-name"><b>' + esc(c.player) + "</b><small>" + esc(moveStamp(m)) + "</small></span><span>" + Charts.sparkline(m.points, 76, 26, { area: true, time: true, direction: m.direction }) + '</span><span class="mv-val"><b>' + displayPrice(Selling.reference(c)) + "</b>" + changeChip(c) + "<small>" + moveMoney(m.delta) + "</small></span></button>");
       row.onclick = function () { openModal(c); };
       p.appendChild(row);
     });
@@ -1181,18 +1296,15 @@
       '<div class="detail-actions">' + (!c.sold ? '<button class="button" id="cardSellPlan" type="button">' + icon("sell") + "Selling plan</button>" : "") + '<a class="button secondary" href="' + esc(terapeakUrl(c.title)) + '" target="_blank" rel="noopener">' + icon("search") + "Terapeak</a></div></div>" +
       '<div class="detail-main">' +
       (hasPicture ? '<section class="dsec"><h3>Price picture</h3>' + priceLadder(c, (workspace.plans[c.sku] || {}).target, { noHistory: true }) + "</section>" : "") +
-      (pts.length >= 2 ? '<section class="dsec" id="histSec"><h3>Value history</h3>' + historyMeta(pts) + "</section>" : "") +
+      '<div id="histSec"></div>' +
       ownerListingBox(c) + marketBox(c) + myNumbersBox(c) + compsBox(c) +
       '<section class="dsec listbar"><h3>List this card</h3><div class="lbbtns"><button class="button small" id="mListEbay" type="button">List on eBay</button><button class="button secondary small" id="mListClaude" type="button">Draft in Claude</button></div><p class="lbfoot">List on eBay opens the sell page with the title copied. Draft in Claude writes the title, item specifics and description.</p></section>' +
       '<div class="links-row"><a class="button secondary small" href="' + ebaySearchUrl(c, false) + '" target="_blank" rel="noopener">Live listings' + icon("external") + '</a><button class="button secondary small" id="mShare" type="button">' + icon("share") + "Share card</button>" +
       (c.cert && /psa/i.test(c.grader || "") ? '<a class="button secondary small" href="https://www.psacard.com/cert/' + esc(c.cert) + '" target="_blank" rel="noopener">PSA cert ' + esc(c.cert) + "</a>" : "") + "</div>" +
       '<details class="dsec cardspecs"><summary>Card details and eBay title</summary><dl class="kv">' + kv + '</dl><div class="titlebox"><div class="lab">eBay title</div><div class="val">' + esc(c.title) + "</div></div></details>" +
       "</div></div>";
-    if (pts.length >= 2) {
-      var hs = m.querySelector("#histSec");
-      hs.appendChild(areaSlot(pts, { h: 170, label: c.player + " saved value over time", padL: 42 }));
-      if (histNote) hs.insertAdjacentHTML("beforeend", histNote);
-    }
+    if (!c.sold) m.querySelector("#histSec").replaceWith(cardMovementPanel(c));
+    else m.querySelector("#histSec").remove();
     m.querySelector("#mClose").onclick = closeModal;
     wireMyNumbers(m, c);
     var sellPlanButton = m.querySelector("#cardSellPlan");
@@ -1266,6 +1378,7 @@
   }
   function render(restore) {
     restoringView=true;
+    state.renderedValuePeriod=state.valuePeriod;
     var v = document.getElementById("view");
     v.innerHTML = "";
     v.appendChild(({ today: viewToday, sell: viewSell, collection: viewCollection, value: viewResults, radar: viewBuy, about: viewAbout }[state.tab] || viewToday)());
@@ -1569,13 +1682,9 @@
 
   // ▲/▼ week-over-week movement chip (needs a prior price from reprice runs)
   function changeChip(c) {
-    var cur = num(c.asking_price), prev = num(c.prev_price);
-    if (c.sold || !cur || !prev) return "";
-    var pct = (cur - prev) / prev * 100;
-    if (Math.abs(pct) < 0.5) return "";
-    var up = pct > 0;
-    return '<span class="chg ' + (up ? "up" : "down") + '">' + (up ? "▲" : "▼") +
-      Math.abs(pct).toFixed(Math.abs(pct) >= 10 ? 0 : 1) + "%</span>";
+    var m = cardMovement(c);
+    if (!m.available) return "";
+    return '<span class="chg ' + m.direction + '" title="' + esc(state.valuePeriod + ' saved value change, ' + moveStamp(m)) + '">' + moveArrow(m) + movePct(m.pct) + ' <small>' + esc(state.valuePeriod) + '</small></span>';
   }
 
 
@@ -1588,11 +1697,12 @@
     return state.q.toLowerCase().split(/\s+/).every(function (w) { return hay.indexOf(w) >= 0; });
   }
 
-  var SORTS = [["val-desc","Value: high to low"],["val-asc","Value: low to high"],["az","Player A–Z"],["cost-desc","Cost: high to low"],["listed","On eBay first"],["new","Recently added"]];
+  var SORTS = [["val-desc","Value: high to low"],["gain","Biggest rise %"],["drop","Biggest fall %"],["dollar-move","Biggest $ move"],["val-asc","Value: low to high"],["az","Player A–Z"],["cost-desc","Cost: high to low"],["listed","On eBay first"],["new","Recently added"]];
   function sortCards(arr,mode) {
     return arr.slice().sort(function(a,b){
       var result=0,av,bv;
       if(mode==='az')result=String(a.player).localeCompare(String(b.player));
+      else if(mode==='gain'||mode==='drop'||mode==='dollar-move'){var am=cardMovement(a),bm=cardMovement(b);result=!am.available?(!bm.available?0:1):!bm.available?-1:mode==='dollar-move'?Math.abs(bm.delta)-Math.abs(am.delta):mode==='drop'?am.pct-bm.pct:bm.pct-am.pct;}
       else if(mode==='new')result=String(b.sku).localeCompare(String(a.sku),undefined,{numeric:true});
       else if(mode==='cost-desc'){av=Selling.cost(a);bv=Selling.cost(b);result=av===null?(bv===null?0:1):bv===null?-1:bv-av;}
       else if(mode==='listed')result=Number(Selling.listed(b))-Number(Selling.listed(a))||(Selling.reference(b)||0)-(Selling.reference(a)||0);
@@ -2622,7 +2732,7 @@
     recalcMyData();               // merge this device's costs + sold entries
     shell();
     var initialHash=location.hash;
-    try{var prefs=JSON.parse(localStorage.getItem("cv-view-v60")||"{}");["sort","inventoryStatus","inventorySport","inventoryType"].forEach(function(k){if(typeof prefs[k]==="string")state[k]=prefs[k];});if(prefs.v===64&&(prefs.inventoryLayout==="list"||prefs.inventoryLayout==="grid"))state.inventoryLayout=prefs.inventoryLayout;}catch(e){}
+    try{var prefs=JSON.parse(localStorage.getItem("cv-view-v60")||"{}");["sort","inventoryStatus","inventorySport","inventoryType","inventoryTier"].forEach(function(k){if(typeof prefs[k]==="string")state[k]=prefs[k];});if((prefs.v===64||prefs.v===72)&&(prefs.inventoryLayout==="list"||prefs.inventoryLayout==="grid"))state.inventoryLayout=prefs.inventoryLayout;if(Movement.PERIODS.some(function(p){return p.key===prefs.valuePeriod;}))state.valuePeriod=prefs.valuePeriod;if(['all','up','down','flat','unavailable'].indexOf(prefs.inventoryMovement)>=0)state.inventoryMovement=prefs.inventoryMovement;if(['All','Cards','Merch'].indexOf(prefs.bucket)>=0)state.bucket=prefs.bucket;state.inventoryFilters=!!prefs.inventoryFilters;}catch(e){}
     if(!SORTS.some(function(s){return s[0]===state.sort;}))state.sort="val-desc";
     if(state.inventoryStatus==="unlisted")state.inventoryStatus="all";
     if(typeof journey.q==='string')state.q=journey.q;

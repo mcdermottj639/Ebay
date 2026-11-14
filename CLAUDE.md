@@ -8,7 +8,30 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
-## Buying and listing progression — v71, November 11, 2026 (ChatGPT/Codex) — CURRENT RELEASE
+## Visual value movement — v72, November 13, 2026 (ChatGPT/Codex)
+- Jack asked for rising/falling card values, week/month percentages and a more
+  visual Inventory. Today and Inventory now lead with dated comparable-value
+  charts, 1W/1M/3M/1Y/All, rising/falling cards, source-aware rows and grid cards.
+- `docs/movement.js` calculates read-only changes ending at the latest recorded
+  observation. A missing baseline/source, source overlay, correction or mismatch
+  is unavailable, never zero. All starts after the latest reset. Approximate
+  windows show their actual dates. Older-than-eight-day values remain historical.
+- The total vault value is separate from the fixed comparable cohort in the
+  chart; both coverage count and tracked dollars are visible. Adds/sales cannot
+  inflate its percentage. Unchanged saved values do not prove a flat market.
+- `build_web.py` retains history basis/applied flags, validates dates and values,
+  preserves same-day corrections and keeps up to 730 observations. `reprice.py`
+  now writes the applied basis with the applied price; thresholds are unchanged.
+  All original inventory, owner records, historical CSVs and research are intact.
+- Existing `cv-view-v60` preferences migrate without replacing owner stores.
+  Detail periods follow back to Inventory; filters/layout/sort survive reload.
+  Buy/sell permissions, offer plans and BIN + Best Offer drafts are unchanged.
+- Browser gate: `.github/workflows/ui-checks.yml` runs Python/Node checks and
+  `tests/browser_movement.py` on PRs/main, with screenshots as CI artifacts.
+  Current publication status and final verification belong in Claudex. A version
+  string here is not evidence of a completed deployment.
+
+## Buying and listing progression — v71, November 11, 2026 (ChatGPT/Codex)
 - Cross-app research, sources, design rules and the continuation sequence live in
   [`UX_REVIEW.md`](UX_REVIEW.md). Next app: Portfolio Dashboard, then Caddie HQ,
   then Jarvis. Read current Claudex handoffs and latest main before future work.

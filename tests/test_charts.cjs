@@ -73,3 +73,15 @@ test('bar and stack markup escapes labels and keeps shares', () => {
   assert.match(stack, /25%/);
   assert.match(C.meter(2, 33), /width:6\.1%/);
 });
+
+test('dated mini-charts keep long observation gaps wider than short gaps', () => {
+  const svg = C.sparkline([{d:'2026-01-01',p:10},{d:'2026-01-02',p:12},{d:'2026-02-01',p:11}],100,30,{time:true});
+  const line = svg.match(/class="sp-line" d="([^"]+)"/)[1];
+  const x = [...line.matchAll(/[ML]([\d.]+) /g)].map(m => +m[1]);
+  assert.ok(x[1] - x[0] < 5);
+  assert.ok(x[2] - x[1] > 80);
+});
+
+test('movement charts honor a real small decline below the legacy deadband', () => {
+  assert.match(C.sparkline([{p:2.64},{p:2.63}],100,30,{direction:'down'}), /sp-down/);
+});

@@ -7,10 +7,10 @@
    Google Fonts are kept in their own cache so the vault keeps its type
    offline; that cache survives version bumps. */
 
-var CACHE = "card-vault-v71";
+var CACHE = "card-vault-v72";
 var FONT_CACHE = "card-vault-fonts";
-var SHELL = ["./", "./index.html", "./vault.css?v=71", "./selling.js?v=71", "./charts.js?v=71",
-             "./buying.js?v=71", "./app.js?v=71", "./manifest.webmanifest?v=71", "./icon.svg?v=71"];
+var SHELL = ["./", "./index.html", "./vault.css?v=72", "./selling.js?v=72", "./charts.js?v=72",
+             "./buying.js?v=72", "./movement.js?v=72", "./app.js?v=72", "./manifest.webmanifest?v=72", "./icon.svg?v=72"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); }));

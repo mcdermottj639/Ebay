@@ -1,9 +1,39 @@
 # Cross-app UX research and continuation record
 
-Updated November 11, 2026. This is Jack's shared research reference for the
+Updated November 13, 2026. This is Jack's shared research reference for the
 one-app-at-a-time review. Keep it available to each succeeding chat.
 
 ## Goal and order
+
+### Card Vault movement follow-up — November 13
+
+Jack's Inventory screenshot exposed a gap in v71: movement was not visible in
+the owned collection. This follow-up adds dated period controls, a fixed-cohort
+value chart, visual risers/fallers, percentage and dollar changes beside each
+card, richer image/list layouts and matching detail charts. Less-used filters
+fold into one section. Black/gold stays; teal and coral identify direction.
+
+| Primary source checked Nov 13 | Documented pattern | Applied here | Limit |
+| --- | --- | --- | --- |
+| [Collectr tracking](https://www.getcollectr.com/track) | Period charts, portfolio changes, valuable/trending items | Chart and movers directly in Inventory | Marketing/public page, not an authenticated test |
+| [Card Ladder valuation methods](https://cardladder.zendesk.com/hc/en-us/articles/12047139141655-Estimate-the-Value-of-any-Card-in-Your-Collection) | Source-specific estimation, dated graphs and underlying sales | Source changes reset comparisons; evidence stays accessible | Card Vault does not inherit its data feed or estimates |
+| [Alt confidence levels](https://support.alt.xyz/en/articles/9213564-alt-value-confidence-levels) | Data coverage affects valuation confidence | Visible dates/coverage; unavailable stays unavailable | No new confidence score or automatic price claim |
+
+Calculation contract: 1W/1M/3M/1Y end at the latest compatible saved observation,
+not the current wall-clock moment. A baseline can precede the period cutoff by
+at most eight days, flagged approximate with actual dates. All begins after the
+latest correction/source reset. Aggregates require a fixed cohort and common
+dated observations; show its tracked value separately from the entire vault.
+No new cards, sales, source changes or price corrections count as appreciation.
+An unchanged saved value can be carried forward; it is not a verified flat
+market. Missing photos use labeled placeholders, never another card's image.
+
+Independent review recomputed the existing CSV weekly/monthly results and
+caught endpoint-cent and missing-basis edge cases, now covered by regressions.
+The repricer's UTC date convention is preserved; freshness uses New York days.
+Checks include exact cents, source resets, day boundaries, cohort weighting,
+history metadata, source-write provenance, navigation, reload and narrow layouts.
+Publication and observed-live evidence are recorded in the canonical handoff.
 
 Improve both presentation and the complete progression through each app:
 understand the situation → inspect evidence → decide → continue with context.

@@ -170,6 +170,9 @@ def main() -> int:
             elif move >= MIN_MOVE:
                 updates[c.sku] = (target, basis)
                 rec["price"], rec["applied"] = f"{target:.2f}", "yes"
+                # The dated value and its provenance must describe the same
+                # update; movement charts reset when this pricing basis changes.
+                rec["basis"] = basis
                 applied.append(f"{c.sku} {c.player}: ${current:.2f} → ${target:.2f} "
                                f"({(target - current) / current * 100:+.1f}%, {r.count} comps)")
         history.append(rec)
