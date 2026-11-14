@@ -15,6 +15,7 @@ env/
 
 # Generated output (your drafts, comps, logs — safe to regenerate)
 output/
+artifacts/
 *.log
 
 # OS junk

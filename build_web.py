@@ -11,6 +11,7 @@ Run it with:   python3 build_web.py
 
 import csv
 import json
+import math
 import re
 import sys
 from datetime import datetime, timezone
@@ -138,8 +139,9 @@ def _price_changes():
 def _price_series():
     """Per-SKU price-over-time series from data/price_history.csv (written by
     reprice.py). Returns {sku: [{d, p}, ...]} sorted oldest→newest, one point
-    per date (last write wins for a day), capped to the most recent ~60 so the
-    Sales Map sparklines stay light. Grows automatically as weekly reprice runs
+    per date (last value wins, preserving a correction on that day). Basis and
+    applied flags describe the saved value, not a newly verified market quote.
+    Capped to the most recent 730 observations. Grows as weekly reprice runs
     append snapshots — with <2 points a card just shows 'tracking started'."""
     path = DATA / "price_history.csv"
     if not path.exists():
@@ -150,23 +152,35 @@ def _price_series():
             sku = (row.get("sku") or "").strip()
             date = (row.get("date") or "").strip()
             price = _num(row.get("price", ""))
-            if not sku or not date or price <= 0:
+            try:
+                parsed_date = datetime.strptime(date, "%Y-%m-%d").date()
+            except ValueError:
+                continue
+            if (not sku or parsed_date.isoformat() != date or
+                    parsed_date > datetime.now(timezone.utc).date() or
+                    not math.isfinite(price) or price <= 0):
                 continue
             # `c` marks a point where we re-based the price on better data, so
             # the card view can say the step is a correction rather than
             # reporting it as the market moving.
             corr = (row.get("kind") or "").strip().lower() == "correction"
-            per_sku.setdefault(sku, {})[date] = (round(price, 2), corr)
+            previous = per_sku.setdefault(sku, {}).get(date, {})
+            point = {"d": date, "p": round(price, 2)}
+            basis = (row.get("basis") or "").strip().lower()
+            if basis:
+                point["b"] = basis
+            applied = (row.get("applied") or "").strip().lower()
+            if applied in ("yes", "no"):
+                point["applied"] = applied == "yes"
+            if corr or previous.get("c"):
+                point["c"] = 1
+            per_sku[sku][date] = point
     series = {}
     for sku, by_date in per_sku.items():
         pts = []
         for d in sorted(by_date):
-            price, corr = by_date[d]
-            pt = {"d": d, "p": price}
-            if corr:
-                pt["c"] = 1
-            pts.append(pt)
-        series[sku] = pts[-60:]
+            pts.append(by_date[d])
+        series[sku] = pts[-730:]
     return series
 
 
@@ -653,7 +667,7 @@ def main() -> int:
     # Self-contained preview: inline the same CSS + JS + data into one file.
     # v64: one stylesheet (vault.css) and three scripts, in index.html order.
     css = (DOCS / "vault.css").read_text(encoding="utf-8") if (DOCS / "vault.css").exists() else ""
-    scripts = [DOCS / "selling.js", DOCS / "charts.js", DOCS / "buying.js", DOCS / "app.js"]
+    scripts = [DOCS / "selling.js", DOCS / "charts.js", DOCS / "buying.js", DOCS / "movement.js", DOCS / "app.js"]
     appjs = "\n".join(f.read_text(encoding="utf-8") for f in scripts) if all(f.exists() for f in scripts) else ""
     if css and appjs:
         # A <title> makes the file publishable as an Artifact (a hosted page the

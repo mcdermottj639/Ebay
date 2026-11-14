@@ -136,10 +136,13 @@
     var vals = pts.map(function (p) { return p.p; });
     var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
     if (hi === lo) { hi += 1; lo -= 1; }
-    var X = function (i) { return 2 + (w - 6) * (i / (pts.length - 1)); };
+    var dates = pts.map(function (p) { return day(p.d); });
+    var timed = o.time && dates.every(function (d) { return d !== null; }) && dates[dates.length - 1] > dates[0];
+    var X = function (i) { return 2 + (w - 6) * (timed ? (dates[i] - dates[0]) / (dates[dates.length - 1] - dates[0]) : i / (pts.length - 1)); };
     var Y = function (v) { return 3 + (h - 6) * (1 - (v - lo) / (hi - lo)); };
     var first = vals[0], lastV = vals[vals.length - 1];
     var dir = Math.abs(lastV - first) < Math.max(0.005 * Math.abs(first), 0.005) ? "flat" : lastV > first ? "up" : "down";
+    if (["up", "down", "flat"].indexOf(o.direction) >= 0) dir = o.direction;
     var d = pts.map(function (p, i) { return (i ? "L" : "M") + fix(X(i)) + " " + fix(Y(p.p)); }).join(" ");
     var area = o.area ? '<path class="sp-fill" d="' + d + " L" + fix(X(pts.length - 1)) + " " + h + " L" + fix(X(0)) + " " + h + ' Z"/>' : "";
     return '<svg class="spark sp-' + dir + '" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + " " + h +

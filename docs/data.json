@@ -143,8 +143,8 @@
       "n": 39
     }
   ],
-  "generated": "Nov 14, 2026 \u00b7 00:23 UTC",
-  "app_version": "v71",
+  "generated": "Nov 14, 2026 \u00b7 02:17 UTC",
+  "app_version": "v72",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -62551,47 +62551,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 6.99
+          "p": 6.99,
+          "b": "asking",
+          "applied": false
         }
       ],
       "market": {
@@ -62679,47 +62701,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 2.2
+          "p": 2.2,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 2.2
+          "p": 2.2,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 2.06
+          "p": 2.06,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-19",
-          "p": 1.84
+          "p": 1.84,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-03",
-          "p": 1.76
+          "p": 1.76,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-10",
-          "p": 1.84
+          "p": 1.84,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-17",
-          "p": 1.76
+          "p": 1.76,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-24",
-          "p": 1.76
+          "p": 1.76,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 1.76
+          "p": 1.76,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 1.76
+          "p": 1.76,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -62807,47 +62851,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 4.39
+          "p": 4.39,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 5.27
+          "p": 5.27,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 3.07
+          "p": 3.07,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 2.64
+          "p": 2.64,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-19",
-          "p": 2.64
+          "p": 2.64,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 2.64
+          "p": 2.64,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 3.07
+          "p": 3.07,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-17",
-          "p": 3.07
+          "p": 3.07,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 3.51
+          "p": 3.51,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-31",
-          "p": 3.08
+          "p": 3.08,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-11-07",
-          "p": 2.63
+          "p": 2.63,
+          "b": "est_sold",
+          "applied": true
         }
       ],
       "market": {
@@ -62935,47 +63001,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 1.32
+          "p": 1.32,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 1.51
+          "p": 1.51,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 1.36
+          "p": 1.36,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 1.36
+          "p": 1.36,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 1.36
+          "p": 1.36,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 1.4
+          "p": 1.4,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-10",
-          "p": 1.4
+          "p": 1.4,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 1.4
+          "p": 1.4,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 1.4
+          "p": 1.4,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 1.32
+          "p": 1.32,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-11-07",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": true
         }
       ],
       "market": {
@@ -63063,47 +63151,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 1.75
+          "p": 1.75,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -63191,47 +63301,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 1.98
+          "p": 1.98,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 1.98
+          "p": 1.98,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -63319,47 +63451,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 1.31
+          "p": 1.31,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 1.31
+          "p": 1.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 1.49
+          "p": 1.49,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 1.49
+          "p": 1.49,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 1.47
+          "p": 1.47,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-03",
-          "p": 1.49
+          "p": 1.49,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-10",
-          "p": 1.49
+          "p": 1.49,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 1.45
+          "p": 1.45,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-24",
-          "p": 1.45
+          "p": 1.45,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 1.45
+          "p": 1.45,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 1.4
+          "p": 1.4,
+          "b": "est_sold",
+          "applied": true
         }
       ],
       "market": {
@@ -63447,47 +63601,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 1.75
+          "p": 1.75,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 1.31
+          "p": 1.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 1.31
+          "p": 1.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 1.31
+          "p": 1.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 1.31
+          "p": 1.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 1.31
+          "p": 1.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 1.31
+          "p": 1.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 1.31
+          "p": 1.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 1.39
+          "p": 1.39,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-11-07",
-          "p": 1.39
+          "p": 1.39,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -63575,47 +63751,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 5.25
+          "p": 5.25,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 4.38
+          "p": 4.38,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 11.85
+          "p": 11.85,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 9.31
+          "p": 9.31,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-19",
-          "p": 9.31
+          "p": 9.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 9.31
+          "p": 9.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 9.31
+          "p": 9.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 9.31
+          "p": 9.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 9.31
+          "p": 9.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 9.31
+          "p": 9.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 9.31
+          "p": 9.31,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -63703,47 +63901,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 2.1
+          "p": 2.1,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 2.58
+          "p": 2.58,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 2.31
+          "p": 2.31,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-19",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 1.87
+          "p": 1.87,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-24",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-31",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 1.75
+          "p": 1.75,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -63831,47 +64051,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 12.99
+          "p": 12.99,
+          "b": "asking",
+          "applied": false
         }
       ],
       "market": {
@@ -63959,52 +64201,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 48.39
+          "p": 48.39,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 48.39
+          "p": 48.39,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 22.66
+          "p": 22.66,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 9.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 9.0
+          "p": 9.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 9.0
+          "p": 9.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 9.0
+          "p": 9.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 9.0
+          "p": 9.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 9.0
+          "p": 9.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 9.0
+          "p": 9.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 9.0
+          "p": 9.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 9.0
+          "p": 9.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -64092,47 +64358,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 59.99
+          "p": 59.99,
+          "b": "asking",
+          "applied": false
         }
       ],
       "market": {
@@ -64188,47 +64476,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 49.99
+          "p": 49.99,
+          "b": "asking",
+          "applied": false
         }
       ],
       "market": {
@@ -64316,47 +64626,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 42.23
+          "p": 42.23,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 47.51
+          "p": 47.51,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 61.59
+          "p": 61.59,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 57.19
+          "p": 57.19,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-19",
-          "p": 57.19
+          "p": 57.19,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 52.79
+          "p": 52.79,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-10",
-          "p": 61.59
+          "p": 61.59,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-17",
-          "p": 68.2
+          "p": 68.2,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-24",
-          "p": 68.2
+          "p": 68.2,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 68.2
+          "p": 68.2,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 61.59
+          "p": 61.59,
+          "b": "est_sold",
+          "applied": true
         }
       ],
       "market": {
@@ -64444,47 +64776,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 39.99
+          "p": 39.99,
+          "b": "asking",
+          "applied": false
         }
       ],
       "market": {
@@ -64572,47 +64926,69 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 30.8
+          "p": 30.8,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 34.14
+          "p": 34.14,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 22.43
+          "p": 22.43,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-14",
-          "p": 21.99
+          "p": 21.99,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-19",
-          "p": 22.87
+          "p": 22.87,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-03",
-          "p": 19.79
+          "p": 19.79,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-10",
-          "p": 23.98
+          "p": 23.98,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-17",
-          "p": 22.43
+          "p": 22.43,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-24",
-          "p": 22.87
+          "p": 22.87,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-10-31",
-          "p": 21.99
+          "p": 21.99,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-11-07",
-          "p": 17.59
+          "p": 17.59,
+          "b": "est_sold",
+          "applied": true
         }
       ],
       "market": {
@@ -64736,52 +65112,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 74.99
+          "p": 74.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 74.99
+          "p": 74.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 74.99
+          "p": 74.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 19.95,
+          "b": "sold",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 74.99
+          "p": 74.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 74.99
+          "p": 74.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 74.99
+          "p": 74.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 70.39
+          "p": 70.39,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-10-17",
-          "p": 70.39
+          "p": 70.39,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 70.39
+          "p": 70.39,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 70.39
+          "p": 70.39,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 70.39
+          "p": 70.39,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -64870,52 +65270,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 136.4
+          "p": 136.4,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 158.4
+          "p": 158.4,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 163.67
+          "p": 163.67,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 101.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 101.0
+          "p": 101.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 101.0
+          "p": 101.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 101.0
+          "p": 101.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 101.0
+          "p": 101.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 101.0
+          "p": 101.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 101.0
+          "p": 101.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 101.0
+          "p": 101.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 101.0
+          "p": 101.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -65003,52 +65427,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 57.19
+          "p": 57.19,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 57.19
+          "p": 57.19,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 57.19
+          "p": 57.19,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 34.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 34.0
+          "p": 34.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 34.0
+          "p": 34.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 34.0
+          "p": 34.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 34.0
+          "p": 34.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 34.0
+          "p": 34.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 34.0
+          "p": 34.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 34.0
+          "p": 34.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 34.0
+          "p": 34.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -65190,44 +65638,64 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 189.0
+          "p": 189.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 189.0
+          "p": 189.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 189.0
+          "p": 189.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 55.0,
+          "b": "sold",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 168.0
+          "p": 168.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 168.0
+          "p": 168.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 168.0
+          "p": 168.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 168.0
+          "p": 168.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 168.0
+          "p": 168.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 168.0
+          "p": 168.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -65314,52 +65782,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 349.0
+          "p": 349.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 349.0
+          "p": 349.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 349.0
+          "p": 349.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 152.49,
+          "b": "sold",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 163.0
+          "p": 163.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 163.0
+          "p": 163.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 163.0
+          "p": 163.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 163.0
+          "p": 163.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 163.0
+          "p": 163.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 163.0
+          "p": 163.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 163.0
+          "p": 163.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 163.0
+          "p": 163.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -65437,52 +65929,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 24.99
+          "p": 24.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 24.99
+          "p": 24.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 24.99
+          "p": 24.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 21.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 21.0
+          "p": 21.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 21.0
+          "p": 21.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 21.0
+          "p": 21.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 21.0
+          "p": 21.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 21.0
+          "p": 21.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 21.0
+          "p": 21.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 21.0
+          "p": 21.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 21.0
+          "p": 21.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -65605,52 +66121,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 99.0
+          "p": 99.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 87.12
+          "p": 87.12,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 105.59
+          "p": 105.59,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 53.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 53.0
+          "p": 53.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 53.0
+          "p": 53.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 53.0
+          "p": 53.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 53.0
+          "p": 53.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 53.0
+          "p": 53.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 53.0
+          "p": 53.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 53.0
+          "p": 53.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 53.0
+          "p": 53.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -65733,57 +66273,83 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 29.99
+          "p": 29.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 29.66
+          "p": 29.66,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 28.73
+          "p": 28.73,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 28.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 28.0
+          "p": 28.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 28.0
+          "p": 28.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 28.0
+          "p": 28.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 28.0
+          "p": 28.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 28.0
+          "p": 28.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-23",
           "p": 23.95,
+          "b": "sold",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-10-24",
-          "p": 23.95
+          "p": 23.95,
+          "b": "sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 23.95
+          "p": 23.95,
+          "b": "sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 23.95
+          "p": 23.95,
+          "b": "sold",
+          "applied": false
         }
       ],
       "market": {
@@ -65969,53 +66535,77 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 182.6
+          "p": 182.6,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 182.6
+          "p": 182.6,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 182.6
+          "p": 182.6,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 177.5,
+          "b": "sold",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 160.0
+          "p": 160.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 160.0
+          "p": 160.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 160.0
+          "p": 160.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 160.0
+          "p": 160.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 160.0
+          "p": 160.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-23",
           "p": 196.76,
+          "b": "sold",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-10-24",
-          "p": 196.76
+          "p": 196.76,
+          "b": "sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 196.76
+          "p": 196.76,
+          "b": "sold",
+          "applied": false
         }
       ],
       "market": {
@@ -66071,52 +66661,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 39.27
+          "p": 39.27,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 39.27
+          "p": 39.27,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 44.0
+          "p": 44.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 12.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 12.0
+          "p": 12.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 12.0
+          "p": 12.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 12.0
+          "p": 12.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 12.0
+          "p": 12.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 12.0
+          "p": 12.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 12.0
+          "p": 12.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 12.0
+          "p": 12.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 12.0
+          "p": 12.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -66240,57 +66854,83 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 99.0
+          "p": 99.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 99.0
+          "p": 99.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 132.0
+          "p": 132.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 67.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 67.0
+          "p": 67.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 67.0
+          "p": 67.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 67.0
+          "p": 67.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 67.0
+          "p": 67.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 67.0
+          "p": 67.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-23",
           "p": 69.0,
+          "b": "sold",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-10-24",
-          "p": 69.0
+          "p": 69.0,
+          "b": "sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 69.0
+          "p": 69.0,
+          "b": "sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 69.0
+          "p": 69.0,
+          "b": "sold",
+          "applied": false
         }
       ],
       "market": {
@@ -66441,48 +67081,70 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 249.0
+          "p": 249.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 249.0
+          "p": 249.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
           "p": 232.0,
+          "b": "sold",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 215.0
+          "p": 215.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 215.0
+          "p": 215.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 215.0
+          "p": 215.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 215.0
+          "p": 215.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 215.0
+          "p": 215.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 215.0
+          "p": 215.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 215.0
+          "p": 215.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 215.0
+          "p": 215.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -66560,52 +67222,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 149.0
+          "p": 149.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 149.0
+          "p": 149.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 149.0
+          "p": 149.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 96.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 96.0
+          "p": 96.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 96.0
+          "p": 96.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 96.0
+          "p": 96.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 96.0
+          "p": 96.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 96.0
+          "p": 96.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 96.0
+          "p": 96.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 96.0
+          "p": 96.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 96.0
+          "p": 96.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -66688,61 +67374,89 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 57.2
+          "p": 57.2,
+          "b": "asking",
+          "applied": true
         },
         {
           "d": "2026-07-23",
-          "p": 43.99
+          "p": 43.99,
+          "b": "est_sold",
+          "applied": true
         },
         {
           "d": "2026-09-09",
-          "p": 37.39
+          "p": 37.39,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 23.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 23.0
+          "p": 23.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 23.0
+          "p": 23.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 23.0
+          "p": 23.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 23.0
+          "p": 23.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 23.0
+          "p": 23.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-23",
           "p": 25.0,
+          "b": "sold",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-10-24",
-          "p": 25.0
+          "p": 25.0,
+          "b": "sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 25.0
+          "p": 25.0,
+          "b": "sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 25.0
+          "p": 25.0,
+          "b": "sold",
+          "applied": false
         },
         {
           "d": "2026-11-10",
           "p": 29.99,
+          "b": "sold",
+          "applied": true,
           "c": 1
         }
       ],
@@ -66852,52 +67566,76 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 199.0
+          "p": 199.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 199.0
+          "p": 199.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
-          "p": 199.0
+          "p": 199.0,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-10",
           "p": 617.97,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 617.97
+          "p": 617.97,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 617.97
+          "p": 617.97,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 617.97
+          "p": 617.97,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 617.97
+          "p": 617.97,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 617.97
+          "p": 617.97,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 617.97
+          "p": 617.97,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 617.97
+          "p": 617.97,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 617.97
+          "p": 617.97,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -66975,48 +67713,70 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 124.99
+          "p": 124.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 124.99
+          "p": 124.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
           "p": 220.0,
+          "b": "est_sold",
+          "applied": false,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 220.0
+          "p": 220.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 220.0
+          "p": 220.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 220.0
+          "p": 220.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 220.0
+          "p": 220.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 220.0
+          "p": 220.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 220.0
+          "p": 220.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 220.0
+          "p": 220.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 220.0
+          "p": 220.0,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -67167,44 +67927,64 @@
       "price_series": [
         {
           "d": "2026-07-15",
-          "p": 349.99
+          "p": 349.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-07-23",
-          "p": 349.99
+          "p": 349.99,
+          "b": "asking",
+          "applied": false
         },
         {
           "d": "2026-09-09",
           "p": 250.0,
+          "b": "est_sold",
+          "applied": false,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 250.0
+          "p": 250.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 250.0
+          "p": 250.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 250.0
+          "p": 250.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 250.0
+          "p": 250.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 250.0
+          "p": 250.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 250.0
+          "p": 250.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 250.0
+          "p": 250.0,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -67269,7 +68049,9 @@
       "price_series": [
         {
           "d": "2026-09-09",
-          "p": 699.0
+          "p": 699.0,
+          "b": "asking",
+          "applied": false
         }
       ],
       "market": {
@@ -67326,39 +68108,57 @@
         {
           "d": "2026-09-10",
           "p": 338.0,
+          "b": "psa",
+          "applied": true,
           "c": 1
         },
         {
           "d": "2026-09-14",
-          "p": 338.0
+          "p": 338.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-09-19",
-          "p": 338.0
+          "p": 338.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-03",
-          "p": 338.0
+          "p": 338.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-10",
-          "p": 338.0
+          "p": 338.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-17",
-          "p": 338.0
+          "p": 338.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-24",
-          "p": 338.0
+          "p": 338.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-10-31",
-          "p": 338.0
+          "p": 338.0,
+          "b": "psa",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 338.0
+          "p": 338.0,
+          "b": "psa",
+          "applied": false
         }
       ],
       "market": {
@@ -67509,11 +68309,15 @@
       "price_series": [
         {
           "d": "2026-10-31",
-          "p": 185.0
+          "p": 185.0,
+          "b": "est_sold",
+          "applied": false
         },
         {
           "d": "2026-11-07",
-          "p": 185.0
+          "p": 185.0,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
@@ -67592,7 +68396,9 @@
       "price_series": [
         {
           "d": "2026-11-07",
-          "p": 193.6
+          "p": 193.6,
+          "b": "est_sold",
+          "applied": true
         }
       ],
       "market": {
@@ -67686,7 +68492,9 @@
       "price_series": [
         {
           "d": "2026-11-07",
-          "p": 100.0
+          "p": 100.0,
+          "b": "est_sold",
+          "applied": false
         }
       ],
       "market": {
