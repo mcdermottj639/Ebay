@@ -1,6 +1,6 @@
 {
-  "researched_at": "2026-11-11T00:14:15+00:00",
-  "coverage_notes": "November 10 ET: eight PSA 10 families attempted across all five categories, including two Kabooms. Public indexed pages only; no fresh live listing or sold evidence qualified. Gmail rate limit prevented new marketplace-alert review; resume after November 7 next run. Product Research sign-in and public sold retrieval gaps recorded. No qualifying buys. Prior listing observations, grades and source dates preserved, including November 7 API snapshot records; this is not a full market scan.",
+  "researched_at": "2026-11-14T00:23:08+00:00",
+  "coverage_notes": "November 13 ET: eight PSA 10 families attempted across five categories, one Downtown. No qualifying buys. One new primary historical Caleb sale, one existing Richardson sale deduplicated; neither establishes fresh qualified resale. Indexed asking pages do not verify live availability. Product Research sign-in, public sold retrieval failure, missing production Browse credentials and Gmail rate limit leave coverage partial. Alert catch-up after November 7 remains unreviewed.",
   "queries_run": [
     "Cade Pink Ice PSA 10",
     "Jalen Hurts Optic PSA 10",
@@ -32910,6 +32910,73 @@
       "listing_id": "327434240966",
       "hold_days": 90,
       "hold_basis": "Planning scenario; sale time is not established"
+    },
+    {
+      "label": "Caleb Williams Prizm RC PSA 10",
+      "item_title": "2024 Panini Prizm Caleb Williams ROOKIE #301 PSA 10 GEM MINT",
+      "listing_id": "fanatics:ff65e283-5c24-45ba-bdd3-00c14a714778",
+      "url": "https://www.fanaticscollect.com/buy-now/ff65e283-5c24-45ba-bdd3-00c14a714778/2024-panini-prizm-caleb-williams-rookie-301-psa-10-gem-mint",
+      "price": null,
+      "shipping": null,
+      "currency": "USD",
+      "identity": {
+        "year": 2024,
+        "set": "Prizm",
+        "player": "Caleb Williams",
+        "number": "301",
+        "parallel": "base",
+        "print_run": "none",
+        "autograph": false,
+        "relic": false,
+        "grader": "PSA",
+        "grade": 10
+      },
+      "identity_reviewed": true,
+      "condition_reviewed": false,
+      "category": "rookies",
+      "sport": "football",
+      "page_state": "sold",
+      "buying_option": "SOLD",
+      "seller_score": null,
+      "seller_pct": null,
+      "checked_at": "2026-11-14T00:23:08+00:00",
+      "query": "2024 Panini Prizm Caleb Williams Rookie PSA 10",
+      "observation_method": "Directly opened primary sold record; historical sale only, no available acquisition offer",
+      "hold_days": 90,
+      "hold_reviewed": false,
+      "hold_basis": "90-day planning scenario; listing-to-sale time not established",
+      "sales": [
+        {
+          "identity": {
+            "year": 2024,
+            "set": "Prizm",
+            "player": "Caleb Williams",
+            "number": "301",
+            "parallel": "base",
+            "print_run": "none",
+            "autograph": false,
+            "relic": false,
+            "grader": "PSA",
+            "grade": 10
+          },
+          "date": "2026-09-06",
+          "price": 340,
+          "currency": "USD",
+          "price_type": "sold",
+          "sale_id": "fanatics:ff65e283-5c24-45ba-bdd3-00c14a714778",
+          "url": "https://www.fanaticscollect.com/buy-now/ff65e283-5c24-45ba-bdd3-00c14a714778/2024-panini-prizm-caleb-williams-rookie-301-psa-10-gem-mint",
+          "source_type": "primary",
+          "exact_match_reviewed": true,
+          "amount_confirmed": true,
+          "shipping_status": "unknown",
+          "observed_at": "2026-11-14T00:23:08+00:00",
+          "note": "Directly inspected primary page labels SOLD Sep 6 2026 at $340, cert 109108695. Source-reported amount, not payment-settlement proof. Other sales-history rows lack distinct transaction IDs and were not admitted as additional sales."
+        }
+      ],
+      "warnings": [
+        "Historical sold record only; no available listing or acquisition price.",
+        "Actual seller fee plan, checkout tax and shipping remain unconfirmed assumptions."
+      ]
     }
   ],
   "api_access": {
@@ -32917,8 +32984,8 @@
     "credentials_present": false,
     "browse": "credentials_unavailable",
     "sold_history": "not_tested",
-    "checked_at": "2026-11-11T00:14:15+00:00",
-    "note": "Read-only check; snapshot unchanged. No API discovery this run."
+    "checked_at": "2026-11-14T00:23:08+00:00",
+    "note": "Read-only connection check; snapshot hash unchanged. No API discovery this run."
   },
   "run_log": [
     {
@@ -33722,14 +33789,235 @@
         "Product Research requires sign-in; public sold fallback and Stained Glass listing retrieval failed."
       ],
       "note": "No qualifying buys. Public pages are indexed observations, not live availability verification. All existing listing checked_at and sold dates preserved; imported November 7 API rows remain unreviewed and dated November 7, not this run. No policy/logic/owner data/comparison-feed changes."
+    },
+    {
+      "researched_at": "2026-11-14T00:23:08+00:00",
+      "mode": "partial public discovery; evidence-only evaluation",
+      "selection_basis": "Six oldest October 30 public-review targets, then two oldest November 3 autograph families to cover all five categories. Eight families; one Downtown/Kaboom. No quota of buys.",
+      "target_count": 36,
+      "families_attempted": 8,
+      "queries_attempted": [
+        "2023 Donruss Downtown Anthony Richardson PSA 10",
+        "2023 Panini Prizm Anthony Richardson Silver Rookie PSA 10",
+        "2024 Panini Prizm Caleb Williams Rookie PSA 10",
+        "2024 Panini Prizm Marvin Harrison Jr Rookie PSA 10",
+        "Prizm Patrick Mahomes Color Blast PSA 10",
+        "2009 Topps Stephen Curry 321 PSA 10",
+        "2021 Amon Ra St Brown Auto PSA 10",
+        "2022 Certified Brock Purdy Auto PSA 10"
+      ],
+      "targets_attempted": [
+        {
+          "label": "Anthony Richardson Downtown PSA 10",
+          "query": "2023 Donruss Downtown Anthony Richardson PSA 10",
+          "category": "downtown_kaboom",
+          "checked_at": "2026-11-14T00:23:08+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/336555368720"
+          ],
+          "coverage": "opened indexed primary marketplace page; no independent live availability or card/slab photo verification",
+          "displayed_item_price": 449,
+          "currency": "USD",
+          "incoming_shipping": 6.12,
+          "seller_score": 1924,
+          "seller_pct": 100,
+          "condition_reviewed": false,
+          "buying_option": "FIXED_PRICE_OR_BEST_OFFER",
+          "outcome": "2023 Donruss #D3 PSA 10; BIN/OBO. Above core discovery band. No fresh exact resale established."
+        },
+        {
+          "label": "Anthony Richardson Prizm Silver RC PSA 10",
+          "query": "2023 Panini Prizm Anthony Richardson Silver Rookie PSA 10",
+          "category": "rookies",
+          "checked_at": "2026-11-14T00:23:08+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/305998362054"
+          ],
+          "coverage": "opened indexed primary marketplace page; no independent live availability or card/slab photo verification",
+          "displayed_item_price": 299.99,
+          "currency": "USD",
+          "incoming_shipping": 5.99,
+          "seller_score": 887146,
+          "seller_pct": 99.9,
+          "condition_reviewed": false,
+          "buying_option": "FIXED_PRICE_OR_BEST_OFFER",
+          "outcome": "2023 Prizm Silver #343 PSA 10, cert 97406888; BIN/OBO. Reopened Fanatics September 26 $85 sold record already saved; deduplicated, not a new sale. No sufficient primary evidence."
+        },
+        {
+          "label": "Caleb Williams Prizm RC PSA 10",
+          "query": "2024 Panini Prizm Caleb Williams Rookie PSA 10",
+          "category": "rookies",
+          "checked_at": "2026-11-14T00:23:08+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/146682857737"
+          ],
+          "coverage": "opened indexed primary marketplace page; no independent live availability or card/slab photo verification",
+          "displayed_item_price": 194.99,
+          "currency": "USD",
+          "incoming_shipping": null,
+          "seller_score": 56822,
+          "seller_pct": 99.7,
+          "condition_reviewed": false,
+          "buying_option": "SOLD_BEST_OFFER_AMOUNT_UNKNOWN",
+          "outcome": "2024 Prizm base #301 PSA 10; SOLD September 30 with Best Offer accepted. Displayed $194.99 is not the confirmed accepted amount; unavailable and excluded. Separate Fanatics September 6 $340 sale added; no fresh primary sale within 30 days."
+        },
+        {
+          "label": "Marvin Harrison Jr Prizm RC PSA 10",
+          "query": "2024 Panini Prizm Marvin Harrison Jr Rookie PSA 10",
+          "category": "rookies",
+          "checked_at": "2026-11-14T00:23:08+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/306097073033"
+          ],
+          "coverage": "opened indexed primary marketplace page; no independent live availability or card/slab photo verification",
+          "displayed_item_price": 119,
+          "currency": "USD",
+          "incoming_shipping": 5.99,
+          "seller_score": 887146,
+          "seller_pct": 99.9,
+          "condition_reviewed": false,
+          "buying_option": "FIXED_PRICE_OR_BEST_OFFER",
+          "outcome": "2024 Prizm base #375 PSA 10, cert 102354238; BIN/OBO. No sufficient primary sold evidence or independently verified live availability."
+        },
+        {
+          "label": "Patrick Mahomes Color Blast PSA 10",
+          "query": "Prizm Patrick Mahomes Color Blast PSA 10",
+          "category": "inserts",
+          "checked_at": "2026-11-14T00:23:08+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/335238872021"
+          ],
+          "coverage": "opened indexed primary marketplace page; no independent live availability or card/slab photo verification",
+          "displayed_item_price": 4000,
+          "currency": "USD",
+          "incoming_shipping": 6.82,
+          "seller_score": 5,
+          "seller_pct": null,
+          "condition_reviewed": false,
+          "buying_option": "FIXED_PRICE_OR_BEST_OFFER",
+          "outcome": "2020 Prizm Color Blast PSA 10; BIN/OBO. Above $1000 research-only boundary and seller feedback below minimum. Obsidian issue is not interchangeable."
+        },
+        {
+          "label": "Stephen Curry Topps rookie PSA 10",
+          "query": "2009 Topps Stephen Curry 321 PSA 10",
+          "category": "established",
+          "checked_at": "2026-11-14T00:23:08+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/227538136945"
+          ],
+          "coverage": "opened indexed primary marketplace page; no independent live availability or card/slab photo verification",
+          "displayed_item_price": 29999.99,
+          "currency": "USD",
+          "incoming_shipping": 13.69,
+          "seller_score": 259,
+          "seller_pct": 100,
+          "condition_reviewed": false,
+          "buying_option": "FIXED_PRICE_OR_BEST_OFFER",
+          "outcome": "2009 Topps #321 PSA 10; BIN/OBO. Above $1000 research-only boundary."
+        },
+        {
+          "label": "Amon-Ra St Brown rookie autos PSA 10",
+          "query": "2021 Amon Ra St Brown Auto PSA 10",
+          "category": "autos",
+          "checked_at": "2026-11-14T00:23:08+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/126890049919"
+          ],
+          "coverage": "opened indexed primary marketplace page; no independent live availability or card/slab photo verification",
+          "displayed_item_price": 499,
+          "currency": "USD",
+          "incoming_shipping": 6.4,
+          "seller_score": 66,
+          "seller_pct": 100,
+          "condition_reviewed": false,
+          "buying_option": "FIXED_PRICE_OR_BEST_OFFER",
+          "outcome": "2021 Mosaic rookie autograph PSA 10; BIN/OBO. Seller below 100-feedback floor; purchase plus tax/shipping exceeds normal all-in limit. Prior listing observation unchanged."
+        },
+        {
+          "label": "Brock Purdy Certified numbered autos PSA 10",
+          "query": "2022 Certified Brock Purdy Auto PSA 10",
+          "category": "autos",
+          "checked_at": "2026-11-14T00:23:08+00:00",
+          "source_urls": [
+            "https://www.ebay.com/itm/236530106941"
+          ],
+          "coverage": "opened indexed primary marketplace page; no independent live availability or card/slab photo verification",
+          "displayed_item_price": 2100,
+          "currency": "USD",
+          "incoming_shipping": 6.07,
+          "seller_score": 0,
+          "seller_pct": null,
+          "condition_reviewed": false,
+          "buying_option": "FIXED_PRICE_OR_BEST_OFFER",
+          "outcome": "2022 Certified Rookie Signatures autograph 3/149 PSA 10, cert 85150148; BIN/OBO. Above $1000 and seller history fails. No short hold established."
+        }
+      ],
+      "category_counts": {
+        "downtown_kaboom": 1,
+        "rookies": 3,
+        "autos": 2,
+        "inserts": 1,
+        "established": 1
+      },
+      "product_research": {
+        "checked_at": "2026-11-14T00:23:08+00:00",
+        "url": "https://www.ebay.com/sh/research",
+        "status": "inaccessible_sign_in_required",
+        "checked_before_public_sold": true,
+        "usable_comp_records": 0,
+        "note": "Opened Product Research first; sign-in required. No authenticated results or accepted Best Offer amounts obtained."
+      },
+      "public_sold_fallback": {
+        "status": "retrieval_failed",
+        "url": "https://www.ebay.com/sch/i.html?_nkw=2023+Prizm+Anthony+Richardson+Silver+343+PSA+10&LH_Sold=1&LH_Complete=1",
+        "note": "Attempted after Product Research; no usable public sold result set obtained."
+      },
+      "alert_review": {
+        "status": "temporarily_rate_limited",
+        "window": "after 2026-11-07",
+        "attempts": 2,
+        "messages_reviewed": 0,
+        "note": "Combined Alt/eBay/other marketplace search and later Alt-only retry both rate-limited. No inference of no alerts; carry catch-up window forward. No owner-event emails read.",
+        "qualified_for_jarvis": 0,
+        "automatic_intake": false
+      },
+      "complete_market_coverage": false,
+      "primary_sale_records_added": 1,
+      "primary_sale_records_reopened_without_duplicate": 1,
+      "primary_sale_source_urls": [
+        "https://www.fanaticscollect.com/buy-now/ff65e283-5c24-45ba-bdd3-00c14a714778/2024-panini-prizm-caleb-williams-rookie-301-psa-10-gem-mint",
+        "https://www.fanaticscollect.com/buy-now/fcc0df72-fab0-43f0-a33b-02d189d68c7c"
+      ],
+      "secondary_sale_records_added": 0,
+      "observations_added": 1,
+      "observations_rechecked": 0,
+      "prior_observations_unchanged": 893,
+      "live_listing_checks": 0,
+      "null_results": [
+        "Anthony Richardson Downtown PSA 10",
+        "Anthony Richardson Prizm Silver RC PSA 10",
+        "Caleb Williams Prizm RC PSA 10",
+        "Marvin Harrison Jr Prizm RC PSA 10",
+        "Patrick Mahomes Color Blast PSA 10",
+        "Stephen Curry Topps rookie PSA 10",
+        "Amon-Ra St Brown rookie autos PSA 10",
+        "Brock Purdy Certified numbered autos PSA 10"
+      ],
+      "failures": [
+        "Production Browse credentials unavailable; read-only connection check left snapshot unchanged.",
+        "Product Research requires sign-in; public sold fallback retrieval failed.",
+        "Gmail rate limit prevented all new-alert review.",
+        "Indexed listing pages do not verify current availability; full slab photo review not completed."
+      ],
+      "note": "No qualifying buys. Partial search, not a full market scan. Caleb accepted Best Offer excluded; Fanatics historical sale is not available inventory. No unlinked sales-history rows counted. Prior listing observations, original grades and sale dates unchanged. No policy/application/owner-data/comparison-feed changes or marketplace transactions."
     }
   ],
   "product_research_access": {
-    "checked_at": "2026-11-11T00:14:15+00:00",
+    "checked_at": "2026-11-14T00:23:08+00:00",
     "url": "https://www.ebay.com/sh/research",
     "status": "inaccessible_sign_in_required",
     "checked_before_public_sold": true,
     "usable_comp_records": 0,
-    "note": "Opened public Product Research entry point; redirected to sign-in. No authenticated Product Research access available; no comps obtained."
+    "note": "Opened Product Research first; sign-in required. No authenticated results or accepted Best Offer amounts obtained."
   }
 }
