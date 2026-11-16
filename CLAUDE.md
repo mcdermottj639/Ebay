@@ -1528,6 +1528,22 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-16 — two live eBay listings linked to cards already in inventory, with
+  their offers (Claude, Jack's chat, data only).** Jack named the cards and sent photos.
+  CARD-0036 Justin Jefferson 2020 Select #61 Red Die-Cut PSA 10 = eBay 336899399649
+  (listing-live email Nov 15 18:45 EST; ask $100.00 from eBay's offer emails; offers
+  booked: $80 Nov 15 22:28 EST and the buyer's $85 counteroffer 22:31 EST, both with
+  eBay's expiry wording). Jack's own $90 counter (eBay email, 22:31 EST) sits between
+  them and is NOT stored: the schema has no event type for a seller counter. The slab
+  is in hand (PSA cert 75861414 from Jack's photo, now in the inventory note).
+  CARD-0041 Rashee Rice 2023 One #309 Precision RPA Blue /75 = eBay 336899411399
+  (listing-live email Nov 15 18:59 EST; offer booked: $45 Nov 16 10:01 EST). ASK
+  CONFLICT: that offer email showed Buy It Now $50.00 (`ask_observed`); Jack's
+  shop-page screenshot at 12:52 PM ET the same day shows $80.00, saved as the current
+  ask with `asking_price_source` owner_statement and an `ask_stated` event. No eBay
+  email shows $80 yet. Serial 06/75 comes only from the owner's listing title.
+  Both rows `listed=yes`. Still unknown: CARD-0041 owner cost; no card photos in
+  docs/img. No values, prices or code changed. v72.
 - **2026-11-10 (night) — CARD-0031 CJ Stroud #339 PSA 10 re-anchored $25 → $29.99
   (Claude, Jack's tap "Reprice CARD-0031").** Median of 7 exact-card/grade reported
   sales, $20–$35, Oct 6–Nov 9 (five retained October sales plus PSA-reported Nov 9
