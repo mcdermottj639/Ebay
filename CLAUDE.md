@@ -1528,6 +1528,7 @@ These rules supersede the historical asking-median radar/Great Value notes below
 - SKUs: cards `CARD-000N`, merch `MERCH-000N`, unique. Continue the numbering.
 
 ## Current status (update me)
+- **2026-11-16 — CARD-0035 Staubach listing noticed (eBay bookkeeper, auto, found in Gmail).** eBay listing-live email, notification time 2026-11-15 18:43 ET: Topps 1972 Roger Staubach Rookie #200 PSA 4, item 336899398066. No eBay email shows an asking price, so it sits in `unresolved_matches` (status `listed_ask_unknown`, candidate CARD-0035, the only Staubach in inventory) and inventory `listed` is unchanged until Jack gives the ask. Unknown: ask, offers, whether Best Offer is on. No values, prices or code changed. v72.
 - **2026-11-16 — two live eBay listings linked to cards already in inventory, with
   their offers (Claude, Jack's chat, data only).** Jack named the cards and sent photos.
   CARD-0036 Justin Jefferson 2020 Select #61 Red Die-Cut PSA 10 = eBay 336899399649
