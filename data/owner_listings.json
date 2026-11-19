@@ -375,6 +375,17 @@
           "currency": "USD",
           "source": "owner_statement",
           "note": "Jack stated the ask ($100) to ChatGPT 2026-11-03 20:28 ET, confirmed it in Jarvis 12:03 ET and in a Claude chat 2026-11-04. Not read from an eBay email."
+        },
+        {
+          "event_id": "336878004176:offer_received:2026-11-18T20:15:08-05:00",
+          "type": "offer_received",
+          "occurred_at": "2026-11-18T20:15:08-05:00",
+          "item_id": "336878004176",
+          "price": 50,
+          "currency": "USD",
+          "source": "ebay_offer_notification_email",
+          "expires_at": "2026-11-19T20:15:00-05:00",
+          "expires_note": "Offer valid for 23 hours, no time zone shown"
         }
       ],
       "asking_price_source": "owner_statement",
