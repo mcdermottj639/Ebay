@@ -5,6 +5,23 @@ import math
 import statistics
 from datetime import datetime, timezone
 
+# Primary sold evidence must come from the owner's own records or official eBay
+# order APIs. eBay's User Agreement bans robots/scrapers, so no ebay.com page read
+# (item, sold search, Product Research) or scraped mirror (130point) can count.
+ALLOWED_PROVENANCE = ("owner_manual", "gmail_sale_email", "ebay_fulfillment_api")
+FORBIDDEN_URL_PARTS = ("ebay.com/itm/", "ebay.com/sch/", "ebay.com/sh/research", "130point")
+
+
+def provenance_problem(sale):
+    """Return why a sale cannot count as primary evidence, or None if it can."""
+    if sale.get("provenance") not in ALLOWED_PROVENANCE:
+        return "missing/invalid provenance (allowed: " + ", ".join(ALLOWED_PROVENANCE) + ")"
+    url = (sale.get("url") or "").lower()
+    if any(part in url for part in FORBIDDEN_URL_PARTS):
+        return "eBay page or scraped-mirror URL is not allowed evidence"
+    return None
+
+
 IDENTITY_FIELDS = ("year", "set", "player", "number", "parallel", "print_run",
                    "autograph", "relic", "grader", "grade")
 
@@ -104,7 +121,7 @@ def sale_evidence(candidate, now, policy):
             reason = "invalid price/currency"
         elif not dt or not 0 <= (now - dt).total_seconds() / 86400 <= policy["sales_window_days"]:
             reason = "outside evidence window"
-        elif not sale_id or not s.get("url"):
+        elif not sale_id or (not s.get("url") and s.get("provenance") not in ALLOWED_PROVENANCE):
             reason = "missing sale provenance"
         elif sale_id in seen:
             reason = "duplicate sale"
@@ -112,6 +129,13 @@ def sale_evidence(candidate, now, policy):
             excluded.append({"sale_id": sale_id, "reason": reason})
             continue
         seen.add(sale_id)
+        s = dict(s)
+        if s.get("source_type") == "primary":
+            problem = provenance_problem(s)
+            if problem:
+                # Kept visible, but only as an unverified/provisional observation.
+                s["source_type"] = "unverified"
+                s["provenance_issue"] = problem
         used.append(s)
     used.sort(key=lambda s: instant(s["date"]), reverse=True)
     primary_sales = [s for s in used if s.get("source_type") == "primary"]
@@ -125,6 +149,7 @@ def sale_evidence(candidate, now, policy):
     # Two prices support only a provisional research scenario; never a qualified buy.
     resale = min(prices[math.floor((len(prices) - 1) * .25)], statistics.median(prices) * .9) if len(prices) >= 2 else None
     return {"sales": used, "excluded": excluded, "count": len(used), "primary_count": primary,
+            "unverified_count": sum(s.get("source_type") == "unverified" for s in used),
             "freshest_days": round(age, 1) if age is not None else None,
             "freshest_primary_days": round(primary_age, 1) if primary_age is not None else None,
             "valuation_basis": "primary only" if confidence == "medium" else "provisional reported sales",

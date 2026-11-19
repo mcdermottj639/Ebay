@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var APP_VERSION = "v72";
+  var APP_VERSION = "v73";
   var buyPrefs;
   try { buyPrefs = Buying.prefs(JSON.parse(localStorage.getItem("cv-buy-v1") || "{}")); } catch (e) { buyPrefs = Buying.prefs(); }
   function saveBuyPrefs() { try { localStorage.setItem("cv-buy-v1", JSON.stringify(buyPrefs)); } catch (e) {} }
@@ -127,18 +127,26 @@
       data._baseSummary = { total_value: num(sm.total_value), revenue: num(sm.revenue),
         realized_profit: num(sm.realized_profit), sold: sm.sold | 0, listed: sm.listed | 0 };
     }
-    var bs = data._baseSummary, dVal = 0, dRev = 0, dReal = 0, dSold = 0, dList = 0;
+    var bs = data._baseSummary, dVal = 0, dRev = 0, dSold = 0, dList = 0;
     data.cards.forEach(function (c) {
       if (!c.sold_local) return;
       dVal -= num(c.asking_price);
       dRev += num(c.sold_price);
-      dReal += num(c.sold_price) - num(c.cost);
       dSold += 1;
       if (String(c._csvListed || "").toLowerCase() === "yes") dList -= 1;
     });
     sm.total_value = Math.round((bs.total_value + dVal) * 100) / 100;
     sm.revenue = Math.round((bs.revenue + dRev) * 100) / 100;
-    sm.realized_profit = Math.round((bs.realized_profit + dReal) * 100) / 100;
+    // Net, same math as the Sales screen (selling.js saleBreakdown) and build_web:
+    // fees, label and supplies come off; only sales with a known cost count.
+    var S = window.CardVaultSelling, pol = (data.radar || {}).policy || null;
+    var netAt = function (c, price) {
+      var b = S && pol ? S.saleBreakdown({ sku: c.sku, sold: true, sold_price: price, cost: c.cost, sale_costs: c.sold ? c.sale_costs : null }, pol) : null;
+      return b && b.net != null ? b.net : num(price) - num(c.cost);
+    };
+    var soldCosted = data.cards.filter(function (c) { return c.sold && num(c.cost) > 0; });
+    sm.realized_profit = Math.round(soldCosted.reduce(function (a, c) { return a + netAt(c, c.sold_price); }, 0) * 100) / 100;
+    sm.realized_cost_count = soldCosted.length;
     sm.sold = bs.sold + dSold;
     sm.listed = Math.max(0, bs.listed + dList);
 
@@ -147,7 +155,10 @@
     // Held cards only — must match build_web and the Est. profit tile beside it.
     data.summary.total_cost = Math.round(data.cards.reduce(
       function (a, c) { return c.sold ? a : a + num(c.cost); }, 0) * 100) / 100;
-    data.summary.profit = Math.round(costed.reduce(function (a, c) { return a + num(c.asking_price) - num(c.cost); }, 0) * 100) / 100;
+    data.summary.profit = Math.round(costed.reduce(function (a, c) { return a + netAt(c, c.asking_price); }, 0) * 100) / 100;
+    var costedValue = costed.reduce(function (a, c) { return a + num(c.asking_price); }, 0);
+    var softValue = costed.reduce(function (a, c) { return a + (/^(est_sold|asking)$/.test(c.price_basis || "") ? num(c.asking_price) : 0); }, 0);
+    data.summary.profit_soft_share = costedValue ? Math.round(softValue / costedValue * 10000) / 10000 : null;
   }
 
   // Real SOLD reference from the owner's tracked sales — median of the most
@@ -688,7 +699,14 @@
     var over = el('<section class="sheet-section"><h3>Over time</h3><p class="section-note">Cards added, sold and re-priced all move this line. Hollow dots mark re-pricing days.</p></section>');
     over.appendChild(areaSlot(hist, { h: 190, label: "Vault value over time" }));
     over.appendChild(twinTable(hist));
-    openInfo("Vault value", money0(total) + " across " + held.length + " priced cards and pieces", [tiers, conf, sports, over]);
+    openInfo("Vault value", money0(total) + " across " + held.length + " priced cards and pieces", [estProfitSection(state.data.summary), tiers, conf, sports, over]);
+  }
+  // Est. profit tile: NET (after fees, label, supplies) if every held card with a
+  // known cost sold at its saved value, plus how much of it rests on EST/ASKING.
+  function estProfitSection(s) {
+    var n = num(s.profit), soft = s.profit_soft_share, pct = soft == null ? null : Math.round(soft * 100);
+    return '<section class="sheet-section"><h3>Est. profit</h3><div class="kpi-row"><div class="kpi"><span>Est. net profit</span><b class="' + (n < 0 ? "down-text" : "up-text") + '">' + (n < 0 ? "−≈" : "≈") + money0(Math.abs(n)) + "</b><small>After fees &amp; shipping · " + (s.cost_count | 0) + " cards with a cost</small></div>" +
+      '<div class="kpi"><span>Rests on EST / asking</span><b>' + (pct == null ? "—" : pct + "%") + "</b>" + (pct == null ? "" : Charts.meter(pct, 100, { label: "Share of the estimate on EST or asking values" })) + "<small>Not real sold prices</small></div></div></section>";
   }
   // The tape: real, dated things that happened — your sales, your live asks,
   // sold prices you recorded in the last 90 days, and genuine value moves.
@@ -1376,11 +1394,20 @@
     }, true);
     syncThemeIcon();
   }
+  // Old data must say so: Buy Radar snapshot >48h, comparable prices >8 days.
+  function staleBanner(tab) {
+    var d = state.data || {}, st = Buying.staleness((d.radar || {}).as_of, d.comps_as_of), msg = "";
+    if (tab === "radar" && st.radar) msg = "Buy Radar data is " + (st.radar.hours == null ? "undated" : Math.floor(st.radar.hours / 24) + " days old") + ". Listings and prices may have changed — recheck before buying.";
+    else if (/^(today|collection|sell)$/.test(tab) && st.comps && d.comps_as_of) msg = "Comparable prices are " + st.comps.days + " days old. Values may be out of date.";
+    return msg ? el('<p class="stale-banner" role="status">' + esc(msg) + "</p>") : null;
+  }
   function render(restore) {
     restoringView=true;
     state.renderedValuePeriod=state.valuePeriod;
     var v = document.getElementById("view");
     v.innerHTML = "";
+    var banner = staleBanner(state.tab);
+    if (banner) v.appendChild(banner);
     v.appendChild(({ today: viewToday, sell: viewSell, collection: viewCollection, value: viewResults, radar: viewBuy, about: viewAbout }[state.tab] || viewToday)());
     document.body.dataset.page = state.tab;
     pinTicker();
@@ -1818,7 +1845,7 @@
     var buyNote = c.buying_option === 'AUCTION' ? 'Auction · price can rise' : unavailable ? 'No longer available' : c.page_state === 'mismatch' ? 'Not the target card' : radarHasNumber(c.all_in) ? 'Est. total ' + money0(c.all_in) : 'Shipping / tax unknown';
     var resaleNote = priced ? (supported ? 'Based on sold comps' : 'Low-confidence estimate') : 'Need sold comps';
     var profitText = hasProfit ? signedBuyMoney(e.cash_margin) : '—';
-    var profitTone = hasProfit ? (e.cash_margin < 0 ? 'loss' : c.status === 'qualified' ? 'gain' : 'pending') : 'pending';
+    var profitTone = Buying.profitTone(c, hasProfit ? e.cash_margin : null);
     var profitLabel = 'Est. cash profit';
     var profitNote = hasProfit ? 'After time / risk / holding: ' + signedBuyMoney(e.adjusted_profit) : unavailable || c.page_state === 'mismatch' ? 'No eligible listing' : priced ? 'Purchase costs unknown' : 'Resale estimate needed';
     var shortReason = c.status === 'qualified' ? 'Clears your buying rules' : c.status === 'pass' ? 'Too expensive at this price' : c.page_state === 'mismatch' ? 'Wrong card or grade' : unavailable ? 'Unavailable' : c.buying_option === 'AUCTION' ? 'Auction · wait for final price' : c.all_in > 1000 ? 'Above your buying budget' : !priced ? 'Wait for sold comparisons' : 'Verify before buying';
@@ -1867,7 +1894,7 @@
     var reason=(c.reasons||[])[0]||'Clears your buying rules';
     return '<article class="buy-card" data-buy-key="'+esc(Buying.key(c))+'"><div class="buy-cardtop">'+buyPhoto(c)+'<div class="buy-cardidentity"><span class="pr-status pr-'+esc(c.status)+'">'+buyStatus(c)+'</span><h3>'+esc(i.player||c.label)+'</h3><p>'+esc(spec||c.item_title)+'</p><small>'+esc((i.grader||'Grade')+' '+(i.grade||'unconfirmed'))+' · '+(Buying.fresh(c)?'Checked '+esc(savedDate(c.checked_at)):'Recheck listing')+'</small></div></div>'+
       '<div class="buy-numbers"><div><span>'+ask+'</span><b>'+radarDisplayPrice(m.ask,true)+'</b></div><div><span>Est. total cost</span><b>'+radarDisplayPrice(m.total,true)+'</b></div><div><span>Resale estimate</span><b>'+radarDisplayPrice(m.resale,true)+'</b></div></div>'+
-      '<div class="buy-profit"><div><span>Est. cash profit</span><small>After fees & shipping</small></div><strong class="'+(m.cash<0?'down-text':m.cash!=null?'up-text':'')+'">'+signedBuyMoney(m.cash)+'</strong></div>'+
+      '<div class="buy-profit"><div><span>Est. cash profit</span><small>After fees & shipping</small></div><strong class="'+{loss:'down-text',gain:'up-text',pending:'muted'}[Buying.profitTone(c,m.cash)]+'">'+signedBuyMoney(m.cash)+'</strong></div>'+
       '<div class="buy-secondary"><span>After time, risk & holding</span><b>'+signedBuyMoney(m.adjusted)+'</b></div>'+
       '<p class="buy-evidence">'+(ev.primary_count||0)+' primary comps · '+(m.resale==null?'Resale not established':ev.confidence==='medium'?'Sold-backed estimate':'Provisional estimate')+'</p>'+
       '<p class="buy-reason" title="'+esc(reason)+'">'+esc(reason)+'</p><div class="buy-actions"><button class="button" data-review type="button">Review card</button><button class="button secondary" data-track type="button" aria-pressed="'+tracked+'">'+(tracked?'Tracked ✓':'Track')+'</button></div></article>';

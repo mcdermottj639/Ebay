@@ -43,3 +43,17 @@ test('saved preferences recover safely and only HTTPS listing images render',()=
   assert.equal(B.image({image:'javascript:alert(1)'}),'');
   assert.equal(B.image({image:'https://i.ebayimg.com/card.jpg'}),'https://i.ebayimg.com/card.jpg');
 });
+test('grid and detail profit tone: only qualified rows read green; estimates stay neutral',()=>{
+  assert.equal(B.profitTone({status:'qualified'},120),'gain');
+  for(const status of ['research','pass','excluded']) assert.equal(B.profitTone({status},120),'pending');
+  assert.equal(B.profitTone({status:'research'},-5),'loss');
+  assert.equal(B.profitTone({status:'qualified'},null),'pending');
+});
+test('stale banner: radar >48h, comps >8 days, undated counts as stale',()=>{
+  const t=Date.parse('2026-11-19T12:00:00Z');
+  assert.equal(B.staleness('2026-11-18T13:00:00Z','2026-11-14',t).radar,null);
+  assert.ok(B.staleness('2026-11-14T14:07:57Z','2026-11-14',t).radar);
+  assert.equal(B.staleness('2026-11-19T00:00:00Z','2026-11-14',t).comps,null);
+  assert.equal(B.staleness('2026-11-19T00:00:00Z','2026-11-10',t).comps.days,9);
+  assert.ok(B.staleness('',null,t).radar); assert.ok(B.staleness('',null,t).comps);
+});

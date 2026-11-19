@@ -37,6 +37,40 @@ def _money(cards, field):
     return sum(_num(getattr(c, field)) for c in cards)
 
 
+# --- Net profit (mirrors docs/selling.js saleBreakdown, v68) -----------------
+# Fees on price + buyer-tax allowance (13.25% cards / 13.6% merch, 2.35% above
+# the $7,500 threshold, + $0.40 per order), outbound label ($8, or $16 over
+# $500) and $2 supplies, all from data/buy_policy.json. A label/fee read from an
+# eBay email (data/sale_costs.json) replaces the planning number. Before income
+# tax. tests/test_build_web.py pins Python == JS on the same inputs.
+MERCH_FEE_RATE = 0.136
+
+
+def _sale_policy():
+    path = DATA / "buy_policy.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+def _net_profit(price, cost, sku, policy, recorded=None):
+    """Net profit on one sale at `price`, or None when it can't be computed."""
+    need = ("fee_rate", "per_order_fee", "resale_buyer_tax_rate", "supplies",
+            "outbound_shipping", "outbound_shipping_premium")
+    if price is None or price <= 0 or cost is None or any(k not in policy for k in need):
+        return None
+    rec = recorded or {}
+    rate = MERCH_FEE_RATE if sku.upper().startswith("MERCH-") else policy["fee_rate"]
+    thr = policy.get("fee_threshold") or 7500
+    above = policy.get("fee_rate_above") or 0
+    base = price * (1 + policy["resale_buyer_tax_rate"])
+    fees = rec.get("fees")
+    if fees is None:
+        fees = round(min(base, thr) * rate + max(0, base - thr) * above + policy["per_order_fee"], 2)
+    label = rec.get("label")
+    if label is None:
+        label = policy["outbound_shipping_premium"] if price > 500 else policy["outbound_shipping"]
+    return round(price - cost - round(fees + label + policy["supplies"], 2), 2)
+
+
 def _status(card):
     return "priced" if card.asking_price.strip() else "needs_price"
 
@@ -319,6 +353,38 @@ def _app_version() -> str:
     return m.group(1) if m else ""
 
 
+def _apply_provenance(snap):
+    """Display-side guard for snapshots written before the provenance rule:
+    a 'primary' sale without allowed provenance (or citing an ebay.com page /
+    130point) shows as unverified, and a row that no longer has enough primary
+    sales cannot stay a qualified buy. Nothing is deleted."""
+    from ebaytools.buy_radar import provenance_problem
+    need = (snap.get("policy") or {}).get("min_primary_sales", 3)
+    for c in snap.get("candidates", []):
+        ev = c.get("evidence") or {}
+        sales = ev.get("sales") or []
+        for sale in sales:
+            if sale.get("source_type") == "primary":
+                problem = provenance_problem(sale)
+                if problem:
+                    sale["source_type"] = "unverified"
+                    sale["provenance_issue"] = problem
+        if sales:
+            ev["primary_count"] = sum(x.get("source_type") == "primary" for x in sales)
+            ev["unverified_count"] = sum(x.get("source_type") == "unverified" for x in sales)
+            if ev["primary_count"] < need and ev.get("confidence") == "medium":
+                ev["confidence"] = "low"
+        if c.get("status") == "qualified" and ev.get("primary_count", 0) < need:
+            c["status"] = "research"
+            c["reasons"] = ["Sold evidence lacks allowed provenance"] + list(c.get("reasons") or [])
+    snap["deals"] = [c for c in snap.get("candidates", []) if c.get("status") == "qualified"]
+    snap["shown"] = len(snap["deals"])
+    if isinstance(snap.get("summary"), dict):
+        for k in snap["summary"]:
+            snap["summary"][k] = sum(c.get("status") == k for c in snap.get("candidates", []))
+    return snap
+
+
 def _radar_snapshot():
     """Buy Radar deals saved by radar.py (data/radar_snapshot.json).
     Returns {as_of, watch_count, deals:[...]} — the app's 🔎 Buy Radar tab.
@@ -330,7 +396,7 @@ def _radar_snapshot():
     try:
         snap = json.loads(path.read_text(encoding="utf-8"))
         if snap.get("schema_version") == 2:
-            return snap
+            return _apply_provenance(snap)
         deals = snap.get("deals", [])
         return {
             "as_of": snap.get("as_of", ""),
@@ -562,12 +628,26 @@ def build_data(cards) -> dict:
     total_cost = _money(unsold, "cost")
     total_value = _money(unsold, "asking_price")   # estimated value of what you still HOLD
     revenue = _money(sold, "sold_price")
-    realized = revenue - _money(sold, "cost")
+    policy = _sale_policy()
 
-    # Unrealized profit only over the cards where we actually KNOW the cost —
-    # otherwise a blank cost reads as $0 and profit == full value (misleading).
+    # Realized profit is NET (after fees, label, supplies — same math as the
+    # Sales screen) and only over sales whose purchase cost is known; a blank
+    # cost used to read as $0 and count the whole sale price as profit.
+    sold_costed = [c for c in sold if _num(c.cost) > 0]
+    realized_gross = _money(sold_costed, "sold_price") - _money(sold_costed, "cost")
+    realized = sum(_net_profit(_num(c.sold_price), _num(c.cost), c.sku, policy,
+                               sale_costs.get(c.sku)) or 0 for c in sold_costed)
+
+    # Est. profit: NET if every held card with a known cost sold at its saved
+    # value. Only cards with a known cost count (a blank cost is not $0).
     costed = [c for c in unsold if c.asking_price.strip() and _num(c.cost) > 0]
-    profit_known = _money(costed, "asking_price") - _money(costed, "cost")
+    profit_gross = _money(costed, "asking_price") - _money(costed, "cost")
+    profit_known = sum(_net_profit(_num(c.asking_price), _num(c.cost), c.sku, policy) or 0
+                       for c in costed)
+    # How much of that estimate rests on EST (asking comps, haircut) or ASKING
+    # values rather than real sold prices / PSA, by saved value.
+    costed_value = _money(costed, "asking_price")
+    soft_value = sum(_num(c.asking_price) for c in costed if _price_basis(c) in ("est_sold", "asking"))
     changes = _price_changes()
     series_by_sku = _price_series()
     market_by_sku = _market()
@@ -584,6 +664,7 @@ def build_data(cards) -> dict:
         "app_version": _app_version(),
         "targets": _targets(),
         "radar": _radar_snapshot(),
+        "comps_as_of": comps_as_of,   # drives the app's stale-data banner (>8 days)
         "summary": {
             "total_cards": len(cards),
             # Everything descriptive counts what's STILL HELD — a sold item is
@@ -597,12 +678,16 @@ def build_data(cards) -> dict:
             "priced": sum(1 for c in unsold if c.asking_price.strip()),
             "total_cost": round(total_cost, 2),
             "total_value": round(total_value, 2),
-            "profit": round(profit_known, 2),          # only over cards with a cost
+            "profit": round(profit_known, 2),          # NET, only over cards with a cost
+            "profit_gross": round(profit_gross, 2),    # before fees/shipping, for reference
+            "profit_soft_share": round(soft_value / costed_value, 4) if costed_value else None,
             "cost_count": len(costed),                 # how many priced cards have cost
             "listed": sum(1 for c in cards if c.is_listed()),
             "sold": len(sold),
             "revenue": round(revenue, 2),
-            "realized_profit": round(realized, 2),
+            "realized_profit": round(realized, 2),     # NET, sales with a known cost
+            "realized_gross": round(realized_gross, 2),
+            "realized_cost_count": len(sold_costed),
             "by_sport": by_sport,
             "sport_stats": sport_stats,
             "grade_stats": grade_stats,

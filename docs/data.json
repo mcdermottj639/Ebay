@@ -158,8 +158,8 @@
       "n": 39
     }
   ],
-  "generated": "Nov 19, 2026 \u00b7 01:44 UTC",
-  "app_version": "v72",
+  "generated": "Nov 19, 2026 \u00b7 20:10 UTC",
+  "app_version": "v73",
   "targets": [
     {
       "label": "CJ Stroud Prizm RC PSA 10",
@@ -43259,7 +43259,8 @@
           ],
           "median": 330,
           "conservative_resale": null,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 0
         },
         "all_in": 433.34,
         "economics": null,
@@ -43696,17 +43697,18 @@
               "price_type": "sold",
               "sale_id": "ebay:327406649905",
               "url": "https://www.ebay.com/itm/327406649905",
-              "source_type": "primary",
+              "source_type": "unverified",
               "exact_match_reviewed": true,
               "amount_confirmed": true,
               "shipping_status": "separate",
               "shipping": 11.99,
-              "note": "Primary page explicitly labels the listing sold Oct 19 at $825; no accepted-Best-Offer ambiguity shown. Source-reported sale, not proof of payment settlement."
+              "note": "Primary page explicitly labels the listing sold Oct 19 at $825; no accepted-Best-Offer ambiguity shown. Source-reported sale, not proof of payment settlement.",
+              "provenance_issue": "missing/invalid provenance (allowed: owner_manual, gmail_sale_email, ebay_fulfillment_api)"
             }
           ],
           "excluded": [],
           "count": 1,
-          "primary_count": 1,
+          "primary_count": 0,
           "freshest_days": 26.6,
           "freshest_primary_days": 26.6,
           "valuation_basis": "provisional reported sales",
@@ -43716,7 +43718,8 @@
           ],
           "median": 825,
           "conservative_resale": null,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 1
         },
         "all_in": 1397.49,
         "economics": null,
@@ -60676,7 +60679,8 @@
           ],
           "median": 160,
           "conservative_resale": null,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 0
         },
         "all_in": 435.3,
         "economics": null,
@@ -68304,16 +68308,17 @@
               "price_type": "sold",
               "sale_id": "fanatics:fcc0df72-fab0-43f0-a33b-02d189d68c7c",
               "url": "https://www.fanaticscollect.com/buy-now/fcc0df72-fab0-43f0-a33b-02d189d68c7c",
-              "source_type": "primary",
+              "source_type": "unverified",
               "exact_match_reviewed": true,
               "amount_confirmed": true,
               "shipping_status": "unknown",
-              "note": "Primary page labels SOLD Sep 26 2026 at $85. Other dated history rows on the page lack distinct transaction IDs and were not counted. Source-reported amount, not settlement proof."
+              "note": "Primary page labels SOLD Sep 26 2026 at $85. Other dated history rows on the page lack distinct transaction IDs and were not counted. Source-reported amount, not settlement proof.",
+              "provenance_issue": "missing/invalid provenance (allowed: owner_manual, gmail_sale_email, ebay_fulfillment_api)"
             }
           ],
           "excluded": [],
           "count": 4,
-          "primary_count": 1,
+          "primary_count": 0,
           "freshest_days": 20.6,
           "freshest_primary_days": 49.6,
           "valuation_basis": "provisional reported sales",
@@ -68323,7 +68328,8 @@
           ],
           "median": 55.010000000000005,
           "conservative_resale": 43.5,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 1
         },
         "all_in": 106.99,
         "economics": {
@@ -68739,7 +68745,8 @@
           ],
           "median": 48.004999999999995,
           "conservative_resale": 43.2,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 0
         },
         "all_in": 109.43,
         "economics": {
@@ -68987,7 +68994,8 @@
           ],
           "median": 115,
           "conservative_resale": 100,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 0
         },
         "all_in": 177.61,
         "economics": {
@@ -69265,7 +69273,8 @@
           ],
           "median": 352,
           "conservative_resale": 316.8,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 0
         },
         "all_in": 360.4,
         "economics": {
@@ -69517,7 +69526,8 @@
           ],
           "median": 43.32,
           "conservative_resale": 35,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 0
         },
         "all_in": 208.64,
         "economics": {
@@ -69715,7 +69725,8 @@
           ],
           "median": 130.0,
           "conservative_resale": 117.0,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 0
         },
         "all_in": 332.12,
         "economics": {
@@ -70312,17 +70323,18 @@
               "price_type": "sold",
               "sale_id": "fanatics:ff65e283-5c24-45ba-bdd3-00c14a714778",
               "url": "https://www.fanaticscollect.com/buy-now/ff65e283-5c24-45ba-bdd3-00c14a714778/2024-panini-prizm-caleb-williams-rookie-301-psa-10-gem-mint",
-              "source_type": "primary",
+              "source_type": "unverified",
               "exact_match_reviewed": true,
               "amount_confirmed": true,
               "shipping_status": "unknown",
               "observed_at": "2026-11-14T00:23:08+00:00",
-              "note": "Directly inspected primary page labels SOLD Sep 6 2026 at $340, cert 109108695. Source-reported amount, not payment-settlement proof. Other sales-history rows lack distinct transaction IDs and were not admitted as additional sales."
+              "note": "Directly inspected primary page labels SOLD Sep 6 2026 at $340, cert 109108695. Source-reported amount, not payment-settlement proof. Other sales-history rows lack distinct transaction IDs and were not admitted as additional sales.",
+              "provenance_issue": "missing/invalid provenance (allowed: owner_manual, gmail_sale_email, ebay_fulfillment_api)"
             }
           ],
           "excluded": [],
           "count": 1,
-          "primary_count": 1,
+          "primary_count": 0,
           "freshest_days": 69.6,
           "freshest_primary_days": 69.6,
           "valuation_basis": "provisional reported sales",
@@ -70332,7 +70344,8 @@
           ],
           "median": 340,
           "conservative_resale": null,
-          "confidence": "low"
+          "confidence": "low",
+          "unverified_count": 1
         },
         "all_in": null,
         "economics": null,
@@ -71524,6 +71537,7 @@
       "excluded": 6
     }
   },
+  "comps_as_of": "2026-11-14",
   "summary": {
     "total_cards": 44,
     "merch": 1,
@@ -71534,12 +71548,16 @@
     "priced": 39,
     "total_cost": 654.8,
     "total_value": 2891.35,
-    "profit": 1451.2,
+    "profit": 1047.4,
+    "profit_gross": 1451.2,
+    "profit_soft_share": 0.1923,
     "cost_count": 9,
     "listed": 8,
     "sold": 5,
     "revenue": 1205.0,
-    "realized_profit": 742.55,
+    "realized_profit": 492.28,
+    "realized_gross": 742.55,
+    "realized_cost_count": 5,
     "by_sport": {
       "Football": 34,
       "Basketball": 2,

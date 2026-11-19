@@ -52,6 +52,12 @@ MIN_MOVE = 0.01      # <1% move → leave the price alone (no churn)
 # they are, we price off the raw sold median with no haircut. Tune here (0.12 =
 # 12% under asking). Rows priced this way are tagged basis "est_sold" so the app
 # shows a distinct EST pill — an estimate, never passed off as a real sold comp.
+# Calibration check, 2026-11-19: owner sales with a prior saved price are too
+# few to re-fit this. n=4 (CARD-0021 $100, CARD-0026 $225, MERCH-0002 $225,
+# MERCH-0003 $255; CARD-0033 has no prior history). Sold / last active asking
+# median = 0.50, 0.75, 0.50, 0.26 (median 0.50); sold / saved value = 0.60,
+# 1.14, 0.90, 0.36. Two are merch, both merch rows had <3 comps (below MIN_COMPS) and the
+# spread is huge, so 12% stays until there are >=10 comparable card sales.
 SOLD_DISCOUNT = 0.12
 
 # Prices set by hand from noisy broad-match comps — never auto-reprice these.

@@ -32,6 +32,23 @@
       resale:finite(e.resale) ? e.resale : finite(ev.conservative_resale) ? ev.conservative_resale : null,
       cash:finite(e.cash_margin) ? e.cash_margin : null, adjusted:finite(e.adjusted_profit) ? e.adjusted_profit : null};
   }
+  // Shared by the radar detail row and the grid card: only a qualified buy may
+  // read green. A positive estimate on a non-qualified row stays neutral, so an
+  // estimate never looks like a confirmed profitable buy.
+  function profitTone(c, cash) {
+    if (!finite(cash)) return 'pending';
+    return cash < 0 ? 'loss' : c && c.status === 'qualified' ? 'gain' : 'pending';
+  }
+  // Stale-data banner: radar snapshot older than 48h, comps older than 8 days.
+  // Undated or unparseable data counts as stale (never as fresh).
+  function staleness(radarAsOf, compsAsOf, now) {
+    var t = typeof now === 'number' ? now : Date.now(), out = {};
+    var age = function (v) { var d = Date.parse(/^\d{4}-\d{2}-\d{2}$/.test(String(v || '')) ? v + 'T12:00:00Z' : v); return isFinite(d) ? (t - d) / 3600000 : null; };
+    var r = age(radarAsOf), c = age(compsAsOf);
+    out.radar = r === null || r > 48 ? {hours: r} : null;
+    out.comps = c === null || c > 8 * 24 ? {days: c === null ? null : Math.floor(c / 24)} : null;
+    return out;
+  }
   function image(c) { return /^https:\/\//i.test(c.image || '') ? c.image : ''; }
   function select(rows, filters, tracked, target) {
     filters = filters || {}; tracked = tracked || [];
@@ -62,5 +79,5 @@
       targetSearch:typeof raw.targetSearch === 'string' ? raw.targetSearch.slice(0,160) : '',
       tracked:Array.isArray(raw.tracked) ? Array.from(new Set(raw.tracked.filter(function (x) { return typeof x === 'string' && x.length > 0 && x.length < 600; }))).slice(0,500) : []};
   }
-  return {key:key,fresh:fresh,inScope:inScope,rows:rows,forTarget:forTarget,metrics:metrics,image:image,select:select,prefs:prefs};
+  return {key:key,fresh:fresh,inScope:inScope,rows:rows,forTarget:forTarget,metrics:metrics,profitTone:profitTone,staleness:staleness,image:image,select:select,prefs:prefs};
 });

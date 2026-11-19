@@ -8,6 +8,50 @@ eBay**, built for a **non-technical owner**. The owner mostly edits a CSV and
 sends card photos; Claude does the rest (cataloging, pricing, drafting,
 listing, deal-finding). Python 3, standard-library-first, no framework.
 
+## Pricing compliance + net profit — v73, November 19, 2026 (Claude)
+ACTIVE RULE — Buy Radar / sourcing / repricing research sources (owner-approved
+2026-11-19). eBay denied Marketplace Insights (2026-07-15) and eBay's User
+Agreement bans robots, scrapers and other automated access to its pages.
+- **Allowed primary sold evidence**: owner-entered sold prices (app "It sold
+  for", `manual_sales.csv`, `my_numbers.json`), the owner's own eBay sale emails
+  in Gmail, and the owner's own orders via the official eBay Fulfillment/Sell
+  APIs. Tag each sale `provenance`: `owner_manual`, `gmail_sale_email` or
+  `ebay_fulfillment_api`.
+- **Allowed active-listing data**: the official Browse API only (`radar.py`,
+  `reprice.py`).
+- **Forbidden**: fetching or browser-reading ANY ebay.com page (item `/itm/`,
+  sold/completed `/sch/` searches, Product Research/Terapeak `/sh/research`),
+  130point or any other scraped mirror. This applies to Claude, scheduled tasks
+  and subagents. Supersedes the "Terapeak-first research order" below for
+  automated research (the owner may still look things up himself and enter the
+  price, which then counts as `owner_manual`).
+- No paid data sources. Claude stays the sole Buy Radar publisher. Verified sold
+  prices stay separate from EST estimates; an estimate never shows as a
+  confirmed profitable buy.
+- `buy_radar.py` `ALLOWED_PROVENANCE` / `provenance_problem`: a "primary" sale
+  counts only with allowed provenance and a URL that is not an ebay.com page or
+  130point. Otherwise it stays visible as `source_type: "unverified"` with
+  `provenance_issue` (never deleted). `build_web._apply_provenance` applies the
+  same rule to older radar snapshots at build time (2026-11-14 snapshot: 3 rows
+  dropped from 1 primary to 0; none were qualified).
+- **Net profit everywhere**: `summary.profit` (Est. profit, held cards with a
+  cost, at saved value) and `summary.realized_profit` (sales with a known cost)
+  now use the selling.js `saleBreakdown` math (fees on price + buyer-tax
+  allowance, label, supplies; recorded label/fees win). `build_web._net_profit`
+  mirrors it; tests pin Python == JS. Gross kept as `profit_gross` /
+  `realized_gross`; `profit_soft_share` = share of the estimate (by value) on
+  EST/asking. Shown in the Vault value sheet "Est. profit" section.
+  Before → after (2026-11-19 data): Est. profit $1,451.20 → $1,047.40 net
+  (19% on EST/asking); realized $742.55 → $492.28 net (5/5 sales costed).
+- Grid "Est. cash profit" uses `Buying.profitTone` like the detail row: only a
+  qualified row is green; a positive estimate on any other row is neutral.
+- Stale banner (`Buying.staleness`): Buy Radar tab when the snapshot is >48h
+  old; Today/Collection/Sell when `comps_as_of` is >8 days old.
+- `SOLD_DISCOUNT` stays 12%: only 4 owner sales with a prior saved price (math
+  in reprice.py comment); revisit at >=10 comparable card sales.
+- Tests: tests/test_buy_radar.py (provenance), tests/test_build_web.py (net
+  parity, soft share, snapshot guard), tests/test_buying.cjs (tone, staleness).
+
 ## Visual value movement — v72, November 13, 2026 (ChatGPT/Codex)
 - Jack asked for rising/falling card values, week/month percentages and a more
   visual Inventory. Today and Inventory now lead with dated comparable-value
@@ -368,7 +412,10 @@ catalog and build checks passed. Browser checks covered all five screens at
 and Terapeak-first research controls in plans and targets. Source records and
 selling math are unchanged. Physical iPhone was not available for testing.
 
-### Standing sold-comparison research order — owner correction
+### Standing sold-comparison research order — HISTORICAL (superseded v73)
+SUPERSEDED 2026-11-19 for any automated or Claude-run research: never fetch or
+browser-read ebay.com pages (Product Research, sold search, item pages) or
+130point — see "Pricing compliance — v73" at the top. Kept for context only:
 Always use Terapeak / eBay Product Research BEFORE eBay public sold/completed
 search when researching comparable prices, resale value or selling timing.
 Terapeak is the primary comp-check source; eBay sold is the fallback when Product
@@ -534,13 +581,14 @@ These rules supersede the historical asking-median radar/Great Value notes below
   Three deduplicated primary sold prices <=90d, newest <=30d, reviewed condition,
   seller history, <=48h observed availability and known shipping are required to
   qualify. Secondary-only or two-sale ceilings are explicitly provisional.
-- `data/buy_research.json` stores reviewed public evidence. Keep sale IDs, URLs,
+- `data/buy_research.json` stores reviewed evidence (v73: new primary sales need
+  allowed `provenance`; no ebay.com page or 130point reads). Keep sale IDs, URLs,
   accepted-price status and source type. Asking/guide prices NEVER become resale
   estimates. Default resale scenario = lower of lower-quartile sold price and
   90% of median. No rarity multiplier, grading-upgrade or price-growth assumption.
 - `radar.py` now does Browse discovery WITHOUT the old asking-discount gate, then
   evaluates saved/reviewed evidence. Unreviewed API matches remain research only.
-  Run `python radar.py --evidence-only` explicitly for saved public-page research;
+  Run `python radar.py --evidence-only` explicitly to re-evaluate saved research;
   this does NOT fetch new listings. Without API keys/dependencies, default exits
   without overwriting the snapshot. Failed queries and incomplete coverage show.
 - Normal all-in cap $500; >$500 individual exception review, >$1000 premium

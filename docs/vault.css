@@ -1269,3 +1269,5 @@ details.dsec[open] > summary { margin-bottom: 12px; }
   .inventory .value-overview-top { flex-direction: row; align-items: center; justify-content: space-between; }
   .inventory .vault-photo-stack { margin-left: 0; margin-right: 12px; transform: scale(1.2); }
 }
+/* Stale-data banner (radar >48h, comps >8 days). Wraps; never widens the page. */
+.stale-banner { margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--warn); color: var(--warn); font-size: 13px; line-height: 1.35; overflow-wrap: anywhere; max-width: 100%; box-sizing: border-box; }
