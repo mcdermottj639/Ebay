@@ -104,3 +104,47 @@ class MovementHistoryTests(unittest.TestCase):
                 points = build._price_series()['X']
             self.assertEqual(len(points), 1)
             self.assertEqual(points[0]['p'], 10)
+
+
+class NetProfitTests(unittest.TestCase):
+    """Est. profit and realized profit use the Sales-screen net math
+    (docs/selling.js saleBreakdown). Pins match tests/test_selling.cjs."""
+    policy = dict(fee_rate=.1325, fee_threshold=7500, fee_rate_above=.0235, per_order_fee=.4,
+                  resale_buyer_tax_rate=.08, outbound_shipping=8, outbound_shipping_premium=16,
+                  supplies=2)
+
+    def test_python_net_matches_selling_js(self):
+        self.assertEqual(build._net_profit(100, 63.0, 'CARD-0021', self.policy, {'label': 7.08}), 13.21)
+        self.assertEqual(build._net_profit(225, 50, 'MERCH-0002', self.policy, {'label': 9.66}), 129.89)
+        # $16 label above $500, recorded fee replaces the estimate, unknown stays None
+        self.assertEqual(build._net_profit(600, 1, 'CARD-0099', self.policy),
+                         round(600 - 1 - (round(648 * .1325 + .4, 2) + 16 + 2), 2))
+        self.assertEqual(build._net_profit(50, 1, 'CARD-0098', self.policy, {'fees': 6}), 50 - 1 - 16)
+        self.assertIsNone(build._net_profit(100, None, 'CARD-0001', self.policy))
+        self.assertIsNone(build._net_profit(100, 50, 'CARD-0001', {}))
+
+    def test_summary_profit_tiles_are_net_and_report_soft_share(self):
+        s = build.build_data(copy.deepcopy(build.catalog.load()))['summary']
+        self.assertLess(s['profit'], s['profit_gross'])            # fees/shipping came off
+        self.assertLessEqual(s['realized_profit'], s['realized_gross'])
+        self.assertLessEqual(s['realized_cost_count'], s['sold'])
+        if s['cost_count']:
+            self.assertGreaterEqual(s['profit_soft_share'], 0)
+            self.assertLessEqual(s['profit_soft_share'], 1)
+
+
+class RadarProvenanceDisplayTests(unittest.TestCase):
+    def test_old_snapshot_ebay_page_primary_shows_unverified_and_cannot_qualify(self):
+        sale = {'source_type': 'primary', 'url': 'https://www.ebay.com/itm/1', 'price': 10}
+        snap = {'policy': {'min_primary_sales': 3}, 'summary': {'qualified': 1, 'research': 0},
+                'candidates': [{'status': 'qualified', 'reasons': [],
+                                'evidence': {'sales': [dict(sale) for _ in range(3)],
+                                             'primary_count': 3, 'confidence': 'medium'}}]}
+        out = build._apply_provenance(snap)
+        c = out['candidates'][0]
+        self.assertEqual(c['status'], 'research')
+        self.assertEqual(c['evidence']['primary_count'], 0)
+        self.assertEqual(c['evidence']['unverified_count'], 3)
+        self.assertEqual(len(c['evidence']['sales']), 3)   # nothing deleted
+        self.assertEqual(out['deals'], [])
+        self.assertEqual(out['summary'], {'qualified': 0, 'research': 1})

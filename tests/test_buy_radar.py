@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
-from ebaytools.buy_radar import economics, evaluate, max_buy, requirements, sale_evidence, snapshot
+from ebaytools.buy_radar import ALLOWED_PROVENANCE, economics, evaluate, max_buy, requirements, sale_evidence, snapshot
 
 class ProfitRadarTests(unittest.TestCase):
     def setUp(self):
@@ -25,7 +25,7 @@ class ProfitRadarTests(unittest.TestCase):
             self.c['sales'].append(dict(identity=ident.copy(), exact_match_reviewed=True,
                 date=(self.now-timedelta(days=i+1)).isoformat(), price=price, currency='USD',
                 price_type='sold', amount_confirmed=True, sale_id=str(i+10),
-                url='https://www.ebay.com/itm/'+str(i+10), source_type='primary'))
+                provenance='owner_manual', source_type='primary'))
 
     def test_fee_includes_tax_and_order_fee(self):
         r = economics(400, 200, 60, self.p)
@@ -230,4 +230,47 @@ class ProfitRadarTests(unittest.TestCase):
         self.assertEqual(result['grade_scope'],'outside_focus')
         self.assertNotEqual(result['status'],'qualified')
 
-if __name__=='__main__':unittest.main()
+
+
+class ProvenanceAllowlistTests(unittest.TestCase):
+    """Primary sold evidence: owner records / Gmail sale emails / Fulfillment API only."""
+    setUp = ProfitRadarTests.setUp
+
+    def test_allowed_provenance_counts_as_primary(self):
+        for prov in ALLOWED_PROVENANCE:
+            c = copy.deepcopy(self.c)
+            for s in c['sales']: s['provenance'] = prov
+            ev = sale_evidence(c, self.now, self.p)
+            self.assertEqual(ev['primary_count'], 3, prov)
+            self.assertEqual(ev['unverified_count'], 0)
+        self.assertEqual(evaluate(self.c, self.p, self.now)['evidence']['confidence'], 'medium')
+
+    def test_missing_or_invalid_provenance_is_unverified_not_deleted(self):
+        for bad in (None, 'ebay_product_research', 'scrape'):
+            c = copy.deepcopy(self.c)
+            for s in c['sales']:
+                s['url'] = 'https://example.com/record'
+                if bad is None: s.pop('provenance')
+                else: s['provenance'] = bad
+            r = evaluate(c, self.p, self.now)
+            self.assertEqual(r['evidence']['primary_count'], 0)
+            self.assertEqual(r['evidence']['count'], 3)  # still visible
+            self.assertEqual(r['evidence']['unverified_count'], 3)
+            self.assertNotEqual(r['status'], 'qualified')
+            self.assertEqual(r['evidence']['confidence'], 'low')
+            self.assertTrue(all(s['provenance_issue'] for s in r['evidence']['sales']))
+        self.assertEqual(self.c['sales'][0]['source_type'], 'primary')  # input not mutated
+
+    def test_ebay_page_and_mirror_urls_never_primary(self):
+        for url in ('https://www.ebay.com/itm/123', 'https://www.ebay.com/sch/i.html?LH_Sold=1',
+                    'https://www.ebay.com/sh/research?keywords=x', 'https://130point.com/sales/'):
+            c = copy.deepcopy(self.c)
+            for s in c['sales']: s['url'] = url
+            r = evaluate(c, self.p, self.now)
+            self.assertEqual(r['evidence']['primary_count'], 0, url)
+            self.assertIn('not allowed', r['evidence']['sales'][0]['provenance_issue'])
+            self.assertNotEqual(r['status'], 'qualified')
+
+
+if __name__ == '__main__':
+    unittest.main()
