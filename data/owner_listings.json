@@ -526,6 +526,26 @@
           "note": "Owner's eBay shop-page screenshot in a Claude chat (2026-11-16 12:52 PM ET) shows $80.00. Not read from an eBay email; exact revision time unknown."
         }
       ]
+    },
+    "MERCH-0001": {
+      "item_id": "336728703040",
+      "url": "https://www.ebay.com/itm/336728703040",
+      "asking_price": 200,
+      "asking_price_source": "ebay_browse_seller_sweep",
+      "currency": "USD",
+      "status": "listed",
+      "confirmed_at": "2026-11-21T09:08:54-05:00",
+      "events": [
+        {
+          "event_id": "336728703040:listing_seen:2026-11-21T09:08:54-05:00",
+          "type": "listing_seen",
+          "occurred_at": "2026-11-21T09:08:54-05:00",
+          "item_id": "336728703040",
+          "price": 200,
+          "currency": "USD",
+          "source": "ebay_browse_seller_sweep"
+        }
+      ]
     }
   },
   "unresolved_matches": [
