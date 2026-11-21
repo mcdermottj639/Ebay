@@ -163,7 +163,7 @@
       "n": 39
     }
   ],
-  "generated": "Nov 21, 2026 \u00b7 01:18 UTC",
+  "generated": "Nov 21, 2026 \u00b7 01:44 UTC",
   "app_version": "v73",
   "targets": [
     {
@@ -77862,6 +77862,17 @@
             "source": "ebay_offer_notification_email",
             "expires_at": "2026-11-16T22:31:00-05:00",
             "expires_note": "Mon, Nov 16 07:31 PM, no time zone shown"
+          },
+          {
+            "event_id": "336899399649:offer_received:2026-11-20T13:52:47-05:00",
+            "type": "offer_received",
+            "occurred_at": "2026-11-20T13:52:47-05:00",
+            "item_id": "336899399649",
+            "price": 75,
+            "currency": "USD",
+            "source": "ebay_offer_notification_email",
+            "expires_at": "2026-11-21T13:52:00-05:00",
+            "expires_note": "Sat, Nov 21 10:52 AM, no time zone shown"
           }
         ]
       },
