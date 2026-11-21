@@ -59,6 +59,15 @@
           "price": 7.08,
           "currency": "USD",
           "source": "ebay_shipping_label_confirmation_email"
+        },
+        {
+          "event_id": "336866460070:shipped:2026-10-28T09:00:26-04:00",
+          "type": "shipped",
+          "occurred_at": "2026-10-28T09:00:26-04:00",
+          "item_id": "336866460070",
+          "currency": "USD",
+          "source": "ebay_order_shipped_email",
+          "time_note": "eBay notification time ('Order shipped' / 'Scanned and on the way'); the email names the order by title (2019 Prizm Tony Pollard Auto RC #339 PSA 10), not item ID. Delivery, payout and fees not confirmed."
         }
       ],
       "sold_price": 100,
@@ -530,6 +539,17 @@
       "candidate_sku": "CARD-0035",
       "source": "ebay_listing_confirmation_email",
       "reason": "Listing-live email (notification time) gives no asking price; title matches CARD-0035 (1972 Topps #200 Roger Staubach PSA 4), the only Staubach in inventory. Needs Jack's ask before it moves to listings."
+    },
+    {
+      "item_id": "336892284975",
+      "url": "https://www.ebay.com/itm/336892284975",
+      "asking_price": null,
+      "currency": "USD",
+      "occurred_at": "2026-11-11T11:59:16-05:00",
+      "status": "outside_card_inventory",
+      "title": "L.A.B. Golf LINK 2.1 Custom Putter 34\" TPT Shaft 70° Lie (title truncated in email)",
+      "source": "ebay_listing_confirmation_email",
+      "reason": "Golf equipment, no matching inventory SKU; excluded from card feed. Listing-live email (notification time) shows no asking price. Separate item ID from 336871213729 (listed Oct 30); no end of that listing seen."
     }
   ]
 }
