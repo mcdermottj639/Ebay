@@ -156,9 +156,14 @@
       "d": "2026-11-19",
       "v": 2891.35,
       "n": 39
+    },
+    {
+      "d": "2026-11-21",
+      "v": 2891.35,
+      "n": 39
     }
   ],
-  "generated": "Nov 19, 2026 \u00b7 20:10 UTC",
+  "generated": "Nov 21, 2026 \u00b7 01:18 UTC",
   "app_version": "v73",
   "targets": [
     {
@@ -74842,6 +74847,15 @@
             "price": 7.08,
             "currency": "USD",
             "source": "ebay_shipping_label_confirmation_email"
+          },
+          {
+            "event_id": "336866460070:shipped:2026-10-28T09:00:26-04:00",
+            "type": "shipped",
+            "occurred_at": "2026-10-28T09:00:26-04:00",
+            "item_id": "336866460070",
+            "currency": "USD",
+            "source": "ebay_order_shipped_email",
+            "time_note": "eBay notification time ('Order shipped' / 'Scanned and on the way'); the email names the order by title (2019 Prizm Tony Pollard Auto RC #339 PSA 10), not item ID. Delivery, payout and fees not confirmed."
           }
         ],
         "sold_price": 100,
