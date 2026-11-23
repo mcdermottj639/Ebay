@@ -166,9 +166,14 @@
       "d": "2026-11-22",
       "v": 2898.84,
       "n": 39
+    },
+    {
+      "d": "2026-11-23",
+      "v": 2898.84,
+      "n": 39
     }
   ],
-  "generated": "Nov 22, 2026 \u00b7 17:43 UTC",
+  "generated": "Nov 23, 2026 \u00b7 01:43 UTC",
   "app_version": "v73",
   "targets": [
     {
@@ -77620,7 +77625,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 1.76,
+      "prev_price": 1.67,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -77782,7 +77787,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 2.54,
+      "prev_price": 2.45,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -77944,7 +77949,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 1.75,
+      "prev_price": 1.65,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -78430,7 +78435,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 1.4,
+      "prev_price": 1.32,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -78754,7 +78759,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 9.31,
+      "prev_price": 8.35,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -79701,7 +79706,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 61.59,
+      "prev_price": 68.2,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -80025,7 +80030,7 @@
       "cert": "",
       "sale_costs": null,
       "my_sales": [],
-      "prev_price": 19.79,
+      "prev_price": 21.99,
       "price_series": [
         {
           "d": "2026-07-15",
@@ -82072,6 +82077,17 @@
             "source": "ebay_offer_notification_email",
             "expires_at": "2026-11-23T09:55:00-05:00",
             "expires_note": "Mon, Nov 23 06:55 AM, no time zone shown"
+          },
+          {
+            "event_id": "336878004176:offer_received:2026-11-22T15:31:16-05:00",
+            "type": "offer_received",
+            "occurred_at": "2026-11-22T15:31:16-05:00",
+            "item_id": "336878004176",
+            "price": 61,
+            "currency": "USD",
+            "source": "ebay_offer_notification_email",
+            "expires_at": "2026-11-23T15:31:00-05:00",
+            "expires_note": "Mon, Nov 23 12:31 PM, no time zone shown"
           }
         ],
         "asking_price_source": "owner_statement",
