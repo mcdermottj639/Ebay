@@ -171,9 +171,14 @@
       "d": "2026-11-23",
       "v": 2898.84,
       "n": 39
+    },
+    {
+      "d": "2026-11-26",
+      "v": 2898.84,
+      "n": 39
     }
   ],
-  "generated": "Nov 23, 2026 \u00b7 01:43 UTC",
+  "generated": "Nov 26, 2026 \u00b7 01:19 UTC",
   "app_version": "v73",
   "targets": [
     {
@@ -77356,7 +77361,7 @@
     "profit_gross": 1451.2,
     "profit_soft_share": 0.1923,
     "cost_count": 9,
-    "listed": 8,
+    "listed": 9,
     "sold": 5,
     "revenue": 1205.0,
     "realized_profit": 492.28,
@@ -83731,9 +83736,45 @@
       "line": "1972 Topps Topps #200",
       "title": "1972 Topps Roger Staubach #200 PSA 4 RC Cowboys",
       "status": "priced",
-      "listed": false,
+      "listed": true,
       "sold": false,
-      "owner_listing": null,
+      "owner_listing": {
+        "item_id": "336899398066",
+        "url": "https://www.ebay.com/itm/336899398066",
+        "asking_price": 150,
+        "currency": "USD",
+        "status": "listed",
+        "confirmed_at": "2026-11-15T18:43:22-05:00",
+        "sku_resolution": {
+          "resolved_at": "2026-11-25T20:30:00-05:00",
+          "source": "title_match_and_owner_statement",
+          "note": "eBay listing-live email title 'Topps 1972 Roger Staubach Rookie #200 PSA 4 VG-EX Dallas...' matches CARD-0035, the only Staubach in inventory (candidate since 2026-11-16). Jack gave the ask in a Claude chat on 2026-11-25."
+        },
+        "asking_price_source": "owner_statement",
+        "asking_price_note": "Owner-stated ask $150 (Claude chat 2026-11-25, relayed in the Claudex handoff 09:11 AM ET). The listing-live email shows no price; no eBay email has shown the price yet.",
+        "events": [
+          {
+            "event_id": "336899398066:listed:2026-11-15T18:43:22-05:00",
+            "type": "listed",
+            "occurred_at": "2026-11-15T18:43:22-05:00",
+            "item_id": "336899398066",
+            "price": null,
+            "currency": "USD",
+            "source": "ebay_listing_confirmation_email",
+            "note": "Listing-live email (notification time) shows no price."
+          },
+          {
+            "event_id": "336899398066:ask_stated:2026-11-25T09:11:00-05:00",
+            "type": "ask_stated",
+            "occurred_at": "2026-11-25T09:11:00-05:00",
+            "item_id": "336899398066",
+            "price": 150,
+            "currency": "USD",
+            "source": "owner_statement",
+            "note": "Jack stated the ask ($150) in a Claude chat 2026-11-25 (handoff entry 09:11 AM ET). Not read from an eBay email; exact statement time unknown."
+          }
+        ]
+      },
       "sold_price": "",
       "sold_date": "",
       "cert": "",
